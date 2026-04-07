@@ -40,7 +40,6 @@ def parse_json(val):
 
 for col in ['SKILLS_NAME','SPECIALIZED_SKILLS_NAME','SOFTWARE_SKILLS_NAME']:
     df_filtered[col+'_list'] = df_filtered[col].apply(parse_json)
-
 # --- OVERALL TOP 30 ---
 all_skills = df_filtered['SKILLS_NAME_list'].explode().dropna()
 all_skills = all_skills[all_skills != '']
