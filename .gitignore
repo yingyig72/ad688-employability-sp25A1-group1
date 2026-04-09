@@ -5,3 +5,4 @@ lightcast_job_postings.csv
 
 .py/
 /.quarto/
+.ipynb/
