@@ -1,0 +1,9 @@
+---
+title: "Ricardo"
+---
+
+## Research Question
+
+*Which cities or states have the highest job growth for AI vs. non-AI careers?*
+
+Content coming soon.

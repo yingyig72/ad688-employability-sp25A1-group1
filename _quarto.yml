@@ -7,7 +7,20 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: about.qmd
+        text: About
+      - text: Research Questions
+        menu:
+          - href: omar.qmd
+            text: "Most In-Demand Skills for DS, BA & ML Roles"
+          - href: ricardo.qmd
+            text: "Which Cities/States Have the Highest Job Growth?"
+          - href: tianyi.qmd
+            text: "Are Remote Jobs Increasing or Decreasing?"
+          - href: zichen.qmd
+            text: "Do Tech Hubs Still Dominate Hiring?"
+          - href: yingyi.qmd
+            text: "Urban vs. Rural Job Markets for AI & Non-AI Careers"
 
 format:
   html:
@@ -16,6 +29,4 @@ format:
       - brand
     css: styles.css
     toc: true
-
-
-
+    bibliography: references.bib
