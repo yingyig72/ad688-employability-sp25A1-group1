@@ -1,5 +1,21 @@
+# Virtual environment
 .venv/
 
+# Quarto build files
 /.quarto/
+_site/
 
+# Data files
 data/
+lightcast_job_postings.csv
+
+# Python files (scripts, notebooks)
+*.py
+*.ipynb
+
+# Cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
