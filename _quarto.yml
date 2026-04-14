@@ -21,7 +21,8 @@ website:
             text: "Do Tech Hubs Still Dominate Hiring?"
           - href: yingyi.qmd
             text: "Urban vs. Rural Job Markets for AI & Non-AI Careers"
-
+      - href: references.qmd
+      - text: References 
 format:
   html:
     theme:
