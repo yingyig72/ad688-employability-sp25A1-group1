@@ -22,7 +22,7 @@ website:
           - href: yingyi.qmd
             text: "Urban vs. Rural Job Markets for AI & Non-AI Careers"
       - href: references.qmd
-      - text: References 
+        text: References 
 format:
   html:
     theme:
