@@ -35,20 +35,6 @@
     "text": "Do tech hubs (e.g., Silicon Valley, Austin, Boston) still dominate hiring, or are other locations emerging?\nContent coming soon."
   },
   {
-    "objectID": "omar.html",
-    "href": "omar.html",
-    "title": "Most In-Demand Skills for Data Science, Business Analytics, and ML Roles",
-    "section": "",
-    "text": "The data science and analytics job market continues to expand rapidly, with the U.S. Bureau of Labor Statistics projecting 36% employment growth for data scientists from 2023 to 2033. As the field matures, understanding which specific skills employers demand is critical for job seekers, educators, and program designers alike.\nPrevious research has examined skill requirements across analytics roles. Radovilsky et al. (2018) conducted a comparative analysis of 1,050 job postings and found that data science roles emphasize computer systems, algorithms, and programming, while business data analytics roles place greater weight on statistical analysis and decision-making support. Similarly, Verma et al. (2019) performed a content analysis of job advertisements and identified SQL, Excel, and visualization tools as core requirements across analytics positions. More recently, Levendis (2025) identified the most sought-after skills for business analytics roles, highlighting both technical proficiency and communication as key employer expectations.\nThis analysis extends that body of work by examining 72,498 job postings from the Lightcast dataset to identify the most in-demand skills across Data Science, Business Analytics, Machine Learning, and related roles."
-  },
-  {
-    "objectID": "omar.html#research-question",
-    "href": "omar.html#research-question",
-    "title": "Omar",
-    "section": "",
-    "text": "What are the most in-demand skills for data science, business analytics, and ML roles?\nContent coming soon."
-  },
-  {
     "objectID": "tianyi.html",
     "href": "tianyi.html",
     "title": "Tianyi",
@@ -63,25 +49,11 @@
     "text": "Are remote jobs increasing or decreasing across industries?\nContent coming soon."
   },
   {
-    "objectID": "yingyi.html",
-    "href": "yingyi.html",
-    "title": "Yingyi",
+    "objectID": "omar.html",
+    "href": "omar.html",
+    "title": "Most In-Demand Skills for Data Science, Business Analytics, and ML Roles",
     "section": "",
-    "text": "How do urban vs. rural job markets differ for AI and non-AI careers?\nContent coming soon."
-  },
-  {
-    "objectID": "yingyi.html#research-question",
-    "href": "yingyi.html#research-question",
-    "title": "Yingyi",
-    "section": "",
-    "text": "How do urban vs. rural job markets differ for AI and non-AI careers?\nContent coming soon."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
+    "text": "The data science and analytics job market continues to expand rapidly, with the U.S. Bureau of Labor Statistics projecting 36% employment growth for data scientists from 2023 to 2033. As the field matures, understanding which specific skills employers demand is critical for job seekers, educators, and program designers alike.\nPrevious research has examined skill requirements across analytics roles. Radovilsky et al. (2018) conducted a comparative analysis of 1,050 job postings and found that data science roles emphasize computer systems, algorithms, and programming, while business data analytics roles place greater weight on statistical analysis and decision-making support. Similarly, Verma et al. (2019) performed a content analysis of job advertisements and identified SQL, Excel, and visualization tools as core requirements across analytics positions. More recently, Levendis (2025) identified the most sought-after skills for business analytics roles, highlighting both technical proficiency and communication as key employer expectations.\nThis analysis extends that body of work by examining 72,498 job postings from the Lightcast dataset to identify the most in-demand skills across Data Science, Business Analytics, Machine Learning, and related roles."
   },
   {
     "objectID": "omar.html#introduction",
@@ -145,5 +117,40 @@
     "title": "Most In-Demand Skills for Data Science, Business Analytics, and ML Roles",
     "section": "Conclusion",
     "text": "Conclusion\nOur analysis of 72,498 Lightcast job postings reveals several key findings:\n\nSQL is the universal requirement — appearing in 30% of all postings, it is the single most demanded technical skill across every role category.\nData Science/ML roles are distinctly more technical — Python (53.5%), Machine Learning (41%), R (39%), and Statistics (39.8%) are all significantly more prevalent in DS/ML postings compared to BA/BI roles, confirming the skill divergence identified by Radovilsky et al. (2018).\nCommunication and soft skills dominate BA/BI roles — Communication (43.7%), Management (34%), and Problem Solving (25.5%) rank highest for Business Analytics, consistent with the findings of Levendis (2025) that employers value both technical and interpersonal competencies.\nThe BI tool landscape is a three-way race — Tableau (16.3%), Power BI (15%), and Excel (17.7%) all appear in similar proportions, suggesting employers value familiarity with multiple visualization platforms rather than expertise in just one.\n\nThese findings have practical implications for analytics program curricula and for job seekers looking to align their skill development with market demand, as emphasized by Verma et al. (2019)."
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Levendis, John D. 2025. “The Business Analytics Skills Employers Are Looking For.” Decision Sciences Journal of Innovative Education. https://doi.org/10.1111/dsji.70004.\n\n\nRadovilsky, Zinovy, Vishwanath Hegde, Ashok Acharya, and Usha Uma. 2018. “Skills Requirements of Business Data Analytics and Data Science Jobs: A Comparative Analysis.” Journal of Supply Chain and Operations Management 16 (1): 82–101. https://www.csupom.com/uploads/1/1/4/8/114895679/v16n1p5.pdf.\n\n\nVerma, Arun, Kirill M. Yurov, Paula L. Lane, and Yuliya V. Yurova. 2019. “An Investigation of Skill Requirements for Business and Data Analytics Positions: A Content Analysis of Job Advertisements.” Journal of Education for Business 94 (4): 243–50. https://doi.org/10.1080/08832323.2018.1520685."
+  },
+  {
+    "objectID": "references.html#references",
+    "href": "references.html#references",
+    "title": "References",
+    "section": "",
+    "text": "Levendis, John D. 2025. “The Business Analytics Skills Employers Are Looking For.” Decision Sciences Journal of Innovative Education. https://doi.org/10.1111/dsji.70004.\n\n\nRadovilsky, Zinovy, Vishwanath Hegde, Ashok Acharya, and Usha Uma. 2018. “Skills Requirements of Business Data Analytics and Data Science Jobs: A Comparative Analysis.” Journal of Supply Chain and Operations Management 16 (1): 82–101. https://www.csupom.com/uploads/1/1/4/8/114895679/v16n1p5.pdf.\n\n\nVerma, Arun, Kirill M. Yurov, Paula L. Lane, and Yuliya V. Yurova. 2019. “An Investigation of Skill Requirements for Business and Data Analytics Positions: A Content Analysis of Job Advertisements.” Journal of Education for Business 94 (4): 243–50. https://doi.org/10.1080/08832323.2018.1520685."
+  },
+  {
+    "objectID": "yingyi.html",
+    "href": "yingyi.html",
+    "title": "Yingyi",
+    "section": "",
+    "text": "How do urban vs. rural job markets differ for AI and non-AI careers?\nContent coming soon."
+  },
+  {
+    "objectID": "yingyi.html#research-question",
+    "href": "yingyi.html#research-question",
+    "title": "Yingyi",
+    "section": "",
+    "text": "How do urban vs. rural job markets differ for AI and non-AI careers?\nContent coming soon."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
   }
 ]
