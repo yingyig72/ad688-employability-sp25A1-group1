@@ -181,9 +181,7 @@ ax.set_title('Key Skills by Role Category', fontweight='bold')
 ax.legend(fontsize=8, loc='lower right')
 
 plt.tight_layout()
-plt.savefig('skills_analysis.png', dpi=150, bbox_inches='tight')
-print("\nSaved: skills_analysis.png")
-print("DONE!")
+plt.show()
 ```
 
 ## Conclusion
