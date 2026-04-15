@@ -210,7 +210,7 @@ div.csl-indent {
   <li><a href="#top-30-most-in-demand-skills-overall" id="toc-top-30-most-in-demand-skills-overall" class="nav-link" data-scroll-target="#top-30-most-in-demand-skills-overall">Top 30 Most In-Demand Skills (Overall)</a></li>
   <li><a href="#top-20-software-and-tools" id="toc-top-20-software-and-tools" class="nav-link" data-scroll-target="#top-20-software-and-tools">Top 20 Software and Tools</a></li>
   <li><a href="#skills-breakdown-by-role-category" id="toc-skills-breakdown-by-role-category" class="nav-link" data-scroll-target="#skills-breakdown-by-role-category">Skills Breakdown by Role Category</a></li>
-  <li><a href="#visualizations" id="toc-visualizations" class="nav-link" data-scroll-target="#visualizations">Visualizations</a></li>
+  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots">Plots</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -259,7 +259,7 @@ div.csl-indent {
 <section id="data-loading" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading">Data Loading</h2>
 <p>We begin by loading the Lightcast job postings dataset, which contains 131 columns covering job titles, skills, certifications, location, salary, and occupation classifications.</p>
-<div id="0263691e" class="cell" data-execution_count="1">
+<div id="ceb2efec" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd, json, matplotlib</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>matplotlib.use(<span class="st">'Agg'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt, numpy <span class="im">as</span> np</span>
@@ -274,7 +274,7 @@ div.csl-indent {
 <section id="filtering-for-relevant-roles" class="level2">
 <h2 class="anchored" data-anchor-id="filtering-for-relevant-roles">Filtering for Relevant Roles</h2>
 <p>To focus on data science, business analytics, and ML roles, we categorize each posting using keywords matched against the <code>TITLE_NAME</code> (Lightcast’s standardized job title) and <code>ONET_NAME</code> (Bureau of Labor Statistics occupation classification) columns. This dual-column approach ensures we capture roles that may have non-standard titles but are classified under relevant O*NET codes.</p>
-<div id="1c77314f" class="cell" data-execution_count="2">
+<div id="dacdd05f" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ds_ml_titles <span class="op">=</span> [<span class="st">'data scien'</span>, <span class="st">'machine learn'</span>, <span class="st">'deep learn'</span>, <span class="st">'ai engineer'</span>,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">'nlp engineer'</span>, <span class="st">'computer vision'</span>]</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ba_titles <span class="op">=</span> [<span class="st">'business intel'</span>, <span class="st">'business analy'</span>, <span class="st">'bi analyst'</span>, <span class="st">'bi developer'</span>]</span>
@@ -310,7 +310,7 @@ Data Science / ML            585</code></pre>
 <section id="parsing-skills" class="level2">
 <h2 class="anchored" data-anchor-id="parsing-skills">Parsing Skills</h2>
 <p>The Lightcast dataset stores skills as JSON arrays within string columns (e.g., <code>SKILLS_NAME</code>, <code>SPECIALIZED_SKILLS_NAME</code>, <code>SOFTWARE_SKILLS_NAME</code>). Each posting can list multiple skills, so we parse these JSON arrays into Python lists for analysis. This approach is consistent with how <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span> extracted and categorized skill keywords from job posting text.</p>
-<div id="e94d22dc" class="cell" data-execution_count="3">
+<div id="ae82e80c" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_json(val):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(val): <span class="cf">return</span> []</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
@@ -325,7 +325,7 @@ Data Science / ML            585</code></pre>
 <section id="top-30-most-in-demand-skills-overall" class="level2">
 <h2 class="anchored" data-anchor-id="top-30-most-in-demand-skills-overall">Top 30 Most In-Demand Skills (Overall)</h2>
 <p>We explode the skill lists so that each skill–posting pair becomes its own row, then count the frequency of each skill across all filtered postings. This gives us the overall demand landscape.</p>
-<div id="dbefcee5" class="cell" data-execution_count="4">
+<div id="33d4f8ad" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>all_skills <span class="op">=</span> df_filtered[<span class="st">'SKILLS_NAME_list'</span>].explode().dropna()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>all_skills <span class="op">=</span> all_skills[all_skills <span class="op">!=</span> <span class="st">''</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>all_counts <span class="op">=</span> all_skills.value_counts()</span>
@@ -380,7 +380,7 @@ Rank  Skill                                      Count  % Posts
 <section id="top-20-software-and-tools" class="level2">
 <h2 class="anchored" data-anchor-id="top-20-software-and-tools">Top 20 Software and Tools</h2>
 <p>Lightcast separately tags software and tool skills in the <code>SOFTWARE_SKILLS_NAME</code> column, allowing us to isolate the specific technologies employers require. The dominance of SQL in this ranking aligns with findings from <span class="citation" data-cites="verma2019investigation">Verma et al. (<a href="#ref-verma2019investigation" role="doc-biblioref">2019</a>)</span>, who identified SQL as the most frequently listed technical requirement in analytics job advertisements.</p>
-<div id="22174cc4" class="cell" data-execution_count="5">
+<div id="8c855e67" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sw <span class="op">=</span> df_filtered[<span class="st">'SOFTWARE_SKILLS_NAME_list'</span>].explode().dropna()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sw <span class="op">=</span> sw[sw <span class="op">!=</span> <span class="st">''</span>]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sw_counts <span class="op">=</span> sw.value_counts()</span>
@@ -421,7 +421,7 @@ TOP 20 SOFTWARE / TOOLS
 <section id="skills-breakdown-by-role-category" class="level2">
 <h2 class="anchored" data-anchor-id="skills-breakdown-by-role-category">Skills Breakdown by Role Category</h2>
 <p>Here we compare the top 10 skills within each role category. This comparison reveals important differences: Data Science/ML roles prioritize Python, Machine Learning, and Statistics, while Business Analytics/BI roles emphasize Communication, Management, and Business Process knowledge. This distinction echoes the findings of <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span>, who noted that “data science emphasizes computer systems, algorithms, and computer programming skills, whereas business data analytics has a substantial focus on statistical and quantitative analysis of data, and decision-making support.” <span class="citation" data-cites="levendis2025business">Levendis (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span> similarly found that business analytics employers seek a blend of technical and communication skills.</p>
-<div id="f6ae357d" class="cell" data-execution_count="6">
+<div id="9e5a2591" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> [<span class="st">'Data Science / ML'</span>,<span class="st">'Business Analytics / BI'</span>,<span class="st">'Data Analytics'</span>,<span class="st">'Data Engineering'</span>]:</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> df_filtered[df_filtered[<span class="st">'role_category'</span>]<span class="op">==</span>cat]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(sub) <span class="op">&lt;</span> <span class="dv">10</span>: <span class="cf">continue</span></span>
@@ -465,10 +465,10 @@ TOP 20 SOFTWARE / TOOLS
 </div>
 </div>
 </section>
-<section id="visualizations" class="level2">
-<h2 class="anchored" data-anchor-id="visualizations">Visualizations</h2>
+<section id="plots" class="level2">
+<h2 class="anchored" data-anchor-id="plots">Plots</h2>
 <p>The four-panel chart below summarizes our findings: (1) the top 20 overall skills, (2) the top 15 software/tools, (3) the top 15 specialized technical skills, and (4) a comparison of key skills across role categories.</p>
-<div id="d7df6829" class="cell" data-execution_count="7">
+<div id="36e2e1a1" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">16</span>))</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Most In-Demand Skills — DS, BA &amp; ML Roles (Lightcast)'</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
@@ -519,14 +519,7 @@ TOP 20 SOFTWARE / TOOLS
 <span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>, loc<span class="op">=</span><span class="st">'lower right'</span>)</span>
 <span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'skills_analysis.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Saved: skills_analysis.png"</span>)</span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"DONE!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Saved: skills_analysis.png
-DONE!</code></pre>
-</div>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="conclusion" class="level2">
