@@ -126,7 +126,7 @@ for cat in ['Data Science / ML','Business Analytics / BI','Data Analytics','Data
         print(f"  {r:>3}. {s:<35} {c:>6,} ({c/len(sub)*100:.1f}%)")
 ```
 
-## Visualizations
+## Plots
 
 The four-panel chart below summarizes our findings: (1) the top 20 overall skills, (2) the top 15 software/tools, (3) the top 15 specialized technical skills, and (4) a comparison of key skills across role categories.
 
