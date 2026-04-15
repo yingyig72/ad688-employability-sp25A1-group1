@@ -1,6 +1,9 @@
 project:
   type: website
 
+execute:
+  freeze: true
+  
 website:
   title: "AD688 Team 1 Spring 2026"
   navbar:
