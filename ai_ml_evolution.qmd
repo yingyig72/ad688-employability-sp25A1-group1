@@ -252,9 +252,7 @@ We also examine whether AI/ML-requiring roles demand higher education levels com
 # Compare education levels: AI/ML vs non-AI/ML postings
 for label, subset in [("AI/ML Postings", df[df['has_ai_ml']]),
                        ("Non-AI/ML Postings", df[~df['has_ai_ml']])]:
-    edu = subset['MIN_EDULEVELS_NAME'].apply(parse_json).explode().dropna()
-    edu = edu[edu != '']
-    edu_counts = edu.value_counts().head(8)
+    edu_counts = subset['MIN_EDULEVELS_NAME'].dropna().value_counts().head(8)
     print(f"\n{label} — Minimum Education Levels:")
     for level, count in edu_counts.items():
         print(f"  {level:<40} {count:>6,} ({count/len(subset)*100:.1f}%)")
