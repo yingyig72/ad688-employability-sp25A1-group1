@@ -183,6 +183,7 @@ ax.legend(fontsize=8, loc='lower right')
 plt.tight_layout()
 plt.savefig('skills_analysis.png', dpi=150, bbox_inches='tight')
 ```
+
 ![Skills Analysis](skills_analysis.png)
 
 ## Conclusion

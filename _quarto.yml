@@ -25,7 +25,7 @@ website:
           - href: yingyi.qmd
             text: "Urban vs. Rural Job Markets for AI & Non-AI Careers"
       - href: references.qmd
-      - text: Business Analytics, Data Science, and Machine Learning Trends
+      - text: ML, BA & DS trends
         menu:
           - href: omar.qmd
             text: "Most In-Demand Skills for DS, BA & ML Roles"     
