@@ -282,7 +282,7 @@ div.csl-indent {
 </section>
 <section id="data-loading" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading">Data Loading</h2>
-<div id="cd966373" class="cell" data-execution_count="1">
+<div id="76e69205" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -303,7 +303,7 @@ div.csl-indent {
 <section id="identifying-data-science-roles" class="level2">
 <h2 class="anchored" data-anchor-id="identifying-data-science-roles">Identifying Data Science Roles</h2>
 <p>We filter the dataset to postings related to data science using keywords matched against the <code>TITLE_NAME</code> and <code>ONET_NAME</code> columns. This dual-column approach ensures broad coverage of data science roles regardless of how individual employers title their positions.</p>
-<div id="c4a69314" class="cell" data-execution_count="2">
+<div id="af220651" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ds_keywords <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data scien'</span>, <span class="st">'machine learn'</span>, <span class="st">'deep learn'</span>, <span class="st">'ai engineer'</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'nlp engineer'</span>, <span class="st">'computer vision'</span>, <span class="st">'data analyst'</span>, <span class="st">'research scientist'</span>,</span>
@@ -312,14 +312,12 @@ div.csl-indent {
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_data_science(row):</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="bu">str</span>(row[<span class="st">'TITLE_NAME'</span>]).lower()</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    o <span class="op">=</span> <span class="bu">str</span>(row[<span class="st">'ONET_NAME'</span>]).lower()</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    combined <span class="op">=</span> t <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span> o</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">any</span>(kw <span class="kw">in</span> combined <span class="cf">for</span> kw <span class="kw">in</span> ds_keywords)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'is_ds'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(is_data_science, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>df_ds <span class="op">=</span> df[df[<span class="st">'is_ds'</span>]].copy()</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Data science related postings: </span><span class="sc">{</span><span class="bu">len</span>(df_ds)<span class="sc">:,}</span><span class="ss"> (</span><span class="sc">{</span><span class="bu">len</span>(df_ds)<span class="op">/</span><span class="bu">len</span>(df)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">% of all postings)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">any</span>(kw <span class="kw">in</span> t <span class="cf">for</span> kw <span class="kw">in</span> ds_keywords)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'is_ds'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(is_data_science, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>df_ds <span class="op">=</span> df[df[<span class="st">'is_ds'</span>]].copy()</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Data science related postings: </span><span class="sc">{</span><span class="bu">len</span>(df_ds)<span class="sc">:,}</span><span class="ss"> (</span><span class="sc">{</span><span class="bu">len</span>(df_ds)<span class="op">/</span><span class="bu">len</span>(df)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">% of all postings)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Data science related postings: 14,214 (19.6% of all postings)</code></pre>
 </div>
@@ -328,7 +326,7 @@ div.csl-indent {
 <section id="top-industries-hiring-data-scientists" class="level2">
 <h2 class="anchored" data-anchor-id="top-industries-hiring-data-scientists">Top Industries Hiring Data Scientists</h2>
 <p>We use the NAICS 2-digit industry classification (<code>NAICS2_NAME</code>) to group data science postings by sector. This level of aggregation provides a clear view of which broad industry categories are driving demand. The cross-industry spread of data science hiring aligns with what <span class="citation" data-cites="manyika2011big">Manyika et al. (<a href="#ref-manyika2011big" role="doc-biblioref">2011</a>)</span> anticipated — that demand for analytical talent would extend well beyond the technology sector into healthcare, finance, and manufacturing.</p>
-<div id="e56c22a4" class="cell" data-execution_count="3">
+<div id="02281c3d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry counts for DS roles</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>industry_ds <span class="op">=</span> df_ds[<span class="st">'NAICS2_NAME'</span>].dropna().value_counts().head(<span class="dv">20</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -368,7 +366,7 @@ Rank  Industry                                        Count       %
 20    Arts, Entertainment, and Recreation                22    0.2%</code></pre>
 </div>
 </div>
-<div id="7c120d5b" class="cell" data-execution_count="4">
+<div id="8e49edbf" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot top 15 industries</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>top15 <span class="op">=</span> industry_ds.head(<span class="dv">15</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -399,7 +397,7 @@ Rank  Industry                                        Count       %
 <section id="data-science-concentration-by-industry" class="level2">
 <h2 class="anchored" data-anchor-id="data-science-concentration-by-industry">Data Science Concentration by Industry</h2>
 <p>Raw posting counts can be misleading — a large industry may post many data science jobs simply because it posts many jobs overall. To control for this, we calculate the data science concentration rate: the percentage of an industry’s total postings that are data science roles. This reveals which industries are most intensely focused on hiring data scientists relative to their overall hiring volume.</p>
-<div id="c00bb56e" class="cell" data-execution_count="5">
+<div id="780c5ecd" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate DS concentration per industry</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>industry_all <span class="op">=</span> df[<span class="st">'NAICS2_NAME'</span>].dropna().value_counts()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>industry_ds_counts <span class="op">=</span> df_ds[<span class="st">'NAICS2_NAME'</span>].dropna().value_counts()</span>
@@ -442,7 +440,7 @@ Finance and Insurance                           7,342   1,485   20.2%
 Unclassified Industry                           9,488   1,804   19.0%</code></pre>
 </div>
 </div>
-<div id="7a08cbc4" class="cell" data-execution_count="6">
+<div id="5cec96a6" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(<span class="bu">range</span>(<span class="bu">len</span>(concentration)), concentration[<span class="st">'ds_pct'</span>].values,</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>               color<span class="op">=</span>plt.cm.plasma(np.linspace(<span class="fl">0.3</span>, <span class="fl">0.9</span>, <span class="bu">len</span>(concentration))))</span>
@@ -470,7 +468,7 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 <section id="skills-demanded-by-top-industries" class="level2">
 <h2 class="anchored" data-anchor-id="skills-demanded-by-top-industries">Skills Demanded by Top Industries</h2>
 <p>Different industries may require different skill profiles from their data scientists. Here we compare the most in-demand skills across the top 5 industries to understand how employer expectations vary by sector. <span class="citation" data-cites="celik2023analysis">Çelik and Bozdağ (<a href="#ref-celik2023analysis" role="doc-biblioref">2023</a>)</span> found that while core skills like Python and Machine Learning are universally demanded, the relative importance of domain-specific competencies shifts significantly across industries.</p>
-<div id="e357b175" class="cell" data-execution_count="7">
+<div id="64e00cc6" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_json(val):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(val):</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
@@ -568,7 +566,7 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
    10. Data Warehousing                       380 (44.8%)</code></pre>
 </div>
 </div>
-<div id="bc92fbe0" class="cell" data-execution_count="8">
+<div id="2149f4ae" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmap comparing key skills across top 5 industries</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>key_skills <span class="op">=</span> [<span class="st">'Python (Programming Language)'</span>, <span class="st">'SQL (Programming Language)'</span>,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">'Machine Learning'</span>, <span class="st">'Data Analysis'</span>, <span class="st">'Statistics'</span>,</span>
@@ -616,7 +614,7 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 <section id="salary-comparison-across-industries" class="level2">
 <h2 class="anchored" data-anchor-id="salary-comparison-across-industries">Salary Comparison Across Industries</h2>
 <p>Compensation is a key indicator of how much an industry values data science talent. We compare median salaries across the top industries to understand which sectors are paying a premium for data scientists. <span class="citation" data-cites="davenport2022still">Davenport and Patil (<a href="#ref-davenport2022still" role="doc-biblioref">2022</a>)</span> noted that experienced data scientists command salaries approaching $200,000 in some markets, but compensation varies significantly by industry and region.</p>
-<div id="2e2bd1a0" class="cell" data-execution_count="9">
+<div id="50561978" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Salary analysis for DS roles by industry</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_ds_salary <span class="op">=</span> df_ds[df_ds[<span class="st">'SALARY'</span>].notna() <span class="op">&amp;</span> (df_ds[<span class="st">'SALARY'</span>] <span class="op">&gt;</span> <span class="dv">0</span>)].copy()</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -660,7 +658,7 @@ Public Administration                      245 $   81,195 $   82,443 $   70,123 
 Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 $  107,000</code></pre>
 </div>
 </div>
-<div id="58ca8d0e" class="cell" data-execution_count="10">
+<div id="ad855625" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> plt.cm.cividis(np.linspace(<span class="fl">0.3</span>, <span class="fl">0.9</span>, <span class="bu">len</span>(salary_by_ind)))</span>
@@ -692,7 +690,7 @@ Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 
 <section id="education-requirements-by-industry" class="level2">
 <h2 class="anchored" data-anchor-id="education-requirements-by-industry">Education Requirements by Industry</h2>
 <p>We examine whether different industries have varying education expectations for data science roles, which may help explain hiring patterns and talent pipeline challenges.</p>
-<div id="ca347432" class="cell" data-execution_count="11">
+<div id="151175b1" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>top5 <span class="op">=</span> industry_ds.head(<span class="dv">5</span>).index.tolist()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ind <span class="kw">in</span> top5:</span>
@@ -743,7 +741,7 @@ Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 
 <section id="experience-requirements-by-industry" class="level2">
 <h2 class="anchored" data-anchor-id="experience-requirements-by-industry">Experience Requirements by Industry</h2>
 <p>Similarly, we compare the minimum years of experience required across industries to understand how entry barriers differ by sector.</p>
-<div id="b78a736d" class="cell" data-execution_count="12">
+<div id="ff872a54" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>exp_by_ind <span class="op">=</span> df_ds[df_ds[<span class="st">'NAICS2_NAME'</span>].isin(top5)].groupby(<span class="st">'NAICS2_NAME'</span>).agg(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    avg_min_exp<span class="op">=</span>(<span class="st">'MIN_YEARS_EXPERIENCE'</span>, <span class="st">'mean'</span>),</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    median_min_exp<span class="op">=</span>(<span class="st">'MIN_YEARS_EXPERIENCE'</span>, <span class="st">'median'</span>),</span>
