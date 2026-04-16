@@ -32,7 +32,7 @@ website:
           - href: ai_ml_evolution.qmd
             text: "Have job descriptions evolved in 2024 to require AI/ML expertise?"
       - href: references.qmd  
-      - text: References 
+        text: References 
 
 format:
   html:
