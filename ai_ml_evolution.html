@@ -272,7 +272,7 @@ div.csl-indent {
 </section>
 <section id="data-loading" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading">Data Loading</h2>
-<div id="892836ca" class="cell" data-execution_count="1">
+<div id="5abc62c6" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -295,7 +295,7 @@ Columns: 131</code></pre>
 <section id="defining-aiml-skills" class="level2">
 <h2 class="anchored" data-anchor-id="defining-aiml-skills">Defining AI/ML Skills</h2>
 <p>We define a comprehensive list of AI/ML-related keywords to search for within the skills columns. These keywords span core AI/ML concepts, popular frameworks, and adjacent technical skills that signal AI/ML expertise.</p>
-<div id="2814d1d4" class="cell" data-execution_count="2">
+<div id="10db77cb" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ai_ml_keywords <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'machine learning'</span>, <span class="st">'deep learning'</span>, <span class="st">'artificial intelligence'</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'neural network'</span>, <span class="st">'natural language processing'</span>, <span class="st">'nlp'</span>,</span>
@@ -346,7 +346,7 @@ Postings without AI/ML skills: 65,733</code></pre>
 <section id="aiml-adoption-over-time" class="level2">
 <h2 class="anchored" data-anchor-id="aiml-adoption-over-time">AI/ML Adoption Over Time</h2>
 <p>To understand the temporal evolution, we parse the <code>POSTED</code> date column and examine how the proportion of AI/ML-requiring postings changes month by month. This approach aligns with the methodology of <span class="citation" data-cites="acemoglu2022artificial">Acemoglu et al. (<a href="#ref-acemoglu2022artificial" role="doc-biblioref">2022</a>)</span>, who tracked AI-related job posting trends to measure the pace of AI adoption across the economy.</p>
-<div id="a67913d2" class="cell" data-execution_count="3">
+<div id="0d7c756f" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse dates</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'posted_date'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'POSTED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'posted_month'</span>] <span class="op">=</span> df[<span class="st">'posted_date'</span>].dt.to_period(<span class="st">'M'</span>)</span>
@@ -376,7 +376,7 @@ Postings without AI/ML skills: 65,733</code></pre>
 2024-09        15,337    1,751    11.4%</code></pre>
 </div>
 </div>
-<div id="6f03d28e" class="cell" data-execution_count="4">
+<div id="a46dcbfe" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Evolution of AI/ML Requirements in Job Postings'</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">15</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
@@ -415,7 +415,7 @@ Postings without AI/ML skills: 65,733</code></pre>
 <section id="most-common-aiml-skills-demanded" class="level2">
 <h2 class="anchored" data-anchor-id="most-common-aiml-skills-demanded">Most Common AI/ML Skills Demanded</h2>
 <p>We now examine which specific AI/ML skills appear most frequently in job postings. Understanding the granularity of demand helps distinguish between postings seeking general AI awareness versus those requiring deep technical proficiency.</p>
-<div id="c951afa2" class="cell" data-execution_count="5">
+<div id="36c9e63d" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract only AI/ML-related skills from flagged postings</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ai_ml_postings <span class="op">=</span> df[df[<span class="st">'has_ai_ml'</span>]].copy()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -464,7 +464,7 @@ Rank  Skill                                      Count
 20    Keras (Neural Network Library)               138</code></pre>
 </div>
 </div>
-<div id="6224c82c" class="cell" data-execution_count="6">
+<div id="dd0448c8" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot top 15 AI/ML skills</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>top_skills <span class="op">=</span> ai_ml_skills_sorted[:<span class="dv">15</span>]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>skills_names <span class="op">=</span> [s[<span class="dv">0</span>] <span class="cf">for</span> s <span class="kw">in</span> top_skills]</span>
@@ -494,7 +494,7 @@ Rank  Skill                                      Count
 <section id="which-roles-are-increasingly-requiring-aiml" class="level2">
 <h2 class="anchored" data-anchor-id="which-roles-are-increasingly-requiring-aiml">Which Roles Are Increasingly Requiring AI/ML?</h2>
 <p>Beyond dedicated data science and ML engineer positions, AI/ML skills are spreading into roles that traditionally had no such requirements. <span class="citation" data-cites="tambe2019artificial">Tambe et al. (<a href="#ref-tambe2019artificial" role="doc-biblioref">2019</a>)</span> highlighted this diffusion pattern, noting that AI adoption extends well beyond the tech sector into healthcare, finance, and operations.</p>
-<div id="c27c6f12" class="cell" data-execution_count="7">
+<div id="b6b99c7d" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 20 job titles (TITLE_NAME) with AI/ML requirements</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>title_ai <span class="op">=</span> ai_ml_postings[<span class="st">'TITLE_NAME'</span>].value_counts().head(<span class="dv">20</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -537,7 +537,7 @@ Rank  Job Title                                   Count
 </section>
 <section id="industries-driving-aiml-demand" class="level2">
 <h2 class="anchored" data-anchor-id="industries-driving-aiml-demand">Industries Driving AI/ML Demand</h2>
-<div id="95fde300" class="cell" data-execution_count="8">
+<div id="19d370f1" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AI/ML demand by NAICS 2-digit industry</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>industry_ai <span class="op">=</span> df.groupby(<span class="st">'NAICS2_NAME'</span>).agg(</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    total<span class="op">=</span>(<span class="st">'has_ai_ml'</span>, <span class="st">'count'</span>),</span>
@@ -581,21 +581,31 @@ Rank  Job Title                                   Count
 <section id="education-requirements-for-aiml-roles" class="level2">
 <h2 class="anchored" data-anchor-id="education-requirements-for-aiml-roles">Education Requirements for AI/ML Roles</h2>
 <p>We also examine whether AI/ML-requiring roles demand higher education levels compared to the overall dataset, which has implications for workforce development and academic program design.</p>
-<div id="7a40336c" class="cell" data-execution_count="9">
+<div id="75e267f7" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare education levels: AI/ML vs non-AI/ML postings</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> label, subset <span class="kw">in</span> [(<span class="st">"AI/ML Postings"</span>, df[df[<span class="st">'has_ai_ml'</span>]]),</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                       (<span class="st">"Non-AI/ML Postings"</span>, df[<span class="op">~</span>df[<span class="st">'has_ai_ml'</span>]])]:</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    edu <span class="op">=</span> subset[<span class="st">'MIN_EDULEVELS_NAME'</span>].<span class="bu">apply</span>(parse_json).explode().dropna()</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    edu <span class="op">=</span> edu[edu <span class="op">!=</span> <span class="st">''</span>]</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    edu_counts <span class="op">=</span> edu.value_counts().head(<span class="dv">8</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss"> — Minimum Education Levels:"</span>)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> level, count <span class="kw">in</span> edu_counts.items():</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>level<span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span>count<span class="sc">:&gt;6,}</span><span class="ss"> (</span><span class="sc">{</span>count<span class="op">/</span><span class="bu">len</span>(subset)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    edu_counts <span class="op">=</span> subset[<span class="st">'MIN_EDULEVELS_NAME'</span>].dropna().value_counts().head(<span class="dv">8</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss"> — Minimum Education Levels:"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> level, count <span class="kw">in</span> edu_counts.items():</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>level<span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span>count<span class="sc">:&gt;6,}</span><span class="ss"> (</span><span class="sc">{</span>count<span class="op">/</span><span class="bu">len</span>(subset)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 AI/ML Postings — Minimum Education Levels:
+  Bachelor's degree                         4,398 (65.0%)
+  No Education Listed                       1,327 (19.6%)
+  Associate degree                            445 (6.6%)
+  Master's degree                             390 (5.8%)
+  High school or GED                          189 (2.8%)
+  Ph.D. or professional degree                 16 (0.2%)
 
-Non-AI/ML Postings — Minimum Education Levels:</code></pre>
+Non-AI/ML Postings — Minimum Education Levels:
+  Bachelor's degree                        37,073 (56.4%)
+  No Education Listed                      20,783 (31.6%)
+  High school or GED                        3,559 (5.4%)
+  Associate degree                          2,696 (4.1%)
+  Master's degree                           1,484 (2.3%)
+  Ph.D. or professional degree                 94 (0.1%)</code></pre>
 </div>
 </div>
 </section>
