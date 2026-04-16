@@ -14,8 +14,6 @@ website:
         text: About
       - text: Research Questions
         menu:
-          - href: omar.qmd
-            text: "Most In-Demand Skills for DS, BA & ML Roles"
           - href: ricardo.qmd
             text: "Which Cities/States Have the Highest Job Growth?"
           - href: tianyi.qmd
@@ -23,8 +21,7 @@ website:
           - href: zichen.qmd
             text: "Do Tech Hubs Still Dominate Hiring?"
           - href: yingyi.qmd
-            text: "Urban vs. Rural Job Markets for AI & Non-AI Careers"
-    
+            text: "Urban vs. Rural Job Markets for AI & Non-AI Careers"   
       - text: ML, BA & DS trends
         menu:
           - href: omar.qmd
