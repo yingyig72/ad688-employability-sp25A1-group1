@@ -24,11 +24,12 @@ website:
             text: "Do Tech Hubs Still Dominate Hiring?"
           - href: yingyi.qmd
             text: "Urban vs. Rural Job Markets for AI & Non-AI Careers"
-      - href: references.qmd
+    
       - text: ML, BA & DS trends
         menu:
           - href: omar.qmd
-            text: "Most In-Demand Skills for DS, BA & ML Roles"     
+            text: "Most In-Demand Skills for DS, BA & ML Roles"   
+      - href: references.qmd  
       - text: References 
 format:
   html:
