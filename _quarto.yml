@@ -31,6 +31,8 @@ website:
             text: "Most In-Demand Skills for DS, BA & ML Roles"   
           - href: ai_ml_evolution.qmd
             text: "Have job descriptions evolved in 2024 to require AI/ML expertise?"
+          - href: industry_hiring.qmd
+            text: "What industries are hiring the most data scientists and why?"
       - href: references.qmd  
         text: References 
 
