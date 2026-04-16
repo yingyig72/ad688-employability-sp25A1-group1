@@ -47,9 +47,7 @@ ds_keywords = [
 
 def is_data_science(row):
     t = str(row['TITLE_NAME']).lower()
-    o = str(row['ONET_NAME']).lower()
-    combined = t + ' ' + o
-    return any(kw in combined for kw in ds_keywords)
+    return any(kw in t for kw in ds_keywords)
 
 df['is_ds'] = df.apply(is_data_science, axis=1)
 df_ds = df[df['is_ds']].copy()

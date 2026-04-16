@@ -48,14 +48,12 @@ de_titles = ['data engineer']
 
 def categorize(row):
     t = str(row['TITLE_NAME']).lower()
-    o = str(row['ONET_NAME']).lower()
-    c = t + ' ' + o
-    if any(k in c for k in ba_titles): return 'Business Analytics / BI'
-    if any(k in c for k in ds_ml_titles): return 'Data Science / ML'
-    if any(k in c for k in da_titles): return 'Data Analytics'
-    if any(k in c for k in de_titles): return 'Data Engineering'
+    if any(k in t for k in ds_ml_titles): return 'Data Science / ML'
+    if any(k in t for k in de_titles): return 'Data Engineering'
+    if any(k in t for k in ba_titles): return 'Business Analytics / BI'
+    if any(k in t for k in da_titles): return 'Data Analytics'
     return None
-
+    
 df['role_category'] = df.apply(categorize, axis=1)
 df_roles = df[df['role_category'].notna()].copy()
 
