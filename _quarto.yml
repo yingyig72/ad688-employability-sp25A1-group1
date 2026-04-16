@@ -33,6 +33,8 @@ website:
             text: "Have job descriptions evolved in 2024 to require AI/ML expertise?"
           - href: industry_hiring.qmd
             text: "What industries are hiring the most data scientists and why?"
+          - href: ba_career_outlook.qmd
+            text: "What is the career outlook for business analytics professionals?"
       - href: references.qmd  
         text: References 
 
