@@ -1,7 +1,11 @@
 ---
 title: "AD688 Team 1 Spring 2026"
 ---
+## Introduction
 
-This is a Quarto website.
+This project analyzes job market trends using Lightcast data.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+We focus on:
+- AI vs Non-AI jobs
+- Salary trends
+- Skill demand

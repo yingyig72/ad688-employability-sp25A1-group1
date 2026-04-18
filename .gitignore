@@ -2,8 +2,8 @@
 .venv/
 
 # Quarto build files
-/.quarto/
-
+.quarto/
+_site/
 
 # Data files
 data/
@@ -12,6 +12,7 @@ lightcast_job_postings.csv
 # Python files (scripts, notebooks)
 *.py
 *.ipynb
+**/*.quarto_ipynb
 
 # Cache
 __pycache__/
@@ -20,6 +21,5 @@ __pycache__/
 # OS files
 .DS_Store
 
-_site/
-
-.
+# Extra folders to ignore
+my-website/
