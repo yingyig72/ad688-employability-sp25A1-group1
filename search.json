@@ -4,7 +4,14 @@
     "href": "index.html",
     "title": "AD688 Team 1 Spring 2026",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "This project analyzes job market trends using Lightcast data.\nWe focus on: - AI vs Non-AI jobs - Salary trends - Skill demand"
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "AD688 Team 1 Spring 2026",
+    "section": "",
+    "text": "This project analyzes job market trends using Lightcast data.\nWe focus on: - AI vs Non-AI jobs - Salary trends - Skill demand"
   },
   {
     "objectID": "industry_hiring.html",
