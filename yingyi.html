@@ -209,6 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#skill-composition-in-ai-vs-non-ai-jobs-by-area" id="toc-skill-composition-in-ai-vs-non-ai-jobs-by-area" class="nav-link" data-scroll-target="#skill-composition-in-ai-vs-non-ai-jobs-by-area"><span class="header-section-number">5</span> Skill Composition in AI vs Non-AI Jobs by Area</a></li>
   <li><a href="#skill-distribution-proportion-in-ai-vs-non-ai-jobs" id="toc-skill-distribution-proportion-in-ai-vs-non-ai-jobs" class="nav-link" data-scroll-target="#skill-distribution-proportion-in-ai-vs-non-ai-jobs"><span class="header-section-number">6</span> Skill Distribution (Proportion) in AI vs Non-AI Jobs</a></li>
   <li><a href="#high-skill-job-salary-urban-vs-rural" id="toc-high-skill-job-salary-urban-vs-rural" class="nav-link" data-scroll-target="#high-skill-job-salary-urban-vs-rural"><span class="header-section-number">7</span> High-Skill Job Salary: Urban vs Rural</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model"><span class="header-section-number">8</span> Model</a></li>
   </ul>
 </nav>
     </div>
@@ -421,7 +422,7 @@ False 4465 True 3014</p>
 <span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>fig.update_layout(template<span class="op">=</span><span class="st">"plotly_white"</span>)</span>
 <span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><img src="visualizations/1AREA_Job_Counts_Over_Time.png" class="img-fluid" style="width:70.0%"></p>
+<p><img src="visualizations/1AREA_Job_Counts_Over_Time.png" class="img-fluid"></p>
 </section>
 <section id="skill-composition-in-ai-vs-non-ai-jobs-by-area" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="skill-composition-in-ai-vs-non-ai-jobs-by-area"><span class="header-section-number">5</span> Skill Composition in AI vs Non-AI Jobs by Area</h2>
@@ -472,7 +473,7 @@ False 4465 True 3014</p>
 <span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>fig.update_layout(template<span class="op">=</span><span class="st">"plotly_white"</span>)</span>
 <span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><img src="visualizations/2AREA_Skill_Composition_in_AI.png" class="img-fluid" style="width:70.0%"></p>
+<p><img src="visualizations/2AREA_Skill_Composition_in_AI.png" class="img-fluid"></p>
 </section>
 <section id="skill-distribution-proportion-in-ai-vs-non-ai-jobs" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="skill-distribution-proportion-in-ai-vs-non-ai-jobs"><span class="header-section-number">6</span> Skill Distribution (Proportion) in AI vs Non-AI Jobs</h2>
@@ -499,7 +500,12 @@ False 4465 True 3014</p>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>fig.update_layout(template<span class="op">=</span><span class="st">"plotly_white"</span>)</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><img src="visualizations/3AREA_Skill_Distribution.png" class="img-fluid" style="width:70.0%"> ## Skill Distribution (Proportion) in AI vs Non-AI Jobs This chart further compares the differences in skill proportions between AI-related positions and non-AI positions. It can be seen that in AI positions, the proportion of highly skilled workers is significantly higher than in non-AI positions, while the proportion of medium-skilled workers has decreased, and the proportion of low-skilled workers remains at a relatively low level. At the same time, this structure is basically the same in urban and rural areas, but the proportion of highly skilled workers is slightly higher in cities, indicating that AI-related positions have a more concentrated demand for highly skilled labor. This result indicates that AI is driving the transformation of the labor force structure from being “dominated by medium skills” to “favoring high skills”, and it shows a consistent but varying trend in different regions. This change reflects the selective demands of AI for tasks and capabilities, giving an advantage to high-skilled workers while weakening the relative position of those with medium and low skills, thereby exacerbating the inequality between skill levels (Mookerjee, 2025)</p>
+<p><img src="visualizations/3AREA_Skill_Distribution.png" class="img-fluid"></p>
+</section>
+<section id="high-skill-job-salary-urban-vs-rural" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="high-skill-job-salary-urban-vs-rural"><span class="header-section-number">7</span> High-Skill Job Salary: Urban vs Rural</h2>
+<p>The chart provides partial evidence that AI does not affect workers uniformly. While AI-related jobs tend to offer slightly higher salaries, the wide overlap in distributions suggests that not all workers benefit equally. This aligns with the idea that AI creates uneven outcomes, enhancing some workers while offering limited gains to others.</p>
+<p>More importantly, the urban–rural comparison shows that the wage premium associated with AI is more pronounced in urban areas. This suggests that AI-driven economic benefits are geographically concentrated, potentially widening existing disparities between urban and rural labor markets.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.box(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"SKILL_LEVEL"</span>] <span class="op">==</span> <span class="st">"High"</span>],</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"AREA_LABEL"</span>,</span>
@@ -526,12 +532,10 @@ False 4465 True 3014</p>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>fig.update_layout(template<span class="op">=</span><span class="st">"plotly_white"</span>)</span>
 <span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><img src="visualizations/4AREA_High_Skill_Job_Salary.png" class="img-fluid" style="width:70.0%"></p>
+<p><img src="visualizations/4AREA_High_Skill_Job_Salary.png" class="img-fluid"></p>
 </section>
-<section id="high-skill-job-salary-urban-vs-rural" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="high-skill-job-salary-urban-vs-rural"><span class="header-section-number">7</span> High-Skill Job Salary: Urban vs Rural</h2>
-<p>The chart provides partial evidence that AI does not affect workers uniformly. While AI-related jobs tend to offer slightly higher salaries, the wide overlap in distributions suggests that not all workers benefit equally. This aligns with the idea that AI creates uneven outcomes, enhancing some workers while offering limited gains to others.</p>
-<p>More importantly, the urban–rural comparison shows that the wage premium associated with AI is more pronounced in urban areas. This suggests that AI-driven economic benefits are geographically concentrated, potentially widening existing disparities between urban and rural labor markets.</p>
+<section id="model" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="model"><span class="header-section-number">8</span> Model</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
