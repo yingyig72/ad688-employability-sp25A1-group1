@@ -156,6 +156,10 @@ div.csl-indent {
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.html"> 
+<span class="menu-text">Data Cleaning</span></a>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research-questions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Research Questions</span>
@@ -276,30 +280,34 @@ div.csl-indent {
 </section>
 <section id="data-loading" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading">Data Loading</h2>
-<div id="5abc62c6" class="cell" data-execution_count="1">
+<div id="7193c7a2" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>matplotlib.use(<span class="st">'Agg'</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">'visualizations'</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"./data/lightcast_job_postings.csv"</span>, low_memory<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total postings: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss">"</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Columns: </span><span class="sc">{</span><span class="bu">len</span>(df.columns)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>matplotlib.use(<span class="st">'Agg'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">'visualizations'</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/lightcast_cleaned.csv"</span>, parse_dates<span class="op">=</span>[<span class="st">"posted"</span>, <span class="st">"expired"</span>])</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"skills_name"</span>, <span class="st">"specialized_skills_name"</span>, <span class="st">"software_skills_name"</span>]:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].fillna(<span class="st">""</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> s: s.split(<span class="st">"|"</span>) <span class="cf">if</span> s <span class="cf">else</span> [])</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total postings: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Columns: </span><span class="sc">{</span><span class="bu">len</span>(df.columns)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Total postings: 72,498
-Columns: 131</code></pre>
+<pre><code>Total postings: 72,454
+Columns: 29</code></pre>
 </div>
 </div>
 </section>
 <section id="defining-aiml-skills" class="level2">
 <h2 class="anchored" data-anchor-id="defining-aiml-skills">Defining AI/ML Skills</h2>
 <p>We define a comprehensive list of AI/ML-related keywords to search for within the skills columns. These keywords span core AI/ML concepts, popular frameworks, and adjacent technical skills that signal AI/ML expertise.</p>
-<div id="10db77cb" class="cell" data-execution_count="2">
+<div id="33a0c64d" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ai_ml_keywords <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'machine learning'</span>, <span class="st">'deep learning'</span>, <span class="st">'artificial intelligence'</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'neural network'</span>, <span class="st">'natural language processing'</span>, <span class="st">'nlp'</span>,</span>
@@ -312,75 +320,58 @@ Columns: 131</code></pre>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'model deployment'</span>, <span class="st">'mlops'</span>, <span class="st">'ai/ml'</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_json(val):</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(val):</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> json.loads(val)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> p <span class="cf">if</span> <span class="bu">isinstance</span>(p, <span class="bu">list</span>) <span class="cf">else</span> []</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>:</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse skills columns</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">'SKILLS_NAME'</span>, <span class="st">'SPECIALIZED_SKILLS_NAME'</span>, <span class="st">'SOFTWARE_SKILLS_NAME'</span>]:</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    df[col <span class="op">+</span> <span class="st">'_list'</span>] <span class="op">=</span> df[col].<span class="bu">apply</span>(parse_json)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all skills into one list per posting</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'all_skills'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> r: r[<span class="st">'SKILLS_NAME_list'</span>] <span class="op">+</span> r[<span class="st">'SPECIALIZED_SKILLS_NAME_list'</span>] <span class="op">+</span> r[<span class="st">'SOFTWARE_SKILLS_NAME_list'</span>],</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    axis<span class="op">=</span><span class="dv">1</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag postings that mention any AI/ML skill</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> has_ai_ml(skills_list):</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    combined <span class="op">=</span> <span class="st">' '</span>.join([s.lower() <span class="cf">for</span> s <span class="kw">in</span> skills_list])</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">any</span>(kw <span class="kw">in</span> combined <span class="cf">for</span> kw <span class="kw">in</span> ai_ml_keywords)</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'has_ai_ml'</span>] <span class="op">=</span> df[<span class="st">'all_skills'</span>].<span class="bu">apply</span>(has_ai_ml)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>ai_ml_count <span class="op">=</span> df[<span class="st">'has_ai_ml'</span>].<span class="bu">sum</span>()</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Postings with AI/ML skills: </span><span class="sc">{</span>ai_ml_count<span class="sc">:,}</span><span class="ss"> (</span><span class="sc">{</span>ai_ml_count<span class="op">/</span><span class="bu">len</span>(df)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Postings without AI/ML skills: </span><span class="sc">{</span>(<span class="op">~</span>df[<span class="st">'has_ai_ml'</span>])<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all skills into one list per posting.</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># The cleaning page already split these into lists, so no JSON parsing needed.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'all_skills'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> r: r[<span class="st">'skills_name'</span>] <span class="op">+</span> r[<span class="st">'specialized_skills_name'</span>] <span class="op">+</span> r[<span class="st">'software_skills_name'</span>],</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    axis<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag postings that mention any AI/ML skill</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> has_ai_ml(skills_list):</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    combined <span class="op">=</span> <span class="st">' '</span>.join([s.lower() <span class="cf">for</span> s <span class="kw">in</span> skills_list])</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">any</span>(kw <span class="kw">in</span> combined <span class="cf">for</span> kw <span class="kw">in</span> ai_ml_keywords)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'has_ai_ml'</span>] <span class="op">=</span> df[<span class="st">'all_skills'</span>].<span class="bu">apply</span>(has_ai_ml)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>ai_ml_count <span class="op">=</span> df[<span class="st">'has_ai_ml'</span>].<span class="bu">sum</span>()</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Postings with AI/ML skills: </span><span class="sc">{</span>ai_ml_count<span class="sc">:,}</span><span class="ss"> (</span><span class="sc">{</span>ai_ml_count<span class="op">/</span><span class="bu">len</span>(df)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Postings without AI/ML skills: </span><span class="sc">{</span>(<span class="op">~</span>df[<span class="st">'has_ai_ml'</span>])<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Postings with AI/ML skills: 6,765 (9.3%)
-Postings without AI/ML skills: 65,733</code></pre>
+Postings without AI/ML skills: 65,689</code></pre>
 </div>
 </div>
 </section>
 <section id="aiml-adoption-over-time" class="level2">
 <h2 class="anchored" data-anchor-id="aiml-adoption-over-time">AI/ML Adoption Over Time</h2>
-<p>To understand the temporal evolution, we parse the <code>POSTED</code> date column and examine how the proportion of AI/ML-requiring postings changes month by month. This approach aligns with the methodology of <span class="citation" data-cites="acemoglu2022artificial">Acemoglu et al. (<a href="#ref-acemoglu2022artificial" role="doc-biblioref">2022</a>)</span>, who tracked AI-related job posting trends to measure the pace of AI adoption across the economy.</p>
-<div id="0d7c756f" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse dates</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'posted_date'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'POSTED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'posted_month'</span>] <span class="op">=</span> df[<span class="st">'posted_date'</span>].dt.to_period(<span class="st">'M'</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to rows with valid dates</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>df_dated <span class="op">=</span> df[df[<span class="st">'posted_month'</span>].notna()].copy()</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Monthly AI/ML posting counts</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>monthly <span class="op">=</span> df_dated.groupby(<span class="st">'posted_month'</span>).agg(</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    total<span class="op">=</span>(<span class="st">'has_ai_ml'</span>, <span class="st">'count'</span>),</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    ai_ml<span class="op">=</span>(<span class="st">'has_ai_ml'</span>, <span class="st">'sum'</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>monthly[<span class="st">'pct_ai_ml'</span>] <span class="op">=</span> (monthly[<span class="st">'ai_ml'</span>] <span class="op">/</span> monthly[<span class="st">'total'</span>] <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>monthly[<span class="st">'posted_month_str'</span>] <span class="op">=</span> monthly[<span class="st">'posted_month'</span>].astype(<span class="bu">str</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Month'</span><span class="sc">:&lt;12}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Total'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'AI/ML'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'% AI/ML'</span><span class="sc">:&gt;8}</span><span class="ss">"</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'-'</span><span class="op">*</span><span class="dv">40</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> monthly.iterrows():</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'posted_month_str'</span>]<span class="sc">:&lt;12}</span><span class="ss"> </span><span class="sc">{</span>row[<span class="st">'total'</span>]<span class="sc">:&gt;8,}</span><span class="ss"> </span><span class="sc">{</span>row[<span class="st">'ai_ml'</span>]<span class="sc">:&gt;8,}</span><span class="ss"> </span><span class="sc">{</span>row[<span class="st">'pct_ai_ml'</span>]<span class="sc">:&gt;7.1f}</span><span class="ss">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To understand the temporal evolution, we examine how the proportion of AI/ML-requiring postings changes month by month. This approach aligns with the methodology of <span class="citation" data-cites="acemoglu2022artificial">Acemoglu et al. (<a href="#ref-acemoglu2022artificial" role="doc-biblioref">2022</a>)</span>, who tracked AI-related job posting trends to measure the pace of AI adoption across the economy.</p>
+<div id="8a678017" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The cleaning page already parsed `posted` as datetime and created `posted_month`</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_dated <span class="op">=</span> df[df[<span class="st">'posted_month'</span>].notna()].copy()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Monthly AI/ML posting counts</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>monthly <span class="op">=</span> df_dated.groupby(<span class="st">'posted_month'</span>).agg(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    total<span class="op">=</span>(<span class="st">'has_ai_ml'</span>, <span class="st">'count'</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    ai_ml<span class="op">=</span>(<span class="st">'has_ai_ml'</span>, <span class="st">'sum'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>monthly[<span class="st">'pct_ai_ml'</span>] <span class="op">=</span> (monthly[<span class="st">'ai_ml'</span>] <span class="op">/</span> monthly[<span class="st">'total'</span>] <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Month'</span><span class="sc">:&lt;12}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Total'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'AI/ML'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'% AI/ML'</span><span class="sc">:&gt;8}</span><span class="ss">"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'-'</span><span class="op">*</span><span class="dv">40</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> monthly.iterrows():</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'posted_month'</span>]<span class="sc">:&lt;12}</span><span class="ss"> </span><span class="sc">{</span>row[<span class="st">'total'</span>]<span class="sc">:&gt;8,}</span><span class="ss"> </span><span class="sc">{</span>row[<span class="st">'ai_ml'</span>]<span class="sc">:&gt;8,}</span><span class="ss"> </span><span class="sc">{</span>row[<span class="st">'pct_ai_ml'</span>]<span class="sc">:&gt;7.1f}</span><span class="ss">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Month           Total    AI/ML  % AI/ML
 ----------------------------------------
 2024-05        15,133    1,147     7.6%
-2024-06        14,390    1,235     8.6%
-2024-07        12,507    1,141     9.1%
-2024-08        15,109    1,491     9.9%
-2024-09        15,337    1,751    11.4%</code></pre>
+2024-06        14,381    1,235     8.6%
+2024-07        12,502    1,141     9.1%
+2024-08        15,105    1,491     9.9%
+2024-09        15,333    1,751    11.4%</code></pre>
 </div>
 </div>
-<div id="a46dcbfe" class="cell" data-execution_count="4">
+<div id="4923ffb2" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Evolution of AI/ML Requirements in Job Postings'</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">15</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
@@ -391,7 +382,7 @@ Postings without AI/ML skills: 65,733</code></pre>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>ax1.bar(x, monthly[<span class="st">'ai_ml'</span>], bottom<span class="op">=</span>monthly[<span class="st">'total'</span>] <span class="op">-</span> monthly[<span class="st">'ai_ml'</span>],</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'AI/ML Required'</span>, color<span class="op">=</span><span class="st">'#2196F3'</span>, alpha<span class="op">=</span><span class="fl">0.85</span>)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>ax1.set_xticks(x)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>ax1.set_xticklabels(monthly[<span class="st">'posted_month_str'</span>], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>ax1.set_xticklabels(monthly[<span class="st">'posted_month'</span>], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Number of Postings'</span>)</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Job Posting Volume: AI/ML vs Non-AI/ML'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>ax1.legend()</span>
@@ -400,14 +391,14 @@ Postings without AI/ML skills: 65,733</code></pre>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>ax2.plot(x, monthly[<span class="st">'pct_ai_ml'</span>], <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'#FF5722'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">6</span>)</span>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>ax2.fill_between(x, monthly[<span class="st">'pct_ai_ml'</span>], alpha<span class="op">=</span><span class="fl">0.15</span>, color<span class="op">=</span><span class="st">'#FF5722'</span>)</span>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>ax2.set_xticks(x)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>ax2.set_xticklabels(monthly[<span class="st">'posted_month_str'</span>], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>ax2.set_xticklabels(monthly[<span class="st">'posted_month'</span>], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'</span><span class="sc">% o</span><span class="st">f Postings Requiring AI/ML'</span>)</span>
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Percentage of Postings Requiring AI/ML Skills Over Time'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>ax2.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'visualizations/ai_ml_evolution_timeline.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -419,7 +410,7 @@ Postings without AI/ML skills: 65,733</code></pre>
 <section id="most-common-aiml-skills-demanded" class="level2">
 <h2 class="anchored" data-anchor-id="most-common-aiml-skills-demanded">Most Common AI/ML Skills Demanded</h2>
 <p>We now examine which specific AI/ML skills appear most frequently in job postings. Understanding the granularity of demand helps distinguish between postings seeking general AI awareness versus those requiring deep technical proficiency.</p>
-<div id="36c9e63d" class="cell" data-execution_count="5">
+<div id="6d1619da" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract only AI/ML-related skills from flagged postings</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ai_ml_postings <span class="op">=</span> df[df[<span class="st">'has_ai_ml'</span>]].copy()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -446,29 +437,32 @@ TOP 20 AI/ML SKILLS IN JOB POSTINGS
 =======================================================
 Rank  Skill                                      Count
 -------------------------------------------------------
-1     Machine Learning                           8,016
-2     Artificial Intelligence                    6,280
-3     Generative Artificial Intelligence         2,280
-4     MLOps (Machine Learning Operations)          674
-5     Machine Learning Algorithms                  626
-6     TensorFlow                                   591
-7     Natural Language Processing (NLP)            566
-8     Scikit-Learn (Python Package)                504
-9     Deep Learning                                492
-10    PyTorch (Machine Learning Library)           453
-11    Artificial Neural Networks                   358
-12    Order Fulfillment                            310
-13    Machine Learning Model Training              242
-14    Feature Engineering                          218
-15    Large Language Modeling                      216
-16    Azure Machine Learning                       213
-17    Random Forest Algorithm                      208
-18    Computer Vision                              182
-19    Xgboost                                      147
-20    Keras (Neural Network Library)               138</code></pre>
+1     "Machine Learning"                         7,980
+2     "Artificial Intelligence"                  5,697
+3     "Generative Artificial Intelligence"       1,916
+4     "MLOps (Machine Learning Operations)"        674
+5     "Machine Learning Algorithms"                608
+6     "TensorFlow"                                 589
+7     "Artificial Intelligence"
+]                  572
+8     "Natural Language Processing (NLP)"          559
+9     "Deep Learning"                              492
+10    "Scikit-Learn (Python Package)"              486
+11    "PyTorch (Machine Learning Library)"         435
+12    "Order Fulfillment"                          307
+13    "Artificial Neural Networks"                 274
+14    "Machine Learning Model Training"            241
+15    "Large Language Modeling"                    216
+16    "Feature Engineering"                        215
+17    "Azure Machine Learning"                     213
+18    "Random Forest Algorithm"                    208
+19    [
+  "Generative Artificial Intelligence"
+]     159
+20    "Xgboost"                                    147</code></pre>
 </div>
 </div>
-<div id="dd0448c8" class="cell" data-execution_count="6">
+<div id="20542805" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot top 15 AI/ML skills</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>top_skills <span class="op">=</span> ai_ml_skills_sorted[:<span class="dv">15</span>]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>skills_names <span class="op">=</span> [s[<span class="dv">0</span>] <span class="cf">for</span> s <span class="kw">in</span> top_skills]</span>
@@ -486,7 +480,7 @@ Rank  Skill                                      Count
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'visualizations/top_ai_ml_skills.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -498,9 +492,9 @@ Rank  Skill                                      Count
 <section id="which-roles-are-increasingly-requiring-aiml" class="level2">
 <h2 class="anchored" data-anchor-id="which-roles-are-increasingly-requiring-aiml">Which Roles Are Increasingly Requiring AI/ML?</h2>
 <p>Beyond dedicated data science and ML engineer positions, AI/ML skills are spreading into roles that traditionally had no such requirements. <span class="citation" data-cites="tambe2019artificial">Tambe et al. (<a href="#ref-tambe2019artificial" role="doc-biblioref">2019</a>)</span> highlighted this diffusion pattern, noting that AI adoption extends well beyond the tech sector into healthcare, finance, and operations.</p>
-<div id="b6b99c7d" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 20 job titles (TITLE_NAME) with AI/ML requirements</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>title_ai <span class="op">=</span> ai_ml_postings[<span class="st">'TITLE_NAME'</span>].value_counts().head(<span class="dv">20</span>)</span>
+<div id="1ce5685c" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 20 job titles with AI/ML requirements</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>title_ai <span class="op">=</span> ai_ml_postings[<span class="st">'title_name'</span>].value_counts().head(<span class="dv">20</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">60</span><span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"TOP 20 JOB TITLES REQUIRING AI/ML SKILLS"</span>)</span>
@@ -508,7 +502,7 @@ Rank  Skill                                      Count
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Rank'</span><span class="sc">:&lt;5}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Job Title'</span><span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Count'</span><span class="sc">:&gt;8}</span><span class="ss">"</span>)</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'-'</span><span class="op">*</span><span class="dv">60</span><span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r, (title, count) <span class="kw">in</span> <span class="bu">enumerate</span>(title_ai.items(), <span class="dv">1</span>):</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>r<span class="sc">:&lt;5}</span><span class="ss"> </span><span class="sc">{</span>title<span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span>count<span class="sc">:&gt;8,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>r<span class="sc">:&lt;5}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">str</span>(title)[:<span class="dv">40</span>]<span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span>count<span class="sc">:&gt;8,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ============================================================
@@ -541,9 +535,9 @@ Rank  Job Title                                   Count
 </section>
 <section id="industries-driving-aiml-demand" class="level2">
 <h2 class="anchored" data-anchor-id="industries-driving-aiml-demand">Industries Driving AI/ML Demand</h2>
-<div id="19d370f1" class="cell" data-execution_count="8">
+<div id="1500b050" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AI/ML demand by NAICS 2-digit industry</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>industry_ai <span class="op">=</span> df.groupby(<span class="st">'NAICS2_NAME'</span>).agg(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>industry_ai <span class="op">=</span> df.groupby(<span class="st">'naics2_name'</span>).agg(</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    total<span class="op">=</span>(<span class="st">'has_ai_ml'</span>, <span class="st">'count'</span>),</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    ai_ml<span class="op">=</span>(<span class="st">'has_ai_ml'</span>, <span class="st">'sum'</span>)</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
@@ -556,7 +550,7 @@ Rank  Job Title                                   Count
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>ax1.barh(<span class="bu">range</span>(<span class="bu">len</span>(industry_ai)), industry_ai[<span class="st">'ai_ml'</span>].values,</span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>         color<span class="op">=</span>plt.cm.cividis(np.linspace(<span class="fl">0.3</span>, <span class="fl">0.9</span>, <span class="bu">len</span>(industry_ai))))</span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>ax1.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(industry_ai)))</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>ax1.set_yticklabels(industry_ai[<span class="st">'NAICS2_NAME'</span>].values, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>ax1.set_yticklabels(industry_ai[<span class="st">'naics2_name'</span>].values, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>ax1.invert_yaxis()</span>
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Number of AI/ML Postings'</span>)</span>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'AI/ML Postings by Industry (Count)'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
@@ -566,14 +560,14 @@ Rank  Job Title                                   Count
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>ax2.barh(<span class="bu">range</span>(<span class="bu">len</span>(industry_pct)), industry_pct[<span class="st">'pct'</span>].values,</span>
 <span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>         color<span class="op">=</span>plt.cm.magma(np.linspace(<span class="fl">0.3</span>, <span class="fl">0.85</span>, <span class="bu">len</span>(industry_pct))))</span>
 <span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>ax2.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(industry_pct)))</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>ax2.set_yticklabels(industry_pct[<span class="st">'NAICS2_NAME'</span>].values, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>ax2.set_yticklabels(industry_pct[<span class="st">'naics2_name'</span>].values, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>ax2.invert_yaxis()</span>
 <span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'</span><span class="sc">% o</span><span class="st">f Industry Postings Requiring AI/ML'</span>)</span>
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'AI/ML Penetration Rate by Industry'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'visualizations/ai_ml_by_industry.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -585,11 +579,11 @@ Rank  Job Title                                   Count
 <section id="education-requirements-for-aiml-roles" class="level2">
 <h2 class="anchored" data-anchor-id="education-requirements-for-aiml-roles">Education Requirements for AI/ML Roles</h2>
 <p>We also examine whether AI/ML-requiring roles demand higher education levels compared to the overall dataset, which has implications for workforce development and academic program design.</p>
-<div id="75e267f7" class="cell" data-execution_count="9">
+<div id="8ab94d19" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare education levels: AI/ML vs non-AI/ML postings</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> label, subset <span class="kw">in</span> [(<span class="st">"AI/ML Postings"</span>, df[df[<span class="st">'has_ai_ml'</span>]]),</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                       (<span class="st">"Non-AI/ML Postings"</span>, df[<span class="op">~</span>df[<span class="st">'has_ai_ml'</span>]])]:</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    edu_counts <span class="op">=</span> subset[<span class="st">'MIN_EDULEVELS_NAME'</span>].dropna().value_counts().head(<span class="dv">8</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    edu_counts <span class="op">=</span> subset[<span class="st">'min_edulevels_name'</span>].dropna().value_counts().head(<span class="dv">8</span>)</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss"> — Minimum Education Levels:"</span>)</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> level, count <span class="kw">in</span> edu_counts.items():</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>level<span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span>count<span class="sc">:&gt;6,}</span><span class="ss"> (</span><span class="sc">{</span>count<span class="op">/</span><span class="bu">len</span>(subset)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
