@@ -223,7 +223,7 @@ fig = px.line(
 fig.update_layout(template="plotly_white")
 fig.show()
 ```
-![](visualizations/1AREA_Job_Counts_Over_Time.png){width=70%}
+![](visualizations/1AREA_Job_Counts_Over_Time.png)
 
 
 
@@ -279,7 +279,7 @@ fig = px.bar(
 fig.update_layout(template="plotly_white")
 fig.show()
 ```
-![](visualizations/2AREA_Skill_Composition_in_AI.png){width=70%}
+![](visualizations/2AREA_Skill_Composition_in_AI.png)
 
 ## Skill Distribution (Proportion) in AI vs Non-AI Jobs
 This chart further compares the differences in skill proportions between AI-related positions and non-AI positions. It can be seen that in AI positions, the proportion of highly skilled workers is significantly higher than in non-AI positions, while the proportion of medium-skilled workers has decreased, and the proportion of low-skilled workers remains at a relatively low level. At the same time, this structure is basically the same in urban and rural areas, but the proportion of highly skilled workers is slightly higher in cities, indicating that AI-related positions have a more concentrated demand for highly skilled labor.
@@ -309,11 +309,12 @@ fig = px.bar(
 fig.update_layout(template="plotly_white")
 fig.show()
 ```
-![](visualizations/3AREA_Skill_Distribution.png){width=70%}
-## Skill Distribution (Proportion) in AI vs Non-AI Jobs
-This chart further compares the differences in skill proportions between AI-related positions and non-AI positions. It can be seen that in AI positions, the proportion of highly skilled workers is significantly higher than in non-AI positions, while the proportion of medium-skilled workers has decreased, and the proportion of low-skilled workers remains at a relatively low level. At the same time, this structure is basically the same in urban and rural areas, but the proportion of highly skilled workers is slightly higher in cities, indicating that AI-related positions have a more concentrated demand for highly skilled labor.
-This result indicates that AI is driving the transformation of the labor force structure from being "dominated by medium skills" to "favoring high skills", and it shows a consistent but varying trend in different regions. This change reflects the selective demands of AI for tasks and capabilities, giving an advantage to high-skilled workers while weakening the relative position of those with medium and low skills, thereby exacerbating the inequality between skill levels (Mookerjee, 2025)
+![](visualizations/3AREA_Skill_Distribution.png)
 
+## High-Skill Job Salary: Urban vs Rural
+The chart provides partial evidence that AI does not affect workers uniformly. While AI-related jobs tend to offer slightly higher salaries, the wide overlap in distributions suggests that not all workers benefit equally. This aligns with the idea that AI creates uneven outcomes, enhancing some workers while offering limited gains to others.
+
+More importantly, the urban–rural comparison shows that the wage premium associated with AI is more pronounced in urban areas. This suggests that AI-driven economic benefits are geographically concentrated, potentially widening existing disparities between urban and rural labor markets.
 
 ```python
 fig = px.box(
@@ -344,12 +345,10 @@ fig.update_layout(template="plotly_white")
 fig.show()
 
 ```
-![](visualizations/4AREA_High_Skill_Job_Salary.png){width=70%}
+![](visualizations/4AREA_High_Skill_Job_Salary.png)
 
-## High-Skill Job Salary: Urban vs Rural
-The chart provides partial evidence that AI does not affect workers uniformly. While AI-related jobs tend to offer slightly higher salaries, the wide overlap in distributions suggests that not all workers benefit equally. This aligns with the idea that AI creates uneven outcomes, enhancing some workers while offering limited gains to others.
+## Model
 
-More importantly, the urban–rural comparison shows that the wage premium associated with AI is more pronounced in urban areas. This suggests that AI-driven economic benefits are geographically concentrated, potentially widening existing disparities between urban and rural labor markets.
 
 ```python
 import numpy as np
