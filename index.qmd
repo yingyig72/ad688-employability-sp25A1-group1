@@ -14,7 +14,7 @@ format:
 
 ## About this project
 
-We are **Team 1 of AD688 (Spring 2026)** five analysts exploring how the U.S. job market is evolving in the age of AI, remote work, and shifting industry demand. Drawing on **millions of job postings** from the Lightcast dataset, we investigate where the opportunities are, which skills matter most, and how geography and industry shape career outcomes today.
+We are **Team 1 of AD688 (Spring 2026)** five analysts exploring how the U.S. job market is evolving in the age of AI, remote work, and shifting industry demand. Drawing on **thousands of job postings** from the Lightcast dataset, we investigate where the opportunities are, which skills matter most, and how geography and industry shape career outcomes today.
 
 Each team member owns a research question below. Click any card to dive into the full analysis.
 
