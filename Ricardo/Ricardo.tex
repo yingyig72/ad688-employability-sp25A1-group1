@@ -1,0 +1,382 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{xcolor}
+
+\geometry{margin=1in}
+\setstretch{1.2}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={Which U.S. Cities or States Have the Highest Job Growth for AI vs. Non-AI Careers?},
+    pdfauthor={}
+}
+
+\title{\textbf{Which U.S. Cities or States Have the Highest Job Growth for AI vs. Non-AI Careers?}\\
+\large A U.S.-Only Comparative Labor Market Analysis}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report examines which U.S. states and metropolitan areas show the strongest job growth for AI-related careers compared with non-AI careers. Because ``AI careers'' are not a single official labor-market category in standard federal statistics, the analysis uses a proxy-based approach. For AI careers, it relies primarily on UMD-LinkUp AI Maps, which identifies job postings requiring AI skills. For non-AI careers, it compares broader labor-market growth patterns using Lightcast's U.S. Talent Attraction Scorecard, which captures overall employment expansion and regional labor-market momentum. The central finding is that AI job growth is concentrated in a relatively small set of innovation-intensive states and metros---especially California, Virginia, Washington, Massachusetts, New York, and the Washington--New York--Boston corridor, along with San Francisco, San Jose, Seattle, and New York City. By contrast, broader non-AI job growth is more strongly associated with fast-growing Sun Belt labor markets, especially Texas and Florida, with Dallas--Fort Worth and Austin standing out among large metros. In short, the places that dominate AI hiring are not exactly the same as the places that dominate overall job growth.
+\end{abstract}
+
+\section{Research Question}
+
+This report addresses the following question:
+
+\begin{quote}
+\textit{Which U.S. cities or states have the highest job growth for AI vs.\ non-AI careers?}
+\end{quote}
+
+To answer this question carefully, it is necessary to distinguish between two different labor-market dynamics:
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Growth and concentration of AI careers}: places where employers are posting a large number of jobs that require AI skills.
+    \item \textbf{Growth of non-AI careers or the broader labor market}: places where total employment and non-specialized labor demand are growing quickly, even if they are not the most AI-intensive markets.
+\end{enumerate}
+
+The main argument of this report is that \textbf{AI job growth is concentrated in highly specialized innovation hubs}, while \textbf{non-AI and broader job growth is more widely distributed and is especially strong in fast-growing Sun Belt states and metro areas.}
+
+\section{Methodological Note}
+
+\subsection{Why this question is difficult to measure}
+
+There is no single universally accepted official definition of an ``AI career'' in the same way that there is for occupations such as nursing, teaching, or construction work. Some studies classify only narrow occupations such as AI engineers or machine learning scientists. Others include any job posting that requests AI-related skills. As a result, any serious answer must rely on carefully chosen proxies.
+
+This report therefore uses two different measurement strategies:
+
+\begin{itemize}
+    \item \textbf{AI careers}: measured using AI job postings from UMD-LinkUp AI Maps. In that dataset, an ``AI job'' is a posting that requires AI skills, identified using a fine-tuned large language model rather than a simple keyword approach.
+    \item \textbf{Non-AI careers}: approximated through broader labor-market growth, using state and metro comparisons from Lightcast's U.S. Talent Attraction Scorecard. This does not isolate every individual non-AI occupation, but it provides a strong benchmark for identifying places where overall labor demand is expanding rapidly outside the narrow AI segment.
+\end{itemize}
+
+\subsection{Why this comparison still works}
+
+Even though AI and non-AI are not measured in exactly the same way, the comparison is still analytically useful. It shows whether AI growth is concentrated in the same locations as broader labor-market expansion. In practice, the answer is only partly yes. Some places, especially Texas, perform well on both dimensions. Others, such as California and Massachusetts, are far more dominant in AI than in broad-based job growth. Meanwhile, places such as Florida are much stronger in broader employment growth than in AI intensity.
+
+\section{Where AI Careers Are Growing Most in the United States}
+
+\subsection{Top U.S. states by AI job creation}
+
+According to UMD-LinkUp AI Maps, the leading U.S. states by \textbf{monthly average AI job postings during January--December 2023} were:
+
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+\textbf{Rank} & \textbf{State} & \textbf{Monthly Average AI Job Postings} \\
+\midrule
+1 & California & 1969 \\
+2 & Texas & 882 \\
+3 & Virginia & 827 \\
+4 & New York & 769 \\
+5 & Massachusetts & 557 \\
+6 & Washington & 514 \\
+7 & Illinois & 389 \\
+8 & Florida & 359 \\
+9 & Pennsylvania & 343 \\
+10 & New Jersey & 323 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This ranking highlights the states with the largest absolute demand for AI-related labor. California leads by a very wide margin, reflecting the central role of Silicon Valley and the Bay Area in advanced software, AI startups, semiconductors, and platform companies. Texas ranks second, suggesting that it is not only a fast-growing general labor market, but also a major AI hiring state. Virginia and New York stand out because AI demand is not limited to traditional technology firms; it also appears in defense, government contracting, consulting, media, and finance.
+
+\subsection{Top U.S. states by AI job intensity}
+
+Absolute scale is not the same thing as specialization. Some states are large and therefore post many AI jobs simply because they have large economies. To account for this, UMD-LinkUp also reports \textbf{AI job intensity}, measured as the percentage of AI jobs among all jobs.
+
+The leading U.S. states by AI job intensity were:
+
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+\textbf{Rank} & \textbf{State} & \textbf{AI Jobs / All Jobs} \\
+\midrule
+1 & District of Columbia & 1.75\% \\
+2 & Virginia & 1.36\% \\
+3 & Washington & 1.20\% \\
+4 & California & 1.10\% \\
+5 & Massachusetts & 1.02\% \\
+6 & New York & 0.97\% \\
+7 & Maryland & 0.83\% \\
+8 & New Jersey & 0.76\% \\
+9 & Connecticut & 0.60\% \\
+10 & Delaware & 0.58\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This table shifts the interpretation. Texas and Florida are very important in absolute AI volume, but they are not the most AI-specialized labor markets. The most AI-intensive geography is concentrated in the District of Columbia, Virginia, Washington State, California, and Massachusetts. This pattern suggests that AI growth is especially strong in places with dense ecosystems of research institutions, federal contractors, advanced services, and knowledge-intensive industries.
+
+\subsection{Top U.S. states by AI share within IT jobs}
+
+A third useful measure is \textbf{AI-to-IT jobs intensity}, which captures the share of AI job postings within the broader IT labor market. It is especially helpful because it shows where AI is taking up a large share of technical hiring, rather than merely reflecting the size of a state's total economy.
+
+The leading U.S. states on this measure were:
+
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+\textbf{Rank} & \textbf{State} & \textbf{AI Jobs / IT Jobs} \\
+\midrule
+1 & Massachusetts & 17.06\% \\
+2 & California & 16.71\% \\
+3 & New York & 16.04\% \\
+4 & Washington & 15.89\% \\
+5 & District of Columbia & 10.91\% \\
+6 & Virginia & 10.82\% \\
+7 & Connecticut & 10.79\% \\
+8 & Delaware & 10.10\% \\
+9 & New Jersey & 10.02\% \\
+10 & Pennsylvania & 9.95\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This ranking shows that Massachusetts is one of the most AI-specialized technical labor markets in the country. Its strength is consistent with the role of the Boston--Cambridge area in biotech, university research, scientific computing, and enterprise technology. California, New York, and Washington also perform very strongly, which confirms that their technical labor markets are deeply intertwined with AI adoption and development.
+
+\subsection{Top U.S. metropolitan areas by AI job creation}
+
+At the metropolitan level, UMD-LinkUp identifies the following U.S. metro areas as the leaders in \textbf{monthly average AI job postings during 2023}:
+
+\begin{center}
+\begin{tabular}{p{0.08\textwidth}p{0.62\textwidth}p{0.15\textwidth}}
+\toprule
+\textbf{Rank} & \textbf{Metropolitan Statistical Area} & \textbf{Value} \\
+\midrule
+1 & New York-Newark-Jersey City, NY-NJ-PA & 879 \\
+2 & Washington-Arlington-Alexandria, DC-VA-MD-WV & 719 \\
+3 & San Francisco-Oakland-Hayward, CA & 614 \\
+4 & San Jose-Sunnyvale-Santa Clara, CA & 569 \\
+5 & Seattle-Tacoma-Bellevue, WA & 480 \\
+6 & Dallas-Fort Worth-Arlington, TX & 367 \\
+7 & Chicago-Naperville-Elgin, IL-IN-WI & 311 \\
+8 & Los Angeles-Long Beach-Anaheim, CA & 309 \\
+9 & Atlanta-Sandy Springs-Roswell, GA & 290 \\
+10 & Austin-Round Rock, TX & 234 \\
+11 & Boston-Cambridge-Newton, MA-NH & 222 \\
+12 & Philadelphia-Camden-Wilmington, PA-NJ-DE-MD & 201 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These metro leaders fall into two broad categories. First, there are elite frontier innovation hubs such as San Francisco, San Jose, Seattle, and Boston. Second, there are large diversified urban economies such as New York, Washington, Dallas, Chicago, Atlanta, and Los Angeles. This matters because it shows that AI growth is not limited to a small number of software-only centers. It is also embedded in finance, consulting, healthcare, defense, media, telecommunications, and large corporate ecosystems.
+
+\section{Where Non-AI or Broad-Based Job Growth Is Strongest in the United States}
+
+\subsection{Why broader job growth matters}
+
+To compare AI with non-AI careers, it is not enough to look only at the technology sector. The relevant question is whether the same places dominating AI are also the same places dominating broader labor-market expansion. For this comparison, Lightcast's U.S. Talent Attraction Scorecard is useful because it evaluates the strength of state and metro labor markets using employment growth and talent-attraction indicators.
+
+\subsection{Leading U.S. states in broader job growth}
+
+Lightcast's 2025 U.S. scorecard indicates that \textbf{Florida} ranked first among states for talent attraction, with \textbf{Texas} close behind. This is highly informative for the AI versus non-AI comparison because these are not necessarily the most AI-intensive states, but they are among the strongest states for broad labor-market expansion.
+
+The interpretation is straightforward. Broad-based job growth is driven not only by frontier innovation, but also by:
+
+\begin{itemize}
+    \item population growth,
+    \item domestic migration,
+    \item lower relative living costs,
+    \item real estate and construction activity,
+    \item business formation,
+    \item logistics and transportation,
+    \item healthcare expansion,
+    \item tourism and consumer services.
+\end{itemize}
+
+These drivers are more broadly distributed than the drivers of AI specialization. As a result, the geography of non-AI job growth tilts more strongly toward the Sun Belt.
+
+\subsection{Leading U.S. metros in broader job growth}
+
+Among large U.S. metropolitan areas, Lightcast reports that \textbf{Dallas--Fort Worth} and \textbf{Austin} ranked first and second, respectively. It also reports that five of the top ten large metros were in Florida and three were in Texas.
+
+This suggests that the broadest labor-market momentum in the United States is concentrated in fast-growing southern metros. These are places where employers are expanding across many sectors, not just AI or high-end technical work. Such labor-market expansion is likely to include many non-AI careers in healthcare, construction, management, logistics, retail, hospitality, education, and business services.
+
+\section{Direct Comparison: AI vs.\ Non-AI Career Growth}
+
+\subsection{A clear geographic split}
+
+The comparison between AI growth and broader non-AI growth can be summarized as follows:
+
+\begin{center}
+\begin{tabular}{p{0.30\textwidth}p{0.30\textwidth}p{0.30\textwidth}}
+\toprule
+\textbf{Dimension} & \textbf{AI Careers} & \textbf{Non-AI / Broad Job Growth} \\
+\midrule
+Main drivers & R\&D, advanced software, data, defense, frontier innovation, elite talent & Population growth, services, healthcare, construction, logistics, tourism, business expansion \\
+Typical geography & Innovation hubs and knowledge-intensive metros & Sun Belt states and rapidly expanding metros \\
+Leading states & California, Virginia, Washington, Massachusetts, New York, DC & Florida, Texas, and other fast-growing southern states \\
+Leading metros & New York, Washington, San Francisco, San Jose, Seattle, Boston & Dallas--Fort Worth, Austin, and several Florida metros \\
+Concentration level & High & More diffuse \\
+Skill barrier & Very high & More varied \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The main conclusion is that AI job growth and non-AI job growth are related, but they are not geographically identical. AI growth is concentrated in places with advanced innovation infrastructure. Broader labor-market growth is stronger in places benefiting from large-scale migration, business relocation, and population expansion.
+
+\subsection{States that matter most in the comparison}
+
+\paragraph{California.}
+California is the dominant state for AI hiring by volume and one of the leaders in AI intensity. However, it does not lead the nation in broad-based labor-market growth in the same way as Texas or Florida. Its comparative advantage is highly specialized and innovation-driven.
+
+\paragraph{Massachusetts.}
+Massachusetts stands out not because it is the largest labor market, but because it is one of the most AI-specialized labor markets in the United States. It is much more important in AI than in overall job growth.
+
+\paragraph{Virginia and the District of Columbia.}
+These are among the most AI-intensive labor markets in the country. Their strength is closely tied to federal agencies, defense contractors, cybersecurity, consulting, and public-sector technology demand.
+
+\paragraph{Texas.}
+Texas is perhaps the strongest all-around case. It combines very high AI job volume with very strong broad-based job growth. It is one of the few places that performs exceptionally well in both the AI and non-AI comparisons.
+
+\paragraph{Florida.}
+Florida is one of the most important states in broad labor-market growth, but it is not one of the most AI-specialized states. It represents the clearest example of a state that is extremely strong in non-AI growth without being a top-tier AI intensity leader.
+
+\section{City-Level Interpretation}
+
+\subsection{U.S. metros that dominate AI}
+
+The U.S. metros most clearly associated with AI concentration and AI job growth are:
+
+\begin{itemize}
+    \item \textbf{San Francisco} and \textbf{San Jose}, because of their central role in frontier AI, venture capital, semiconductors, and software platforms;
+    \item \textbf{Seattle}, because of its concentration of cloud computing and major technology firms;
+    \item \textbf{Boston}, because of its strength in university research, biotech, and scientific computing;
+    \item \textbf{Washington, DC}, because of defense, federal contracting, public-sector AI applications, and cybersecurity;
+    \item \textbf{New York City}, because of its scale and the spread of AI into finance, media, advertising, and large corporate services.
+\end{itemize}
+
+\subsection{U.S. metros that dominate broader non-AI growth}
+
+The strongest examples of broader labor-market expansion are:
+
+\begin{itemize}
+    \item \textbf{Dallas--Fort Worth},
+    \item \textbf{Austin},
+    \item several major \textbf{Florida metros},
+    \item and other fast-growing southern metros benefiting from migration and business relocation.
+\end{itemize}
+
+These labor markets are strong not only because of technology hiring, but because they are expanding across many industries at once.
+
+\subsection{Bridge metros}
+
+Some U.S. metros function as bridges between the AI map and the broader growth map:
+
+\begin{itemize}
+    \item \textbf{Austin}, which combines rapid overall growth with a strong and rising technology base;
+    \item \textbf{Dallas--Fort Worth}, which combines corporate scale, logistics strength, and rising AI demand;
+    \item \textbf{Atlanta}, which is a large diversified metro with meaningful AI hiring and strong general labor-market depth.
+\end{itemize}
+
+These bridge metros may become increasingly important because they offer both labor-market scale and room for further AI expansion.
+
+\section{Economic Interpretation}
+
+\subsection{Why AI growth is so concentrated}
+
+AI job growth is concentrated because AI production and deployment require assets that are not evenly distributed across the country. These include:
+
+\begin{itemize}
+    \item elite technical talent,
+    \item world-class universities,
+    \item venture capital,
+    \item large technology firms,
+    \item advanced research ecosystems,
+    \item dense professional networks,
+    \item and specialized demand from sectors such as defense, biotech, and finance.
+\end{itemize}
+
+As a result, AI grows fastest in a relatively small number of highly developed innovation hubs.
+
+\subsection{Why non-AI growth is more geographically broad}
+
+By contrast, non-AI and broader labor-market growth depend more heavily on:
+
+\begin{itemize}
+    \item population inflows,
+    \item housing expansion,
+    \item infrastructure development,
+    \item lower taxes or lower business costs,
+    \item healthcare and education demand,
+    \item business services,
+    \item and the expansion of local consumer markets.
+\end{itemize}
+
+These are forces that can support rapid employment growth even in places that are not top-tier AI centers. That is why states such as Florida and Texas perform so strongly in broader growth rankings.
+
+\section{Answer to the Research Question}
+
+The best short answer is the following:
+
+\begin{quote}
+\textbf{In the United States, AI career growth is strongest in innovation-intensive states and metros such as California, Virginia, Washington, Massachusetts, New York, the District of Columbia, and metro areas such as New York City, Washington, San Francisco, San Jose, and Seattle. By contrast, broader non-AI job growth is especially strong in Sun Belt labor markets, above all Texas and Florida, with Dallas--Fort Worth and Austin among the most prominent large metros.}
+\end{quote}
+
+This means that the U.S. geography of AI opportunity is not identical to the geography of general labor-market growth. Students and workers targeting advanced AI roles are most likely to find the strongest ecosystems in a relatively narrow set of innovation hubs. Those targeting broad employment growth across many occupations may find faster expansion in rapidly growing southern states and metros.
+
+\section{Conclusion}
+
+The U.S. labor market is developing along two overlapping but distinct geographic tracks. One track is the \textbf{AI track}, concentrated in highly specialized innovation hubs with strong technical ecosystems. The other is the \textbf{broad-growth track}, concentrated in rapidly expanding states and metros where population growth, business relocation, and service-sector expansion are generating jobs across a wide range of occupations.
+
+This distinction matters for workforce strategy, migration decisions, regional development policy, and career planning. A location that is excellent for AI careers is not always the same location that is strongest for non-AI career growth. The most notable exception is Texas, which performs strongly in both categories and therefore stands out as a uniquely important state in the U.S. labor-market landscape.
+
+\begin{thebibliography}{99}
+
+\bibitem{aimaps_state_creation}
+UMD-LinkUp AI Maps.
+\newblock \textit{States: AI Jobs Creation}.
+\newblock Monthly average of AI job postings during Jan--Dec 2023.
+\newblock Available at: \url{https://www.aimaps.ai/download/ranking-sheets/1-AI-Jobs-Creation-States.pdf}
+
+\bibitem{aimaps_state_intensity}
+UMD-LinkUp AI Maps.
+\newblock \textit{States: AI Jobs Intensity}.
+\newblock Percentage of AI jobs over all jobs for Jan--Dec 2023.
+\newblock Available at: \url{https://www.aimaps.ai/download/ranking-sheets/3-AI-Jobs-Intensity-States.pdf}
+
+\bibitem{aimaps_state_it}
+UMD-LinkUp AI Maps.
+\newblock \textit{States: AI-to-IT Jobs Intensity}.
+\newblock Percentage of AI jobs over IT jobs for Jan--Dec 2023.
+\newblock Available at: \url{https://www.aimaps.ai/download/ranking-sheets/4-AI-to-IT-Jobs-Intensity-States.pdf}
+
+\bibitem{aimaps_msa_creation}
+UMD-LinkUp AI Maps.
+\newblock \textit{Top 50 MSAs by AI Jobs Creation}.
+\newblock Monthly average of AI job postings during Jan--Dec 2023.
+\newblock Available at: \url{https://www.aimaps.ai/download/ranking-sheets/5-AI-Jobs-Creation-Top-50-MSAs.pdf}
+
+\bibitem{lightcast_scorecard}
+Lightcast.
+\newblock \textit{2025 Talent Attraction Scorecard}.
+\newblock U.S. state and metro rankings.
+\newblock Available at: \url{https://lightcast.io/resources/research/talent-attraction-scorecard-25}
+
+\bibitem{lightcast_method}
+Lightcast.
+\newblock \textit{Talent Attraction Scorecard 2025 Methodology}.
+\newblock Available at: \url{https://lightcast.io/tas-2025-methodology}
+
+\end{thebibliography}
+
+\end{document}
