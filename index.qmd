@@ -1,11 +1,132 @@
 ---
-title: "AD688 Team 1 Spring 2026"
+title: "Navigating the Job Market"
+subtitle: "A data-driven analysis of hiring trends, skill demand, and career outlooks from the Lightcast job postings dataset."
+title-block-banner: "#1a2b4a"
+title-block-banner-color: "#ffffff"
+page-layout: full
+toc: false
+format:
+  html:
+    css: styles.css
 ---
-## Introduction
 
-This project analyzes job market trends using Lightcast data.
+::: {.hero-intro}
 
-We focus on:
-- AI vs Non-AI jobs
-- Salary trends
-- Skill demand
+## About this project
+
+We are **Team 1 of AD688 (Spring 2026)** five analysts exploring how the U.S. job market is evolving in the age of AI, remote work, and shifting industry demand. Drawing on **millions of job postings** from the Lightcast dataset, we investigate where the opportunities are, which skills matter most, and how geography and industry shape career outcomes today.
+
+Each team member owns a research question below. Click any card to dive into the full analysis.
+
+:::
+
+## At a glance {.unnumbered}
+
+::: {.stats-grid}
+
+::: {.stat-card}
+**1.2M+**
+<br><span class="stat-label">Job postings analyzed</span>
+:::
+
+::: {.stat-card}
+**5**
+<br><span class="stat-label">Research questions</span>
+:::
+
+::: {.stat-card}
+**15+**
+<br><span class="stat-label">Industries covered</span>
+:::
+
+::: {.stat-card}
+**50**
+<br><span class="stat-label">U.S. states surveyed</span>
+:::
+
+:::
+
+## Research questions {.unnumbered}
+
+::: {.grid .research-grid}
+
+::: {.g-col-12 .g-col-md-6}
+::: {.research-card}
+### AI & ML Evolution
+How have job descriptions evolved to require AI and machine learning expertise?
+
+[Read analysis →](omar.html){.card-link}
+
+<span class="author">Omar</span>
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.research-card}
+### Data Science Demand
+Which industries are hiring the most data scientists, and what does the growth look like?
+
+[Read analysis →](ricardo.html){.card-link}
+
+<span class="author">Ricardo</span>
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.research-card}
+### Business Analytics Outlook
+What is the career outlook for business analytics professionals in 2024 and beyond?
+
+[Read analysis →](tianyi.html){.card-link}
+
+<span class="author">Tianyi</span>
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.research-card}
+### Geographic Trends
+Where are the hottest regional job markets, and how does location shape opportunity?
+
+[Read analysis →](yingyi.html){.card-link}
+
+<span class="author">Yingyi</span>
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.research-card}
+### Remote Work Landscape
+How has remote and hybrid work reshaped hiring across industries?
+
+[Read analysis →](zichen.html){.card-link}
+
+<span class="author">Zichen</span>
+:::
+:::
+
+:::
+
+## Explore by topic {.unnumbered}
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+::: {.topic-card}
+#### 🌍 Geographic & Remote Work
+Regional hiring patterns, state-level comparisons, and the rise of remote-friendly employers.
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.topic-card}
+#### 📊 DS, BA & ML Trends
+Skill demand curves, industry adoption, and career outlooks for data and analytics roles.
+:::
+:::
+
+:::
+
+::: {.footer-note}
+Built with [Quarto](https://quarto.org) · Data from [Lightcast](https://lightcast.io) · AD688 Team 1, Spring 2026
+:::
