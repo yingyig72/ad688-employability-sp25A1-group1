@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="AD688 Team 1">
-<meta name="dcterms.date" content="2026-04-21">
 
 <title>Data Cleaning – AD688 Team 1 Spring 2026</title>
 <style>
@@ -79,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4897d45d2f75ed4f519693be625836c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-92ccca19d14c0bd04edafc1952284584.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -246,12 +245,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">April 21, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -268,19 +261,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="load-the-raw-data" class="level2">
 <h2 class="anchored" data-anchor-id="load-the-raw-data">1. Load the raw data</h2>
-<div id="85da7f07" class="cell" data-execution_count="1">
+<div id="2b83751a" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>RAW_PATH <span class="op">=</span> <span class="st">"data/lightcast_job_postings.csv"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>OUT_DIR <span class="op">=</span> <span class="st">"data"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>OUT_PATH <span class="op">=</span> os.path.join(OUT_DIR, <span class="st">"lightcast_cleaned.csv"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>os.makedirs(OUT_DIR, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>df_raw <span class="op">=</span> pd.read_csv(RAW_PATH, low_memory<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Raw shape: </span><span class="sc">{</span>df_raw<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> rows x </span><span class="sc">{</span>df_raw<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>RAW_PATH <span class="op">=</span> <span class="st">"data/lightcast_job_postings.csv"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>OUT_DIR <span class="op">=</span> <span class="st">"data"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>OUT_PATH <span class="op">=</span> os.path.join(OUT_DIR, <span class="st">"lightcast_cleaned.csv"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>os.makedirs(OUT_DIR, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>df_raw <span class="op">=</span> pd.read_csv(RAW_PATH, low_memory<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Raw shape: </span><span class="sc">{</span>df_raw<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> rows x </span><span class="sc">{</span>df_raw<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Raw shape: 72,498 rows x 131 columns</code></pre>
 </div>
@@ -289,7 +286,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="select-the-columns-our-team-actually-uses" class="level2">
 <h2 class="anchored" data-anchor-id="select-the-columns-our-team-actually-uses">2. Select the columns our team actually uses</h2>
 <p>The raw file has many columns we don’t need. We keep only those referenced across the five research questions (skills, industry, geography, remote work, salary, education, timing).</p>
-<div id="1c5fb128" class="cell" data-execution_count="2">
+<div id="325d1c5a" class="cell" data-execution_count="2">
+<details open="" class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>keep_cols <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Identifiers &amp; timing</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ID"</span>, <span class="st">"POSTED"</span>, <span class="st">"EXPIRED"</span>, <span class="st">"DURATION"</span>,</span>
@@ -317,6 +316,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Kept </span><span class="sc">{</span><span class="bu">len</span>(available)<span class="sc">}</span><span class="ss"> columns."</span>)</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> missing:</span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Note: </span><span class="sc">{</span><span class="bu">len</span>(missing)<span class="sc">}</span><span class="ss"> requested columns not present: </span><span class="sc">{</span>missing<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Kept 25 columns.</code></pre>
 </div>
@@ -325,9 +325,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="standardize-column-names" class="level2">
 <h2 class="anchored" data-anchor-id="standardize-column-names">3. Standardize column names</h2>
 <p>Lowercase, underscore-separated names are easier to type and less error-prone across teammates.</p>
-<div id="0d360d37" class="cell" data-execution_count="3">
+<div id="72f0cf37" class="cell" data-execution_count="3">
+<details open="" class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.columns <span class="op">=</span> df.columns.<span class="bu">str</span>.lower()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
@@ -419,7 +422,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="parse-date-columns" class="level2">
 <h2 class="anchored" data-anchor-id="parse-date-columns">4. Parse date columns</h2>
 <p><code>posted</code> and <code>expired</code> come in as strings. Parsing them now lets every downstream page do time-based filtering without reparsing.</p>
-<div id="c76f1668" class="cell" data-execution_count="4">
+<div id="6535787a" class="cell" data-execution_count="4">
+<details open="" class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"posted"</span>, <span class="st">"expired"</span>]:</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> pd.to_datetime(df[col], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
@@ -430,6 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"posted_month"</span>] <span class="op">=</span> df[<span class="st">"posted"</span>].dt.to_period(<span class="st">"M"</span>).astype(<span class="bu">str</span>)</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"posted"</span>, <span class="st">"expired"</span>, <span class="st">"posted_year"</span>, <span class="st">"posted_month"</span>]].head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
@@ -476,10 +482,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="drop-rows-with-no-posting-date-or-no-title" class="level2">
 <h2 class="anchored" data-anchor-id="drop-rows-with-no-posting-date-or-no-title">5. Drop rows with no posting date or no title</h2>
 <p>A row missing both a date and a job title can’t contribute to any of our research questions.</p>
-<div id="d21061dc" class="cell" data-execution_count="5">
+<div id="97dceb6b" class="cell" data-execution_count="5">
+<details open="" class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>before <span class="op">=</span> <span class="bu">len</span>(df)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">"posted"</span>, <span class="st">"title_name"</span>])</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dropped </span><span class="sc">{</span>before <span class="op">-</span> <span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss"> rows missing posted date or title. </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss"> remain."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Dropped 44 rows missing posted date or title. 72,454 remain.</code></pre>
 </div>
@@ -488,13 +497,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="deduplicate" class="level2">
 <h2 class="anchored" data-anchor-id="deduplicate">6. Deduplicate</h2>
 <p>Lightcast sometimes includes the same posting more than once. We dedupe on <code>id</code> when available, otherwise on the combination of title + company + posted date.</p>
-<div id="242bebc0" class="cell" data-execution_count="6">
+<div id="e3a3ee2c" class="cell" data-execution_count="6">
+<details open="" class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>before <span class="op">=</span> <span class="bu">len</span>(df)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"id"</span> <span class="kw">in</span> df.columns:</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.drop_duplicates(subset<span class="op">=</span>[<span class="st">"id"</span>])</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.drop_duplicates(subset<span class="op">=</span>[<span class="st">"title_name"</span>, <span class="st">"company_name"</span>, <span class="st">"posted"</span>])</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dropped </span><span class="sc">{</span>before <span class="op">-</span> <span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss"> duplicate rows. </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss"> remain."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Dropped 0 duplicate rows. 72,454 remain.</code></pre>
 </div>
@@ -503,7 +515,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="clean-salary-fields" class="level2">
 <h2 class="anchored" data-anchor-id="clean-salary-fields">7. Clean salary fields</h2>
 <p>Salaries have outliers (e.g., hourly rates mis-coded as annual, or placeholder values like <code>1</code> or <code>999999</code>). We clip to a sensible annual range and flag valid salary rows.</p>
-<div id="7bba87d6" class="cell" data-execution_count="7">
+<div id="71cd730c" class="cell" data-execution_count="7">
+<details open="" class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"salary"</span>, <span class="st">"salary_from"</span>, <span class="st">"salary_to"</span>]:</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> pd.to_numeric(df[col], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
@@ -512,6 +526,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"has_salary"</span>] <span class="op">=</span> df[<span class="st">"salary"</span>].notna() <span class="cf">if</span> <span class="st">"salary"</span> <span class="kw">in</span> df.columns <span class="cf">else</span> <span class="va">False</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Rows with valid salary: </span><span class="sc">{</span>df[<span class="st">'has_salary'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss"> (</span><span class="sc">{</span>df[<span class="st">'has_salary'</span>]<span class="sc">.</span>mean()<span class="sc">:.1%}</span><span class="ss">)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows with valid salary: 30,807 (42.5%)</code></pre>
 </div>
@@ -520,7 +535,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="standardize-remote-work-categories" class="level2">
 <h2 class="anchored" data-anchor-id="standardize-remote-work-categories">8. Standardize remote work categories</h2>
 <p><code>remote_type_name</code> has inconsistent casing and a mix of nulls. We collapse it to three clean buckets: <code>Remote</code>, <code>Hybrid</code>, <code>On-site</code>.</p>
-<div id="90d3019d" class="cell" data-execution_count="8">
+<div id="1a784fce" class="cell" data-execution_count="8">
+<details open="" class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> standardize_remote(x):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(x):</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"On-site"</span>  <span class="co"># Lightcast convention: null means not flagged as remote</span></span>
@@ -534,6 +551,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"remote_type_name"</span> <span class="kw">in</span> df.columns:</span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"remote_category"</span>] <span class="op">=</span> df[<span class="st">"remote_type_name"</span>].<span class="bu">apply</span>(standardize_remote)</span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(df[<span class="st">"remote_category"</span>].value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>remote_category
 On-site    56570
@@ -544,76 +562,102 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="clean-skills-columns" class="level2">
 <h2 class="anchored" data-anchor-id="clean-skills-columns">9. Clean skills columns</h2>
-<p>Skill columns are pipe- or comma-separated strings. We convert them to Python lists so downstream pages can use <code>.explode()</code> directly without re-parsing.</p>
-<div id="fa683444" class="cell" data-execution_count="9">
+<p>Lightcast stores skills as JSON arrays inside string columns. The raw values look like <code>["Python", "SQL", "Machine Learning"]</code> (sometimes with extra whitespace or newlines). We parse the JSON properly so each row ends up as a clean list of skill strings — no surrounding quotes, no leftover brackets, no blank entries.</p>
+<div id="fda2dfef" class="cell" data-execution_count="9">
+<details open="" class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> split_skills(x):</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(x):</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lightcast uses various separators; handle the common ones</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="bu">str</span>(x).replace(<span class="st">"|"</span>, <span class="st">","</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [t.strip() <span class="cf">for</span> t <span class="kw">in</span> s.split(<span class="st">","</span>) <span class="cf">if</span> t.strip()]</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"skills_name"</span>, <span class="st">"specialized_skills_name"</span>, <span class="st">"software_skills_name"</span>]:</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].<span class="bu">apply</span>(split_skills)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"title_name"</span>, <span class="st">"skills_name"</span>]].head(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">title_name</th>
-<th data-quarto-table-cell-role="th">skills_name</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>Enterprise Analysts</td>
-<td>[[\n&nbsp;&nbsp;"Merchandising", "Mathematics", "Present...</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>Oracle Consultants</td>
-<td>[[\n&nbsp;&nbsp;"Procurement", "Financial Statements", "...</td>
-</tr>
-</tbody>
-</table>
-
-</div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Parse a Lightcast skills cell into a clean list of skill strings."""</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(x):</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="bu">str</span>(x).strip()</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> s:</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lightcast raw format is a JSON array — try that first.</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        parsed <span class="op">=</span> json.loads(s)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(parsed, <span class="bu">list</span>):</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> [<span class="bu">str</span>(item).strip() <span class="cf">for</span> item <span class="kw">in</span> parsed <span class="cf">if</span> <span class="bu">str</span>(item).strip()]</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> (json.JSONDecodeError, <span class="pp">ValueError</span>):</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fallback for rare rows that use pipe or comma separators.</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> s.replace(<span class="st">"|"</span>, <span class="st">","</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        t.strip().strip(<span class="st">'"'</span>).strip(<span class="st">"'"</span>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> t <span class="kw">in</span> s.split(<span class="st">","</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> t.strip() <span class="kw">and</span> t.strip() <span class="kw">not</span> <span class="kw">in</span> (<span class="st">"["</span>, <span class="st">"]"</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"skills_name"</span>, <span class="st">"specialized_skills_name"</span>, <span class="st">"software_skills_name"</span>]:</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].<span class="bu">apply</span>(split_skills)</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick sanity check</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sample parsed skills:"</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> skills <span class="kw">in</span> df[<span class="st">"skills_name"</span>].head(<span class="dv">3</span>):</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>skills[:<span class="dv">5</span>]<span class="sc">}{</span><span class="st">'...'</span> <span class="cf">if</span> <span class="bu">len</span>(skills) <span class="op">&gt;</span> <span class="dv">5</span> <span class="cf">else</span> <span class="st">''</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sample parsed skills:
+  ['Merchandising', 'Mathematics', 'Presentations', 'Predictive Modeling', 'Data Modeling']...
+  ['Procurement', 'Financial Statements', 'Oracle Business Intelligence (BI) / OBIA', 'Oracle E-Business Suite', 'PL/SQL']...
+  ['Management', 'Exception Reporting', 'Report Writing', 'Security Clearance', 'Interpersonal Communications']...</code></pre>
 </div>
 </div>
 </section>
 <section id="standardize-geography" class="level2">
 <h2 class="anchored" data-anchor-id="standardize-geography">10. Standardize geography</h2>
 <p>State names and city names sometimes have trailing whitespace or inconsistent casing.</p>
-<div id="ab59f457" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"state_name"</span>, <span class="st">"city_name"</span>, <span class="st">"county_name"</span>, <span class="st">"msa_name"</span>]:</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].astype(<span class="bu">str</span>).<span class="bu">str</span>.strip().replace({<span class="st">"nan"</span>: np.nan, <span class="st">""</span>: np.nan})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fbd7a7ec" class="cell" data-execution_count="10">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"state_name"</span>, <span class="st">"city_name"</span>, <span class="st">"county_name"</span>, <span class="st">"msa_name"</span>]:</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].astype(<span class="bu">str</span>).<span class="bu">str</span>.strip().replace({<span class="st">"nan"</span>: np.nan, <span class="st">""</span>: np.nan})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section>
 <section id="summary-of-the-cleaned-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="summary-of-the-cleaned-dataset">11. Summary of the cleaned dataset</h2>
-<div id="23a781cc" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Final shape: </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> rows x </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Date range: </span><span class="sc">{</span>df[<span class="st">'posted'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">.</span>date()<span class="sc">}</span><span class="ss"> to </span><span class="sc">{</span>df[<span class="st">'posted'</span>]<span class="sc">.</span><span class="bu">max</span>()<span class="sc">.</span>date()<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Unique job titles: </span><span class="sc">{</span>df[<span class="st">'title_name'</span>]<span class="sc">.</span>nunique()<span class="sc">:,}</span><span class="ss">"</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"state_name"</span> <span class="kw">in</span> df.columns:</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"States covered: </span><span class="sc">{</span>df[<span class="st">'state_name'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="485ebf8d" class="cell" data-execution_count="11">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Final shape: </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> rows x </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Date range: </span><span class="sc">{</span>df[<span class="st">'posted'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">.</span>date()<span class="sc">}</span><span class="ss"> to </span><span class="sc">{</span>df[<span class="st">'posted'</span>]<span class="sc">.</span><span class="bu">max</span>()<span class="sc">.</span>date()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Unique job titles: </span><span class="sc">{</span>df[<span class="st">'title_name'</span>]<span class="sc">.</span>nunique()<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"state_name"</span> <span class="kw">in</span> df.columns:</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"States covered: </span><span class="sc">{</span>df[<span class="st">'state_name'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 10 most common skills — sanity check that parsing worked correctly</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top 10 most common skills (sanity check):"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"skills_name"</span>].explode().value_counts().head(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Final shape: 72,454 rows x 29 columns
 Date range: 2024-05-01 to 2024-09-30
 Unique job titles: 5,719
-States covered: 51</code></pre>
+States covered: 51
+
+Top 10 most common skills (sanity check):
+skills_name
+Communication                 31661
+Data Analysis                 28515
+Management                    24631
+SQL (Programming Language)    21733
+Problem Solving               18522
+Leadership                    17561
+Computer Science              17287
+Operations                    14767
+Project Management            13711
+Business Process              13278
+Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="05bcdaca" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df.dtypes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="02835500" class="cell" data-execution_count="12">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df.dtypes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>id                                    str
 posted                     datetime64[us]
@@ -650,36 +694,38 @@ dtype: object</code></pre>
 </section>
 <section id="save-the-cleaned-file" class="level2">
 <h2 class="anchored" data-anchor-id="save-the-cleaned-file">12. Save the cleaned file</h2>
-<div id="d0b54551" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert list columns back to pipe-separated strings for CSV compatibility.</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Each teammate's page will split them back into lists on load (helper provided below).</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>df_out <span class="op">=</span> df.copy()</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"skills_name"</span>, <span class="st">"specialized_skills_name"</span>, <span class="st">"software_skills_name"</span>]:</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df_out.columns:</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        df_out[col] <span class="op">=</span> df_out[col].<span class="bu">apply</span>(<span class="kw">lambda</span> lst: <span class="st">"|"</span>.join(lst) <span class="cf">if</span> <span class="bu">isinstance</span>(lst, <span class="bu">list</span>) <span class="cf">else</span> <span class="st">""</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>df_out.to_csv(OUT_PATH, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Saved cleaned dataset to </span><span class="sc">{</span>OUT_PATH<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"File size: </span><span class="sc">{</span>os<span class="sc">.</span>path<span class="sc">.</span>getsize(OUT_PATH) <span class="op">/</span> <span class="fl">1e6</span><span class="sc">:.1f}</span><span class="ss"> MB"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ebb56ed0" class="cell" data-execution_count="13">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert list columns back to pipe-separated strings for CSV compatibility.</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Each teammate's page will split them back into lists on load.</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df_out <span class="op">=</span> df.copy()</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"skills_name"</span>, <span class="st">"specialized_skills_name"</span>, <span class="st">"software_skills_name"</span>]:</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df_out.columns:</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        df_out[col] <span class="op">=</span> df_out[col].<span class="bu">apply</span>(<span class="kw">lambda</span> lst: <span class="st">"|"</span>.join(lst) <span class="cf">if</span> <span class="bu">isinstance</span>(lst, <span class="bu">list</span>) <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>df_out.to_csv(OUT_PATH, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Saved cleaned dataset to </span><span class="sc">{</span>OUT_PATH<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"File size: </span><span class="sc">{</span>os<span class="sc">.</span>path<span class="sc">.</span>getsize(OUT_PATH) <span class="op">/</span> <span class="fl">1e6</span><span class="sc">:.1f}</span><span class="ss"> MB"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Saved cleaned dataset to data/lightcast_cleaned.csv
-File size: 103.3 MB</code></pre>
+File size: 88.8 MB</code></pre>
 </div>
 </div>
 </section>
 <section id="how-to-use-this-in-your-research-question-page" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-use-this-in-your-research-question-page">How to use this in your research question page</h2>
-<p>At the top of your <code>.qmd</code> file (e.g., <code>omar.qmd</code>, <code>ricardo.qmd</code>), replace your current data-loading code with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/lightcast_cleaned.csv"</span>, parse_dates<span class="op">=</span>[<span class="st">"posted"</span>, <span class="st">"expired"</span>])</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Skills columns are stored as pipe-separated strings in the CSV. If your page</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># uses them, split them back into lists:</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"skills_name"</span>, <span class="st">"specialized_skills_name"</span>, <span class="st">"software_skills_name"</span>]:</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].fillna(<span class="st">""</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> s: s.split(<span class="st">"|"</span>) <span class="cf">if</span> s <span class="cf">else</span> [])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>That’s it — every page now starts from the same cleaned foundation, and any future fix to the pipeline (done here in <code>data_cleaning.qmd</code>) propagates to the whole site on the next render.</p>
+<p>At the top of your <code>.qmd</code> file (e.g., <code>omar.qmd</code>, <code>industry_hiring.qmd</code>), load the cleaned file like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/lightcast_cleaned.csv"</span>, parse_dates<span class="op">=</span>[<span class="st">"posted"</span>, <span class="st">"expired"</span>])</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Skills columns are stored as pipe-separated strings in the CSV — split back into lists:</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"skills_name"</span>, <span class="st">"specialized_skills_name"</span>, <span class="st">"software_skills_name"</span>]:</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].fillna(<span class="st">""</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> s: s.split(<span class="st">"|"</span>) <span class="cf">if</span> s <span class="cf">else</span> [])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Every page now starts from the same cleaned foundation, and any future fix to the pipeline (done here in <code>data_cleaning.qmd</code>) propagates to the whole site on the next render.</p>
 
 
 </section>

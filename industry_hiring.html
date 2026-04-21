@@ -98,7 +98,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4897d45d2f75ed4f519693be625836c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-92ccca19d14c0bd04edafc1952284584.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -282,28 +282,34 @@ div.csl-indent {
 </section>
 <section id="data-loading" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading">Data Loading</h2>
-<div id="76e69205" class="cell" data-execution_count="1">
+<p>We load the cleaned Lightcast dataset produced by our shared <a href="./data_cleaning.html">Data Cleaning</a> page. This file has already been deduplicated, date-parsed, and had its skills columns split into Python lists.</p>
+<div id="e7c9af11" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>matplotlib.use(<span class="st">'Agg'</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">'visualizations'</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"./data/lightcast_job_postings.csv"</span>, low_memory<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total postings: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>matplotlib.use(<span class="st">'Agg'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">'visualizations'</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/lightcast_cleaned.csv"</span>, parse_dates<span class="op">=</span>[<span class="st">"posted"</span>, <span class="st">"expired"</span>])</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Skills columns are stored as pipe-separated strings in the CSV — split back into lists</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"skills_name"</span>, <span class="st">"specialized_skills_name"</span>, <span class="st">"software_skills_name"</span>]:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> df.columns:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].fillna(<span class="st">""</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> s: s.split(<span class="st">"|"</span>) <span class="cf">if</span> s <span class="cf">else</span> [])</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total postings: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Total postings: 72,498</code></pre>
+<pre><code>Total postings: 72,454</code></pre>
 </div>
 </div>
 </section>
 <section id="identifying-data-science-roles" class="level2">
 <h2 class="anchored" data-anchor-id="identifying-data-science-roles">Identifying Data Science Roles</h2>
-<p>We filter the dataset to postings related to data science using keywords matched against the <code>TITLE_NAME</code> and <code>ONET_NAME</code> columns. This dual-column approach ensures broad coverage of data science roles regardless of how individual employers title their positions.</p>
-<div id="af220651" class="cell" data-execution_count="2">
+<p>We filter the dataset to postings related to data science using keywords matched against the <code>title_name</code> and <code>onet_name</code> columns. This dual-column approach ensures broad coverage of data science roles regardless of how individual employers title their positions.</p>
+<div id="ad1ebe65" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ds_keywords <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data scien'</span>, <span class="st">'machine learn'</span>, <span class="st">'deep learn'</span>, <span class="st">'ai engineer'</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'nlp engineer'</span>, <span class="st">'computer vision'</span>, <span class="st">'data analyst'</span>, <span class="st">'research scientist'</span>,</span>
@@ -311,7 +317,7 @@ div.csl-indent {
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_data_science(row):</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="bu">str</span>(row[<span class="st">'TITLE_NAME'</span>]).lower()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="bu">str</span>(row[<span class="st">'title_name'</span>]).lower()</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">any</span>(kw <span class="kw">in</span> t <span class="cf">for</span> kw <span class="kw">in</span> ds_keywords)</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'is_ds'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(is_data_science, axis<span class="op">=</span><span class="dv">1</span>)</span>
@@ -325,10 +331,10 @@ div.csl-indent {
 </section>
 <section id="top-industries-hiring-data-scientists" class="level2">
 <h2 class="anchored" data-anchor-id="top-industries-hiring-data-scientists">Top Industries Hiring Data Scientists</h2>
-<p>We use the NAICS 2-digit industry classification (<code>NAICS2_NAME</code>) to group data science postings by sector. This level of aggregation provides a clear view of which broad industry categories are driving demand. The cross-industry spread of data science hiring aligns with what <span class="citation" data-cites="manyika2011big">Manyika et al. (<a href="#ref-manyika2011big" role="doc-biblioref">2011</a>)</span> anticipated — that demand for analytical talent would extend well beyond the technology sector into healthcare, finance, and manufacturing.</p>
-<div id="02281c3d" class="cell" data-execution_count="3">
+<p>We use the NAICS 2-digit industry classification (<code>naics2_name</code>) to group data science postings by sector. This level of aggregation provides a clear view of which broad industry categories are driving demand. The cross-industry spread of data science hiring aligns with what <span class="citation" data-cites="manyika2011big">Manyika et al. (<a href="#ref-manyika2011big" role="doc-biblioref">2011</a>)</span> anticipated — that demand for analytical talent would extend well beyond the technology sector into healthcare, finance, and manufacturing.</p>
+<div id="9a545625" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry counts for DS roles</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>industry_ds <span class="op">=</span> df_ds[<span class="st">'NAICS2_NAME'</span>].dropna().value_counts().head(<span class="dv">20</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>industry_ds <span class="op">=</span> df_ds[<span class="st">'naics2_name'</span>].dropna().value_counts().head(<span class="dv">20</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">65</span><span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"TOP 20 INDUSTRIES HIRING DATA SCIENTISTS"</span>)</span>
@@ -366,7 +372,7 @@ Rank  Industry                                        Count       %
 20    Arts, Entertainment, and Recreation                22    0.2%</code></pre>
 </div>
 </div>
-<div id="8e49edbf" class="cell" data-execution_count="4">
+<div id="a62968ca" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot top 15 industries</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>top15 <span class="op">=</span> industry_ds.head(<span class="dv">15</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -385,7 +391,7 @@ Rank  Industry                                        Count       %
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'visualizations/ds_top_industries.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -397,10 +403,10 @@ Rank  Industry                                        Count       %
 <section id="data-science-concentration-by-industry" class="level2">
 <h2 class="anchored" data-anchor-id="data-science-concentration-by-industry">Data Science Concentration by Industry</h2>
 <p>Raw posting counts can be misleading — a large industry may post many data science jobs simply because it posts many jobs overall. To control for this, we calculate the data science concentration rate: the percentage of an industry’s total postings that are data science roles. This reveals which industries are most intensely focused on hiring data scientists relative to their overall hiring volume.</p>
-<div id="780c5ecd" class="cell" data-execution_count="5">
+<div id="19215560" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate DS concentration per industry</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>industry_all <span class="op">=</span> df[<span class="st">'NAICS2_NAME'</span>].dropna().value_counts()</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>industry_ds_counts <span class="op">=</span> df_ds[<span class="st">'NAICS2_NAME'</span>].dropna().value_counts()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>industry_all <span class="op">=</span> df[<span class="st">'naics2_name'</span>].dropna().value_counts()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>industry_ds_counts <span class="op">=</span> df_ds[<span class="st">'naics2_name'</span>].dropna().value_counts()</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>concentration <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'total_postings'</span>: industry_all,</span>
@@ -440,7 +446,7 @@ Finance and Insurance                           7,342   1,485   20.2%
 Unclassified Industry                           9,488   1,804   19.0%</code></pre>
 </div>
 </div>
-<div id="5cec96a6" class="cell" data-execution_count="6">
+<div id="0f30cfc2" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(<span class="bu">range</span>(<span class="bu">len</span>(concentration)), concentration[<span class="st">'ds_pct'</span>].values,</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>               color<span class="op">=</span>plt.cm.plasma(np.linspace(<span class="fl">0.3</span>, <span class="fl">0.9</span>, <span class="bu">len</span>(concentration))))</span>
@@ -456,7 +462,7 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'visualizations/ds_concentration_by_industry.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -468,31 +474,20 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 <section id="skills-demanded-by-top-industries" class="level2">
 <h2 class="anchored" data-anchor-id="skills-demanded-by-top-industries">Skills Demanded by Top Industries</h2>
 <p>Different industries may require different skill profiles from their data scientists. Here we compare the most in-demand skills across the top 5 industries to understand how employer expectations vary by sector. <span class="citation" data-cites="celik2023analysis">Çelik and Bozdağ (<a href="#ref-celik2023analysis" role="doc-biblioref">2023</a>)</span> found that while core skills like Python and Machine Learning are universally demanded, the relative importance of domain-specific competencies shifts significantly across industries.</p>
-<div id="64e00cc6" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_json(val):</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(val):</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> json.loads(val)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> p <span class="cf">if</span> <span class="bu">isinstance</span>(p, <span class="bu">list</span>) <span class="cf">else</span> []</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>:</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>df_ds[<span class="st">'SKILLS_NAME_list'</span>] <span class="op">=</span> df_ds[<span class="st">'SKILLS_NAME'</span>].<span class="bu">apply</span>(parse_json)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>top5_industries <span class="op">=</span> industry_ds.head(<span class="dv">5</span>).index.tolist()</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ind <span class="kw">in</span> top5_industries:</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> df_ds[df_ds[<span class="st">'NAICS2_NAME'</span>] <span class="op">==</span> ind]</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    skills <span class="op">=</span> sub[<span class="st">'SKILLS_NAME_list'</span>].explode().dropna()</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    skills <span class="op">=</span> skills[skills <span class="op">!=</span> <span class="st">''</span>]</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    top_skills <span class="op">=</span> skills.value_counts().head(<span class="dv">10</span>)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">  </span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">55</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>ind<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span><span class="bu">len</span>(sub)<span class="sc">:,}</span><span class="ss"> postings)"</span>)</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">55</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r, (s, c) <span class="kw">in</span> <span class="bu">enumerate</span>(top_skills.items(), <span class="dv">1</span>):</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>r<span class="sc">:&gt;3}</span><span class="ss">. </span><span class="sc">{</span>s<span class="sc">:&lt;35}</span><span class="ss"> </span><span class="sc">{</span>c<span class="sc">:&gt;6,}</span><span class="ss"> (</span><span class="sc">{</span>c<span class="op">/</span><span class="bu">len</span>(sub)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="7716871b" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>top5_industries <span class="op">=</span> industry_ds.head(<span class="dv">5</span>).index.tolist()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ind <span class="kw">in</span> top5_industries:</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> df_ds[df_ds[<span class="st">'naics2_name'</span>] <span class="op">==</span> ind]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    skills <span class="op">=</span> sub[<span class="st">'skills_name'</span>].explode().dropna()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    skills <span class="op">=</span> skills[skills <span class="op">!=</span> <span class="st">''</span>]</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    top_skills <span class="op">=</span> skills.value_counts().head(<span class="dv">10</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">  </span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">55</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>ind<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span><span class="bu">len</span>(sub)<span class="sc">:,}</span><span class="ss"> postings)"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">55</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r, (s, c) <span class="kw">in</span> <span class="bu">enumerate</span>(top_skills.items(), <span class="dv">1</span>):</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>r<span class="sc">:&gt;3}</span><span class="ss">. </span><span class="sc">{</span>s<span class="sc">:&lt;35}</span><span class="ss"> </span><span class="sc">{</span>c<span class="sc">:&gt;6,}</span><span class="ss"> (</span><span class="sc">{</span>c<span class="op">/</span><span class="bu">len</span>(sub)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   =======================================================
@@ -566,7 +561,7 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
    10. Data Warehousing                       380 (44.8%)</code></pre>
 </div>
 </div>
-<div id="2149f4ae" class="cell" data-execution_count="8">
+<div id="48931938" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmap comparing key skills across top 5 industries</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>key_skills <span class="op">=</span> [<span class="st">'Python (Programming Language)'</span>, <span class="st">'SQL (Programming Language)'</span>,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">'Machine Learning'</span>, <span class="st">'Data Analysis'</span>, <span class="st">'Statistics'</span>,</span>
@@ -575,8 +570,8 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>heatmap_data <span class="op">=</span> []</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ind <span class="kw">in</span> top5_industries:</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> df_ds[df_ds[<span class="st">'NAICS2_NAME'</span>] <span class="op">==</span> ind]</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    all_skills <span class="op">=</span> sub[<span class="st">'SKILLS_NAME_list'</span>].explode().value_counts()</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> df_ds[df_ds[<span class="st">'naics2_name'</span>] <span class="op">==</span> ind]</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    all_skills <span class="op">=</span> sub[<span class="st">'skills_name'</span>].explode().value_counts()</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    row <span class="op">=</span> [all_skills.get(s, <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(sub) <span class="op">*</span> <span class="dv">100</span> <span class="cf">for</span> s <span class="kw">in</span> key_skills]</span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    heatmap_data.append(row)</span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
@@ -602,7 +597,7 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 <span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'visualizations/ds_skills_by_industry_heatmap.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -614,26 +609,27 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 <section id="salary-comparison-across-industries" class="level2">
 <h2 class="anchored" data-anchor-id="salary-comparison-across-industries">Salary Comparison Across Industries</h2>
 <p>Compensation is a key indicator of how much an industry values data science talent. We compare median salaries across the top industries to understand which sectors are paying a premium for data scientists. <span class="citation" data-cites="davenport2022still">Davenport and Patil (<a href="#ref-davenport2022still" role="doc-biblioref">2022</a>)</span> noted that experienced data scientists command salaries approaching $200,000 in some markets, but compensation varies significantly by industry and region.</p>
-<div id="50561978" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Salary analysis for DS roles by industry</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_ds_salary <span class="op">=</span> df_ds[df_ds[<span class="st">'SALARY'</span>].notna() <span class="op">&amp;</span> (df_ds[<span class="st">'SALARY'</span>] <span class="op">&gt;</span> <span class="dv">0</span>)].copy()</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>salary_by_ind <span class="op">=</span> df_ds_salary.groupby(<span class="st">'NAICS2_NAME'</span>).agg(</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>(<span class="st">'SALARY'</span>, <span class="st">'count'</span>),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    median_salary<span class="op">=</span>(<span class="st">'SALARY'</span>, <span class="st">'median'</span>),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    mean_salary<span class="op">=</span>(<span class="st">'SALARY'</span>, <span class="st">'mean'</span>),</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    p25<span class="op">=</span>(<span class="st">'SALARY'</span>, <span class="kw">lambda</span> x: x.quantile(<span class="fl">0.25</span>)),</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    p75<span class="op">=</span>(<span class="st">'SALARY'</span>, <span class="kw">lambda</span> x: x.quantile(<span class="fl">0.75</span>))</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>salary_by_ind <span class="op">=</span> salary_by_ind[salary_by_ind[<span class="st">'count'</span>] <span class="op">&gt;=</span> <span class="dv">10</span>].sort_values(<span class="st">'median_salary'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">15</span>)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">75</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"SALARY COMPARISON FOR DS ROLES BY INDUSTRY (min 10 postings with salary)"</span>)</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">75</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Industry'</span><span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'N'</span><span class="sc">:&gt;5}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Median'</span><span class="sc">:&gt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Mean'</span><span class="sc">:&gt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'25th'</span><span class="sc">:&gt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'75th'</span><span class="sc">:&gt;10}</span><span class="ss">"</span>)</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'-'</span><span class="op">*</span><span class="dv">75</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> salary_by_ind.iterrows():</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'NAICS2_NAME'</span>][:<span class="dv">40</span>]<span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">int</span>(row[<span class="st">'count'</span>])<span class="sc">:&gt;5}</span><span class="ss"> $</span><span class="sc">{</span>row[<span class="st">'median_salary'</span>]<span class="sc">:&gt;9,.0f}</span><span class="ss"> $</span><span class="sc">{</span>row[<span class="st">'mean_salary'</span>]<span class="sc">:&gt;9,.0f}</span><span class="ss"> $</span><span class="sc">{</span>row[<span class="st">'p25'</span>]<span class="sc">:&gt;9,.0f}</span><span class="ss"> $</span><span class="sc">{</span>row[<span class="st">'p75'</span>]<span class="sc">:&gt;9,.0f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="beba195e" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Salary analysis for DS roles by industry.</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The cleaning page already clipped unrealistic salaries and created `has_salary`.</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df_ds_salary <span class="op">=</span> df_ds[df_ds[<span class="st">'has_salary'</span>]].copy()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>salary_by_ind <span class="op">=</span> df_ds_salary.groupby(<span class="st">'naics2_name'</span>).agg(</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>(<span class="st">'salary'</span>, <span class="st">'count'</span>),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    median_salary<span class="op">=</span>(<span class="st">'salary'</span>, <span class="st">'median'</span>),</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    mean_salary<span class="op">=</span>(<span class="st">'salary'</span>, <span class="st">'mean'</span>),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    p25<span class="op">=</span>(<span class="st">'salary'</span>, <span class="kw">lambda</span> x: x.quantile(<span class="fl">0.25</span>)),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    p75<span class="op">=</span>(<span class="st">'salary'</span>, <span class="kw">lambda</span> x: x.quantile(<span class="fl">0.75</span>))</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>salary_by_ind <span class="op">=</span> salary_by_ind[salary_by_ind[<span class="st">'count'</span>] <span class="op">&gt;=</span> <span class="dv">10</span>].sort_values(<span class="st">'median_salary'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">15</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">75</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"SALARY COMPARISON FOR DS ROLES BY INDUSTRY (min 10 postings with salary)"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">75</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Industry'</span><span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'N'</span><span class="sc">:&gt;5}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Median'</span><span class="sc">:&gt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Mean'</span><span class="sc">:&gt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'25th'</span><span class="sc">:&gt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'75th'</span><span class="sc">:&gt;10}</span><span class="ss">"</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'-'</span><span class="op">*</span><span class="dv">75</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> salary_by_ind.iterrows():</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'naics2_name'</span>][:<span class="dv">40</span>]<span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">int</span>(row[<span class="st">'count'</span>])<span class="sc">:&gt;5}</span><span class="ss"> $</span><span class="sc">{</span>row[<span class="st">'median_salary'</span>]<span class="sc">:&gt;9,.0f}</span><span class="ss"> $</span><span class="sc">{</span>row[<span class="st">'mean_salary'</span>]<span class="sc">:&gt;9,.0f}</span><span class="ss"> $</span><span class="sc">{</span>row[<span class="st">'p25'</span>]<span class="sc">:&gt;9,.0f}</span><span class="ss"> $</span><span class="sc">{</span>row[<span class="st">'p75'</span>]<span class="sc">:&gt;9,.0f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ===========================================================================
@@ -658,7 +654,7 @@ Public Administration                      245 $   81,195 $   82,443 $   70,123 
 Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 $  107,000</code></pre>
 </div>
 </div>
-<div id="ad855625" class="cell" data-execution_count="10">
+<div id="41298551" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> plt.cm.cividis(np.linspace(<span class="fl">0.3</span>, <span class="fl">0.9</span>, <span class="bu">len</span>(salary_by_ind)))</span>
@@ -669,7 +665,7 @@ Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    ax.plot([row[<span class="st">'p25'</span>], row[<span class="st">'p75'</span>]], [i, i], color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(salary_by_ind)))</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(salary_by_ind[<span class="st">'NAICS2_NAME'</span>].values, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(salary_by_ind[<span class="st">'naics2_name'</span>].values, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>ax.invert_yaxis()</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Median Salary ($)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Median Data Scientist Salary by Industry (with IQR)'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
@@ -678,7 +674,7 @@ Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'visualizations/ds_salary_by_industry.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -690,12 +686,12 @@ Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 
 <section id="education-requirements-by-industry" class="level2">
 <h2 class="anchored" data-anchor-id="education-requirements-by-industry">Education Requirements by Industry</h2>
 <p>We examine whether different industries have varying education expectations for data science roles, which may help explain hiring patterns and talent pipeline challenges.</p>
-<div id="151175b1" class="cell" data-execution_count="11">
+<div id="e833ee2d" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>top5 <span class="op">=</span> industry_ds.head(<span class="dv">5</span>).index.tolist()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ind <span class="kw">in</span> top5:</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> df_ds[df_ds[<span class="st">'NAICS2_NAME'</span>] <span class="op">==</span> ind]</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    edu_counts <span class="op">=</span> sub[<span class="st">'MIN_EDULEVELS_NAME'</span>].dropna().value_counts().head(<span class="dv">5</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> df_ds[df_ds[<span class="st">'naics2_name'</span>] <span class="op">==</span> ind]</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    edu_counts <span class="op">=</span> sub[<span class="st">'min_edulevels_name'</span>].dropna().value_counts().head(<span class="dv">5</span>)</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">  </span><span class="sc">{</span>ind<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span><span class="bu">len</span>(sub)<span class="sc">:,}</span><span class="ss"> postings)"</span>)</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> level, count <span class="kw">in</span> edu_counts.items():</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"    </span><span class="sc">{</span>level<span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span>count<span class="sc">:&gt;5,}</span><span class="ss"> (</span><span class="sc">{</span>count<span class="op">/</span><span class="bu">len</span>(sub)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -741,11 +737,11 @@ Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 
 <section id="experience-requirements-by-industry" class="level2">
 <h2 class="anchored" data-anchor-id="experience-requirements-by-industry">Experience Requirements by Industry</h2>
 <p>Similarly, we compare the minimum years of experience required across industries to understand how entry barriers differ by sector.</p>
-<div id="ff872a54" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>exp_by_ind <span class="op">=</span> df_ds[df_ds[<span class="st">'NAICS2_NAME'</span>].isin(top5)].groupby(<span class="st">'NAICS2_NAME'</span>).agg(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    avg_min_exp<span class="op">=</span>(<span class="st">'MIN_YEARS_EXPERIENCE'</span>, <span class="st">'mean'</span>),</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    median_min_exp<span class="op">=</span>(<span class="st">'MIN_YEARS_EXPERIENCE'</span>, <span class="st">'median'</span>),</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>(<span class="st">'MIN_YEARS_EXPERIENCE'</span>, <span class="st">'count'</span>)</span>
+<div id="bae920bf" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>exp_by_ind <span class="op">=</span> df_ds[df_ds[<span class="st">'naics2_name'</span>].isin(top5)].groupby(<span class="st">'naics2_name'</span>).agg(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    avg_min_exp<span class="op">=</span>(<span class="st">'min_years_experience'</span>, <span class="st">'mean'</span>),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    median_min_exp<span class="op">=</span>(<span class="st">'min_years_experience'</span>, <span class="st">'median'</span>),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>(<span class="st">'min_years_experience'</span>, <span class="st">'count'</span>)</span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>).reset_index().sort_values(<span class="st">'avg_min_exp'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">65</span><span class="sc">}</span><span class="ss">"</span>)</span>
@@ -754,7 +750,7 @@ Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Industry'</span><span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Avg Yrs'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Median'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'N'</span><span class="sc">:&gt;6}</span><span class="ss">"</span>)</span>
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'-'</span><span class="op">*</span><span class="dv">65</span><span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> exp_by_ind.iterrows():</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'NAICS2_NAME'</span>][:<span class="dv">40</span>]<span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span>row[<span class="st">'avg_min_exp'</span>]<span class="sc">:&gt;7.1f}</span><span class="ss"> </span><span class="sc">{</span>row[<span class="st">'median_min_exp'</span>]<span class="sc">:&gt;7.1f}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">int</span>(row[<span class="st">'count'</span>])<span class="sc">:&gt;6,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'naics2_name'</span>][:<span class="dv">40</span>]<span class="sc">:&lt;40}</span><span class="ss"> </span><span class="sc">{</span>row[<span class="st">'avg_min_exp'</span>]<span class="sc">:&gt;7.1f}</span><span class="ss"> </span><span class="sc">{</span>row[<span class="st">'median_min_exp'</span>]<span class="sc">:&gt;7.1f}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">int</span>(row[<span class="st">'count'</span>])<span class="sc">:&gt;6,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 =================================================================
