@@ -25,12 +25,12 @@ Each team member owns a research question below. Click any card to dive into the
 ::: {.stats-grid}
 
 ::: {.stat-card}
-**1.2M+**
+**72k+**
 <br><span class="stat-label">Job postings analyzed</span>
 :::
 
 ::: {.stat-card}
-**5**
+**8**
 <br><span class="stat-label">Research questions</span>
 :::
 
