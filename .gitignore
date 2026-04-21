@@ -8,6 +8,7 @@ _site/
 # Data files
 data/
 lightcast_job_postings.csv
+lightcast_cleaned.csv
 
 # Python files (scripts, notebooks)
 *.py
