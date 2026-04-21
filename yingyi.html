@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-92ccca19d14c0bd04edafc1952284584.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-4897d45d2f75ed4f519693be625836c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -324,9 +324,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Check distribution</span></span>
 <span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"AI_JOB"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>count AI_JOB<br>
-False 4465 True 3014</p>
-<p>dtype: int64</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill missing experience with median</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"MIN_YEARS_EXPERIENCE"</span>] <span class="op">=</span> pd.to_numeric(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"MIN_YEARS_EXPERIENCE"</span>],</span>
@@ -384,8 +381,6 @@ False 4465 True 3014</p>
 <span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Low"</span></span>
 <span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"SKILL_LEVEL"</span>] <span class="op">=</span> df.<span class="bu">apply</span>(classify_skill, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"AREA_LABEL"</span>)[<span class="st">"SKILL_LEVEL"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>proportion AREA_LABEL SKILL_LEVEL Rural Medium 0.629944 High 0.324859 Low 0.045198 Urban Medium 0.594947 High 0.359018 Low 0.046035</p>
-<p>dtype: float64</p>
 </section>
 <section id="job-counts-over-time-by-skill-level-in-urban-and-rural-areas" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="job-counts-over-time-by-skill-level-in-urban-and-rural-areas"><span class="header-section-number">4</span> Job Counts Over Time by Skill Level in Urban and Rural Areas</h2>
@@ -727,7 +722,6 @@ False 4465 True 3014</p>
 <span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coef_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>R2: 0.1913965804742378 RMSE: 0.3641396087905476 Feature Coefficient 0 AI_JOB 0.079960 1 URBAN_BINARY 0.150160 2 MIN_YEARS_EXPERIENCE 0.046561 3 AI_URBAN_INTERACTION -0.095228 4 SKILL_LEVEL_Medium 0.113236 5 SKILL_LEVEL_High 0.263699 6 AI_SKILL_INTERACTION -0.010044</p>
 
 
 </section>
