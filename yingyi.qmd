@@ -1,12 +1,17 @@
 ---
-title: "Yingyi"
----
----
 title: "Urban vs. Rural Job Markets for AI and Non-AI Careers"
+author: "Yingyi"
 format:
   html:
     toc: true
     number-sections: true
+    code-fold: false
+    code-overflow: scroll
+execute:
+  eval: false
+  echo: true
+  warning: false
+  message: false
 ---
 
 ## Introduction
@@ -15,7 +20,7 @@ This analysis compares how AI and non-AI job markets differ across urban and rur
 
 ## Data Loading
 
-```{python}
+```python
 import pandas as pd
 
 df = pd.read_csv("./data/lightcast_job_postings.csv", low_memory=False)
@@ -28,7 +33,7 @@ df.head()
 
 
 # Define AI keywords
-```{python}
+```python
 import re
 import numpy as np
 
@@ -100,9 +105,15 @@ df["AI_JOB"].value_counts()
 ```
 
 
+count
+AI_JOB	
+False	4465
+True	3014
+
+dtype: int64
 
 
-```{python}
+```python
 # Fill missing experience with median
 df["MIN_YEARS_EXPERIENCE"] = pd.to_numeric(
     df["MIN_YEARS_EXPERIENCE"],
@@ -161,7 +172,18 @@ def classify_skill(row):
 df["SKILL_LEVEL"] = df.apply(classify_skill, axis=1)
 df.groupby("AREA_LABEL")["SKILL_LEVEL"].value_counts(normalize=True)
 ```
-```{python}
+
+proportion
+AREA_LABEL	SKILL_LEVEL	
+Rural	Medium	0.629944
+High	0.324859
+Low	0.045198
+Urban	Medium	0.594947
+High	0.359018
+Low	0.046035
+
+dtype: float64
+```python
 import pandas as pd
 import plotly.express as px
 
@@ -195,7 +217,8 @@ fig = px.line(
 fig.update_layout(template="plotly_white")
 fig.show()
 ```
-```{python}
+
+```python
 high_skill = df[df["SKILL_LEVEL"] == "High"]
 
 high_share = (
@@ -243,7 +266,7 @@ fig = px.bar(
 fig.update_layout(template="plotly_white")
 fig.show()
 ```
-```{python}
+```python
 skill_dist = (
     df.groupby(["AI_LABEL", "AREA_LABEL", "SKILL_LEVEL"])
     .size()
@@ -267,7 +290,7 @@ fig = px.bar(
 fig.update_layout(template="plotly_white")
 fig.show()
 ```
-```{python}
+```python
 fig = px.box(
     df[df["SKILL_LEVEL"] == "High"],
     x="AREA_LABEL",
@@ -296,7 +319,7 @@ fig.update_layout(template="plotly_white")
 fig.show()
 
 ```
-```{python}
+```python
 import numpy as np
 
 from sklearn.model_selection import train_test_split
@@ -345,7 +368,7 @@ rmse = np.sqrt(mse)
 print("R2:", r2_score(y_test, y_pred))
 print("RMSE:", rmse)
 ```
-```{python}
+```python
 # Keep only Urban and Rural observations
 df_reg = df[df["AREA_LABEL"].isin(["Urban", "Rural"])].copy()
 
