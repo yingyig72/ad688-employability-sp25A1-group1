@@ -105,12 +105,15 @@ df["AI_JOB"].value_counts()
 ```
 
 
-count
-AI_JOB	
-False	4465
-True	3014
+```{python}
+#| echo: false
+import pandas as pd
+from IPython.display import display
 
-dtype: int64
+count_df = pd.Series({False: 4465, True: 3014}, name='AI_JOB')
+count_df.index.name = 'AI_JOB'
+display(count_df.to_frame('count'))
+```
 
 
 ```python
@@ -174,16 +177,23 @@ df.groupby("AREA_LABEL")["SKILL_LEVEL"].value_counts(normalize=True)
 ```
 
 
-proportion
-AREA_LABEL	SKILL_LEVEL	
-Rural	Medium	0.629944
-High	0.324859
-Low	0.045198
-Urban	Medium	0.594947
-High	0.359018
-Low	0.046035
+```{python}
+#| echo: false
+import pandas as pd
+from IPython.display import display
 
-dtype: float64
+data = {
+    ('Rural', 'Medium'): 0.629944,
+    ('Rural', 'High'):   0.324859,
+    ('Rural', 'Low'):    0.045198,
+    ('Urban', 'Medium'): 0.594947,
+    ('Urban', 'High'):   0.359018,
+    ('Urban', 'Low'):    0.046035,
+}
+proportion_df = pd.Series(data)
+proportion_df.index.names = ['AREA_LABEL', 'SKILL_LEVEL']
+display(proportion_df.to_frame('proportion'))
+```
 
 ## Job Counts Over Time by Skill Level in Urban and Rural Areas
 This graph clearly shows a distinct trend of skill and spatial differentiation. The number of high-skilled positions in urban areas has continued to grow significantly, while the growth of medium and low-skilled positions has been relatively slow; in contrast, the overall number of positions in rural areas is lower, and the changes in each skill level are relatively small. This indicates that employment growth is mainly concentrated in high-skilled fields in cities, while the overall development of the rural labor market is relatively sluggish.
@@ -545,13 +555,14 @@ coef_df = pd.DataFrame({
 
 print(coef_df)
 ```
-R2: 0.1913965804742378
-RMSE: 0.3641396087905476
-                Feature  Coefficient
-0                AI_JOB     0.079960
-1          URBAN_BINARY     0.150160
-2  MIN_YEARS_EXPERIENCE     0.046561
-3  AI_URBAN_INTERACTION    -0.095228
-4    SKILL_LEVEL_Medium     0.113236
-5      SKILL_LEVEL_High     0.263699
-6  AI_SKILL_INTERACTION    -0.010044
+```{python}
+#| echo: false
+import pandas as pd
+from IPython.display import display
+
+coef_df = pd.DataFrame({
+    'Feature': ['AI_JOB', 'URBAN_BINARY', 'MIN_YEARS_EXPERIENCE', 'AI_URBAN_INTERACTION', 'SKILL_LEVEL_Medium', 'SKILL_LEVEL_High', 'AI_SKILL_INTERACTION'],
+    'Coefficient': [0.079960, 0.150160, 0.046561, -0.095228, 0.113236, 0.263699, -0.010044]
+})
+display(coef_df)
+```
