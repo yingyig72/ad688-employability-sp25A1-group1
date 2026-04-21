@@ -9,6 +9,8 @@ website:
   navbar:
     left:
       - href: index.qmd
+      - href: data_cleaning.qmd
+        text: Data Cleaning
         text: Home
       - href: about.qmd
         text: About
