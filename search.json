@@ -217,55 +217,6 @@
     "text": "Acemoglu, Daron, David Autor, Jonathon Hazell, and Pascual Restrepo. 2022. “Artificial Intelligence and Jobs: Evidence from Online Vacancies.” Journal of Labor Economics 40 (S1): S293–340. https://doi.org/10.1086/718327.\n\n\nAlshahrani, Saeed, Saleh Bajaba, Sami Alsabban, and Khalid Alwafi. 2024. “Data Science for Job Market Analysis: A Survey on Applications and Techniques.” Expert Systems with Applications 254: 124390. https://doi.org/10.1016/j.eswa.2024.124390.\n\n\nCarnevale, Anthony P., Ban Cheah, and Emma Wenzinger. 2023. The Impact of Generative AI on the Labor Market. Georgetown University Center on Education; the Workforce. https://cew.georgetown.edu/.\n\n\nÇelik, Serkan, and Hasan Can Bozdağ. 2023. “Analysis of Skills and Qualifications Required in Data Scientist Job Postings Based on the Pareto Analysis Perspective Using Text Mining.” Journal of Information Science, ahead of print. https://doi.org/10.1177/01655515231220168.\n\n\nDavenport, Thomas H., and D. J. Patil. 2012. “Data Scientist: The Sexiest Job of the 21st Century.” Harvard Business Review 90 (10): 70–76.\n\n\nDavenport, Thomas H., and D. J. Patil. 2022. “Is Data Scientist Still the Sexiest Job of the 21st Century?” Harvard Business Review 100 (4).\n\n\nLevendis, John, Lori Dickes, and Sarah Wilks. 2025. “The Business Analytics Skills Employers Are Looking For.” Decision Sciences Journal of Innovative Education, ahead of print. https://doi.org/10.1111/dsji.70004.\n\n\nManyika, James, Michael Chui, Brad Brown, et al. 2011. Big Data: The Next Frontier for Innovation, Competition, and Productivity. McKinsey Global Institute.\n\n\nRadovilsky, Zinovy, Vishwanath Hegde, Ankur Acharya, and Ullas Uma. 2018. “Skills Requirements of Business Data Analytics and Data Science Jobs: A Comparative Analysis.” Journal of Supply Chain and Operations Management 16 (1): 82–101.\n\n\nTambe, Prasanna, Peter Cappelli, and Valery Yakubovich. 2019. “Artificial Intelligence in Human Resources Management: Challenges and a Path Forward.” California Management Review 61 (4): 15–42. https://doi.org/10.1177/0008125619867910.\n\n\nUmamaheswaran, Sathish, Shawn Fernandes, V. G. Venkatesh, Naveen Avula, and Yangyan Shi. 2023. “What Do Employers Look for in ‘Business Analytics’ Roles? — a Skill Mining Analysis.” Information Systems Frontiers, ahead of print. https://doi.org/10.1007/s10796-023-10437-y.\n\n\nVerma, Arun, Kirsten M. Yurov, Peggy L. Lane, and Yuliya V. Yurova. 2019. “An Investigation of Skill Requirements for Business and Data Analytics Positions: A Content Analysis of Job Advertisements.” Journal of Education for Business 94 (4): 243–50. https://doi.org/10.1080/08832323.2018.1520685."
   },
   {
-    "objectID": "zichen.html",
-    "href": "zichen.html",
-    "title": "Zichen",
-    "section": "",
-    "text": "Do tech hubs (e.g., Silicon Valley, Austin, Boston) still dominate hiring, or are other locations emerging?\nContent coming soon."
-  },
-  {
-    "objectID": "zichen.html#research-question",
-    "href": "zichen.html#research-question",
-    "title": "Zichen",
-    "section": "",
-    "text": "Do tech hubs (e.g., Silicon Valley, Austin, Boston) still dominate hiring, or are other locations emerging?\nContent coming soon."
-  },
-  {
-    "objectID": "ricardo.html",
-    "href": "ricardo.html",
-    "title": "Ricardo",
-    "section": "",
-    "text": "Which cities or states have the highest job growth for AI vs. non-AI careers?\nContent coming soon."
-  },
-  {
-    "objectID": "ricardo.html#research-question",
-    "href": "ricardo.html#research-question",
-    "title": "Ricardo",
-    "section": "",
-    "text": "Which cities or states have the highest job growth for AI vs. non-AI careers?\nContent coming soon."
-  },
-  {
-    "objectID": "yingyi.html",
-    "href": "yingyi.html",
-    "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
-    "section": "",
-    "text": "This analysis compares how AI and non-AI job markets differ across urban and rural areas."
-  },
-  {
-    "objectID": "yingyi.html#introduction",
-    "href": "yingyi.html#introduction",
-    "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
-    "section": "",
-    "text": "This analysis compares how AI and non-AI job markets differ across urban and rural areas."
-  },
-  {
-    "objectID": "yingyi.html#data-loading",
-    "href": "yingyi.html#data-loading",
-    "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
-    "section": "0.2 Data Loading",
-    "text": "0.2 Data Loading\nimport pandas as pd\n\ndf = pd.read_csv(\"./data/lightcast_job_postings.csv\", low_memory=False)\n\nprint(f\"Rows: {len(df)}\")\ndf.head()"
-  },
-  {
     "objectID": "ai_ml_evolution.html",
     "href": "ai_ml_evolution.html",
     "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
@@ -336,25 +287,53 @@
     "text": "Conclusion\nOur analysis of the Lightcast dataset reveals several key findings about the evolution of AI/ML requirements in job postings:\n\nAI/ML skills are increasingly prevalent — A meaningful and growing share of job postings now explicitly require AI/ML expertise, extending beyond traditional data science and engineering roles.\nMachine Learning and Python dominate — Among AI/ML-specific skills, Machine Learning as a general competency and Python-based frameworks (TensorFlow, PyTorch, scikit-learn) are the most frequently cited, consistent with the findings of Tambe et al. (2019) on AI skill diffusion.\nDemand extends beyond tech — Industries such as finance, healthcare, and professional services are increasingly embedding AI/ML requirements into their job descriptions, reflecting the broader adoption trends documented by Acemoglu et al. (2022).\nHigher education expectations — AI/ML roles tend to require higher minimum education levels, with a greater proportion of postings specifying a Master’s or Doctoral degree compared to non-AI/ML roles.\nGenerative AI is emerging — Keywords related to generative AI, large language models, and tools like ChatGPT are beginning to appear in job postings, confirming the labor market shifts identified by Carnevale et al. (2023).\n\nThese findings underscore the importance of integrating AI/ML competencies into analytics and data science curricula to meet evolving employer expectations."
   },
   {
-    "objectID": "yingyi_backup.html",
-    "href": "yingyi_backup.html",
+    "objectID": "yingyi.html",
+    "href": "yingyi.html",
     "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
     "section": "",
     "text": "This analysis compares how AI and non-AI job markets differ across urban and rural areas."
   },
   {
-    "objectID": "yingyi_backup.html#introduction",
-    "href": "yingyi_backup.html#introduction",
+    "objectID": "yingyi.html#introduction",
+    "href": "yingyi.html#introduction",
     "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
     "section": "",
     "text": "This analysis compares how AI and non-AI job markets differ across urban and rural areas."
   },
   {
-    "objectID": "yingyi_backup.html#data-loading",
-    "href": "yingyi_backup.html#data-loading",
+    "objectID": "yingyi.html#data-loading",
+    "href": "yingyi.html#data-loading",
     "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
     "section": "0.2 Data Loading",
     "text": "0.2 Data Loading\nimport pandas as pd\n\ndf = pd.read_csv(\"./data/lightcast_job_postings.csv\", low_memory=False)\n\nprint(f\"Rows: {len(df)}\")\ndf.head()"
+  },
+  {
+    "objectID": "ricardo.html",
+    "href": "ricardo.html",
+    "title": "Ricardo",
+    "section": "",
+    "text": "Which cities or states have the highest job growth for AI vs. non-AI careers?\nContent coming soon."
+  },
+  {
+    "objectID": "ricardo.html#research-question",
+    "href": "ricardo.html#research-question",
+    "title": "Ricardo",
+    "section": "",
+    "text": "Which cities or states have the highest job growth for AI vs. non-AI careers?\nContent coming soon."
+  },
+  {
+    "objectID": "zichen.html",
+    "href": "zichen.html",
+    "title": "Zichen",
+    "section": "",
+    "text": "Do tech hubs (e.g., Silicon Valley, Austin, Boston) still dominate hiring, or are other locations emerging?\nContent coming soon."
+  },
+  {
+    "objectID": "zichen.html#research-question",
+    "href": "zichen.html#research-question",
+    "title": "Zichen",
+    "section": "",
+    "text": "Do tech hubs (e.g., Silicon Valley, Austin, Boston) still dominate hiring, or are other locations emerging?\nContent coming soon."
   },
   {
     "objectID": "tianyi.html",
