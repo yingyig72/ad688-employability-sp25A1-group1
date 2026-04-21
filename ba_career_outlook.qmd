@@ -19,9 +19,10 @@ This analysis uses the Lightcast job postings dataset to examine the career outl
 
 ## Data Loading
 
+We load the cleaned Lightcast dataset produced by our shared [Data Cleaning](data_cleaning.qmd) page. This file has already been deduplicated, date-parsed, and had its skills columns split into Python lists.
+
 ```{python}
 import pandas as pd
-import json
 import os
 import matplotlib
 matplotlib.use('Agg')
@@ -30,13 +31,19 @@ import numpy as np
 
 os.makedirs('visualizations', exist_ok=True)
 
-df = pd.read_csv("./data/lightcast_job_postings.csv", low_memory=False)
+df = pd.read_csv("data/lightcast_cleaned.csv", parse_dates=["posted", "expired"])
+
+# Skills columns are stored as pipe-separated strings in the CSV — split back into lists
+for col in ["skills_name", "specialized_skills_name", "software_skills_name"]:
+    if col in df.columns:
+        df[col] = df[col].fillna("").apply(lambda s: s.split("|") if s else [])
+
 print(f"Total postings: {len(df):,}")
 ```
 
 ## Identifying Business Analytics Roles
 
-We categorize postings into business analytics and adjacent data roles using keywords matched against the `TITLE_NAME` and `ONET_NAME` columns. This allows us to compare the BA job market directly against data science, data engineering, and data analytics roles.
+We categorize postings into business analytics and adjacent data roles using keywords matched against the `title_name` column. This allows us to compare the BA job market directly against data science, data engineering, and data analytics roles.
 
 ```{python}
 ds_ml_titles = ['data scien', 'machine learn', 'deep learn', 'ai engineer',
@@ -47,7 +54,7 @@ da_titles = ['data analy']
 de_titles = ['data engineer']
 
 def categorize(row):
-    t = str(row['TITLE_NAME']).lower()
+    t = str(row['title_name']).lower()
     if any(k in t for k in ds_ml_titles): return 'Data Science / ML'
     if any(k in t for k in de_titles): return 'Data Engineering'
     if any(k in t for k in ba_titles): return 'Business Analytics / BI'
@@ -67,12 +74,10 @@ print(df_roles['role_category'].value_counts().to_string())
 We examine how demand for business analytics roles has evolved over time compared to other data roles. Understanding the trajectory of BA hiring helps assess whether the field is growing, plateauing, or being absorbed into other roles.
 
 ```{python}
-df_roles['posted_date'] = pd.to_datetime(df_roles['POSTED'], errors='coerce')
-df_roles['posted_month'] = df_roles['posted_date'].dt.to_period('M')
+# The cleaning page already created `posted_month` as a string
 df_dated = df_roles[df_roles['posted_month'].notna()].copy()
 
 monthly_roles = df_dated.groupby(['posted_month', 'role_category']).size().unstack(fill_value=0)
-monthly_roles.index = monthly_roles.index.astype(str)
 
 print(f"Monthly posting counts by role category:\n")
 print(monthly_roles.to_string())
@@ -97,7 +102,7 @@ ax.grid(axis='y', alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('visualizations/ba_demand_trends.png', dpi=150, bbox_inches='tight')
-plt.show()
+plt.close()
 ```
 
 ![Demand Trends by Role](visualizations/ba_demand_trends.png)
@@ -107,14 +112,15 @@ plt.show()
 Compensation is a critical factor in assessing career outlook. We compare salary distributions across the four role categories to understand where business analytics professionals stand relative to their peers in data science, data analytics, and data engineering.
 
 ```{python}
-df_salary = df_roles[df_roles['SALARY'].notna() & (df_roles['SALARY'] > 0)].copy()
+# The cleaning page already clipped unrealistic salaries and created `has_salary`
+df_salary = df_roles[df_roles['has_salary']].copy()
 
 salary_comp = df_salary.groupby('role_category').agg(
-    count=('SALARY', 'count'),
-    median=('SALARY', 'median'),
-    mean=('SALARY', 'mean'),
-    p25=('SALARY', lambda x: x.quantile(0.25)),
-    p75=('SALARY', lambda x: x.quantile(0.75))
+    count=('salary', 'count'),
+    median=('salary', 'median'),
+    mean=('salary', 'mean'),
+    p25=('salary', lambda x: x.quantile(0.25)),
+    p75=('salary', lambda x: x.quantile(0.75))
 ).reset_index().sort_values('median', ascending=False)
 
 print(f"\n{'='*75}")
@@ -145,7 +151,7 @@ ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'${x:,.0f}'))
 
 plt.tight_layout()
 plt.savefig('visualizations/ba_salary_comparison.png', dpi=150, bbox_inches='tight')
-plt.show()
+plt.close()
 ```
 
 ![Salary Comparison](visualizations/ba_salary_comparison.png)
@@ -156,19 +162,8 @@ plt.show()
 Understanding the skills employers demand is essential for career planning. @levendis2025business found that the top skills for business analytics include analytics, communication, visualization, and problem-solving. We examine whether our dataset confirms these findings and how the BA skill profile compares to other data roles.
 
 ```{python}
-def parse_json(val):
-    if pd.isna(val):
-        return []
-    try:
-        p = json.loads(val)
-        return p if isinstance(p, list) else []
-    except:
-        return []
-
-df_roles['SKILLS_NAME_list'] = df_roles['SKILLS_NAME'].apply(parse_json)
-
 ba_postings = df_roles[df_roles['role_category'] == 'Business Analytics / BI']
-ba_skills = ba_postings['SKILLS_NAME_list'].explode().dropna()
+ba_skills = ba_postings['skills_name'].explode().dropna()
 ba_skills = ba_skills[ba_skills != '']
 ba_top = ba_skills.value_counts().head(20)
 
@@ -195,7 +190,7 @@ ax.grid(axis='x', alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('visualizations/ba_top_skills.png', dpi=150, bbox_inches='tight')
-plt.show()
+plt.close()
 ```
 
 ![Top BA Skills](visualizations/ba_top_skills.png)
@@ -216,7 +211,7 @@ for cat in ['Business Analytics / BI', 'Data Science / ML', 'Data Analytics', 'D
     sub = df_roles[df_roles['role_category'] == cat]
     if len(sub) == 0:
         continue
-    all_skills = sub['SKILLS_NAME_list'].explode().value_counts()
+    all_skills = sub['skills_name'].explode().value_counts()
     row = [all_skills.get(s, 0) / len(sub) * 100 for s in key_skills]
     comparison_data.append({'role': cat, 'values': row})
 
@@ -238,7 +233,7 @@ ax.grid(axis='x', alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('visualizations/ba_skills_comparison.png', dpi=150, bbox_inches='tight')
-plt.show()
+plt.close()
 ```
 
 ![Skills Comparison Across Roles](visualizations/ba_skills_comparison.png)
@@ -248,7 +243,7 @@ plt.show()
 We examine which industries employ the most business analytics professionals, providing guidance on where BA career opportunities are concentrated.
 
 ```{python}
-ba_industries = ba_postings['NAICS2_NAME'].dropna().value_counts().head(15)
+ba_industries = ba_postings['naics2_name'].dropna().value_counts().head(15)
 
 print(f"\n{'='*60}")
 print(f"TOP 15 INDUSTRIES FOR BA / BI ROLES")
@@ -277,7 +272,7 @@ for i, count in enumerate(top10_ind.values):
 
 plt.tight_layout()
 plt.savefig('visualizations/ba_industries.png', dpi=150, bbox_inches='tight')
-plt.show()
+plt.close()
 ```
 
 ![BA Industries](visualizations/ba_industries.png)
@@ -290,7 +285,7 @@ We examine the education levels and experience thresholds that employers set for
 print("EDUCATION REQUIREMENTS BY ROLE CATEGORY\n")
 for cat in ['Business Analytics / BI', 'Data Science / ML', 'Data Analytics', 'Data Engineering']:
     sub = df_roles[df_roles['role_category'] == cat]
-    edu_counts = sub['MIN_EDULEVELS_NAME'].dropna().value_counts().head(5)
+    edu_counts = sub['min_edulevels_name'].dropna().value_counts().head(5)
     print(f"  {cat} ({len(sub):,} postings)")
     for level, count in edu_counts.items():
         print(f"    {level:<40} {count:>5,} ({count/len(sub)*100:.1f}%)")
@@ -300,9 +295,9 @@ for cat in ['Business Analytics / BI', 'Data Science / ML', 'Data Analytics', 'D
 ```{python}
 print("EXPERIENCE REQUIREMENTS BY ROLE CATEGORY\n")
 exp_comp = df_roles.groupby('role_category').agg(
-    avg_exp=('MIN_YEARS_EXPERIENCE', 'mean'),
-    median_exp=('MIN_YEARS_EXPERIENCE', 'median'),
-    count=('MIN_YEARS_EXPERIENCE', 'count')
+    avg_exp=('min_years_experience', 'mean'),
+    median_exp=('min_years_experience', 'median'),
+    count=('min_years_experience', 'count')
 ).reset_index().sort_values('avg_exp', ascending=False)
 
 print(f"{'Role':<30} {'Avg Yrs':>8} {'Median':>8} {'N':>6}")
@@ -313,13 +308,13 @@ for _, row in exp_comp.iterrows():
 
 ## Remote Work Availability for BA Roles
 
-The availability of remote work is an increasingly important factor in career decisions. We compare remote work options across role categories to assess the flexibility offered to business analytics professionals.
+The availability of remote work is an increasingly important factor in career decisions. We compare remote work options across role categories to assess the flexibility offered to business analytics professionals. The cleaning page already standardized remote types into three buckets (`Remote`, `Hybrid`, `On-site`) in the `remote_category` column.
 
 ```{python}
 print("REMOTE WORK BY ROLE CATEGORY\n")
 for cat in ['Business Analytics / BI', 'Data Science / ML', 'Data Analytics', 'Data Engineering']:
     sub = df_roles[df_roles['role_category'] == cat]
-    remote_counts = sub['REMOTE_TYPE_NAME'].dropna().value_counts()
+    remote_counts = sub['remote_category'].dropna().value_counts()
     print(f"  {cat} ({len(sub):,} postings)")
     for rtype, count in remote_counts.items():
         print(f"    {rtype:<30} {count:>5,} ({count/len(sub)*100:.1f}%)")
@@ -333,7 +328,7 @@ Understanding where BA opportunities are concentrated helps professionals target
 ```{python}
 import plotly.express as px
 
-state_counts = ba_postings['STATE_NAME'].dropna().value_counts().reset_index()
+state_counts = ba_postings['state_name'].dropna().value_counts().reset_index()
 state_counts.columns = ['state', 'count']
 
 # State name to abbreviation mapping

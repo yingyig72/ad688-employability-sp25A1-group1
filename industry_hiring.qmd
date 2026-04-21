@@ -19,9 +19,10 @@ This analysis uses the Lightcast job postings dataset to identify which industri
 
 ## Data Loading
 
+We load the cleaned Lightcast dataset produced by our shared [Data Cleaning](data_cleaning.qmd) page. This file has already been deduplicated, date-parsed, and had its skills columns split into Python lists.
+
 ```{python}
 import pandas as pd
-import json
 import os
 import matplotlib
 matplotlib.use('Agg')
@@ -30,13 +31,19 @@ import numpy as np
 
 os.makedirs('visualizations', exist_ok=True)
 
-df = pd.read_csv("./data/lightcast_job_postings.csv", low_memory=False)
+df = pd.read_csv("data/lightcast_cleaned.csv", parse_dates=["posted", "expired"])
+
+# Skills columns are stored as pipe-separated strings in the CSV — split back into lists
+for col in ["skills_name", "specialized_skills_name", "software_skills_name"]:
+    if col in df.columns:
+        df[col] = df[col].fillna("").apply(lambda s: s.split("|") if s else [])
+
 print(f"Total postings: {len(df):,}")
 ```
 
 ## Identifying Data Science Roles
 
-We filter the dataset to postings related to data science using keywords matched against the `TITLE_NAME` and `ONET_NAME` columns. This dual-column approach ensures broad coverage of data science roles regardless of how individual employers title their positions.
+We filter the dataset to postings related to data science using keywords matched against the `title_name` and `onet_name` columns. This dual-column approach ensures broad coverage of data science roles regardless of how individual employers title their positions.
 
 ```{python}
 ds_keywords = [
@@ -46,7 +53,7 @@ ds_keywords = [
 ]
 
 def is_data_science(row):
-    t = str(row['TITLE_NAME']).lower()
+    t = str(row['title_name']).lower()
     return any(kw in t for kw in ds_keywords)
 
 df['is_ds'] = df.apply(is_data_science, axis=1)
@@ -57,11 +64,11 @@ print(f"Data science related postings: {len(df_ds):,} ({len(df_ds)/len(df)*100:.
 
 ## Top Industries Hiring Data Scientists
 
-We use the NAICS 2-digit industry classification (`NAICS2_NAME`) to group data science postings by sector. This level of aggregation provides a clear view of which broad industry categories are driving demand. The cross-industry spread of data science hiring aligns with what @manyika2011big anticipated — that demand for analytical talent would extend well beyond the technology sector into healthcare, finance, and manufacturing.
+We use the NAICS 2-digit industry classification (`naics2_name`) to group data science postings by sector. This level of aggregation provides a clear view of which broad industry categories are driving demand. The cross-industry spread of data science hiring aligns with what @manyika2011big anticipated — that demand for analytical talent would extend well beyond the technology sector into healthcare, finance, and manufacturing.
 
 ```{python}
 # Industry counts for DS roles
-industry_ds = df_ds['NAICS2_NAME'].dropna().value_counts().head(20)
+industry_ds = df_ds['naics2_name'].dropna().value_counts().head(20)
 
 print(f"\n{'='*65}")
 print(f"TOP 20 INDUSTRIES HIRING DATA SCIENTISTS")
@@ -91,7 +98,7 @@ for i, (count) in enumerate(top15.values):
 
 plt.tight_layout()
 plt.savefig('visualizations/ds_top_industries.png', dpi=150, bbox_inches='tight')
-plt.show()
+plt.close()
 ```
 
 ![Top Industries Hiring Data Scientists](visualizations/ds_top_industries.png)
@@ -102,8 +109,8 @@ Raw posting counts can be misleading — a large industry may post many data sci
 
 ```{python}
 # Calculate DS concentration per industry
-industry_all = df['NAICS2_NAME'].dropna().value_counts()
-industry_ds_counts = df_ds['NAICS2_NAME'].dropna().value_counts()
+industry_all = df['naics2_name'].dropna().value_counts()
+industry_ds_counts = df_ds['naics2_name'].dropna().value_counts()
 
 concentration = pd.DataFrame({
     'total_postings': industry_all,
@@ -137,7 +144,7 @@ for i, val in enumerate(concentration['ds_pct'].values):
 
 plt.tight_layout()
 plt.savefig('visualizations/ds_concentration_by_industry.png', dpi=150, bbox_inches='tight')
-plt.show()
+plt.close()
 ```
 
 ![DS Concentration by Industry](visualizations/ds_concentration_by_industry.png)
@@ -147,22 +154,11 @@ plt.show()
 Different industries may require different skill profiles from their data scientists. Here we compare the most in-demand skills across the top 5 industries to understand how employer expectations vary by sector. @celik2023analysis found that while core skills like Python and Machine Learning are universally demanded, the relative importance of domain-specific competencies shifts significantly across industries.
 
 ```{python}
-def parse_json(val):
-    if pd.isna(val):
-        return []
-    try:
-        p = json.loads(val)
-        return p if isinstance(p, list) else []
-    except:
-        return []
-
-df_ds['SKILLS_NAME_list'] = df_ds['SKILLS_NAME'].apply(parse_json)
-
 top5_industries = industry_ds.head(5).index.tolist()
 
 for ind in top5_industries:
-    sub = df_ds[df_ds['NAICS2_NAME'] == ind]
-    skills = sub['SKILLS_NAME_list'].explode().dropna()
+    sub = df_ds[df_ds['naics2_name'] == ind]
+    skills = sub['skills_name'].explode().dropna()
     skills = skills[skills != '']
     top_skills = skills.value_counts().head(10)
     
@@ -182,8 +178,8 @@ key_skills = ['Python (Programming Language)', 'SQL (Programming Language)',
 
 heatmap_data = []
 for ind in top5_industries:
-    sub = df_ds[df_ds['NAICS2_NAME'] == ind]
-    all_skills = sub['SKILLS_NAME_list'].explode().value_counts()
+    sub = df_ds[df_ds['naics2_name'] == ind]
+    all_skills = sub['skills_name'].explode().value_counts()
     row = [all_skills.get(s, 0) / len(sub) * 100 for s in key_skills]
     heatmap_data.append(row)
 
@@ -209,7 +205,7 @@ ax.set_title('Key Skills Demanded by Top Industries (% of DS Postings)', fontwei
 
 plt.tight_layout()
 plt.savefig('visualizations/ds_skills_by_industry_heatmap.png', dpi=150, bbox_inches='tight')
-plt.show()
+plt.close()
 ```
 
 ![Skills by Industry Heatmap](visualizations/ds_skills_by_industry_heatmap.png)
@@ -219,15 +215,16 @@ plt.show()
 Compensation is a key indicator of how much an industry values data science talent. We compare median salaries across the top industries to understand which sectors are paying a premium for data scientists. @davenport2022still noted that experienced data scientists command salaries approaching $200,000 in some markets, but compensation varies significantly by industry and region.
 
 ```{python}
-# Salary analysis for DS roles by industry
-df_ds_salary = df_ds[df_ds['SALARY'].notna() & (df_ds['SALARY'] > 0)].copy()
+# Salary analysis for DS roles by industry.
+# The cleaning page already clipped unrealistic salaries and created `has_salary`.
+df_ds_salary = df_ds[df_ds['has_salary']].copy()
 
-salary_by_ind = df_ds_salary.groupby('NAICS2_NAME').agg(
-    count=('SALARY', 'count'),
-    median_salary=('SALARY', 'median'),
-    mean_salary=('SALARY', 'mean'),
-    p25=('SALARY', lambda x: x.quantile(0.25)),
-    p75=('SALARY', lambda x: x.quantile(0.75))
+salary_by_ind = df_ds_salary.groupby('naics2_name').agg(
+    count=('salary', 'count'),
+    median_salary=('salary', 'median'),
+    mean_salary=('salary', 'mean'),
+    p25=('salary', lambda x: x.quantile(0.25)),
+    p75=('salary', lambda x: x.quantile(0.75))
 ).reset_index()
 salary_by_ind = salary_by_ind[salary_by_ind['count'] >= 10].sort_values('median_salary', ascending=False).head(15)
 
@@ -237,7 +234,7 @@ print(f"{'='*75}")
 print(f"{'Industry':<40} {'N':>5} {'Median':>10} {'Mean':>10} {'25th':>10} {'75th':>10}")
 print(f"{'-'*75}")
 for _, row in salary_by_ind.iterrows():
-    print(f"{row['NAICS2_NAME'][:40]:<40} {int(row['count']):>5} ${row['median_salary']:>9,.0f} ${row['mean_salary']:>9,.0f} ${row['p25']:>9,.0f} ${row['p75']:>9,.0f}")
+    print(f"{row['naics2_name'][:40]:<40} {int(row['count']):>5} ${row['median_salary']:>9,.0f} ${row['mean_salary']:>9,.0f} ${row['p25']:>9,.0f} ${row['p75']:>9,.0f}")
 ```
 
 ```{python}
@@ -251,7 +248,7 @@ for i, (_, row) in enumerate(salary_by_ind.iterrows()):
     ax.plot([row['p25'], row['p75']], [i, i], color='black', linewidth=1.5, alpha=0.6)
 
 ax.set_yticks(range(len(salary_by_ind)))
-ax.set_yticklabels(salary_by_ind['NAICS2_NAME'].values, fontsize=9)
+ax.set_yticklabels(salary_by_ind['naics2_name'].values, fontsize=9)
 ax.invert_yaxis()
 ax.set_xlabel('Median Salary ($)', fontsize=11)
 ax.set_title('Median Data Scientist Salary by Industry (with IQR)', fontweight='bold', fontsize=13)
@@ -260,7 +257,7 @@ ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'${x:,.0f}'))
 
 plt.tight_layout()
 plt.savefig('visualizations/ds_salary_by_industry.png', dpi=150, bbox_inches='tight')
-plt.show()
+plt.close()
 ```
 
 ![Salary by Industry](visualizations/ds_salary_by_industry.png)
@@ -273,8 +270,8 @@ We examine whether different industries have varying education expectations for 
 top5 = industry_ds.head(5).index.tolist()
 
 for ind in top5:
-    sub = df_ds[df_ds['NAICS2_NAME'] == ind]
-    edu_counts = sub['MIN_EDULEVELS_NAME'].dropna().value_counts().head(5)
+    sub = df_ds[df_ds['naics2_name'] == ind]
+    edu_counts = sub['min_edulevels_name'].dropna().value_counts().head(5)
     print(f"\n  {ind} ({len(sub):,} postings)")
     for level, count in edu_counts.items():
         print(f"    {level:<40} {count:>5,} ({count/len(sub)*100:.1f}%)")
@@ -285,10 +282,10 @@ for ind in top5:
 Similarly, we compare the minimum years of experience required across industries to understand how entry barriers differ by sector.
 
 ```{python}
-exp_by_ind = df_ds[df_ds['NAICS2_NAME'].isin(top5)].groupby('NAICS2_NAME').agg(
-    avg_min_exp=('MIN_YEARS_EXPERIENCE', 'mean'),
-    median_min_exp=('MIN_YEARS_EXPERIENCE', 'median'),
-    count=('MIN_YEARS_EXPERIENCE', 'count')
+exp_by_ind = df_ds[df_ds['naics2_name'].isin(top5)].groupby('naics2_name').agg(
+    avg_min_exp=('min_years_experience', 'mean'),
+    median_min_exp=('min_years_experience', 'median'),
+    count=('min_years_experience', 'count')
 ).reset_index().sort_values('avg_min_exp', ascending=False)
 
 print(f"\n{'='*65}")
@@ -297,7 +294,7 @@ print(f"{'='*65}")
 print(f"{'Industry':<40} {'Avg Yrs':>8} {'Median':>8} {'N':>6}")
 print(f"{'-'*65}")
 for _, row in exp_by_ind.iterrows():
-    print(f"{row['NAICS2_NAME'][:40]:<40} {row['avg_min_exp']:>7.1f} {row['median_min_exp']:>7.1f} {int(row['count']):>6,}")
+    print(f"{row['naics2_name'][:40]:<40} {row['avg_min_exp']:>7.1f} {row['median_min_exp']:>7.1f} {int(row['count']):>6,}")
 ```
 
 ## Conclusion
