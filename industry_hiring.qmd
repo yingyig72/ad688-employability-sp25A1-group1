@@ -7,6 +7,8 @@ format:
     bibliography: references.bib
     toc: true
 jupyter: python3
+execute: 
+    echo: false
 ---
 
 ## Introduction
