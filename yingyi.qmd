@@ -8,7 +8,7 @@ format:
     code-fold: false
     code-overflow: scroll
 execute:
-  eval: false
+  eval: true
   echo: false
   warning: false
   message: false
