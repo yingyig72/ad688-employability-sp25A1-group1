@@ -9,7 +9,7 @@ format:
     code-overflow: scroll
 execute:
   eval: false
-  echo: true
+  echo: false
   warning: false
   message: false
 ---
@@ -20,7 +20,7 @@ This analysis compares how AI and non-AI job markets differ across urban and rur
 
 ## Data Loading
 
-```python
+```{python}
 import pandas as pd
 
 df = pd.read_csv("./data/lightcast_job_postings.csv", low_memory=False)
@@ -33,7 +33,7 @@ df.head()
 
 
 ##  Define AI，Area, and Skill Level keywords
-```python
+```{python}
 import re
 import numpy as np
 
@@ -106,17 +106,6 @@ df["AI_JOB"].value_counts()
 
 
 ```{python}
-#| echo: false
-import pandas as pd
-from IPython.display import display
-
-count_df = pd.Series({False: 4465, True: 3014}, name='AI_JOB')
-count_df.index.name = 'AI_JOB'
-display(count_df.to_frame('count'))
-```
-
-
-```python
 # Fill missing experience with median
 df["MIN_YEARS_EXPERIENCE"] = pd.to_numeric(
     df["MIN_YEARS_EXPERIENCE"],
@@ -199,7 +188,7 @@ display(proportion_df.to_frame('proportion'))
 This graph clearly shows a distinct trend of skill and spatial differentiation. The number of high-skilled positions in urban areas has continued to grow significantly, while the growth of medium and low-skilled positions has been relatively slow; in contrast, the overall number of positions in rural areas is lower, and the changes in each skill level are relatively small. This indicates that employment growth is mainly concentrated in high-skilled fields in cities, while the overall development of the rural labor market is relatively sluggish.
 This trend suggests that AI is driving the labor market to concentrate on high-skilled and urban areas, and exacerbating structural inequality. Specifically, high-skilled positions continue to expand in cities, while medium and low-skilled positions have limited growth or even face pressure, and the overall changes in rural areas are relatively weak, further widening the urban-rural gap (Mookerjee, 2025)
 
-```python
+```{python}
 import pandas as pd
 import plotly.express as px
 
@@ -241,7 +230,7 @@ fig.show()
 ## Skill Composition in AI vs Non-AI Jobs by Area
 This chart illustrates the differences in skill structures between AI positions and non-AI positions across urban and rural areas. It can be observed that in both cities and rural areas, the proportion of highly skilled labor in AI positions is generally higher than that in non-AI positions, while the proportion of low-skilled workers is lower. This indicates that AI-related work has a stronger demand for high-skilled individuals. Additionally, medium-skilled workers still dominate in both types of positions, but their proportion is slightly reduced in AI positions, reflecting a structural shift towards the higher-skilled end.
 This distribution indicates that AI does not uniformly affect all skill levels, but rather drives the labor force structure towards a higher-skilled orientation and reduces the demand for low-skilled labor. This "skill-biased change" will further intensify the differentiation in the labor market, benefiting the high-skilled group more while imposing greater adjustment pressure on the middle and low-skilled groups (Mookerjee, 2025)
-```python
+```{python}
 high_skill = df[df["SKILL_LEVEL"] == "High"]
 
 high_share = (
@@ -295,7 +284,7 @@ fig.show()
 This chart further compares the differences in skill proportions between AI-related positions and non-AI positions. It can be seen that in AI positions, the proportion of highly skilled workers is significantly higher than in non-AI positions, while the proportion of medium-skilled workers has decreased, and the proportion of low-skilled workers remains at a relatively low level. At the same time, this structure is basically the same in urban and rural areas, but the proportion of highly skilled workers is slightly higher in cities, indicating that AI-related positions have a more concentrated demand for highly skilled labor.
 This result indicates that AI is driving the transformation of the labor force structure from being "dominated by medium skills" to "favoring high skills", and it shows a consistent but varying trend in different regions. This change reflects the selective demands of AI for tasks and capabilities, giving an advantage to high-skilled workers while weakening the relative position of those with medium and low skills, thereby exacerbating the inequality between skill levels (Mookerjee, 2025)
 
-```python
+```{python}
 skill_dist = (
     df.groupby(["AI_LABEL", "AREA_LABEL", "SKILL_LEVEL"])
     .size()
@@ -326,7 +315,7 @@ The chart provides partial evidence that AI does not affect workers uniformly. W
 
 More importantly, the urban–rural comparison shows that the wage premium associated with AI is more pronounced in urban areas. This suggests that AI-driven economic benefits are geographically concentrated, potentially widening existing disparities between urban and rural labor markets.
 
-```python
+```{python}
 fig = px.box(
     df[df["SKILL_LEVEL"] == "High"],
     x="AREA_LABEL",
@@ -360,7 +349,7 @@ fig.show()
 ## Model
 
 
-```python
+```{python}
 import numpy as np
 
 from sklearn.model_selection import train_test_split
@@ -409,7 +398,7 @@ rmse = np.sqrt(mse)
 print("R2:", r2_score(y_test, y_pred))
 print("RMSE:", rmse)
 ```
-```python
+```{python}
 # Keep only Urban and Rural observations
 df_reg = df[df["AREA_LABEL"].isin(["Urban", "Rural"])].copy()
 
