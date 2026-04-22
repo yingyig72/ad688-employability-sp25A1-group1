@@ -139,6 +139,8 @@ keep_cols = [
     "lat",
     "lon",
     "AREA_LABEL",
+    "AI_LABEL",
+    "AI_JOB",
     "POSTED",
     "LAST_UPDATED_DATE",
     "NAICS_2022_2_NAME",
@@ -166,23 +168,6 @@ df.groupby("AREA_LABEL")["SKILL_LEVEL"].value_counts(normalize=True)
 ```
 
 
-```{python}
-#| echo: false
-import pandas as pd
-from IPython.display import display
-
-data = {
-    ('Rural', 'Medium'): 0.629944,
-    ('Rural', 'High'):   0.324859,
-    ('Rural', 'Low'):    0.045198,
-    ('Urban', 'Medium'): 0.594947,
-    ('Urban', 'High'):   0.359018,
-    ('Urban', 'Low'):    0.046035,
-}
-proportion_df = pd.Series(data)
-proportion_df.index.names = ['AREA_LABEL', 'SKILL_LEVEL']
-display(proportion_df.to_frame('proportion'))
-```
 
 ## Job Counts Over Time by Skill Level in Urban and Rural Areas
 This graph clearly shows a distinct trend of skill and spatial differentiation. The number of high-skilled positions in urban areas has continued to grow significantly, while the growth of medium and low-skilled positions has been relatively slow; in contrast, the overall number of positions in rural areas is lower, and the changes in each skill level are relatively small. This indicates that employment growth is mainly concentrated in high-skilled fields in cities, while the overall development of the rural labor market is relatively sluggish.
@@ -222,7 +207,6 @@ fig = px.line(
 fig.update_layout(template="plotly_white")
 fig.show()
 ```
-![](visualizations/1AREA_Job_Counts_Over_Time.png)
 
 
 
@@ -278,7 +262,7 @@ fig = px.bar(
 fig.update_layout(template="plotly_white")
 fig.show()
 ```
-![](visualizations/2AREA_Skill_Composition_in_AI.png)
+
 
 ## Skill Distribution (Proportion) in AI vs Non-AI Jobs
 This chart further compares the differences in skill proportions between AI-related positions and non-AI positions. It can be seen that in AI positions, the proportion of highly skilled workers is significantly higher than in non-AI positions, while the proportion of medium-skilled workers has decreased, and the proportion of low-skilled workers remains at a relatively low level. At the same time, this structure is basically the same in urban and rural areas, but the proportion of highly skilled workers is slightly higher in cities, indicating that AI-related positions have a more concentrated demand for highly skilled labor.
@@ -308,7 +292,6 @@ fig = px.bar(
 fig.update_layout(template="plotly_white")
 fig.show()
 ```
-![](visualizations/3AREA_Skill_Distribution.png)
 
 ## High-Skill Job Salary: Urban vs Rural
 The chart provides partial evidence that AI does not affect workers uniformly. While AI-related jobs tend to offer slightly higher salaries, the wide overlap in distributions suggests that not all workers benefit equally. This aligns with the idea that AI creates uneven outcomes, enhancing some workers while offering limited gains to others.
@@ -344,7 +327,6 @@ fig.update_layout(template="plotly_white")
 fig.show()
 
 ```
-![](visualizations/4AREA_High_Skill_Job_Salary.png)
 
 ## Model
 
@@ -543,15 +525,4 @@ coef_df = pd.DataFrame({
 })
 
 print(coef_df)
-```
-```{python}
-#| echo: false
-import pandas as pd
-from IPython.display import display
-
-coef_df = pd.DataFrame({
-    'Feature': ['AI_JOB', 'URBAN_BINARY', 'MIN_YEARS_EXPERIENCE', 'AI_URBAN_INTERACTION', 'SKILL_LEVEL_Medium', 'SKILL_LEVEL_High', 'AI_SKILL_INTERACTION'],
-    'Coefficient': [0.079960, 0.150160, 0.046561, -0.095228, 0.113236, 0.263699, -0.010044]
-})
-display(coef_df)
 ```
