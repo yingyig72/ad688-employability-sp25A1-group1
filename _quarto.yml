@@ -3,6 +3,9 @@ project:
 
 execute:
   freeze: true
+  echo: false
+  warning: false
+  message: false
   
 website:
   title: "AD688 Team 1 Spring 2026"
