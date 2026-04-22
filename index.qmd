@@ -63,8 +63,8 @@ How have job descriptions evolved to require AI and machine learning expertise?
 
 ::: {.g-col-12 .g-col-md-6}
 ::: {.research-card}
-### Data Science Demand
-Which industries are hiring the most data scientists, and what does the growth look like?
+### Job Outlook for U.S. Cities and States
+Which U.S. cities or states have the highest job growth for AI vs. non-AI careers?
 
 [Read analysis →](ricardo.html){.card-link}
 
@@ -74,8 +74,8 @@ Which industries are hiring the most data scientists, and what does the growth l
 
 ::: {.g-col-12 .g-col-md-6}
 ::: {.research-card}
-### Job Outlook by US Cities and States 
-Which U.S. cities or states have the highest job growth for AI vs. non-AI careers?
+### Remote Job Outlook
+Are remote jobs increasing or decreasing across industries?
 
 [Read analysis →](tianyi.html){.card-link}
 
