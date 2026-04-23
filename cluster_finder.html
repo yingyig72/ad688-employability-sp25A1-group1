@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Omar Mohamed">
+<meta name="author" content="Omar Mohd Haris">
 
 <title>Job Cluster Finder – AD688 Team 1 Spring 2026</title>
 <style>
@@ -204,7 +204,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Omar Mohamed </p>
+             <p>Omar Mohd Haris </p>
           </div>
   </div>
     
@@ -255,32 +255,30 @@ ul.task-list li input[type="checkbox"] {
   next to the rendered HTML (i.e. alongside ai_ml_evolution.html in _site/).
   If you keep the JSON somewhere else, adjust the fetch() path below.
 -->
+
 <div id="cluster-finder" style="font-family: system-ui, sans-serif; max-width: 900px; margin: 2em 0;">
-<h3 style="margin-top: 0;" class="anchored">
-Find Your Job Cluster
-</h3>
-<p style="color: #555;">
-Select the skills you have (or want to develop). We’ll match you to the closest cluster of job postings in the Lightcast dataset using cosine similarity against the K-means centroids.
-</p>
-<div style="margin: 1em 0;">
-<pre><code>&lt;input
-  id="skill-search"
-  type="text"
-  placeholder="Search skills (e.g. Python, SQL, Tableau)..."
-  style="width: 100%; padding: 0.6em; font-size: 1em; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;"
-/&gt;</code></pre>
-</div>
-<div id="skill-grid" style="display: flex; flex-wrap: wrap; gap: 0.4em; max-height: 260px; overflow-y: auto; border: 1px solid #eee; padding: 0.8em; border-radius: 6px; background: #fafafa;">
+  <h3 style="margin-top: 0;" class="anchored">Find Your Job Cluster</h3>
+  <p style="color: #555;">
+    Select the skills you have (or want to develop). We'll match you to the
+    closest cluster of job postings in the Lightcast dataset using cosine
+    similarity against the K-means centroids.
+  </p>
 
-</div>
-<div id="selected-tray" style="margin-top: 0.8em; min-height: 2em; font-size: 0.9em; color: #333;">
-<pre><code>&lt;strong&gt;Selected (0):&lt;/strong&gt; &lt;span id="selected-list" style="color: #888;"&gt;none yet&lt;/span&gt;</code></pre>
-</div>
-<p><button id="match-btn" style="margin-top: 1em; padding: 0.7em 1.4em; font-size: 1em; border: none; border-radius: 6px; background: #2563eb; color: white; cursor: pointer;">Find My Cluster</button></p>
-<div id="results" style="margin-top: 1.5em;">
+  <div style="margin: 1em 0;">
+    <input id="skill-search" type="text" placeholder="Search skills (e.g. Python, SQL, Tableau)..." style="width: 100%; padding: 0.6em; font-size: 1em; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+  </div>
 
+  <div id="skill-grid" style="display: flex; flex-wrap: wrap; gap: 0.4em; max-height: 260px; overflow-y: auto; border: 1px solid #eee; padding: 0.8em; border-radius: 6px; background: #fafafa;"></div>
+
+  <div id="selected-tray" style="margin-top: 0.8em; min-height: 2em; font-size: 0.9em; color: #333;">
+    <strong>Selected (0):</strong> <span id="selected-list" style="color: #888;">none yet</span>
+  </div>
+
+  <button id="match-btn" style="margin-top: 1em; padding: 0.7em 1.4em; font-size: 1em; border: none; border-radius: 6px; background: #2563eb; color: white; cursor: pointer;">Find My Cluster</button>
+
+  <div id="results" style="margin-top: 1.5em;"></div>
 </div>
-</div>
+
 <script>
 (function () {
   const state = {
@@ -428,6 +426,7 @@ Select the skills you have (or want to develop). We’ll match you to the closes
   document.getElementById("match-btn").addEventListener("click", renderResults);
 })();
 </script>
+
 </section>
 <section id="interpreting-the-results" class="level2">
 <h2 class="anchored" data-anchor-id="interpreting-the-results">Interpreting the Results</h2>
