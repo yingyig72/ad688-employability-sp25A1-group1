@@ -3,7 +3,7 @@
    ============================================ */
 
 /* Import editorial-feeling fonts */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
   --accent: #1a2b4a;
@@ -20,12 +20,91 @@ body {
   color: var(--text);
   background: var(--bg);
   line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, .quarto-title-block .title {
   font-family: 'Fraunces', Georgia, serif;
   font-weight: 500;
   letter-spacing: -0.01em;
+}
+
+/* ---- Navbar: blend with page + animated underline ---- */
+.navbar {
+  background-color: var(--bg) !important;
+  box-shadow: none;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background-color 0.3s ease;
+}
+
+.navbar-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  color: var(--accent) !important;
+  letter-spacing: -0.01em;
+}
+
+.navbar .nav-link,
+.navbar .dropdown-toggle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: var(--text) !important;
+  transition: color 0.2s ease;
+  position: relative;
+  padding: 0.5rem 1rem !important;
+}
+
+/* Sliding underline on hover */
+.navbar .nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+
+.navbar .nav-link:hover::before,
+.navbar .nav-link.active::before {
+  transform: scaleX(1);
+}
+
+.navbar .nav-link:hover,
+.navbar .dropdown-toggle:hover,
+.navbar-brand:hover {
+  color: var(--accent) !important;
+}
+
+/* Dropdown polish */
+.dropdown-menu {
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(26, 43, 74, 0.08);
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin-top: 0.5rem !important;
+  background: var(--card-bg);
+}
+
+.dropdown-menu .dropdown-item {
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  white-space: normal;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: var(--bg);
+  color: var(--accent);
+  transform: translateX(3px);
 }
 
 /* ---- Title banner polish ---- */
@@ -168,6 +247,22 @@ h2.unnumbered, .unnumbered > h2 {
   letter-spacing: 0.08em;
 }
 
+/* ---- Generic Quarto cards (lift on hover) ---- */
+.card,
+.quarto-grid-item,
+.quarto-listing .list-item {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  border: 1px solid var(--border);
+}
+
+.card:hover,
+.quarto-grid-item:hover,
+.quarto-listing .list-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(26, 43, 74, 0.09);
+  border-color: var(--accent-soft);
+}
+
 /* ---- Topic cards ---- */
 .topic-card {
   background: linear-gradient(135deg, #f5f3ee 0%, #ffffff 100%);
@@ -175,11 +270,12 @@ h2.unnumbered, .unnumbered > h2 {
   border-radius: 14px;
   padding: 2rem;
   height: 100%;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .topic-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(26, 43, 74, 0.06);
 }
 
 .topic-card h4 {
@@ -220,6 +316,7 @@ h2.unnumbered, .unnumbered > h2 {
   .quarto-title-block .subtitle { font-size: 1rem; }
   .stat-card { font-size: 1.75rem; padding: 1.25rem 1rem; }
   h2.unnumbered, .unnumbered > h2 { font-size: 1.6rem; }
+  .navbar .nav-link::before { display: none; } /* cleaner on mobile collapsed menu */
 }
 
 /* ---- Smooth scroll ---- */
