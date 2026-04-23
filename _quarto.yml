@@ -52,3 +52,6 @@ format:
     css: styles.css
     toc: true
     bibliography: references.bib
+    include-after-body:
+      text: |
+        <script src="/custom.js"></script>
