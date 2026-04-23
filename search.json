@@ -676,41 +676,48 @@
     "href": "yingyi.html",
     "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
     "section": "",
-    "text": "FORCE UPDATE 999 ## 1. Introduction Artificial intelligence (AI) is rapidly transforming labor markets, but its impact is not uniform across regions or skill groups. Rather than simply increasing or decreasing employment, AI reshapes the structure of work by altering skill demand, wage distribution, and geographic concentration of opportunities. Existing research suggests that AI disproportionately benefits high-skilled workers while displacing routine and low-skilled labor, particularly in urban areas (Mookerjee, SSRN 5840003). At the same time, rural labor markets face structural constraints, where limited opportunities interact with strong geographic attachment, leading individuals to adjust their career expectations downward (Niccolai et al., 2022). This paper investigates how AI affects labor market outcomes across urban and rural areas by focusing on three key dimensions: skill composition, wage inequality, and job distribution over time. By combining descriptive visualization and regression analysis, this study aims to understand whether AI amplifies spatial inequality and how skill-based transformations shape these patterns."
+    "text": "Artificial intelligence (AI) is rapidly transforming labor markets, but its impact is not uniform across regions or skill groups. Rather than simply increasing or decreasing employment, AI reshapes the structure of work by altering skill demand, wage distribution, and geographic concentration of opportunities. Existing research suggests that AI disproportionately benefits high-skilled workers while displacing routine and low-skilled labor, particularly in urban areas (Mookerjee, SSRN 5840003). At the same time, rural labor markets face structural constraints, where limited opportunities interact with strong geographic attachment, leading individuals to adjust their career expectations downward (Niccolai et al., 2022). This paper investigates how AI affects labor market outcomes across urban and rural areas by focusing on three key dimensions: skill composition, wage inequality, and job distribution over time. By combining descriptive visualization and regression analysis, this study aims to understand whether AI amplifies spatial inequality and how skill-based transformations shape these patterns."
+  },
+  {
+    "objectID": "yingyi.html#introduction",
+    "href": "yingyi.html#introduction",
+    "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
+    "section": "",
+    "text": "Artificial intelligence (AI) is rapidly transforming labor markets, but its impact is not uniform across regions or skill groups. Rather than simply increasing or decreasing employment, AI reshapes the structure of work by altering skill demand, wage distribution, and geographic concentration of opportunities. Existing research suggests that AI disproportionately benefits high-skilled workers while displacing routine and low-skilled labor, particularly in urban areas (Mookerjee, SSRN 5840003). At the same time, rural labor markets face structural constraints, where limited opportunities interact with strong geographic attachment, leading individuals to adjust their career expectations downward (Niccolai et al., 2022). This paper investigates how AI affects labor market outcomes across urban and rural areas by focusing on three key dimensions: skill composition, wage inequality, and job distribution over time. By combining descriptive visualization and regression analysis, this study aims to understand whether AI amplifies spatial inequality and how skill-based transformations shape these patterns."
   },
   {
     "objectID": "yingyi.html#literature-review",
     "href": "yingyi.html#literature-review",
     "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
-    "section": "0.1 2. Literature Review",
-    "text": "0.1 2. Literature Review\nA growing body of literature highlights that AI does not affect all workers equally. Mookerjee (SSRN 5840003) finds that AI increases demand for high-skilled labor while reducing opportunities for routine and low-skilled jobs, particularly in urban economies. This suggests that AI contributes to wage polarization and skill-biased inequality.\nFrom a structural perspective, Shen (2024) argues that AI primarily transforms tasks rather than eliminating entire occupations. Routine tasks are increasingly automated, while non-routine, cognitive, and analytical tasks become more valuable. As a result, labor demand shifts toward medium- and high-skill roles, leading to a reconfiguration of skill composition.\nSpatial inequality is further emphasized by Capello and Lenzi (2023), who show that automation produces different outcomes across regions. In rural areas, low-skilled workers are more likely to exit the labor market entirely due to limited reallocation opportunities. In contrast, urban areas experience restructuring rather than simple job loss, with increasing dominance of high-skilled employment but also rising inequality.\nGeographic concentration also plays a key role. AI-related jobs remain heavily clustered in major metropolitan areas such as San Francisco, New York, and Seattle, although some diffusion to secondary cities is emerging (Ather et al., 2024). Despite this, access to opportunities remains uneven.\nFinally, beyond economic constraints, social factors also shape labor outcomes. Niccolai et al. (2022) show that rural workers often prioritize staying in their communities despite limited job availability, creating a tension between aspiration and opportunity. This highlights that labor market outcomes are shaped not only by demand but also by social and geographic constraints."
+    "section": "0.2 Literature Review",
+    "text": "0.2 Literature Review\nA growing body of literature highlights that AI does not affect all workers equally. Mookerjee (SSRN 5840003) finds that AI increases demand for high-skilled labor while reducing opportunities for routine and low-skilled jobs, particularly in urban economies. This suggests that AI contributes to wage polarization and skill-biased inequality.\nFrom a structural perspective, Shen (2024) argues that AI primarily transforms tasks rather than eliminating entire occupations. Routine tasks are increasingly automated, while non-routine, cognitive, and analytical tasks become more valuable. As a result, labor demand shifts toward medium- and high-skill roles, leading to a reconfiguration of skill composition.\nSpatial inequality is further emphasized by Capello and Lenzi (2023), who show that automation produces different outcomes across regions. In rural areas, low-skilled workers are more likely to exit the labor market entirely due to limited reallocation opportunities. In contrast, urban areas experience restructuring rather than simple job loss, with increasing dominance of high-skilled employment but also rising inequality.\nGeographic concentration also plays a key role. AI-related jobs remain heavily clustered in major metropolitan areas such as San Francisco, New York, and Seattle, although some diffusion to secondary cities is emerging (Ather et al., 2024). Despite this, access to opportunities remains uneven.\nFinally, beyond economic constraints, social factors also shape labor outcomes. Niccolai et al. (2022) show that rural workers often prioritize staying in their communities despite limited job availability, creating a tension between aspiration and opportunity. This highlights that labor market outcomes are shaped not only by demand but also by social and geographic constraints."
   },
   {
     "objectID": "yingyi.html#data-methodology",
     "href": "yingyi.html#data-methodology",
     "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
-    "section": "0.2 3. Data & Methodology",
-    "text": "0.2 3. Data & Methodology\nThis study uses job-level data including salary, skill level, AI classification, geographic classification (urban vs rural), and years of experience.\nThe analysis includes:\nDescriptive visualizations: Salary distribution (boxplots) Skill composition (stacked bars) Skill distribution (proportions) Job trends over time (line charts)"
+    "section": "0.3 Data & Methodology",
+    "text": "0.3 Data & Methodology\nThis study uses job-level data including salary, skill level, AI classification, geographic classification (urban vs rural), and years of experience.\nThe analysis includes:\nDescriptive visualizations: Salary distribution (boxplots) Skill composition (stacked bars) Skill distribution (proportions) Job trends over time (line charts)"
   },
   {
     "objectID": "yingyi.html#data-loading",
     "href": "yingyi.html#data-loading",
     "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
-    "section": "0.3 4. Data Loading",
-    "text": "0.3 4. Data Loading"
+    "section": "0.4 Data Loading",
+    "text": "0.4 Data Loading"
   },
   {
     "objectID": "yingyi.html#define-aiarea-and-skill-level-keywords",
     "href": "yingyi.html#define-aiarea-and-skill-level-keywords",
     "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
-    "section": "0.4 5. Define AI，Area, and Skill Level keywords",
-    "text": "0.4 5. Define AI，Area, and Skill Level keywords"
+    "section": "0.5 Define AI，Area, and Skill Level keywords",
+    "text": "0.5 Define AI，Area, and Skill Level keywords"
   },
   {
     "objectID": "yingyi.html#results",
     "href": "yingyi.html#results",
     "title": "Urban vs. Rural Job Markets for AI and Non-AI Careers",
-    "section": "0.5 6. Results",
-    "text": "0.5 6. Results"
+    "section": "0.6 Results",
+    "text": "0.6 Results"
   }
 ]
