@@ -139,11 +139,11 @@ div.csl-indent {
   </li>  
         <li>
     <a class="dropdown-item" href="./tianyi.html">
- <span class="dropdown-text">Are Remote Jobs Increasing or Decreasing?</span></a>
+ <span class="dropdown-text">Do Tech Hubs Still Dominate Hiring?</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./zichen.html">
- <span class="dropdown-text">Do Tech Hubs Still Dominate Hiring?</span></a>
+ <span class="dropdown-text">Are remote jobs increasing or decreasing across industries?</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./yingyi.html">
@@ -278,7 +278,7 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="key-variables">Key Variables</h2>
 <p>This analysis uses the 2024 Lightcast job postings dataset to examine changes in remote job share across industries. To answer the research question, three variables are especially important: <code>NAICS_2022_6_NAME</code>, <code>REMOTE_TYPE_NAME</code>, and <code>POSTED</code>. Together, these fields provide the industry classification, the remote-work label, and the posting date needed to track industry-level changes in remote hiring over time.</p>
 <p>These variables make it possible to analyze remote job postings at the industry-month level. Specifically, <code>NAICS_2022_6_NAME</code> identifies the industry of each posting, <code>REMOTE_TYPE_NAME</code> indicates whether the position is labeled as remote or non-remote, and <code>POSTED</code> provides the time information needed to compare remote job share from May to September 2024.</p>
-<div id="d4476546" class="cell" data-message="false" data-execution_count="1">
+<div id="6bb8e6c2" class="cell" data-message="false" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>Total postings: 72,498
                             NAICS_2022_6_NAME REMOTE_TYPE_NAME    POSTED
@@ -302,7 +302,7 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="remote-work-classification">Remote Work Classification</h2>
 <p>Because the raw values in <code>REMOTE_TYPE_NAME</code> are not fully standardized, I grouped postings into three broader categories: <code>Remote</code>, <code>Hybrid</code>, and <code>Onsite</code>. Postings explicitly labeled <code>Remote</code> were classified as remote roles, postings labeled <code>Hybrid Remote</code> were classified as hybrid roles, and postings labeled <code>Not Remote</code> or missing values such as <code>[None]</code> were grouped with on-site roles for simplicity.</p>
 <p>This classification step makes the dataset easier to interpret and provides a more consistent basis for industry-level comparison. Since the goal of this section is to evaluate whether remote opportunities increased or decreased across industries, the later analysis focuses specifically on the share of postings classified as <code>Remote</code>.</p>
-<div id="ef5dfe58" class="cell" data-message="false" data-execution_count="2">
+<div id="1ed28c6f" class="cell" data-message="false" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>month
 2024-05    15133
@@ -330,7 +330,7 @@ Name: count, dtype: int64
 <h1>Monthly Remote Share by Industry</h1>
 <p>After defining the remote-work categories, the next step is to calculate the monthly share of postings classified as <code>Remote</code> within each industry. This measure is more informative than raw posting counts because industries differ substantially in overall hiring volume. By converting remote postings into percentages, I can compare remote hiring patterns across industries on a more consistent basis.</p>
 <p>This percentage-based approach is also appropriate for the research question because the goal is not simply to identify which industries posted the most jobs, but rather to examine how remote hiring changed within each industry over time. Prior research suggests that remote-work feasibility and remote-job prevalence vary substantially across industries rather than following a single labor market pattern <span class="citation" data-cites="dingel2020 hansen2023">(<a href="#ref-dingel2020" role="doc-biblioref">Dingel and Neiman 2020</a>; <a href="#ref-hansen2023" role="doc-biblioref">Hansen et al. 2023</a>)</span>. Measuring remote share at the industry-month level therefore provides a clearer basis for evaluating whether remote opportunities were increasing or decreasing across sectors.</p>
-<div id="134d4340" class="cell" data-message="false" data-execution_count="3">
+<div id="37aba0c8" class="cell" data-message="false" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
@@ -538,7 +538,7 @@ Name: count, dtype: int64
 <section id="main-results" class="level2">
 <h2 class="anchored" data-anchor-id="main-results">Main Results</h2>
 <p>To evaluate whether remote jobs were increasing or decreasing across industries, I compared each industry’s remote job share in May 2024 with its corresponding share in September 2024. This comparison provides a straightforward summary of the overall direction of change during the period and helps identify which industries became more remote-oriented and which became less so.</p>
-<div id="4f1b31f6" class="cell" data-message="false" data-execution_count="4">
+<div id="03bfc6fd" class="cell" data-message="false" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>month                                                 2024-05    2024-09  \
 NAICS_2022_6_NAME                                                          
@@ -577,15 +577,6 @@ Computer Systems Design Services                            -8.388648
 Custom Computer Programming Services                       -10.473097  </code></pre>
 </div>
 </div>
-<div id="d8e01c66" class="cell" data-message="false" data-execution_count="5">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="zichen_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
 <p>The bar chart provides a clear visual comparison of changes in remote job share across industries between May and September 2024. The results show that remote job trends were mixed across industries rather than moving in one uniform direction. Several industries experienced increases in remote job share during this period. The strongest increase appeared in General Medical and Surgical Hospitals, followed by Unclassified Industry and All Other Professional, Scientific, and Technical Services. In contrast, the steepest decline appeared in Custom Computer Programming Services, followed by Computer Systems Design Services and Other Computer Related Services.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -607,15 +598,6 @@ Custom Computer Programming Services                       -10.473097  </code></
 <h2 class="anchored" data-anchor-id="month-to-month-patterns">Month-to-Month Patterns</h2>
 <p>Although the previous figure summarizes the net change in remote job share from May to September 2024, it does not show how that change developed from month to month. To better understand the time path of remote hiring, I plotted the industries with the largest increases and the largest decreases in remote job share over the period.</p>
 <p>This figure adds an important layer to the analysis because industries may arrive at a similar final increase or decrease through very different monthly patterns. Some industries may show relatively steady movement, while others may fluctuate substantially before ending higher or lower in September than in May.</p>
-<div id="67fb6f31" class="cell" data-message="false" data-execution_count="6">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="zichen_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
 <p>The line chart shows that remote job trends did not evolve in the same way across industries from month to month. Industries with positive end-of-period changes generally moved upward overall, whereas industries with negative end-of-period changes tended to move downward or remained volatile before ending lower in September than in May.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
