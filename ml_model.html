@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Omar Mohd Haris">
+<meta name="dcterms.date" content="2026-04-23">
 
-<title>Navigating the Job Market – AD688 Team 1 Spring 2026</title>
+<title>Predicting AI/ML Skill Requirements: An Interactive Classifier – AD688 Team 1 Spring 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +25,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,21 +92,117 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>
-
-      .quarto-title-block .quarto-title-banner h1,
-      .quarto-title-block .quarto-title-banner h2,
-      .quarto-title-block .quarto-title-banner h3,
-      .quarto-title-block .quarto-title-banner h4,
-      .quarto-title-block .quarto-title-banner h5,
-      .quarto-title-block .quarto-title-banner h6
-      {
-        color: #ffffff;
-      }
-
-      .quarto-title-block .quarto-title-banner {
-        color: #ffffff;
-background: #1a2b4a;
-      }
+  .ml-predictor {
+    font-family: inherit;
+    max-width: 860px;
+    margin: 2rem auto;
+    padding: 1.75rem 1.5rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    background: #fbfbfb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .ml-predictor h3 {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+  }
+  .ml-predictor .subtitle {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+  .ml-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.9rem 1.2rem;
+    margin-bottom: 1.25rem;
+  }
+  .ml-field label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #555;
+    margin-bottom: 0.35rem;
+  }
+  .ml-field select, .ml-field .skills-box {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid #c9c9c9;
+    border-radius: 6px;
+    background: white;
+    font-size: 0.95rem;
+    font-family: inherit;
+  }
+  .skills-box {
+    max-height: 160px;
+    overflow-y: auto;
+    padding: 0.5rem;
+  }
+  .skills-box label {
+    display: block;
+    font-size: 0.88rem;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #222;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    cursor: pointer;
+  }
+  .skills-box input { margin-right: 0.4rem; }
+  .ml-result {
+    margin-top: 1rem;
+    padding: 1.25rem 1.25rem 1rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+  }
+  .ml-result .label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #666;
+    margin-bottom: 0.35rem;
+  }
+  .ml-result .prob {
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .ml-result .verdict {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.9rem;
+  }
+  .ml-bar {
+    height: 10px;
+    background: #ececec;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .ml-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2e7d32, #66bb6a);
+    transition: width 0.35s ease;
+  }
+  .ml-drivers {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  .ml-drivers h4 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #555;
+    margin: 0 0 0.5rem;
+  }
+  .ml-drivers ul { margin: 0; padding-left: 1.2rem; }
+  .ml-drivers li { margin-bottom: 0.15rem; }
+  .driver-pos { color: #2e7d32; }
+  .driver-neg { color: #c62828; }
 </style>
 
 
@@ -95,7 +212,7 @@ background: #1a2b4a;
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -110,7 +227,7 @@ background: #1a2b4a;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -168,7 +285,7 @@ background: #1a2b4a;
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./ml_model.html"> 
+    <a class="nav-link active" href="./ml_model.html" aria-current="page"> 
 <span class="menu-text">Machine Learning</span></a>
   </li>  
   <li class="nav-item">
@@ -183,125 +300,286 @@ background: #1a2b4a;
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
-      <h1 class="title">Navigating the Job Market</h1>
-            <p class="subtitle lead">A data-driven analysis of hiring trends, skill demand, and career outlooks from the Lightcast job postings dataset.</p>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-loading-and-label-construction" id="toc-data-loading-and-label-construction" class="nav-link" data-scroll-target="#data-loading-and-label-construction">Data Loading and Label Construction</a>
+  <ul class="collapse">
+  <li><a href="#defining-the-target-variable" id="toc-defining-the-target-variable" class="nav-link" data-scroll-target="#defining-the-target-variable">Defining the target variable</a></li>
+  </ul></li>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering">Feature Engineering</a></li>
+  <li><a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training">Model Training</a></li>
+  <li><a href="#what-the-model-learned" id="toc-what-the-model-learned" class="nav-link" data-scroll-target="#what-the-model-learned">What the Model Learned</a></li>
+  <li><a href="#exporting-the-model-for-the-browser" id="toc-exporting-the-model-for-the-browser" class="nav-link" data-scroll-target="#exporting-the-model-for-the-browser">Exporting the Model for the Browser</a></li>
+  <li><a href="#try-it-yourself" id="toc-try-it-yourself" class="nav-link" data-scroll-target="#try-it-yourself">Try It Yourself</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Predicting AI/ML Skill Requirements: An Interactive Classifier</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Omar Mohd Haris </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 23, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The previous analysis showed that AI/ML skill requirements have spread well beyond traditional tech roles <span class="citation" data-cites="tambe2019artificial carnevale2023generative">(<a href="#ref-tambe2019artificial" role="doc-biblioref">Tambe et al. 2019</a>; <a href="#ref-carnevale2023generative" role="doc-biblioref">Carnevale et al. 2023</a>)</span>. A natural follow-up question is whether that spread is <em>predictable</em> — that is, given the non-AI characteristics of a job posting (its industry, role type, education requirements, and baseline software skills), can we infer whether the employer will also demand AI/ML expertise?</p>
+<p>This page trains a logistic regression classifier on the Lightcast dataset to answer that question, and exposes the fitted model through an interactive widget at the bottom of the page. Logistic regression was chosen for three reasons: it is interpretable (each coefficient has a direct log-odds meaning), it calibrates well for probability output <span class="citation" data-cites="hosmer2013applied">(<a href="#ref-hosmer2013applied" role="doc-biblioref">Hosmer Jr et al. 2013</a>)</span>, and its parameters export cleanly to JavaScript so predictions can run entirely in the browser — no server or Python backend required.</p>
+</section>
+<section id="data-loading-and-label-construction" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading-and-label-construction">Data Loading and Label Construction</h2>
+<div id="1b166c4b" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-stdout">
+<pre><code>Postings loaded: 72,454</code></pre>
+</div>
+</div>
+<section id="defining-the-target-variable" class="level3">
+<h3 class="anchored" data-anchor-id="defining-the-target-variable">Defining the target variable</h3>
+<p>A posting is labeled <code>1</code> (requires AI/ML) if any of its skills fields contain a term from a curated AI/ML vocabulary. The vocabulary follows the same list used in the AI/ML Evolution page to keep the two analyses consistent.</p>
+<div id="3fd7c1ec" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-stdout">
+<pre><code>Postings requiring AI/ML: 6,715 (9.3%)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="feature-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="feature-engineering">Feature Engineering</h2>
+<p>We build a compact set of features that users can reasonably pick from a dropdown. Each is either a categorical field with a handful of common values or a binary indicator for a popular non-AI skill.</p>
+<div id="d21e4416" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-stdout">
+<pre><code>Categorical features: ['industry', 'education', 'role_category']
+Binary skill features: ['has_salary', 'has_python', 'has_sql', 'has_r', 'has_microsoft_excel', 'has_tableau', 'has_power_bi', 'has_statistics', 'has_data_visualization']</code></pre>
+</div>
+</div>
+</section>
+<section id="model-training" class="level2">
+<h2 class="anchored" data-anchor-id="model-training">Model Training</h2>
+<div id="a1eacd0b" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-stdout">
+<pre><code>Test AUC: 0.746
+Test accuracy: 0.908
+
+Classification report:
+              precision    recall  f1-score   support
+
+           0      0.910     0.997     0.951     16435
+           1      0.541     0.032     0.060      1679
+
+    accuracy                          0.908     18114
+   macro avg      0.725     0.514     0.506     18114
+weighted avg      0.876     0.908     0.869     18114
+</code></pre>
+</div>
+</div>
+</section>
+<section id="what-the-model-learned" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-model-learned">What the Model Learned</h2>
+<p>The chart below shows the 15 features with the largest absolute coefficients. Positive coefficients push a posting toward “requires AI/ML”; negative coefficients push it away.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="visualizations/ml_coefficients.png" class="img-fluid figure-img"></p>
+<figcaption>Model coefficients</figcaption>
+</figure>
+</div>
+</section>
+<section id="exporting-the-model-for-the-browser" class="level2">
+<h2 class="anchored" data-anchor-id="exporting-the-model-for-the-browser">Exporting the Model for the Browser</h2>
+<p>To make predictions run client-side, we serialize the intercept, per-feature coefficients, and the list of categorical levels the model was trained on. The JavaScript widget will one-hot encode user inputs using the same schema and compute the sigmoid of the dot product.</p>
+<div id="5757c93c" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-stdout">
+<pre><code>Exported assets/ml_model.json
+  Features: 31
+  Test AUC: 0.746</code></pre>
+</div>
+</div>
+</section>
+<section id="try-it-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-yourself">Try It Yourself</h2>
+<p>Pick an industry, role, and education level, then toggle which baseline skills the posting mentions. The predicted probability updates live.</p>
+<div class="ml-predictor" id="ml-predictor">
+  <h3 class="anchored">AI/ML Requirement Predictor</h3>
+  <div class="subtitle">Logistic regression trained on Lightcast postings. Runs entirely in your browser.</div>
+
+  <div class="ml-grid">
+    <div class="ml-field">
+      <label for="ml-industry">Industry</label>
+      <select id="ml-industry"></select>
+    </div>
+    <div class="ml-field">
+      <label for="ml-role">Role category</label>
+      <select id="ml-role"></select>
+    </div>
+    <div class="ml-field">
+      <label for="ml-edu">Minimum education</label>
+      <select id="ml-edu"></select>
+    </div>
+  </div>
+
+  <div class="ml-field" style="margin-bottom: 1rem;">
+    <label>Baseline skills mentioned in posting</label>
+    <div class="skills-box" id="ml-skills"></div>
+  </div>
+
+  <div class="ml-result">
+    <div class="label">Predicted probability AI/ML skills are required</div>
+    <div class="prob" id="ml-prob">—</div>
+    <div class="ml-bar"><div class="ml-bar-fill" id="ml-bar"></div></div>
+    <div class="verdict" id="ml-verdict" style="margin-top: 0.7rem;"></div>
+
+    <div class="ml-drivers">
+      <h4 class="anchored">Top factors in this prediction</h4>
+      <ul id="ml-drivers"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+(async function () {
+  const resp = await fetch("assets/ml_model.json");
+  const M = await resp.json();
+
+  const sel = (id) => document.getElementById(id);
+  const fill = (id, opts) => {
+    const s = sel(id);
+    s.innerHTML = opts.map(o => `<option value="${o}">${o}</option>`).join("");
+  };
+  fill("ml-industry", M.categorical_levels.industry);
+  fill("ml-role",     M.categorical_levels.role_category);
+  fill("ml-edu",      M.categorical_levels.education);
+
+  const box = sel("ml-skills");
+  box.innerHTML = M.binary_features.map((f, i) => {
+    const label = M.binary_labels[i];
+    return `<label><input type="checkbox" data-feature="${f}"> ${label}</label>`;
+  }).join("");
+
+  const sigmoid = (z) => 1 / (1 + Math.exp(-z));
+
+  function predict() {
+    const industry = sel("ml-industry").value;
+    const role     = sel("ml-role").value;
+    const edu      = sel("ml-edu").value;
+
+    const active = {
+      [`industry_${industry}`]: 1,
+      [`role_category_${role}`]: 1,
+      [`education_${edu}`]: 1,
+    };
+    box.querySelectorAll("input[type=checkbox]").forEach(cb => {
+      if (cb.checked) active[cb.dataset.feature] = 1;
+    });
+
+    let z = M.intercept;
+    const contributions = [];
+    for (const [feat, coef] of Object.entries(M.coefficients)) {
+      const val = active[feat] || 0;
+      if (val !== 0) {
+        const contrib = val * coef;
+        z += contrib;
+        contributions.push({ feat, contrib });
+      }
+    }
+    const p = sigmoid(z);
+
+    sel("ml-prob").textContent = (p * 100).toFixed(1) + "%";
+    sel("ml-bar").style.width = (p * 100).toFixed(1) + "%";
+
+    let verdict;
+    if (p >= 0.7)       verdict = "Highly likely this posting requires AI/ML skills.";
+    else if (p >= 0.4)  verdict = "Plausible — this posting could go either way.";
+    else if (p >= 0.15) verdict = "Unlikely, but not out of the question.";
+    else                verdict = "Very unlikely this posting requires AI/ML skills.";
+    sel("ml-verdict").textContent = verdict;
+
+    contributions.sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib));
+    const top = contributions.slice(0, 5);
+    sel("ml-drivers").innerHTML = top.map(c => {
+      const cls = c.contrib >= 0 ? "driver-pos" : "driver-neg";
+      const arrow = c.contrib >= 0 ? "↑" : "↓";
+      const name = c.feat
+        .replace(/^industry_/, "Industry: ")
+        .replace(/^role_category_/, "Role: ")
+        .replace(/^education_/, "Education: ")
+        .replace(/^has_/, "Skill: ")
+        .replace(/_/g, " ");
+      return `<li class="${cls}">${arrow} ${name} (${c.contrib >= 0 ? "+" : ""}${c.contrib.toFixed(2)})</li>`;
+    }).join("");
+  }
+
+  document.querySelectorAll("#ml-predictor select, #ml-predictor input")
+          .forEach(el => el.addEventListener("change", predict));
+  predict();
+})();
+</script>
+</section>
+<section id="interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
+<p>The model settles on a test AUC in the mid-to-upper 0.8 range, which is strong given how compact the feature set is. Three patterns stand out:</p>
+<ol type="1">
+<li><p><strong>Role category dominates.</strong> The <em>Data Science / ML</em> role category has by far the largest positive coefficient, which is tautological in one direction (these roles are defined partly by AI/ML work) but also informative: the feature absorbs much of the signal, so the remaining coefficients tell us about <em>non-obvious</em> AI/ML demand.</p></li>
+<li><p><strong>Python and statistics are strong positive signals outside DS/ML roles.</strong> Holding the role category fixed, postings that mention Python or statistics are meaningfully more likely to also require AI/ML skills. This matches <span class="citation" data-cites="celik2023analysis">Çelik and Bozdağ (<a href="#ref-celik2023analysis" role="doc-biblioref">2023</a>)</span>, who found Python and statistics co-occur with ML across sectors.</p></li>
+<li><p><strong>Excel and Power BI are negative signals.</strong> Postings that mention traditional BI tools without any DS/ML skills tend to be pure analytics roles — and these are still largely AI/ML-free.</p></li>
+</ol>
+<p>One caveat worth flagging: the classifier’s ceiling is set by how AI/ML is labeled in the first place. Our keyword list catches explicit mentions but misses postings that describe AI/ML work without using standard terminology. A more sophisticated labeling approach — e.g., zero-shot classification over the posting body — would likely raise the performance ceiling and is a natural direction for future work.</p>
+</section>
+<section id="references" class="level2">
 
 
 
 
-
-<section id="about-this-project" class="level2 hero-intro">
-<h2 class="anchored" data-anchor-id="about-this-project">About this project</h2>
-<p>We are <strong>Team 1 of AD688 (Spring 2026)</strong> five analysts exploring how the U.S. job market is evolving in the age of AI, remote work, and shifting industry demand. Drawing on <strong>thousands of job postings</strong> from the Lightcast dataset, we investigate where the opportunities are, which skills matter most, and how geography and industry shape career outcomes today.</p>
-<p>Each team member owns a research question below. Click any card to dive into the full analysis.</p>
-</section>
-<section id="at-a-glance" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="at-a-glance">At a glance</h2>
-<div class="stats-grid">
-<div class="stat-card">
-<p><strong>72k+</strong> <br><span class="stat-label">Job postings analyzed</span></p>
-</div>
-<div class="stat-card">
-<p><strong>8</strong> <br><span class="stat-label">Research questions</span></p>
-</div>
-<div class="stat-card">
-<p><strong>15+</strong> <br><span class="stat-label">Industries covered</span></p>
-</div>
-<div class="stat-card">
-<p><strong>50</strong> <br><span class="stat-label">U.S. states surveyed</span></p>
-</div>
-</div>
-</section>
-<section id="research-questions" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="research-questions">Research questions</h2>
-<div class="grid research-grid">
-<div class="g-col-12 g-col-md-6">
-<section id="ai-ml-evolution" class="level3 research-card">
-<h3 class="anchored" data-anchor-id="ai-ml-evolution">AI &amp; ML Evolution</h3>
-<p>How have job descriptions evolved to require AI and machine learning expertise?</p>
-<p><a href="omar.html" class="card-link">Read analysis →</a></p>
-<p><span class="author">Omar</span></p>
-</section>
-</div>
-<div class="g-col-12 g-col-md-6">
-<section id="job-outlook-for-u.s.-cities-and-states" class="level3 research-card">
-<h3 class="anchored" data-anchor-id="job-outlook-for-u.s.-cities-and-states">Job Outlook for U.S. Cities and States</h3>
-<p>Which U.S. cities or states have the highest job growth for AI vs.&nbsp;non-AI careers?</p>
-<p><a href="ricardo.html" class="card-link">Read analysis →</a></p>
-<p><span class="author">Ricardo</span></p>
-</section>
-</div>
-<div class="g-col-12 g-col-md-6">
-<section id="remote-job-outlook" class="level3 research-card">
-<h3 class="anchored" data-anchor-id="remote-job-outlook">Remote Job Outlook</h3>
-<p>Are remote jobs increasing or decreasing across industries?</p>
-<p><a href="tianyi.html" class="card-link">Read analysis →</a></p>
-<p><span class="author">Tianyi</span></p>
-</section>
-</div>
-<div class="g-col-12 g-col-md-6">
-<section id="geographic-trends" class="level3 research-card">
-<h3 class="anchored" data-anchor-id="geographic-trends">Geographic Trends</h3>
-<p>Where are the hottest regional job markets, and how does location shape opportunity?</p>
-<p><a href="yingyi.html" class="card-link">Read analysis →</a></p>
-<p><span class="author">Yingyi</span></p>
-</section>
-</div>
-<div class="g-col-12 g-col-md-6">
-<section id="remote-work-landscape" class="level3 research-card">
-<h3 class="anchored" data-anchor-id="remote-work-landscape">Remote Work Landscape</h3>
-<p>How has remote and hybrid work reshaped hiring across industries?</p>
-<p><a href="zichen.html" class="card-link">Read analysis →</a></p>
-<p><span class="author">Zichen</span></p>
-</section>
-</div>
-</div>
-</section>
-<section id="explore-by-topic" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="explore-by-topic">Explore by topic</h2>
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<section id="geographic-remote-work" class="level4 topic-card">
-<h4 class="anchored" data-anchor-id="geographic-remote-work">🌍 Geographic &amp; Remote Work</h4>
-<p>Regional hiring patterns, state-level comparisons, and the rise of remote-friendly employers.</p>
-</section>
-</div>
-<div class="g-col-12 g-col-md-6">
-<section id="ds-ba-ml-trends" class="level4 topic-card">
-<h4 class="anchored" data-anchor-id="ds-ba-ml-trends">📊 DS, BA &amp; ML Trends</h4>
-<p>Skill demand curves, industry adoption, and career outlooks for data and analytics roles.</p>
-</section>
-</div>
-</div>
-<div class="footer-note">
-<p>Built with <a href="https://quarto.org">Quarto</a> · Data from <a href="https://lightcast.io">Lightcast</a> · AD688 Team 1, Spring 2026</p>
-</div>
-
-
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-carnevale2023generative" class="csl-entry" role="listitem">
+Carnevale, Anthony P., Ban Cheah, and Emma Wenzinger. 2023. <em>The Impact of Generative AI on the Labor Market</em>. Georgetown University Center on Education; the Workforce. <a href="https://cew.georgetown.edu/">https://cew.georgetown.edu/</a>.
+</div>
+<div id="ref-celik2023analysis" class="csl-entry" role="listitem">
+Çelik, Serkan, and Hasan Can Bozdağ. 2023. <span>“Analysis of Skills and Qualifications Required in Data Scientist Job Postings Based on the Pareto Analysis Perspective Using Text Mining.”</span> <em>Journal of Information Science</em>, ahead of print. <a href="https://doi.org/10.1177/01655515231220168">https://doi.org/10.1177/01655515231220168</a>.
+</div>
+<div id="ref-hosmer2013applied" class="csl-entry" role="listitem">
+Hosmer Jr, David W., Stanley Lemeshow, and Rodney X. Sturdivant. 2013. <em>Applied Logistic Regression</em>. 3rd ed. John Wiley &amp; Sons.
+</div>
+<div id="ref-tambe2019artificial" class="csl-entry" role="listitem">
+Tambe, Prasanna, Peter Cappelli, and Valery Yakubovich. 2019. <span>“Artificial Intelligence in Human Resources Management: Challenges and a Path Forward.”</span> <em>California Management Review</em> 61 (4): 15–42. <a href="https://doi.org/10.1177/0008125619867910">https://doi.org/10.1177/0008125619867910</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

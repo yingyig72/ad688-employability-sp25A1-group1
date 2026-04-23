@@ -63,7 +63,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-92ccca19d14c0bd04edafc1952284584.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-4897d45d2f75ed4f519693be625836c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -143,7 +143,7 @@ div.csl-indent {
  <span class="dropdown-text">Do Tech Hubs Still Dominate Hiring?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./yingyi.html">
+    <a class="dropdown-item" href="./yingyi.qmd">
  <span class="dropdown-text">Urban vs.&nbsp;Rural Job Markets for AI &amp; Non-AI Careers</span></a>
   </li>  
     </ul>
@@ -171,6 +171,10 @@ div.csl-indent {
   </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./ml_model.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="./references.html"> 
 <span class="menu-text">References</span></a>
@@ -246,7 +250,7 @@ div.csl-indent {
 <section id="data-loading" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading">Data Loading</h2>
 <p>We load the cleaned Lightcast dataset produced by our shared <a href="./data_cleaning.html">Data Cleaning</a> page. This file has already been deduplicated, date-parsed, and had its skills columns split into Python lists, so we can jump straight into analysis.</p>
-<div id="ed06ab94" class="cell" data-execution_count="1">
+<div id="3ca94579" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>Total postings: 72,454</code></pre>
 </div>
@@ -255,7 +259,7 @@ div.csl-indent {
 <section id="filtering-for-relevant-roles" class="level2">
 <h2 class="anchored" data-anchor-id="filtering-for-relevant-roles">Filtering for Relevant Roles</h2>
 <p>To focus on data science, business analytics, and ML roles, we categorize each posting using keywords matched against the <code>title_name</code> (Lightcast’s standardized job title) and <code>onet_name</code> (Bureau of Labor Statistics occupation classification) columns. This dual-column approach ensures we capture roles that may have non-standard titles but are classified under relevant O*NET codes.</p>
-<div id="aa01267b" class="cell" data-execution_count="2">
+<div id="55d2363d" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>Filtered to 72,454 relevant postings (100.0%)
 
@@ -269,7 +273,7 @@ Data Science / ML            585</code></pre>
 <section id="top-30-most-in-demand-skills-overall" class="level2">
 <h2 class="anchored" data-anchor-id="top-30-most-in-demand-skills-overall">Top 30 Most In-Demand Skills (Overall)</h2>
 <p>We explode the skill lists so that each skill–posting pair becomes its own row, then count the frequency of each skill across all filtered postings. This gives us the overall demand landscape. This approach is consistent with how <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span> extracted and categorized skill keywords from job posting text.</p>
-<div id="28ca8221" class="cell" data-execution_count="3">
+<div id="c620b77b" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 =================================================================
@@ -313,7 +317,7 @@ Rank  Skill                                      Count  % Posts
 <section id="top-20-software-and-tools" class="level2">
 <h2 class="anchored" data-anchor-id="top-20-software-and-tools">Top 20 Software and Tools</h2>
 <p>Lightcast separately tags software and tool skills in the <code>software_skills_name</code> column, allowing us to isolate the specific technologies employers require. The dominance of SQL in this ranking aligns with findings from <span class="citation" data-cites="verma2019investigation">Verma et al. (<a href="#ref-verma2019investigation" role="doc-biblioref">2019</a>)</span>, who identified SQL as the most frequently listed technical requirement in analytics job advertisements.</p>
-<div id="0e682f09" class="cell" data-execution_count="4">
+<div id="0f9e53fe" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 =================================================================
@@ -345,7 +349,7 @@ TOP 20 SOFTWARE / TOOLS
 <section id="skills-breakdown-by-role-category" class="level2">
 <h2 class="anchored" data-anchor-id="skills-breakdown-by-role-category">Skills Breakdown by Role Category</h2>
 <p>Here we compare the top 10 skills within each role category. This comparison reveals important differences: Data Science/ML roles prioritize Python, Machine Learning, and Statistics, while Business Analytics/BI roles emphasize Communication, Management, and Business Process knowledge. This distinction echoes the findings of <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span>, who noted that data science emphasizes computer systems, algorithms, and programming skills, whereas business data analytics has a substantial focus on statistical and quantitative analysis of data. <span class="citation" data-cites="levendis2025business">Levendis et al. (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span> similarly found that business analytics employers seek a blend of technical and communication skills.</p>
-<div id="7248feae" class="cell" data-execution_count="5">
+<div id="1c3f6ead" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>
   =======================================================

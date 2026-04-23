@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-92ccca19d14c0bd04edafc1952284584.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-4897d45d2f75ed4f519693be625836c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -161,7 +161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Do Tech Hubs Still Dominate Hiring?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./yingyi.html">
+    <a class="dropdown-item" href="./yingyi.qmd">
  <span class="dropdown-text">Urban vs.&nbsp;Rural Job Markets for AI &amp; Non-AI Careers</span></a>
   </li>  
     </ul>
@@ -189,6 +189,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./ml_model.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="./references.html"> 
 <span class="menu-text">References</span></a>
@@ -261,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="load-the-raw-data" class="level2">
 <h2 class="anchored" data-anchor-id="load-the-raw-data">1. Load the raw data</h2>
-<div id="9f2475b8" class="cell" data-execution_count="1">
+<div id="64ee85f4" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -286,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="select-the-columns-our-team-actually-uses" class="level2">
 <h2 class="anchored" data-anchor-id="select-the-columns-our-team-actually-uses">2. Select the columns our team actually uses</h2>
 <p>The raw file has many columns we don’t need. We keep only those referenced across the five research questions (skills, industry, geography, remote work, salary, education, timing).</p>
-<div id="a6b123d4" class="cell" data-execution_count="2">
+<div id="09694f17" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>keep_cols <span class="op">=</span> [</span>
@@ -325,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="standardize-column-names" class="level2">
 <h2 class="anchored" data-anchor-id="standardize-column-names">3. Standardize column names</h2>
 <p>Lowercase, underscore-separated names are easier to type and less error-prone across teammates.</p>
-<div id="66415acf" class="cell" data-execution_count="3">
+<div id="a8f8f49d" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.columns <span class="op">=</span> df.columns.<span class="bu">str</span>.lower()</span>
@@ -422,7 +426,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="parse-date-columns" class="level2">
 <h2 class="anchored" data-anchor-id="parse-date-columns">4. Parse date columns</h2>
 <p><code>posted</code> and <code>expired</code> come in as strings. Parsing them now lets every downstream page do time-based filtering without reparsing.</p>
-<div id="409ea4ce" class="cell" data-execution_count="4">
+<div id="b5f2796a" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"posted"</span>, <span class="st">"expired"</span>]:</span>
@@ -482,7 +486,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="drop-rows-with-no-posting-date-or-no-title" class="level2">
 <h2 class="anchored" data-anchor-id="drop-rows-with-no-posting-date-or-no-title">5. Drop rows with no posting date or no title</h2>
 <p>A row missing both a date and a job title can’t contribute to any of our research questions.</p>
-<div id="a0782224" class="cell" data-execution_count="5">
+<div id="ed782710" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>before <span class="op">=</span> <span class="bu">len</span>(df)</span>
@@ -497,7 +501,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="deduplicate" class="level2">
 <h2 class="anchored" data-anchor-id="deduplicate">6. Deduplicate</h2>
 <p>Lightcast sometimes includes the same posting more than once. We dedupe on <code>id</code> when available, otherwise on the combination of title + company + posted date.</p>
-<div id="26e9b44c" class="cell" data-execution_count="6">
+<div id="d9d3d3c0" class="cell" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>before <span class="op">=</span> <span class="bu">len</span>(df)</span>
@@ -515,7 +519,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="clean-salary-fields" class="level2">
 <h2 class="anchored" data-anchor-id="clean-salary-fields">7. Clean salary fields</h2>
 <p>Salaries have outliers (e.g., hourly rates mis-coded as annual, or placeholder values like <code>1</code> or <code>999999</code>). We clip to a sensible annual range and flag valid salary rows.</p>
-<div id="0d23dfc4" class="cell" data-execution_count="7">
+<div id="3e3a4aea" class="cell" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"salary"</span>, <span class="st">"salary_from"</span>, <span class="st">"salary_to"</span>]:</span>
@@ -535,7 +539,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="standardize-remote-work-categories" class="level2">
 <h2 class="anchored" data-anchor-id="standardize-remote-work-categories">8. Standardize remote work categories</h2>
 <p><code>remote_type_name</code> has inconsistent casing and a mix of nulls. We collapse it to three clean buckets: <code>Remote</code>, <code>Hybrid</code>, <code>On-site</code>.</p>
-<div id="4066b47f" class="cell" data-execution_count="8">
+<div id="8e6e79d4" class="cell" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> standardize_remote(x):</span>
@@ -563,7 +567,7 @@ Name: count, dtype: int64</code></pre>
 <section id="clean-skills-columns" class="level2">
 <h2 class="anchored" data-anchor-id="clean-skills-columns">9. Clean skills columns</h2>
 <p>Lightcast stores skills as JSON arrays inside string columns. The raw values look like <code>["Python", "SQL", "Machine Learning"]</code> (sometimes with extra whitespace or newlines). We parse the JSON properly so each row ends up as a clean list of skill strings — no surrounding quotes, no leftover brackets, no blank entries.</p>
-<div id="c7a9940e" class="cell" data-execution_count="9">
+<div id="e386da15" class="cell" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> split_skills(x):</span>
@@ -608,7 +612,7 @@ Name: count, dtype: int64</code></pre>
 <section id="standardize-geography" class="level2">
 <h2 class="anchored" data-anchor-id="standardize-geography">10. Standardize geography</h2>
 <p>State names and city names sometimes have trailing whitespace or inconsistent casing.</p>
-<div id="dd0e7623" class="cell" data-execution_count="10">
+<div id="074551ea" class="cell" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"state_name"</span>, <span class="st">"city_name"</span>, <span class="st">"county_name"</span>, <span class="st">"msa_name"</span>]:</span>
@@ -619,7 +623,7 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="summary-of-the-cleaned-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="summary-of-the-cleaned-dataset">11. Summary of the cleaned dataset</h2>
-<div id="0ac909ff" class="cell" data-execution_count="11">
+<div id="fc41302f" class="cell" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Final shape: </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> rows x </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span>
@@ -653,7 +657,7 @@ Business Process              13278
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="0db64514" class="cell" data-execution_count="12">
+<div id="301b7283" class="cell" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df.dtypes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -694,7 +698,7 @@ dtype: object</code></pre>
 </section>
 <section id="save-the-cleaned-file" class="level2">
 <h2 class="anchored" data-anchor-id="save-the-cleaned-file">12. Save the cleaned file</h2>
-<div id="4ba6335f" class="cell" data-execution_count="13">
+<div id="4aa12ebe" class="cell" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert list columns back to pipe-separated strings for CSV compatibility.</span></span>

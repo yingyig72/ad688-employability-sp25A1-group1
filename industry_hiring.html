@@ -63,7 +63,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-92ccca19d14c0bd04edafc1952284584.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-4897d45d2f75ed4f519693be625836c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -143,7 +143,7 @@ div.csl-indent {
  <span class="dropdown-text">Do Tech Hubs Still Dominate Hiring?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./yingyi.html">
+    <a class="dropdown-item" href="./yingyi.qmd">
  <span class="dropdown-text">Urban vs.&nbsp;Rural Job Markets for AI &amp; Non-AI Careers</span></a>
   </li>  
     </ul>
@@ -171,6 +171,10 @@ div.csl-indent {
   </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./ml_model.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="./references.html"> 
 <span class="menu-text">References</span></a>
@@ -248,7 +252,7 @@ div.csl-indent {
 <section id="data-loading" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading">Data Loading</h2>
 <p>We load the cleaned Lightcast dataset produced by our shared <a href="./data_cleaning.html">Data Cleaning</a> page. This file has already been deduplicated, date-parsed, and had its skills columns split into Python lists.</p>
-<div id="de83ac9a" class="cell" data-execution_count="1">
+<div id="cbecf36f" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>Total postings: 72,454</code></pre>
 </div>
@@ -257,7 +261,7 @@ div.csl-indent {
 <section id="identifying-data-science-roles" class="level2">
 <h2 class="anchored" data-anchor-id="identifying-data-science-roles">Identifying Data Science Roles</h2>
 <p>We filter the dataset to postings related to data science using keywords matched against the <code>title_name</code> and <code>onet_name</code> columns. This dual-column approach ensures broad coverage of data science roles regardless of how individual employers title their positions.</p>
-<div id="af8699b3" class="cell" data-execution_count="2">
+<div id="c08ae12b" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>Data science related postings: 14,214 (19.6% of all postings)</code></pre>
 </div>
@@ -266,7 +270,7 @@ div.csl-indent {
 <section id="top-industries-hiring-data-scientists" class="level2">
 <h2 class="anchored" data-anchor-id="top-industries-hiring-data-scientists">Top Industries Hiring Data Scientists</h2>
 <p>We use the NAICS 2-digit industry classification (<code>naics2_name</code>) to group data science postings by sector. This level of aggregation provides a clear view of which broad industry categories are driving demand. The cross-industry spread of data science hiring aligns with what <span class="citation" data-cites="manyika2011big">Manyika et al. (<a href="#ref-manyika2011big" role="doc-biblioref">2011</a>)</span> anticipated — that demand for analytical talent would extend well beyond the technology sector into healthcare, finance, and manufacturing.</p>
-<div id="837f8d4f" class="cell" data-execution_count="3">
+<div id="b84808ec" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 =================================================================
@@ -306,7 +310,7 @@ Rank  Industry                                        Count       %
 <section id="data-science-concentration-by-industry" class="level2">
 <h2 class="anchored" data-anchor-id="data-science-concentration-by-industry">Data Science Concentration by Industry</h2>
 <p>Raw posting counts can be misleading — a large industry may post many data science jobs simply because it posts many jobs overall. To control for this, we calculate the data science concentration rate: the percentage of an industry’s total postings that are data science roles. This reveals which industries are most intensely focused on hiring data scientists relative to their overall hiring volume.</p>
-<div id="b626ae01" class="cell" data-execution_count="5">
+<div id="2010ba21" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ======================================================================
@@ -341,7 +345,7 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 <section id="skills-demanded-by-top-industries" class="level2">
 <h2 class="anchored" data-anchor-id="skills-demanded-by-top-industries">Skills Demanded by Top Industries</h2>
 <p>Different industries may require different skill profiles from their data scientists. Here we compare the most in-demand skills across the top 5 industries to understand how employer expectations vary by sector. <span class="citation" data-cites="celik2023analysis">Çelik and Bozdağ (<a href="#ref-celik2023analysis" role="doc-biblioref">2023</a>)</span> found that while core skills like Python and Machine Learning are universally demanded, the relative importance of domain-specific competencies shifts significantly across industries.</p>
-<div id="bd2e3bba" class="cell" data-execution_count="7">
+<div id="735ac58c" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>
   =======================================================
@@ -425,7 +429,7 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 <section id="salary-comparison-across-industries" class="level2">
 <h2 class="anchored" data-anchor-id="salary-comparison-across-industries">Salary Comparison Across Industries</h2>
 <p>Compensation is a key indicator of how much an industry values data science talent. We compare median salaries across the top industries to understand which sectors are paying a premium for data scientists. <span class="citation" data-cites="davenport2022still">Davenport and Patil (<a href="#ref-davenport2022still" role="doc-biblioref">2022</a>)</span> noted that experienced data scientists command salaries approaching $200,000 in some markets, but compensation varies significantly by industry and region.</p>
-<div id="0559f1d4" class="cell" data-execution_count="9">
+<div id="88a7ef90" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ===========================================================================
@@ -460,7 +464,7 @@ Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 
 <section id="education-requirements-by-industry" class="level2">
 <h2 class="anchored" data-anchor-id="education-requirements-by-industry">Education Requirements by Industry</h2>
 <p>We examine whether different industries have varying education expectations for data science roles, which may help explain hiring patterns and talent pipeline challenges.</p>
-<div id="a4a0d4e3" class="cell" data-execution_count="11">
+<div id="09aafe3f" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
 <pre><code>
   Professional, Scientific, and Technical Services (3,506 postings)
@@ -503,7 +507,7 @@ Administrative and Support and Waste Man  1184 $   80,900 $   90,630 $   70,156 
 <section id="experience-requirements-by-industry" class="level2">
 <h2 class="anchored" data-anchor-id="experience-requirements-by-industry">Experience Requirements by Industry</h2>
 <p>Similarly, we compare the minimum years of experience required across industries to understand how entry barriers differ by sector.</p>
-<div id="5cb514b2" class="cell" data-execution_count="12">
+<div id="a1efdfce" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 =================================================================
