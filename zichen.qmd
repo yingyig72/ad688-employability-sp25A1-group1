@@ -38,7 +38,7 @@ from IPython import get_ipython
 ip = get_ipython()
 if ip is not None:
     ip.run_line_magic("matplotlib", "inline")
-df = pd.read_csv("data/lightcast_job_postings.csv", low_memory=False)
+pd.read_csv("./data/lightcast_job_postings.csv", low_memory=False)
 
 print(f"Total postings: {len(df):,}")
 print(df[['NAICS_2022_6_NAME', 'REMOTE_TYPE_NAME', 'POSTED']].head())
