@@ -1,5 +1,9 @@
 project:
   type: website
+  render:
+    - "*.qmd"
+    - "!yingyi.qmd"
+
 
 execute:
   freeze: true
