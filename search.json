@@ -158,14 +158,14 @@
     "href": "index.html",
     "title": "Navigating the Job Market",
     "section": "",
-    "text": "We are Team 1 of AD688 (Spring 2026) five analysts exploring how the U.S. job market is evolving in the age of AI, remote work, and shifting industry demand. Drawing on thousands of job postings from the Lightcast dataset, we investigate where the opportunities are, which skills matter most, and how geography and industry shape career outcomes today.\nEach team member owns a research question below. Click any card to dive into the full analysis."
+    "text": "Hiring Activity\n      —\n      \n    \n\n    \n    \n      Arc color\n      \n        \n        In-person heavy\n      \n      \n        \n        Remote heavy\n      \n      Arc height\n      = posting volume\n    \n\n    \n    \n  \n\n  \n  \n    ▶ Play\n    \n    —\n  \n\n  \n    Each arc reaches from the geographic center of the U.S. to a hiring hub; arc height reflects posting volume and arc color reflects the share of remote roles. Drag to rotate, scroll to zoom, and scrub the timeline to see how hiring shifted over time."
   },
   {
     "objectID": "index.html#about-this-project",
     "href": "index.html#about-this-project",
     "title": "Navigating the Job Market",
-    "section": "",
-    "text": "We are Team 1 of AD688 (Spring 2026) five analysts exploring how the U.S. job market is evolving in the age of AI, remote work, and shifting industry demand. Drawing on thousands of job postings from the Lightcast dataset, we investigate where the opportunities are, which skills matter most, and how geography and industry shape career outcomes today.\nEach team member owns a research question below. Click any card to dive into the full analysis."
+    "section": "About this project",
+    "text": "About this project\nWe are Team 1 of AD688 (Spring 2026) five analysts exploring how the U.S. job market is evolving in the age of AI, remote work, and shifting industry demand. Drawing on thousands of job postings from the Lightcast dataset, we investigate where the opportunities are, which skills matter most, and how geography and industry shape career outcomes today.\nEach team member owns a research question below. Click any card to dive into the full analysis."
   },
   {
     "objectID": "index.html#at-a-glance",
