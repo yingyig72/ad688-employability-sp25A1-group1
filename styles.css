@@ -337,5 +337,39 @@ h2.unnumbered, .unnumbered > h2 {
   .navbar .nav-link::before { display: none; }
 }
 
+/* ============================================
+   Append to your existing styles.css
+   Page transition styles (pairs with custom.js)
+   ============================================ */
+
+/* Initial state: body is transparent until JS adds .page-loaded */
+body.page-transition-ready {
+  opacity: 0;
+  transition: opacity 0.25s ease-out;
+}
+
+body.page-transition-ready.page-loaded {
+  opacity: 1;
+}
+
+body.page-transition-ready.page-leaving {
+  opacity: 0;
+  transition: opacity 0.22s ease-in;
+}
+
+/* Safety net: if JS fails to load, the page still shows */
+@media (prefers-reduced-motion: reduce) {
+  body.page-transition-ready,
+  body.page-transition-ready.page-loaded,
+  body.page-transition-ready.page-leaving {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
+/* Extra safety: if .page-transition-ready never gets applied
+   (JS blocked, etc.), the body stays visible by default since
+   only .page-transition-ready sets opacity: 0 */
+
 /* ---- Smooth scroll ---- */
 html { scroll-behavior: smooth; }
