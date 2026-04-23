@@ -25,7 +25,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -235,8 +254,8 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Business analytics has emerged as one of the fastest-growing professional fields, driven by organizations’ increasing reliance on data-driven decision-making. <span class="citation" data-cites="radovilsky2018skills">(<a href="#ref-radovilsky2018skills" role="doc-biblioref"><strong>radovilsky2018skills?</strong></a>)</span> conducted a comparative analysis of over 1,000 job postings and found that business analytics roles emphasize statistical analysis, decision-making support, and data management — a distinct profile from data science roles, which lean more heavily on programming and algorithms. <span class="citation" data-cites="verma2019investigation">(<a href="#ref-verma2019investigation" role="doc-biblioref"><strong>verma2019investigation?</strong></a>)</span> similarly examined job advertisements and identified SQL, Excel, and visualization tools as core requirements across analytics positions.</p>
-<p>More recently, <span class="citation" data-cites="levendis2025business">(<a href="#ref-levendis2025business" role="doc-biblioref"><strong>levendis2025business?</strong></a>)</span> analyzed over 2,600 job postings and identified the most sought-after skills for business analytics roles, finding that analytics, communication, visualization, and problem-solving consistently top the list. <span class="citation" data-cites="umamaheswaran2023employers">(<a href="#ref-umamaheswaran2023employers" role="doc-biblioref"><strong>umamaheswaran2023employers?</strong></a>)</span> used a text-mining approach to study business analytics job descriptions and found that employers increasingly expect a blend of technical skills (including machine learning) alongside soft skills like stakeholder management — suggesting that the BA role is evolving beyond its traditional boundaries.</p>
+<p>Business analytics has emerged as one of the fastest-growing professional fields, driven by organizations’ increasing reliance on data-driven decision-making. <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span> conducted a comparative analysis of over 1,000 job postings and found that business analytics roles emphasize statistical analysis, decision-making support, and data management — a distinct profile from data science roles, which lean more heavily on programming and algorithms. <span class="citation" data-cites="verma2019investigation">Verma et al. (<a href="#ref-verma2019investigation" role="doc-biblioref">2019</a>)</span> similarly examined job advertisements and identified SQL, Excel, and visualization tools as core requirements across analytics positions.</p>
+<p>More recently, <span class="citation" data-cites="levendis2025business">Levendis et al. (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span> analyzed over 2,600 job postings and identified the most sought-after skills for business analytics roles, finding that analytics, communication, visualization, and problem-solving consistently top the list. <span class="citation" data-cites="umamaheswaran2023employers">Umamaheswaran et al. (<a href="#ref-umamaheswaran2023employers" role="doc-biblioref">2023</a>)</span> used a text-mining approach to study business analytics job descriptions and found that employers increasingly expect a blend of technical skills (including machine learning) alongside soft skills like stakeholder management — suggesting that the BA role is evolving beyond its traditional boundaries.</p>
 <p>This analysis uses the Lightcast job postings dataset to examine the career outlook for business analytics professionals, including demand trends, salary prospects, skill requirements, and how the BA role compares to adjacent data roles.</p>
 </section>
 <section id="data-loading" class="level2">
@@ -313,7 +332,7 @@ Data Analytics                  6958 $   93,868 $  101,594 $   74,308 $  118,229
 </section>
 <section id="skills-profile-for-business-analytics-roles" class="level2">
 <h2 class="anchored" data-anchor-id="skills-profile-for-business-analytics-roles">Skills Profile for Business Analytics Roles</h2>
-<p>Understanding the skills employers demand is essential for career planning. <span class="citation" data-cites="levendis2025business">(<a href="#ref-levendis2025business" role="doc-biblioref"><strong>levendis2025business?</strong></a>)</span> found that the top skills for business analytics include analytics, communication, visualization, and problem-solving. We examine whether our dataset confirms these findings and how the BA skill profile compares to other data roles.</p>
+<p>Understanding the skills employers demand is essential for career planning. <span class="citation" data-cites="levendis2025business">Levendis et al. (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span> found that the top skills for business analytics include analytics, communication, visualization, and problem-solving. We examine whether our dataset confirms these findings and how the BA skill profile compares to other data roles.</p>
 <div id="40dfe919" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -353,7 +372,7 @@ Rank  Skill                                      Count       %
 </section>
 <section id="skills-comparison-ba-vs-other-data-roles" class="level2">
 <h2 class="anchored" data-anchor-id="skills-comparison-ba-vs-other-data-roles">Skills Comparison: BA vs Other Data Roles</h2>
-<p><span class="citation" data-cites="radovilsky2018skills">(<a href="#ref-radovilsky2018skills" role="doc-biblioref"><strong>radovilsky2018skills?</strong></a>)</span> noted that business analytics emphasizes statistical analysis and decision support while data science prioritizes programming and algorithms. We test this distinction by comparing the prevalence of key skills across all four role categories.</p>
+<p><span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span> noted that business analytics emphasizes statistical analysis and decision support while data science prioritizes programming and algorithms. We test this distinction by comparing the prevalence of key skills across all four role categories.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="visualizations/ba_skills_comparison.png" class="img-fluid figure-img"></p>
@@ -545,20 +564,34 @@ Rank  State                       Postings
 <ol type="1">
 <li><p><strong>Sustained demand</strong> — Business analytics and BI roles represent a significant share of data-related job postings, and demand has remained steady over the observation period, confirming the field’s maturity and stability.</p></li>
 <li><p><strong>Competitive compensation</strong> — While BA salaries may trail those of data science and data engineering roles, they remain competitive and are bolstered by lower barriers to entry in terms of education and experience requirements.</p></li>
-<li><p><strong>Distinctive skill profile</strong> — Consistent with the findings of <span class="citation" data-cites="radovilsky2018skills">(<a href="#ref-radovilsky2018skills" role="doc-biblioref"><strong>radovilsky2018skills?</strong></a>)</span> and <span class="citation" data-cites="levendis2025business">(<a href="#ref-levendis2025business" role="doc-biblioref"><strong>levendis2025business?</strong></a>)</span>, BA roles prioritize SQL, Excel, Tableau/Power BI, communication, and problem-solving over the Python-heavy, ML-focused profile of data science. This distinction creates a clear career path for professionals who prefer applied analytics and stakeholder engagement over model building.</p></li>
-<li><p><strong>Evolving expectations</strong> — As <span class="citation" data-cites="umamaheswaran2023employers">(<a href="#ref-umamaheswaran2023employers" role="doc-biblioref"><strong>umamaheswaran2023employers?</strong></a>)</span> documented, employers are increasingly looking for BA professionals who can bridge the gap between technical analysis and business strategy, blending traditional BI skills with emerging competencies in machine learning and advanced analytics.</p></li>
+<li><p><strong>Distinctive skill profile</strong> — Consistent with the findings of <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span> and <span class="citation" data-cites="levendis2025business">Levendis et al. (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span>, BA roles prioritize SQL, Excel, Tableau/Power BI, communication, and problem-solving over the Python-heavy, ML-focused profile of data science. This distinction creates a clear career path for professionals who prefer applied analytics and stakeholder engagement over model building.</p></li>
+<li><p><strong>Evolving expectations</strong> — As <span class="citation" data-cites="umamaheswaran2023employers">Umamaheswaran et al. (<a href="#ref-umamaheswaran2023employers" role="doc-biblioref">2023</a>)</span> documented, employers are increasingly looking for BA professionals who can bridge the gap between technical analysis and business strategy, blending traditional BI skills with emerging competencies in machine learning and advanced analytics.</p></li>
 <li><p><strong>Broad industry reach</strong> — Business analytics roles span professional services, finance, technology, healthcare, and beyond, offering professionals flexibility in choosing an industry that aligns with their interests.</p></li>
-<li><p><strong>Accessible entry point</strong> — Compared to data science roles, business analytics positions tend to have more flexible education requirements, making the field accessible to professionals with diverse educational backgrounds — a pattern consistent with <span class="citation" data-cites="verma2019investigation">(<a href="#ref-verma2019investigation" role="doc-biblioref"><strong>verma2019investigation?</strong></a>)</span>’s findings.</p></li>
+<li><p><strong>Accessible entry point</strong> — Compared to data science roles, business analytics positions tend to have more flexible education requirements, making the field accessible to professionals with diverse educational backgrounds — a pattern consistent with <span class="citation" data-cites="verma2019investigation">Verma et al. (<a href="#ref-verma2019investigation" role="doc-biblioref">2019</a>)</span>’s findings.</p></li>
 </ol>
 <p>For aspiring analytics professionals, business analytics offers a strong career path with growing demand, competitive pay, and opportunities to develop into leadership roles in data strategy and management.</p>
 </section>
 <section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
+
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-levendis2025business" class="csl-entry" role="listitem">
+Levendis, John, Lori Dickes, and Sarah Wilks. 2025. <span>“The Business Analytics Skills Employers Are Looking For.”</span> <em>Decision Sciences Journal of Innovative Education</em>, ahead of print. <a href="https://doi.org/10.1111/dsji.70004">https://doi.org/10.1111/dsji.70004</a>.
+</div>
+<div id="ref-radovilsky2018skills" class="csl-entry" role="listitem">
+Radovilsky, Zinovy, Vishwanath Hegde, Ankur Acharya, and Ullas Uma. 2018. <span>“Skills Requirements of Business Data Analytics and Data Science Jobs: A Comparative Analysis.”</span> <em>Journal of Supply Chain and Operations Management</em> 16 (1): 82–101.
+</div>
+<div id="ref-umamaheswaran2023employers" class="csl-entry" role="listitem">
+Umamaheswaran, Sathish, Shawn Fernandes, V. G. Venkatesh, Naveen Avula, and Yangyan Shi. 2023. <span>“What Do Employers Look for in <span>‘Business Analytics’</span> Roles? — a Skill Mining Analysis.”</span> <em>Information Systems Frontiers</em>, ahead of print. <a href="https://doi.org/10.1007/s10796-023-10437-y">https://doi.org/10.1007/s10796-023-10437-y</a>.
+</div>
+<div id="ref-verma2019investigation" class="csl-entry" role="listitem">
+Verma, Arun, Kirsten M. Yurov, Peggy L. Lane, and Yuliya V. Yurova. 2019. <span>“An Investigation of Skill Requirements for Business and Data Analytics Positions: A Content Analysis of Job Advertisements.”</span> <em>Journal of Education for Business</em> 94 (4): 243–50. <a href="https://doi.org/10.1080/08832323.2018.1520685">https://doi.org/10.1080/08832323.2018.1520685</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

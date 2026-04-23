@@ -25,7 +25,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -276,8 +295,8 @@ ul.task-list li input[type="checkbox"] {
 <p>There is no single universally accepted official definition of an “AI career” in the same way that there is for occupations such as nursing, teaching, or construction work. Some studies classify only narrow occupations such as AI engineers or machine learning scientists. Others include any job posting that requests AI-related skills. As a result, any serious answer must rely on carefully chosen proxies.</p>
 <p>This report therefore uses two different measurement strategies:</p>
 <ul>
-<li><strong>AI careers:</strong> measured using AI job postings from UMD-LinkUp AI Maps <span class="citation" data-cites="umdlinkup2023states">(<a href="#ref-umdlinkup2023states" role="doc-biblioref"><strong>umdlinkup2023states?</strong></a>)</span>. In that dataset, an “AI job” is a posting that requires AI skills, identified using a fine-tuned large language model rather than a simple keyword approach.</li>
-<li><strong>Non-AI careers:</strong> approximated through broader labor-market growth, using state and metro comparisons from Lightcast’s U.S. Talent Attraction Scorecard <span class="citation" data-cites="lightcast2025scorecard">(<a href="#ref-lightcast2025scorecard" role="doc-biblioref"><strong>lightcast2025scorecard?</strong></a>)</span>. This does not isolate every individual non-AI occupation, but it provides a strong benchmark for identifying places where overall labor demand is expanding rapidly outside the narrow AI segment.</li>
+<li><strong>AI careers:</strong> measured using AI job postings from UMD-LinkUp AI Maps <span class="citation" data-cites="umdlinkup2023states">(<a href="#ref-umdlinkup2023states" role="doc-biblioref">UMD-LinkUp AI Maps (2023a)</a>)</span>. In that dataset, an “AI job” is a posting that requires AI skills, identified using a fine-tuned large language model rather than a simple keyword approach.</li>
+<li><strong>Non-AI careers:</strong> approximated through broader labor-market growth, using state and metro comparisons from Lightcast’s U.S. Talent Attraction Scorecard <span class="citation" data-cites="lightcast2025scorecard">(<a href="#ref-lightcast2025scorecard" role="doc-biblioref">Lightcast (2025)</a>)</span>. This does not isolate every individual non-AI occupation, but it provides a strong benchmark for identifying places where overall labor demand is expanding rapidly outside the narrow AI segment.</li>
 </ul>
 </section>
 <section id="why-this-comparison-still-works" class="level3" data-number="2.2">
@@ -289,7 +308,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="3" class="anchored" data-anchor-id="where-ai-careers-are-growing-most-in-the-united-states"><span class="header-section-number">3</span> Where AI Careers Are Growing Most in the United States</h2>
 <section id="top-u.s.-states-by-ai-job-creation" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="top-u.s.-states-by-ai-job-creation"><span class="header-section-number">3.1</span> Top U.S. States by AI Job Creation</h3>
-<p>According to UMD-LinkUp AI Maps <span class="citation" data-cites="umdlinkup2023states">(<a href="#ref-umdlinkup2023states" role="doc-biblioref"><strong>umdlinkup2023states?</strong></a>)</span>, the leading U.S. states by monthly average AI job postings during January–December 2023 were:</p>
+<p>According to UMD-LinkUp AI Maps <span class="citation" data-cites="umdlinkup2023states">(<a href="#ref-umdlinkup2023states" role="doc-biblioref">UMD-LinkUp AI Maps (2023a)</a>)</span>, the leading U.S. states by monthly average AI job postings during January–December 2023 were:</p>
 <div id="tbl-ai-creation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ai-creation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -364,7 +383,7 @@ Table&nbsp;1: Top 10 U.S. States by AI Job Postings (Monthly Average, 2023)
 </section>
 <section id="top-u.s.-states-by-ai-job-intensity" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="top-u.s.-states-by-ai-job-intensity"><span class="header-section-number">3.2</span> Top U.S. States by AI Job Intensity</h3>
-<p>Absolute scale is not the same thing as specialization. Some states are large and therefore post many AI jobs simply because they have large economies. To account for this, UMD-LinkUp also reports AI job intensity, measured as the percentage of AI jobs among all jobs <span class="citation" data-cites="umdlinkup2023intensity">(<a href="#ref-umdlinkup2023intensity" role="doc-biblioref"><strong>umdlinkup2023intensity?</strong></a>)</span>.</p>
+<p>Absolute scale is not the same thing as specialization. Some states are large and therefore post many AI jobs simply because they have large economies. To account for this, UMD-LinkUp also reports AI job intensity, measured as the percentage of AI jobs among all jobs <span class="citation" data-cites="umdlinkup2023intensity">(<a href="#ref-umdlinkup2023intensity" role="doc-biblioref">UMD-LinkUp AI Maps (2023b)</a>)</span>.</p>
 <div id="tbl-ai-intensity" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ai-intensity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -514,7 +533,7 @@ Table&nbsp;3: Top 10 U.S. States by AI-to-IT Job Intensity (2023)
 </section>
 <section id="top-u.s.-metropolitan-areas-by-ai-job-creation" class="level3" data-number="3.4">
 <h3 data-number="3.4" class="anchored" data-anchor-id="top-u.s.-metropolitan-areas-by-ai-job-creation"><span class="header-section-number">3.4</span> Top U.S. Metropolitan Areas by AI Job Creation</h3>
-<p>At the metropolitan level, UMD-LinkUp identifies the following U.S. metro areas as the leaders in monthly average AI job postings during 2023 <span class="citation" data-cites="umdlinkup2023msa">(<a href="#ref-umdlinkup2023msa" role="doc-biblioref"><strong>umdlinkup2023msa?</strong></a>)</span>:</p>
+<p>At the metropolitan level, UMD-LinkUp identifies the following U.S. metro areas as the leaders in monthly average AI job postings during 2023 <span class="citation" data-cites="umdlinkup2023msa">(<a href="#ref-umdlinkup2023msa" role="doc-biblioref">UMD-LinkUp AI Maps (2023c)</a>)</span>:</p>
 <div id="tbl-ai-metros" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ai-metros-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -602,7 +621,7 @@ Table&nbsp;4: Top 12 U.S. Metro Areas by AI Job Postings (Monthly Average, 2023)
 <h2 data-number="4" class="anchored" data-anchor-id="where-non-ai-or-broad-based-job-growth-is-strongest"><span class="header-section-number">4</span> Where Non-AI or Broad-Based Job Growth Is Strongest</h2>
 <section id="why-broader-job-growth-matters" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="why-broader-job-growth-matters"><span class="header-section-number">4.1</span> Why Broader Job Growth Matters</h3>
-<p>To compare AI with non-AI careers, it is not enough to look only at the technology sector. The relevant question is whether the same places dominating AI are also the same places dominating broader labor-market expansion. For this comparison, Lightcast’s U.S. Talent Attraction Scorecard <span class="citation" data-cites="lightcast2025scorecard">(<a href="#ref-lightcast2025scorecard" role="doc-biblioref"><strong>lightcast2025scorecard?</strong></a>)</span> is useful because it evaluates the strength of state and metro labor markets using employment growth and talent-attraction indicators.</p>
+<p>To compare AI with non-AI careers, it is not enough to look only at the technology sector. The relevant question is whether the same places dominating AI are also the same places dominating broader labor-market expansion. For this comparison, Lightcast’s U.S. Talent Attraction Scorecard <span class="citation" data-cites="lightcast2025scorecard">(<a href="#ref-lightcast2025scorecard" role="doc-biblioref">Lightcast (2025)</a>)</span> is useful because it evaluates the strength of state and metro labor markets using employment growth and talent-attraction indicators.</p>
 </section>
 <section id="leading-u.s.-states-in-broader-job-growth" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="leading-u.s.-states-in-broader-job-growth"><span class="header-section-number">4.2</span> Leading U.S. States in Broader Job Growth</h3>
@@ -776,12 +795,26 @@ Table&nbsp;5: AI vs.&nbsp;Non-AI Career Growth: Summary Comparison
 <p>This distinction matters for workforce strategy, migration decisions, regional development policy, and career planning. A location that is excellent for AI careers is not always the same location that is strongest for non-AI career growth. The most notable exception is <strong>Texas</strong>, which performs strongly in both categories and therefore stands out as a uniquely important state in the U.S. labor-market landscape.</p>
 </section>
 <section id="references" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="references"><span class="header-section-number">10</span> References</h2>
+
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">10 References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-lightcast2025scorecard" class="csl-entry" role="listitem">
+<span class="smallcaps">Lightcast</span>. (2025): <span>“<a href="https://lightcast.io/resources/research/talent-attraction-scorecard-25">2025 Talent Attraction Scorecard</a>,”</span>
+</div>
+<div id="ref-umdlinkup2023states" class="csl-entry" role="listitem">
+<span class="smallcaps">UMD-LinkUp AI Maps</span>. (2023a): <span>“<a href="https://www.aimaps.ai/download/ranking-sheets/1-AI-Jobs-Creation-States.pdf">States: <span>AI</span> Jobs Creation — Monthly Average of <span>AI</span> Job Postings During <span>Jan–Dec</span> 2023</a>,”</span>
+</div>
+<div id="ref-umdlinkup2023intensity" class="csl-entry" role="listitem">
+<span class="smallcaps">---</span>. (2023b): <span>“<a href="https://www.aimaps.ai/download/ranking-sheets/3-AI-Jobs-Intensity-States.pdf">States: <span>AI</span> Jobs Intensity — Percentage of <span>AI</span> Jobs over All Jobs for <span>Jan–Dec</span> 2023</a>,”</span>
+</div>
+<div id="ref-umdlinkup2023msa" class="csl-entry" role="listitem">
+<span class="smallcaps">---</span>. (2023c): <span>“<a href="https://www.aimaps.ai/download/ranking-sheets/5-AI-Jobs-Creation-Top-50-MSAs.pdf">Top 50 <span>MSAs</span> by <span>AI</span> Jobs Creation — Monthly Average of <span>AI</span> Job Postings During <span>Jan–Dec</span> 2023</a>,”</span>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

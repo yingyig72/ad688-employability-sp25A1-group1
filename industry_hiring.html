@@ -25,7 +25,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -230,8 +249,8 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Data science has become a strategic priority across virtually every sector of the economy. <span class="citation" data-cites="davenport2012data">(<a href="#ref-davenport2012data" role="doc-biblioref"><strong>davenport2012data?</strong></a>)</span> first brought widespread attention to the explosive demand for data scientists, noting that companies across industries were competing to hire professionals who could extract insights from large, unstructured datasets. A decade later, <span class="citation" data-cites="davenport2022still">(<a href="#ref-davenport2022still" role="doc-biblioref"><strong>davenport2022still?</strong></a>)</span> revisited this claim and confirmed that data science remains one of the fastest-growing professions, with the U.S. Bureau of Labor Statistics projecting more growth than almost any other field through 2029.</p>
-<p>The diffusion of data science hiring beyond the technology sector has been well documented. <span class="citation" data-cites="manyika2011big">(<a href="#ref-manyika2011big" role="doc-biblioref"><strong>manyika2011big?</strong></a>)</span> predicted that data-driven decision-making would create significant talent shortages across healthcare, retail, and manufacturing. More recently, <span class="citation" data-cites="alshahrani2024data">(<a href="#ref-alshahrani2024data" role="doc-biblioref"><strong>alshahrani2024data?</strong></a>)</span> conducted a comprehensive survey of data science applications in job market analysis, finding that industries ranging from finance to government are leveraging data science for workforce planning, customer analytics, and regulatory compliance. <span class="citation" data-cites="celik2023analysis">(<a href="#ref-celik2023analysis" role="doc-biblioref"><strong>celik2023analysis?</strong></a>)</span> examined data scientist job postings using text mining and confirmed that core skills like Machine Learning, Python, and Statistics are consistently demanded across sectors.</p>
+<p>Data science has become a strategic priority across virtually every sector of the economy. <span class="citation" data-cites="davenport2012data">Davenport and Patil (<a href="#ref-davenport2012data" role="doc-biblioref">2012</a>)</span> first brought widespread attention to the explosive demand for data scientists, noting that companies across industries were competing to hire professionals who could extract insights from large, unstructured datasets. A decade later, <span class="citation" data-cites="davenport2022still">Davenport and Patil (<a href="#ref-davenport2022still" role="doc-biblioref">2022</a>)</span> revisited this claim and confirmed that data science remains one of the fastest-growing professions, with the U.S. Bureau of Labor Statistics projecting more growth than almost any other field through 2029.</p>
+<p>The diffusion of data science hiring beyond the technology sector has been well documented. <span class="citation" data-cites="manyika2011big">Manyika et al. (<a href="#ref-manyika2011big" role="doc-biblioref">2011</a>)</span> predicted that data-driven decision-making would create significant talent shortages across healthcare, retail, and manufacturing. More recently, <span class="citation" data-cites="alshahrani2024data">Alshahrani et al. (<a href="#ref-alshahrani2024data" role="doc-biblioref">2024</a>)</span> conducted a comprehensive survey of data science applications in job market analysis, finding that industries ranging from finance to government are leveraging data science for workforce planning, customer analytics, and regulatory compliance. <span class="citation" data-cites="celik2023analysis">Çelik and Bozdağ (<a href="#ref-celik2023analysis" role="doc-biblioref">2023</a>)</span> examined data scientist job postings using text mining and confirmed that core skills like Machine Learning, Python, and Statistics are consistently demanded across sectors.</p>
 <p>This analysis uses the Lightcast job postings dataset to identify which industries are hiring the most data scientists, examine what skills and qualifications these industries prioritize, and explore why certain sectors have emerged as leading employers.</p>
 </section>
 <section id="data-loading" class="level2">
@@ -254,7 +273,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="top-industries-hiring-data-scientists" class="level2">
 <h2 class="anchored" data-anchor-id="top-industries-hiring-data-scientists">Top Industries Hiring Data Scientists</h2>
-<p>We use the NAICS 2-digit industry classification (<code>naics2_name</code>) to group data science postings by sector. This level of aggregation provides a clear view of which broad industry categories are driving demand. The cross-industry spread of data science hiring aligns with what <span class="citation" data-cites="manyika2011big">(<a href="#ref-manyika2011big" role="doc-biblioref"><strong>manyika2011big?</strong></a>)</span> anticipated — that demand for analytical talent would extend well beyond the technology sector into healthcare, finance, and manufacturing.</p>
+<p>We use the NAICS 2-digit industry classification (<code>naics2_name</code>) to group data science postings by sector. This level of aggregation provides a clear view of which broad industry categories are driving demand. The cross-industry spread of data science hiring aligns with what <span class="citation" data-cites="manyika2011big">Manyika et al. (<a href="#ref-manyika2011big" role="doc-biblioref">2011</a>)</span> anticipated — that demand for analytical talent would extend well beyond the technology sector into healthcare, finance, and manufacturing.</p>
 <div id="b84808ec" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -329,7 +348,7 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 </section>
 <section id="skills-demanded-by-top-industries" class="level2">
 <h2 class="anchored" data-anchor-id="skills-demanded-by-top-industries">Skills Demanded by Top Industries</h2>
-<p>Different industries may require different skill profiles from their data scientists. Here we compare the most in-demand skills across the top 5 industries to understand how employer expectations vary by sector. <span class="citation" data-cites="celik2023analysis">(<a href="#ref-celik2023analysis" role="doc-biblioref"><strong>celik2023analysis?</strong></a>)</span> found that while core skills like Python and Machine Learning are universally demanded, the relative importance of domain-specific competencies shifts significantly across industries.</p>
+<p>Different industries may require different skill profiles from their data scientists. Here we compare the most in-demand skills across the top 5 industries to understand how employer expectations vary by sector. <span class="citation" data-cites="celik2023analysis">Çelik and Bozdağ (<a href="#ref-celik2023analysis" role="doc-biblioref">2023</a>)</span> found that while core skills like Python and Machine Learning are universally demanded, the relative importance of domain-specific competencies shifts significantly across industries.</p>
 <div id="735ac58c" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -413,7 +432,7 @@ Unclassified Industry                           9,488   1,804   19.0%</code></pr
 </section>
 <section id="salary-comparison-across-industries" class="level2">
 <h2 class="anchored" data-anchor-id="salary-comparison-across-industries">Salary Comparison Across Industries</h2>
-<p>Compensation is a key indicator of how much an industry values data science talent. We compare median salaries across the top industries to understand which sectors are paying a premium for data scientists. <span class="citation" data-cites="davenport2022still">(<a href="#ref-davenport2022still" role="doc-biblioref"><strong>davenport2022still?</strong></a>)</span> noted that experienced data scientists command salaries approaching $200,000 in some markets, but compensation varies significantly by industry and region.</p>
+<p>Compensation is a key indicator of how much an industry values data science talent. We compare median salaries across the top industries to understand which sectors are paying a premium for data scientists. <span class="citation" data-cites="davenport2022still">Davenport and Patil (<a href="#ref-davenport2022still" role="doc-biblioref">2022</a>)</span> noted that experienced data scientists command salaries approaching $200,000 in some markets, but compensation varies significantly by industry and region.</p>
 <div id="88a7ef90" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -512,21 +531,38 @@ Unclassified Industry                        3.8     3.0  1,236</code></pre>
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Our analysis of the Lightcast dataset reveals several key findings about which industries are hiring the most data scientists and the factors driving this demand:</p>
 <ol type="1">
-<li><p><strong>Professional services and technology lead in volume</strong> — Industries such as Professional, Scientific, and Technical Services and Information/Technology consistently post the most data science roles, confirming the cross-industry diffusion predicted by <span class="citation" data-cites="manyika2011big">(<a href="#ref-manyika2011big" role="doc-biblioref"><strong>manyika2011big?</strong></a>)</span>.</p></li>
-<li><p><strong>Finance and healthcare show high concentration</strong> — While these industries may post fewer total jobs, a relatively high proportion of their openings are data science roles, reflecting the strategic importance of analytics in these sectors as documented by <span class="citation" data-cites="alshahrani2024data">(<a href="#ref-alshahrani2024data" role="doc-biblioref"><strong>alshahrani2024data?</strong></a>)</span>.</p></li>
-<li><p><strong>Skill requirements vary by industry</strong> — Technology-driven industries emphasize Python, Machine Learning, and cloud tools, while finance and consulting roles place greater weight on SQL, Statistics, and communication skills. <span class="citation" data-cites="celik2023analysis">(<a href="#ref-celik2023analysis" role="doc-biblioref"><strong>celik2023analysis?</strong></a>)</span> similarly found that while core data science skills are universal, their relative importance shifts across domains.</p></li>
-<li><p><strong>Compensation reflects demand intensity</strong> — Industries with the highest data science concentration tend to offer more competitive salaries, consistent with the talent scarcity dynamics described by <span class="citation" data-cites="davenport2022still">(<a href="#ref-davenport2022still" role="doc-biblioref"><strong>davenport2022still?</strong></a>)</span>.</p></li>
+<li><p><strong>Professional services and technology lead in volume</strong> — Industries such as Professional, Scientific, and Technical Services and Information/Technology consistently post the most data science roles, confirming the cross-industry diffusion predicted by <span class="citation" data-cites="manyika2011big">Manyika et al. (<a href="#ref-manyika2011big" role="doc-biblioref">2011</a>)</span>.</p></li>
+<li><p><strong>Finance and healthcare show high concentration</strong> — While these industries may post fewer total jobs, a relatively high proportion of their openings are data science roles, reflecting the strategic importance of analytics in these sectors as documented by <span class="citation" data-cites="alshahrani2024data">Alshahrani et al. (<a href="#ref-alshahrani2024data" role="doc-biblioref">2024</a>)</span>.</p></li>
+<li><p><strong>Skill requirements vary by industry</strong> — Technology-driven industries emphasize Python, Machine Learning, and cloud tools, while finance and consulting roles place greater weight on SQL, Statistics, and communication skills. <span class="citation" data-cites="celik2023analysis">Çelik and Bozdağ (<a href="#ref-celik2023analysis" role="doc-biblioref">2023</a>)</span> similarly found that while core data science skills are universal, their relative importance shifts across domains.</p></li>
+<li><p><strong>Compensation reflects demand intensity</strong> — Industries with the highest data science concentration tend to offer more competitive salaries, consistent with the talent scarcity dynamics described by <span class="citation" data-cites="davenport2022still">Davenport and Patil (<a href="#ref-davenport2022still" role="doc-biblioref">2022</a>)</span>.</p></li>
 <li><p><strong>Education and experience barriers differ</strong> — Some industries are more flexible on formal education requirements, potentially opening pathways for bootcamp graduates and self-taught professionals, while others maintain strict degree requirements.</p></li>
 </ol>
 <p>These findings have important implications for data science professionals choosing which industries to target, and for educational programs designing curricula to serve industry-specific needs.</p>
 </section>
 <section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
+
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-alshahrani2024data" class="csl-entry" role="listitem">
+Alshahrani, Saeed, Saleh Bajaba, Sami Alsabban, and Khalid Alwafi. 2024. <span>“Data Science for Job Market Analysis: A Survey on Applications and Techniques.”</span> <em>Expert Systems with Applications</em> 254: 124390. <a href="https://doi.org/10.1016/j.eswa.2024.124390">https://doi.org/10.1016/j.eswa.2024.124390</a>.
+</div>
+<div id="ref-celik2023analysis" class="csl-entry" role="listitem">
+Çelik, Serkan, and Hasan Can Bozdağ. 2023. <span>“Analysis of Skills and Qualifications Required in Data Scientist Job Postings Based on the Pareto Analysis Perspective Using Text Mining.”</span> <em>Journal of Information Science</em>, ahead of print. <a href="https://doi.org/10.1177/01655515231220168">https://doi.org/10.1177/01655515231220168</a>.
+</div>
+<div id="ref-davenport2012data" class="csl-entry" role="listitem">
+Davenport, Thomas H., and D. J. Patil. 2012. <span>“Data Scientist: The Sexiest Job of the 21st Century.”</span> <em>Harvard Business Review</em> 90 (10): 70–76.
+</div>
+<div id="ref-davenport2022still" class="csl-entry" role="listitem">
+Davenport, Thomas H., and D. J. Patil. 2022. <span>“Is Data Scientist Still the Sexiest Job of the 21st Century?”</span> <em>Harvard Business Review</em> 100 (4).
+</div>
+<div id="ref-manyika2011big" class="csl-entry" role="listitem">
+Manyika, James, Michael Chui, Brad Brown, et al. 2011. <em>Big Data: The Next Frontier for Innovation, Competition, and Productivity</em>. McKinsey Global Institute.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -25,7 +25,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -229,7 +248,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>The data science and analytics job market continues to expand rapidly, with the U.S. Bureau of Labor Statistics projecting 36% employment growth for data scientists from 2023 to 2033. As the field matures, understanding which specific skills employers demand is critical for job seekers, educators, and program designers alike.</p>
-<p>Previous research has examined skill requirements across analytics roles. <span class="citation" data-cites="radovilsky2018skills">(<a href="#ref-radovilsky2018skills" role="doc-biblioref"><strong>radovilsky2018skills?</strong></a>)</span> conducted a comparative analysis of 1,050 job postings and found that data science roles emphasize computer systems, algorithms, and programming, while business data analytics roles place greater weight on statistical analysis and decision-making support. Similarly, <span class="citation" data-cites="verma2019investigation">(<a href="#ref-verma2019investigation" role="doc-biblioref"><strong>verma2019investigation?</strong></a>)</span> performed a content analysis of job advertisements and identified SQL, Excel, and visualization tools as core requirements across analytics positions. More recently, <span class="citation" data-cites="levendis2025business">(<a href="#ref-levendis2025business" role="doc-biblioref"><strong>levendis2025business?</strong></a>)</span> identified the most sought-after skills for business analytics roles, highlighting both technical proficiency and communication as key employer expectations.</p>
+<p>Previous research has examined skill requirements across analytics roles. <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span> conducted a comparative analysis of 1,050 job postings and found that data science roles emphasize computer systems, algorithms, and programming, while business data analytics roles place greater weight on statistical analysis and decision-making support. Similarly, <span class="citation" data-cites="verma2019investigation">Verma et al. (<a href="#ref-verma2019investigation" role="doc-biblioref">2019</a>)</span> performed a content analysis of job advertisements and identified SQL, Excel, and visualization tools as core requirements across analytics positions. More recently, <span class="citation" data-cites="levendis2025business">Levendis et al. (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span> identified the most sought-after skills for business analytics roles, highlighting both technical proficiency and communication as key employer expectations.</p>
 <p>This analysis extends that body of work by examining job postings from the Lightcast dataset to identify the most in-demand skills across Data Science, Business Analytics, Machine Learning, and related roles.</p>
 </section>
 <section id="data-loading" class="level2">
@@ -257,7 +276,7 @@ Data Science / ML            585</code></pre>
 </section>
 <section id="top-30-most-in-demand-skills-overall" class="level2">
 <h2 class="anchored" data-anchor-id="top-30-most-in-demand-skills-overall">Top 30 Most In-Demand Skills (Overall)</h2>
-<p>We explode the skill lists so that each skill–posting pair becomes its own row, then count the frequency of each skill across all filtered postings. This gives us the overall demand landscape. This approach is consistent with how <span class="citation" data-cites="radovilsky2018skills">(<a href="#ref-radovilsky2018skills" role="doc-biblioref"><strong>radovilsky2018skills?</strong></a>)</span> extracted and categorized skill keywords from job posting text.</p>
+<p>We explode the skill lists so that each skill–posting pair becomes its own row, then count the frequency of each skill across all filtered postings. This gives us the overall demand landscape. This approach is consistent with how <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span> extracted and categorized skill keywords from job posting text.</p>
 <div id="c620b77b" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -301,7 +320,7 @@ Rank  Skill                                      Count  % Posts
 </section>
 <section id="top-20-software-and-tools" class="level2">
 <h2 class="anchored" data-anchor-id="top-20-software-and-tools">Top 20 Software and Tools</h2>
-<p>Lightcast separately tags software and tool skills in the <code>software_skills_name</code> column, allowing us to isolate the specific technologies employers require. The dominance of SQL in this ranking aligns with findings from <span class="citation" data-cites="verma2019investigation">(<a href="#ref-verma2019investigation" role="doc-biblioref"><strong>verma2019investigation?</strong></a>)</span>, who identified SQL as the most frequently listed technical requirement in analytics job advertisements.</p>
+<p>Lightcast separately tags software and tool skills in the <code>software_skills_name</code> column, allowing us to isolate the specific technologies employers require. The dominance of SQL in this ranking aligns with findings from <span class="citation" data-cites="verma2019investigation">Verma et al. (<a href="#ref-verma2019investigation" role="doc-biblioref">2019</a>)</span>, who identified SQL as the most frequently listed technical requirement in analytics job advertisements.</p>
 <div id="0f9e53fe" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -333,7 +352,7 @@ TOP 20 SOFTWARE / TOOLS
 </section>
 <section id="skills-breakdown-by-role-category" class="level2">
 <h2 class="anchored" data-anchor-id="skills-breakdown-by-role-category">Skills Breakdown by Role Category</h2>
-<p>Here we compare the top 10 skills within each role category. This comparison reveals important differences: Data Science/ML roles prioritize Python, Machine Learning, and Statistics, while Business Analytics/BI roles emphasize Communication, Management, and Business Process knowledge. This distinction echoes the findings of <span class="citation" data-cites="radovilsky2018skills">(<a href="#ref-radovilsky2018skills" role="doc-biblioref"><strong>radovilsky2018skills?</strong></a>)</span>, who noted that data science emphasizes computer systems, algorithms, and programming skills, whereas business data analytics has a substantial focus on statistical and quantitative analysis of data. <span class="citation" data-cites="levendis2025business">(<a href="#ref-levendis2025business" role="doc-biblioref"><strong>levendis2025business?</strong></a>)</span> similarly found that business analytics employers seek a blend of technical and communication skills.</p>
+<p>Here we compare the top 10 skills within each role category. This comparison reveals important differences: Data Science/ML roles prioritize Python, Machine Learning, and Statistics, while Business Analytics/BI roles emphasize Communication, Management, and Business Process knowledge. This distinction echoes the findings of <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span>, who noted that data science emphasizes computer systems, algorithms, and programming skills, whereas business data analytics has a substantial focus on statistical and quantitative analysis of data. <span class="citation" data-cites="levendis2025business">Levendis et al. (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span> similarly found that business analytics employers seek a blend of technical and communication skills.</p>
 <div id="1c3f6ead" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -382,19 +401,30 @@ TOP 20 SOFTWARE / TOOLS
 <p>Our analysis of the Lightcast job postings dataset reveals several key findings:</p>
 <ol type="1">
 <li><p><strong>SQL is the universal requirement</strong> — appearing in roughly 30% of all postings, it is the single most demanded technical skill across every role category.</p></li>
-<li><p><strong>Data Science/ML roles are distinctly more technical</strong> — Python, Machine Learning, R, and Statistics are all significantly more prevalent in DS/ML postings compared to BA/BI roles, confirming the skill divergence identified by <span class="citation" data-cites="radovilsky2018skills">(<a href="#ref-radovilsky2018skills" role="doc-biblioref"><strong>radovilsky2018skills?</strong></a>)</span>.</p></li>
-<li><p><strong>Communication and soft skills dominate BA/BI roles</strong> — Communication, Management, and Problem Solving rank highest for Business Analytics, consistent with the findings of <span class="citation" data-cites="levendis2025business">(<a href="#ref-levendis2025business" role="doc-biblioref"><strong>levendis2025business?</strong></a>)</span> that employers value both technical and interpersonal competencies.</p></li>
+<li><p><strong>Data Science/ML roles are distinctly more technical</strong> — Python, Machine Learning, R, and Statistics are all significantly more prevalent in DS/ML postings compared to BA/BI roles, confirming the skill divergence identified by <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span>.</p></li>
+<li><p><strong>Communication and soft skills dominate BA/BI roles</strong> — Communication, Management, and Problem Solving rank highest for Business Analytics, consistent with the findings of <span class="citation" data-cites="levendis2025business">Levendis et al. (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span> that employers value both technical and interpersonal competencies.</p></li>
 <li><p><strong>The BI tool landscape is a three-way race</strong> — Tableau, Power BI, and Excel all appear in similar proportions, suggesting employers value familiarity with multiple visualization platforms rather than expertise in just one.</p></li>
 </ol>
-<p>These findings have practical implications for analytics program curricula and for job seekers looking to align their skill development with market demand, as emphasized by <span class="citation" data-cites="verma2019investigation">(<a href="#ref-verma2019investigation" role="doc-biblioref"><strong>verma2019investigation?</strong></a>)</span>.</p>
+<p>These findings have practical implications for analytics program curricula and for job seekers looking to align their skill development with market demand, as emphasized by <span class="citation" data-cites="verma2019investigation">Verma et al. (<a href="#ref-verma2019investigation" role="doc-biblioref">2019</a>)</span>.</p>
 </section>
 <section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
+
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-levendis2025business" class="csl-entry" role="listitem">
+Levendis, John, Lori Dickes, and Sarah Wilks. 2025. <span>“The Business Analytics Skills Employers Are Looking For.”</span> <em>Decision Sciences Journal of Innovative Education</em>, ahead of print. <a href="https://doi.org/10.1111/dsji.70004">https://doi.org/10.1111/dsji.70004</a>.
+</div>
+<div id="ref-radovilsky2018skills" class="csl-entry" role="listitem">
+Radovilsky, Zinovy, Vishwanath Hegde, Ankur Acharya, and Ullas Uma. 2018. <span>“Skills Requirements of Business Data Analytics and Data Science Jobs: A Comparative Analysis.”</span> <em>Journal of Supply Chain and Operations Management</em> 16 (1): 82–101.
+</div>
+<div id="ref-verma2019investigation" class="csl-entry" role="listitem">
+Verma, Arun, Kirsten M. Yurov, Peggy L. Lane, and Yuliya V. Yurova. 2019. <span>“An Investigation of Skill Requirements for Business and Data Analytics Positions: A Content Analysis of Job Advertisements.”</span> <em>Journal of Education for Business</em> 94 (4): 243–50. <a href="https://doi.org/10.1080/08832323.2018.1520685">https://doi.org/10.1080/08832323.2018.1520685</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
