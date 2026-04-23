@@ -6,6 +6,8 @@ format:
   html:
     bibliography: references.bib
     toc: true
+eval: false
+echo: false
 jupyter: python3
 ---
 # Introduction
