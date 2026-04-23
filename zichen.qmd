@@ -182,6 +182,8 @@ plt.show()
 ```
 The bar chart provides a clear visual comparison of changes in remote job share across industries between May and September 2024. The results show that remote job trends were mixed across industries rather than moving in one uniform direction. Several industries experienced increases in remote job share during this period. The strongest increase appeared in General Medical and Surgical Hospitals, followed by Unclassified Industry and All Other Professional, Scientific, and Technical Services. In contrast, the steepest decline appeared in Custom Computer Programming Services, followed by Computer Systems Design Services and Other Computer Related Services.
 
+![Remote Job Shares](visualizations/change_in_remote_share_may_to_sep.png)
+
 Overall, the figure suggests that remote job share in 2024 neither increased nor decreased uniformly across the labor market. Instead, the direction and magnitude of change depended strongly on the industry. Some sectors became more remote-oriented over the period, while others showed a clear decline in remote job share.
 
 ## Industry Heterogeneity and Connection to the Literature
@@ -224,6 +226,8 @@ plt.savefig("monthly_remote_share_selected_industries.png", dpi=150, bbox_inches
 plt.show()
 ```
 The line chart shows that remote job trends did not evolve in the same way across industries from month to month. Industries with positive end-of-period changes generally moved upward overall, whereas industries with negative end-of-period changes tended to move downward or remained volatile before ending lower in September than in May.
+
+![Remote Job Trends](visualizations/monthly_remote_share_selected_industries.png)
 
 Several upward-trending industries, such as General Medical and Surgical Hospitals and Unclassified Industry, finished the period with clearly higher remote job share than they had in May. By contrast, several computer-related industries, including Computer Systems Design Services and Custom Computer Programming Services, showed overall declines despite short-term fluctuations during the middle of the period.
 
