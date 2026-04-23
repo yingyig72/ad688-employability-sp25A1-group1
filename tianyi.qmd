@@ -61,6 +61,7 @@ This chart compares the number of AI-related and non-AI job postings across urba
 The chart indicates that metropolitan labor markets remain the dominant centers of employment, especially for technology- and data-oriented positions.
 
 This pattern is consistent with prior research showing that AI-related jobs are concentrated in urban regions due to stronger innovation ecosystems.
+
 ## Visualization 2: Proportion of AI and Non-AI Jobs by Region Type
 
 ![](figures/urban_rural_props.png)
