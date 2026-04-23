@@ -1,6 +1,4 @@
 ---
-title: "Navigating the Job Market"
-subtitle: "A data-driven analysis of hiring trends, skill demand, and career outlooks from the Lightcast job postings dataset."
 page-layout: full
 toc: false
 title-block-style: none
