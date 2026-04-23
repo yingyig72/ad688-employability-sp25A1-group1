@@ -364,7 +364,7 @@ div.csl-indent {
 </section>
 <section id="data-loading-and-label-construction" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading-and-label-construction">Data Loading and Label Construction</h2>
-<div id="1b166c4b" class="cell" data-execution_count="1">
+<div id="2adf39e2" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>Postings loaded: 72,454</code></pre>
 </div>
@@ -372,7 +372,7 @@ div.csl-indent {
 <section id="defining-the-target-variable" class="level3">
 <h3 class="anchored" data-anchor-id="defining-the-target-variable">Defining the target variable</h3>
 <p>A posting is labeled <code>1</code> (requires AI/ML) if any of its skills fields contain a term from a curated AI/ML vocabulary. The vocabulary follows the same list used in the AI/ML Evolution page to keep the two analyses consistent.</p>
-<div id="3fd7c1ec" class="cell" data-execution_count="2">
+<div id="1e257a6c" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>Postings requiring AI/ML: 6,715 (9.3%)</code></pre>
 </div>
@@ -382,7 +382,7 @@ div.csl-indent {
 <section id="feature-engineering" class="level2">
 <h2 class="anchored" data-anchor-id="feature-engineering">Feature Engineering</h2>
 <p>We build a compact set of features that users can reasonably pick from a dropdown. Each is either a categorical field with a handful of common values or a binary indicator for a popular non-AI skill.</p>
-<div id="d21e4416" class="cell" data-execution_count="3">
+<div id="f267c94d" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>Categorical features: ['industry', 'education', 'role_category']
 Binary skill features: ['has_salary', 'has_python', 'has_sql', 'has_r', 'has_microsoft_excel', 'has_tableau', 'has_power_bi', 'has_statistics', 'has_data_visualization']</code></pre>
@@ -391,7 +391,7 @@ Binary skill features: ['has_salary', 'has_python', 'has_sql', 'has_r', 'has_mic
 </section>
 <section id="model-training" class="level2">
 <h2 class="anchored" data-anchor-id="model-training">Model Training</h2>
-<div id="a1eacd0b" class="cell" data-execution_count="4">
+<div id="7e3cba0a" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>Test AUC: 0.746
 Test accuracy: 0.908
@@ -422,7 +422,7 @@ weighted avg      0.876     0.908     0.869     18114
 <section id="exporting-the-model-for-the-browser" class="level2">
 <h2 class="anchored" data-anchor-id="exporting-the-model-for-the-browser">Exporting the Model for the Browser</h2>
 <p>To make predictions run client-side, we serialize the intercept, per-feature coefficients, and the list of categorical levels the model was trained on. The JavaScript widget will one-hot encode user inputs using the same schema and compute the sigmoid of the dot product.</p>
-<div id="5757c93c" class="cell" data-execution_count="6">
+<div id="5e1ebcdc" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>Exported assets/ml_model.json
   Features: 31

@@ -1,0 +1,92 @@
+{
+  "intercept": -1.4795376908633413,
+  "coefficients": {
+    "industry_Administrative and Support and Waste Management and Remediation Services": -0.5958228432218321,
+    "industry_Educational Services": -0.09162547541741292,
+    "industry_Finance and Insurance": 0.11432351853643317,
+    "industry_Health Care and Social Assistance": -0.5478942176456908,
+    "industry_Information": 0.18724914641812326,
+    "industry_Manufacturing": 0.5126522507271906,
+    "industry_Other": -0.14210660685669294,
+    "industry_Professional, Scientific, and Technical Services": 0.11278038044018365,
+    "industry_Retail Trade": -0.3128010097608139,
+    "industry_Unclassified Industry": -0.29042701310972646,
+    "industry_Wholesale Trade": -0.425865820946151,
+    "education_Associate degree": 0.24651597962222785,
+    "education_Bachelor's degree": -0.31685355998506515,
+    "education_High school or GED": -0.7614967144099546,
+    "education_Master's degree": 0.11262891487110109,
+    "education_No Education Listed": -0.683780275146525,
+    "education_Ph.D. or professional degree": -0.07655203579717304,
+    "role_category_Business Analytics / BI": -1.169682852003816,
+    "role_category_Data Analytics": -0.7351498640140688,
+    "role_category_Data Engineering": 0.43632145928546484,
+    "role_category_Data Science / ML": 0.8718190392631603,
+    "role_category_Other": -0.8828454733812293,
+    "has_salary": 0.2615371068981914,
+    "has_python": 1.394201739617568,
+    "has_sql": -0.14081039782413624,
+    "has_r": 0.18022057765690822,
+    "has_microsoft_excel": -0.715644059877185,
+    "has_tableau": -0.15586496432546093,
+    "has_power_bi": 0.14813957432536998,
+    "has_statistics": 0.1481900023036373,
+    "has_data_visualization": 0.32325356961817125
+  },
+  "categorical_levels": {
+    "industry": [
+      "Administrative and Support and Waste Management and Remediation Services",
+      "Educational Services",
+      "Finance and Insurance",
+      "Health Care and Social Assistance",
+      "Information",
+      "Manufacturing",
+      "Other",
+      "Professional, Scientific, and Technical Services",
+      "Retail Trade",
+      "Unclassified Industry",
+      "Wholesale Trade"
+    ],
+    "education": [
+      "Associate degree",
+      "Bachelor's degree",
+      "High school or GED",
+      "Master's degree",
+      "No Education Listed",
+      "Ph.D. or professional degree"
+    ],
+    "role_category": [
+      "Business Analytics / BI",
+      "Data Analytics",
+      "Data Engineering",
+      "Data Science / ML",
+      "Other"
+    ]
+  },
+  "binary_features": [
+    "has_salary",
+    "has_python",
+    "has_sql",
+    "has_r",
+    "has_microsoft_excel",
+    "has_tableau",
+    "has_power_bi",
+    "has_statistics",
+    "has_data_visualization"
+  ],
+  "binary_labels": [
+    "Python (Programming Language)",
+    "SQL (Programming Language)",
+    "R (Programming Language)",
+    "Microsoft Excel",
+    "Tableau (Business Intelligence Software)",
+    "Power BI",
+    "Statistics",
+    "Data Visualization"
+  ],
+  "metrics": {
+    "auc": 0.7461037606772253,
+    "accuracy": 0.9077509108976483,
+    "positive_rate": 0.09267949319568278
+  }
+}
