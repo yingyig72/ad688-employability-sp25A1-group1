@@ -1,16 +1,15 @@
 ---
 title: "Navigating the Job Market"
 subtitle: "A data-driven analysis of hiring trends, skill demand, and career outlooks from the Lightcast job postings dataset."
-title-block-banner: "#1a2b4a"
-title-block-banner-color: "#ffffff"
 page-layout: full
 toc: false
+title-block-style: none
 format:
   html:
     css: styles.css
 ---
 ```{=html}
-   {{< include hiring_arcs_widget.html >}}
+{{< include silk_hero.html >}}
 ```
 
 ::: {.hero-intro}
