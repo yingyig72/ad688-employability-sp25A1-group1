@@ -179,6 +179,19 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#research-question" id="toc-research-question" class="nav-link active" data-scroll-target="#research-question">Research Question</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">Literature Review</a></li>
+  <li><a href="#data-cleaning-and-preparation" id="toc-data-cleaning-and-preparation" class="nav-link" data-scroll-target="#data-cleaning-and-preparation">Data Cleaning and Preparation</a></li>
+  <li><a href="#classification-logic" id="toc-classification-logic" class="nav-link" data-scroll-target="#classification-logic">Classification Logic</a></li>
+  <li><a href="#visualization-1-number-of-ai-and-non-ai-jobs-by-region-type" id="toc-visualization-1-number-of-ai-and-non-ai-jobs-by-region-type" class="nav-link" data-scroll-target="#visualization-1-number-of-ai-and-non-ai-jobs-by-region-type">Visualization 1: Number of AI and Non-AI Jobs by Region Type</a>
+  <ul class="collapse">
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#interpretation-1" id="toc-interpretation-1" class="nav-link" data-scroll-target="#interpretation-1">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#findings" id="toc-findings" class="nav-link" data-scroll-target="#findings">Findings</a></li>
+  <li><a href="#business-and-career-implications" id="toc-business-and-career-implications" class="nav-link" data-scroll-target="#business-and-career-implications">Business and Career Implications</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -206,8 +219,77 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="research-question" class="level2">
 <h2 class="anchored" data-anchor-id="research-question">Research Question</h2>
-<p><em>Are remote jobs increasing or decreasing across industries?</em></p>
-<p>Content coming soon.</p>
+<p><em>How do urban vs.&nbsp;rural job markets differ for AI and non-AI careers?</em></p>
+<p>This section examines how urban and rural labor markets differ for AI-related and non-AI careers using the Lightcast job postings dataset. The purpose is to understand whether AI-related opportunities are more concentrated in metropolitan areas and whether non-AI roles are distributed differently across regions.</p>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Geographic location remains an important factor in labor market outcomes, even as digital technologies and remote work continue to reshape employment patterns. Urban regions are often associated with stronger infrastructure, larger talent pools, and more advanced industries, which may give them an advantage in attracting technology-driven jobs. Rural regions, by contrast, may offer fewer opportunities in highly specialized occupations.</p>
+<p>This analysis focuses on comparing urban and rural job markets for AI and non-AI careers. By identifying differences in job volume and job composition, this section helps explain whether advanced labor market opportunities remain concentrated in metropolitan areas in 2024.</p>
+</section>
+<section id="literature-review" class="level2">
+<h2 class="anchored" data-anchor-id="literature-review">Literature Review</h2>
+<p>Existing literature suggests that AI-related jobs are geographically concentrated in urban areas due to stronger innovation ecosystems and access to skilled labor <span class="citation" data-cites="ather2024geography">(<a href="#ref-ather2024geography" role="doc-biblioref"><strong>ather2024geography?</strong></a>)</span>.</p>
+<p>Studies also show that automation tends to favor high-skilled workers, particularly in metropolitan regions, contributing to skill-biased labor demand <span class="citation" data-cites="mookerjee2023ai">(<a href="#ref-mookerjee2023ai" role="doc-biblioref"><strong>mookerjee2023ai?</strong></a>)</span>.</p>
+<p>From a task-based perspective, AI transforms routine work while increasing demand for analytical and cognitive tasks <span class="citation" data-cites="shen2024tasks">(<a href="#ref-shen2024tasks" role="doc-biblioref"><strong>shen2024tasks?</strong></a>)</span>.</p>
+<p>In addition, regional disparities remain significant, as rural areas often face limited job mobility and fewer reallocation opportunities compared to urban regions <span class="citation" data-cites="capello2023regional">(<a href="#ref-capello2023regional" role="doc-biblioref"><strong>capello2023regional?</strong></a>)</span>.</p>
+<p>These findings motivate our analysis, which empirically examines differences in AI and non-AI job postings between urban and rural regions using the Lightcast dataset.</p>
+</section>
+<section id="data-cleaning-and-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-cleaning-and-preparation">Data Cleaning and Preparation</h2>
+<p>The Lightcast job postings dataset was used for this analysis. To prepare the data:</p>
+<ul>
+<li>Only the relevant variables were kept, including <code>TITLE</code>, <code>MSA_NAME</code>, <code>STATE_NAME</code>, and <code>SKILLS_NAME</code>.</li>
+<li>Job titles and skill fields were cleaned and standardized into lowercase text for consistent keyword matching.</li>
+<li>Jobs were classified as <strong>AI-related</strong> or <strong>Non-AI</strong> based on a combined text field using job titles and skills.</li>
+<li><code>MSA_NAME</code> was used to distinguish <strong>Urban</strong> and <strong>Rural</strong> locations:
+<ul>
+<li>If <code>MSA_NAME</code> was present, the posting was classified as <strong>Urban</strong></li>
+<li>If <code>MSA_NAME</code> was missing, the posting was classified as <strong>Rural</strong></li>
+</ul></li>
+</ul>
+<p>This approach provides a practical way to compare metropolitan and non-metropolitan labor markets using the available geographic information.</p>
+</section>
+<section id="classification-logic" class="level2">
+<h2 class="anchored" data-anchor-id="classification-logic">Classification Logic</h2>
+<p>For this project, AI-related jobs were defined broadly to include data-, analytics-, and technology-oriented roles. This includes positions associated with artificial intelligence, machine learning, data science, analytics, software development, and technical tools such as Python and SQL.</p>
+<p>This broader classification is appropriate because many AI-related opportunities are embedded in adjacent technical fields rather than appearing only under explicit job titles such as “AI Engineer” or “Machine Learning Scientist.”</p>
+</section>
+<section id="visualization-1-number-of-ai-and-non-ai-jobs-by-region-type" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-1-number-of-ai-and-non-ai-jobs-by-region-type">Visualization 1: Number of AI and Non-AI Jobs by Region Type</h2>
+<p><img src="figures/urban_rural_counts.png" class="img-fluid"></p>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p>This chart compares the number of AI-related and non-AI job postings across urban and rural labor markets. The results show that urban areas account for the vast majority of total job postings. In both urban and rural locations, AI-related roles outnumber non-AI roles, but the total number of opportunities is much higher in urban regions.</p>
+<p>The chart indicates that metropolitan labor markets remain the dominant centers of employment, especially for technology- and data-oriented positions.</p>
+<p>This pattern is consistent with prior research showing that AI-related jobs are concentrated in urban regions due to stronger innovation ecosystems. ## Visualization 2: Proportion of AI and Non-AI Jobs by Region Type</p>
+<p><img src="figures/urban_rural_props.png" class="img-fluid"></p>
+</section>
+<section id="interpretation-1" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
+<p>This figure compares the proportion of AI-related and non-AI roles within urban and rural regions. AI-related jobs make up the larger share of postings in both regions. However, the AI share is slightly higher in urban areas than in rural areas.</p>
+<p>This suggests that while both regions contain AI-related opportunities, urban labor markets are more strongly specialized in advanced and technology-driven work.</p>
+</section>
+</section>
+<section id="findings" class="level2">
+<h2 class="anchored" data-anchor-id="findings">Findings</h2>
+<p>The analysis reveals a significant difference between urban and rural job markets. First, urban areas have a substantially larger number of job postings compared to rural regions. This indicates that most employment opportunities are concentrated in metropolitan labor markets.</p>
+<p>In terms of job composition, AI-related roles dominate both urban and rural markets. However, the concentration is slightly higher in urban areas. Approximately 70% of jobs in urban regions are AI-related, compared to about 66% in rural regions.</p>
+<p>This suggests that while AI-related roles are present in both regions, urban markets have a stronger concentration of technology-driven opportunities. In addition, the absolute number of AI jobs is dramatically higher in urban areas, which further highlights the dominance of cities in advanced labor markets.</p>
+</section>
+<section id="business-and-career-implications" class="level2">
+<h2 class="anchored" data-anchor-id="business-and-career-implications">Business and Career Implications</h2>
+<p>These findings have practical implications for job seekers. Students and early-career professionals who want to pursue AI-, analytics-, or data-related roles may have access to more opportunities in urban labor markets, where the volume of postings is substantially larger and the concentration of technical jobs is slightly higher.</p>
+<p>At the same time, the presence of AI-related roles in rural areas suggests that these opportunities are not limited entirely to major cities. However, the much smaller number of postings indicates that job seekers in rural markets may face more limited options and stronger competition when targeting advanced technical roles.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In conclusion, there are clear differences between urban and rural job markets for AI and non-AI careers. Urban regions not only provide significantly more job opportunities overall, but also show a slightly higher concentration of AI-related roles.</p>
+<p>Although rural areas also contain AI-related positions, the total number of such opportunities is much smaller. This highlights the continued importance of geographic location in accessing technology-driven careers.</p>
+<p>Overall, the results suggest that urban areas remain the primary hubs for AI- and data-related jobs, reinforcing the idea that advanced career opportunities are still concentrated in major metropolitan regions despite the growth of remote work.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
 
 
 </section>
