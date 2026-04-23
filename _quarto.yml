@@ -25,9 +25,9 @@ website:
           - href: ricardo.qmd
             text: "Which Cities/States Have the Highest Job Growth?"
           - href: tianyi.qmd
-            text: "Are Remote Jobs Increasing or Decreasing?"
-          - href: zichen.qmd
             text: "Do Tech Hubs Still Dominate Hiring?"
+          - href: zichen.qmd
+            text: "Are remote jobs increasing or decreasing across industries?"
           - href: yingyi.qmd
             text: "Urban vs. Rural Job Markets for AI & Non-AI Careers"   
       - text: ML, BA & DS trends
