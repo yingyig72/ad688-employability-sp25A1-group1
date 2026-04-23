@@ -14,7 +14,7 @@ execute:
   warning: false
   message: false
 ---
-
+FORCE UPDATE 999
 ## Introduction
 
 This analysis compares how AI and non-AI job markets differ across urban and rural areas.
