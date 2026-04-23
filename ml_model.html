@@ -25,26 +25,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -363,8 +344,8 @@ div.csl-indent {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The previous analysis showed that AI/ML skill requirements have spread well beyond traditional tech roles <span class="citation" data-cites="tambe2019artificial carnevale2023generative">(<a href="#ref-tambe2019artificial" role="doc-biblioref">Tambe et al. 2019</a>; <a href="#ref-carnevale2023generative" role="doc-biblioref">Carnevale et al. 2023</a>)</span>. A natural follow-up question is whether that spread is <em>predictable</em> — that is, given the non-AI characteristics of a job posting (its industry, role type, education requirements, and baseline software skills), can we infer whether the employer will also demand AI/ML expertise?</p>
-<p>This page trains a logistic regression classifier on the Lightcast dataset to answer that question, and exposes the fitted model through an interactive widget at the bottom of the page. Logistic regression was chosen for three reasons: it is interpretable (each coefficient has a direct log-odds meaning), it calibrates well for probability output <span class="citation" data-cites="hosmer2013applied">(<a href="#ref-hosmer2013applied" role="doc-biblioref">Hosmer Jr et al. 2013</a>)</span>, and its parameters export cleanly to JavaScript so predictions can run entirely in the browser — no server or Python backend required.</p>
+<p>The previous analysis showed that AI/ML skill requirements have spread well beyond traditional tech roles <span class="citation" data-cites="tambe2019artificial carnevale2023generative">(<a href="#ref-tambe2019artificial" role="doc-biblioref"><strong>tambe2019artificial?</strong></a>; <a href="#ref-carnevale2023generative" role="doc-biblioref"><strong>carnevale2023generative?</strong></a>)</span>. A natural follow-up question is whether that spread is <em>predictable</em> — that is, given the non-AI characteristics of a job posting (its industry, role type, education requirements, and baseline software skills), can we infer whether the employer will also demand AI/ML expertise?</p>
+<p>This page trains a logistic regression classifier on the Lightcast dataset to answer that question, and exposes the fitted model through an interactive widget at the bottom of the page. Logistic regression was chosen for three reasons: it is interpretable (each coefficient has a direct log-odds meaning), it calibrates well for probability output <span class="citation" data-cites="hosmer2013applied">(<a href="#ref-hosmer2013applied" role="doc-biblioref"><strong>hosmer2013applied?</strong></a>)</span>, and its parameters export cleanly to JavaScript so predictions can run entirely in the browser — no server or Python backend required.</p>
 </section>
 <section id="data-loading-and-label-construction" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading-and-label-construction">Data Loading and Label Construction</h2>
@@ -558,32 +539,18 @@ weighted avg      0.876     0.908     0.869     18114
 <p>The model settles on a test AUC in the mid-to-upper 0.8 range, which is strong given how compact the feature set is. Three patterns stand out:</p>
 <ol type="1">
 <li><p><strong>Role category dominates.</strong> The <em>Data Science / ML</em> role category has by far the largest positive coefficient, which is tautological in one direction (these roles are defined partly by AI/ML work) but also informative: the feature absorbs much of the signal, so the remaining coefficients tell us about <em>non-obvious</em> AI/ML demand.</p></li>
-<li><p><strong>Python and statistics are strong positive signals outside DS/ML roles.</strong> Holding the role category fixed, postings that mention Python or statistics are meaningfully more likely to also require AI/ML skills. This matches <span class="citation" data-cites="celik2023analysis">Çelik and Bozdağ (<a href="#ref-celik2023analysis" role="doc-biblioref">2023</a>)</span>, who found Python and statistics co-occur with ML across sectors.</p></li>
+<li><p><strong>Python and statistics are strong positive signals outside DS/ML roles.</strong> Holding the role category fixed, postings that mention Python or statistics are meaningfully more likely to also require AI/ML skills. This matches <span class="citation" data-cites="celik2023analysis">(<a href="#ref-celik2023analysis" role="doc-biblioref"><strong>celik2023analysis?</strong></a>)</span>, who found Python and statistics co-occur with ML across sectors.</p></li>
 <li><p><strong>Excel and Power BI are negative signals.</strong> Postings that mention traditional BI tools without any DS/ML skills tend to be pure analytics roles — and these are still largely AI/ML-free.</p></li>
 </ol>
 <p>One caveat worth flagging: the classifier’s ceiling is set by how AI/ML is labeled in the first place. Our keyword list catches explicit mentions but misses postings that describe AI/ML work without using standard terminology. A more sophisticated labeling approach — e.g., zero-shot classification over the posting body — would likely raise the performance ceiling and is a natural direction for future work.</p>
 </section>
 <section id="references" class="level2">
-
-
+<h2 class="anchored" data-anchor-id="references">References</h2>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-carnevale2023generative" class="csl-entry" role="listitem">
-Carnevale, Anthony P., Ban Cheah, and Emma Wenzinger. 2023. <em>The Impact of Generative AI on the Labor Market</em>. Georgetown University Center on Education; the Workforce. <a href="https://cew.georgetown.edu/">https://cew.georgetown.edu/</a>.
-</div>
-<div id="ref-celik2023analysis" class="csl-entry" role="listitem">
-Çelik, Serkan, and Hasan Can Bozdağ. 2023. <span>“Analysis of Skills and Qualifications Required in Data Scientist Job Postings Based on the Pareto Analysis Perspective Using Text Mining.”</span> <em>Journal of Information Science</em>, ahead of print. <a href="https://doi.org/10.1177/01655515231220168">https://doi.org/10.1177/01655515231220168</a>.
-</div>
-<div id="ref-hosmer2013applied" class="csl-entry" role="listitem">
-Hosmer Jr, David W., Stanley Lemeshow, and Rodney X. Sturdivant. 2013. <em>Applied Logistic Regression</em>. 3rd ed. John Wiley &amp; Sons.
-</div>
-<div id="ref-tambe2019artificial" class="csl-entry" role="listitem">
-Tambe, Prasanna, Peter Cappelli, and Valery Yakubovich. 2019. <span>“Artificial Intelligence in Human Resources Management: Challenges and a Path Forward.”</span> <em>California Management Review</em> 61 (4): 15–42. <a href="https://doi.org/10.1177/0008125619867910">https://doi.org/10.1177/0008125619867910</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

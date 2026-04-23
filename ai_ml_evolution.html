@@ -25,26 +25,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -248,7 +229,7 @@ div.csl-indent {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The rapid advancement of artificial intelligence and machine learning technologies has fundamentally reshaped the labor market. As organizations increasingly integrate AI-driven tools into their operations, the demand for employees with AI/ML competencies has surged — not only in traditional tech roles, but across industries <span class="citation" data-cites="tambe2019artificial">(<a href="#ref-tambe2019artificial" role="doc-biblioref">Tambe et al. 2019</a>)</span>. <span class="citation" data-cites="carnevale2023generative">Carnevale et al. (<a href="#ref-carnevale2023generative" role="doc-biblioref">2023</a>)</span> found that generative AI is already influencing job requirements, with employers beginning to embed AI-related skills into postings that previously had no such expectations.</p>
+<p>The rapid advancement of artificial intelligence and machine learning technologies has fundamentally reshaped the labor market. As organizations increasingly integrate AI-driven tools into their operations, the demand for employees with AI/ML competencies has surged — not only in traditional tech roles, but across industries <span class="citation" data-cites="tambe2019artificial">(<a href="#ref-tambe2019artificial" role="doc-biblioref"><strong>tambe2019artificial?</strong></a>)</span>. <span class="citation" data-cites="carnevale2023generative">(<a href="#ref-carnevale2023generative" role="doc-biblioref"><strong>carnevale2023generative?</strong></a>)</span> found that generative AI is already influencing job requirements, with employers beginning to embed AI-related skills into postings that previously had no such expectations.</p>
 <p>This analysis examines the Lightcast job postings dataset to determine whether job descriptions have evolved over time to require AI/ML expertise. Specifically, we investigate the prevalence of AI/ML-related skills across job postings, the types of roles increasingly demanding these skills, and the industries driving this shift.</p>
 </section>
 <section id="data-loading" class="level2">
@@ -272,7 +253,7 @@ Postings without AI/ML skills: 65,689</code></pre>
 </section>
 <section id="aiml-adoption-over-time" class="level2">
 <h2 class="anchored" data-anchor-id="aiml-adoption-over-time">AI/ML Adoption Over Time</h2>
-<p>To understand the temporal evolution, we examine how the proportion of AI/ML-requiring postings changes month by month. This approach aligns with the methodology of <span class="citation" data-cites="acemoglu2022artificial">Acemoglu et al. (<a href="#ref-acemoglu2022artificial" role="doc-biblioref">2022</a>)</span>, who tracked AI-related job posting trends to measure the pace of AI adoption across the economy.</p>
+<p>To understand the temporal evolution, we examine how the proportion of AI/ML-requiring postings changes month by month. This approach aligns with the methodology of <span class="citation" data-cites="acemoglu2022artificial">(<a href="#ref-acemoglu2022artificial" role="doc-biblioref"><strong>acemoglu2022artificial?</strong></a>)</span>, who tracked AI-related job posting trends to measure the pace of AI adoption across the economy.</p>
 <div id="9ad56259" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>Month           Total    AI/ML  % AI/ML
@@ -333,7 +314,7 @@ Rank  Skill                                      Count
 </section>
 <section id="which-roles-are-increasingly-requiring-aiml" class="level2">
 <h2 class="anchored" data-anchor-id="which-roles-are-increasingly-requiring-aiml">Which Roles Are Increasingly Requiring AI/ML?</h2>
-<p>Beyond dedicated data science and ML engineer positions, AI/ML skills are spreading into roles that traditionally had no such requirements. <span class="citation" data-cites="tambe2019artificial">Tambe et al. (<a href="#ref-tambe2019artificial" role="doc-biblioref">2019</a>)</span> highlighted this diffusion pattern, noting that AI adoption extends well beyond the tech sector into healthcare, finance, and operations.</p>
+<p>Beyond dedicated data science and ML engineer positions, AI/ML skills are spreading into roles that traditionally had no such requirements. <span class="citation" data-cites="tambe2019artificial">(<a href="#ref-tambe2019artificial" role="doc-biblioref"><strong>tambe2019artificial?</strong></a>)</span> highlighted this diffusion pattern, noting that AI adoption extends well beyond the tech sector into healthcare, finance, and operations.</p>
 <div id="b252404e" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -403,31 +384,20 @@ Non-AI/ML Postings — Minimum Education Levels:
 <p>Our analysis of the Lightcast dataset reveals several key findings about the evolution of AI/ML requirements in job postings:</p>
 <ol type="1">
 <li><p><strong>AI/ML skills are increasingly prevalent</strong> — A meaningful and growing share of job postings now explicitly require AI/ML expertise, extending beyond traditional data science and engineering roles.</p></li>
-<li><p><strong>Machine Learning and Python dominate</strong> — Among AI/ML-specific skills, Machine Learning as a general competency and Python-based frameworks (TensorFlow, PyTorch, scikit-learn) are the most frequently cited, consistent with the findings of <span class="citation" data-cites="tambe2019artificial">Tambe et al. (<a href="#ref-tambe2019artificial" role="doc-biblioref">2019</a>)</span> on AI skill diffusion.</p></li>
-<li><p><strong>Demand extends beyond tech</strong> — Industries such as finance, healthcare, and professional services are increasingly embedding AI/ML requirements into their job descriptions, reflecting the broader adoption trends documented by <span class="citation" data-cites="acemoglu2022artificial">Acemoglu et al. (<a href="#ref-acemoglu2022artificial" role="doc-biblioref">2022</a>)</span>.</p></li>
+<li><p><strong>Machine Learning and Python dominate</strong> — Among AI/ML-specific skills, Machine Learning as a general competency and Python-based frameworks (TensorFlow, PyTorch, scikit-learn) are the most frequently cited, consistent with the findings of <span class="citation" data-cites="tambe2019artificial">(<a href="#ref-tambe2019artificial" role="doc-biblioref"><strong>tambe2019artificial?</strong></a>)</span> on AI skill diffusion.</p></li>
+<li><p><strong>Demand extends beyond tech</strong> — Industries such as finance, healthcare, and professional services are increasingly embedding AI/ML requirements into their job descriptions, reflecting the broader adoption trends documented by <span class="citation" data-cites="acemoglu2022artificial">(<a href="#ref-acemoglu2022artificial" role="doc-biblioref"><strong>acemoglu2022artificial?</strong></a>)</span>.</p></li>
 <li><p><strong>Higher education expectations</strong> — AI/ML roles tend to require higher minimum education levels, with a greater proportion of postings specifying a Master’s or Doctoral degree compared to non-AI/ML roles.</p></li>
-<li><p><strong>Generative AI is emerging</strong> — Keywords related to generative AI, large language models, and tools like ChatGPT are beginning to appear in job postings, confirming the labor market shifts identified by <span class="citation" data-cites="carnevale2023generative">Carnevale et al. (<a href="#ref-carnevale2023generative" role="doc-biblioref">2023</a>)</span>.</p></li>
+<li><p><strong>Generative AI is emerging</strong> — Keywords related to generative AI, large language models, and tools like ChatGPT are beginning to appear in job postings, confirming the labor market shifts identified by <span class="citation" data-cites="carnevale2023generative">(<a href="#ref-carnevale2023generative" role="doc-biblioref"><strong>carnevale2023generative?</strong></a>)</span>.</p></li>
 </ol>
 <p>These findings underscore the importance of integrating AI/ML competencies into analytics and data science curricula to meet evolving employer expectations.</p>
 </section>
 <section id="references" class="level2">
-
-
+<h2 class="anchored" data-anchor-id="references">References</h2>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-acemoglu2022artificial" class="csl-entry" role="listitem">
-Acemoglu, Daron, David Autor, Jonathon Hazell, and Pascual Restrepo. 2022. <span>“Artificial Intelligence and Jobs: Evidence from Online Vacancies.”</span> <em>Journal of Labor Economics</em> 40 (S1): S293–340. <a href="https://doi.org/10.1086/718327">https://doi.org/10.1086/718327</a>.
-</div>
-<div id="ref-carnevale2023generative" class="csl-entry" role="listitem">
-Carnevale, Anthony P., Ban Cheah, and Emma Wenzinger. 2023. <em>The Impact of Generative AI on the Labor Market</em>. Georgetown University Center on Education; the Workforce. <a href="https://cew.georgetown.edu/">https://cew.georgetown.edu/</a>.
-</div>
-<div id="ref-tambe2019artificial" class="csl-entry" role="listitem">
-Tambe, Prasanna, Peter Cappelli, and Valery Yakubovich. 2019. <span>“Artificial Intelligence in Human Resources Management: Challenges and a Path Forward.”</span> <em>California Management Review</em> 61 (4): 15–42. <a href="https://doi.org/10.1177/0008125619867910">https://doi.org/10.1177/0008125619867910</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
