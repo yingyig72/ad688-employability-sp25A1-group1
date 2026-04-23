@@ -189,6 +189,132 @@
     "text": "Explore by topic\n\n\n\n🌍 Geographic & Remote Work\nRegional hiring patterns, state-level comparisons, and the rise of remote-friendly employers.\n\n\n\n\n📊 DS, BA & ML Trends\nSkill demand curves, industry adoption, and career outlooks for data and analytics roles.\n\n\n\n\nBuilt with Quarto · Data from Lightcast · AD688 Team 1, Spring 2026"
   },
   {
+    "objectID": "cluster_finder.html",
+    "href": "cluster_finder.html",
+    "title": "Job Cluster Finder",
+    "section": "",
+    "text": "The Lightcast job postings dataset contains hundreds of thousands of postings spanning every industry, role, and seniority level. Rather than looking at jobs one at a time, this page groups them into ten natural clusters based on the skills they require — then lets you find which cluster your own skill set fits best.\nThe goal is twofold: to surface the structure of the labor market at a glance, and to give job seekers a concrete, data-driven way to see where they sit within it."
+  },
+  {
+    "objectID": "cluster_finder.html#overview",
+    "href": "cluster_finder.html#overview",
+    "title": "Job Cluster Finder",
+    "section": "",
+    "text": "The Lightcast job postings dataset contains hundreds of thousands of postings spanning every industry, role, and seniority level. Rather than looking at jobs one at a time, this page groups them into ten natural clusters based on the skills they require — then lets you find which cluster your own skill set fits best.\nThe goal is twofold: to surface the structure of the labor market at a glance, and to give job seekers a concrete, data-driven way to see where they sit within it."
+  },
+  {
+    "objectID": "cluster_finder.html#methodology",
+    "href": "cluster_finder.html#methodology",
+    "title": "Job Cluster Finder",
+    "section": "Methodology",
+    "text": "Methodology\nI ran K-means clustering on a sample of roughly 50,000 Lightcast postings. Each posting was encoded as a 200-dimensional binary vector indicating which of the most common skills it required. The raw counts were then reweighted using TF-IDF so that distinctive skills (e.g. PyTorch, Kubernetes) carried more signal than ubiquitous ones (e.g. Communication, Microsoft Office), and each vector was L2-normalized so that cosine similarity could be used for matching.\nK-means with k=10 produced ten interpretable clusters covering software engineering, data science, healthcare, finance, operations, and several other role families. The full pipeline — vocabulary construction, TF-IDF weighting, clustering, and cluster summarization — lives in build_clusters.py in the repository root."
+  },
+  {
+    "objectID": "cluster_finder.html#cluster-landscape",
+    "href": "cluster_finder.html#cluster-landscape",
+    "title": "Job Cluster Finder",
+    "section": "Cluster Landscape",
+    "text": "Cluster Landscape\nThe plot below projects every posting down to two dimensions using PCA, colored by its assigned cluster. Points that sit close together share similar skill profiles; clusters that overlap in 2D often reflect role families with related skill bases (e.g. data analytics and business intelligence).\n\n\n\nJob postings projected to 2D via PCA, colored by cluster assignment\n\n\nThe clusters themselves are defined by their top skills. The chart below shows the most common skills within each cluster, which gives a quick sense of what kind of work each cluster represents.\n\n\n\nTop skills within each of the ten clusters"
+  },
+  {
+    "objectID": "cluster_finder.html#find-your-own-cluster",
+    "href": "cluster_finder.html#find-your-own-cluster",
+    "title": "Job Cluster Finder",
+    "section": "Find Your Own Cluster",
+    "text": "Find Your Own Cluster\nPick the skills you have — or the ones you’d like to develop — and the tool below will find the cluster whose centroid is most similar to your profile. It returns the top match along with two runner-ups, plus typical job titles, top industries, median salary, and typical education level for the best-matching cluster.\nAll of the matching happens client-side in your browser using cosine similarity against the exported cluster centroids, so the results are instant.\n\n\n\nFind Your Job Cluster\n\n\nSelect the skills you have (or want to develop). We’ll match you to the closest cluster of job postings in the Lightcast dataset using cosine similarity against the K-means centroids.\n\n\n&lt;input\n  id=\"skill-search\"\n  type=\"text\"\n  placeholder=\"Search skills (e.g. Python, SQL, Tableau)...\"\n  style=\"width: 100%; padding: 0.6em; font-size: 1em; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;\"\n/&gt;\n\n\n\n\n\n&lt;strong&gt;Selected (0):&lt;/strong&gt; &lt;span id=\"selected-list\" style=\"color: #888;\"&gt;none yet&lt;/span&gt;\n\nFind My Cluster"
+  },
+  {
+    "objectID": "cluster_finder.html#interpreting-the-results",
+    "href": "cluster_finder.html#interpreting-the-results",
+    "title": "Job Cluster Finder",
+    "section": "Interpreting the Results",
+    "text": "Interpreting the Results\nA high similarity score (above ~0.5) means your skill set aligns strongly with the center of a cluster — you’d likely be competitive for the kinds of jobs it contains. A lower score (0.2–0.4) means you sit closer to the boundary between clusters, which is actually common for interdisciplinary skill sets. If your top match and your runner-up are close in score, it suggests your profile straddles two role families; this is worth knowing when you write resumes or frame applications.\nOne caveat: the model only knows about the top 200 skills in the dataset. Very niche or very new skills may not appear in the vocabulary, so picking one or two adjacent skills (e.g. Machine Learning if LangChain isn’t listed) often gives a more stable match."
+  },
+  {
+    "objectID": "cluster_finder.html#why-clustering-matters-for-career-planning",
+    "href": "cluster_finder.html#why-clustering-matters-for-career-planning",
+    "title": "Job Cluster Finder",
+    "section": "Why Clustering Matters for Career Planning",
+    "text": "Why Clustering Matters for Career Planning\nTraditional job-title taxonomies (SOC codes, ONET categories) are slow to update and often lump together roles with very different skill requirements. Skill-based clustering reflects what employers are actually asking for right now*, which makes it a more honest picture of the market. For the research questions this site explores — how AI/ML expertise is spreading across industries, which sectors are hiring data scientists, what the outlook is for business analytics — seeing the skill clusters side by side makes these trends much easier to spot."
+  },
+  {
+    "objectID": "ai_ml_evolution.html",
+    "href": "ai_ml_evolution.html",
+    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
+    "section": "",
+    "text": "The rapid advancement of artificial intelligence and machine learning technologies has fundamentally reshaped the labor market. As organizations increasingly integrate AI-driven tools into their operations, the demand for employees with AI/ML competencies has surged — not only in traditional tech roles, but across industries (Tambe et al. 2019). Carnevale et al. (2023) found that generative AI is already influencing job requirements, with employers beginning to embed AI-related skills into postings that previously had no such expectations.\nThis analysis examines the Lightcast job postings dataset to determine whether job descriptions have evolved over time to require AI/ML expertise. Specifically, we investigate the prevalence of AI/ML-related skills across job postings, the types of roles increasingly demanding these skills, and the industries driving this shift."
+  },
+  {
+    "objectID": "ai_ml_evolution.html#introduction",
+    "href": "ai_ml_evolution.html#introduction",
+    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
+    "section": "",
+    "text": "The rapid advancement of artificial intelligence and machine learning technologies has fundamentally reshaped the labor market. As organizations increasingly integrate AI-driven tools into their operations, the demand for employees with AI/ML competencies has surged — not only in traditional tech roles, but across industries (Tambe et al. 2019). Carnevale et al. (2023) found that generative AI is already influencing job requirements, with employers beginning to embed AI-related skills into postings that previously had no such expectations.\nThis analysis examines the Lightcast job postings dataset to determine whether job descriptions have evolved over time to require AI/ML expertise. Specifically, we investigate the prevalence of AI/ML-related skills across job postings, the types of roles increasingly demanding these skills, and the industries driving this shift."
+  },
+  {
+    "objectID": "ai_ml_evolution.html#data-loading",
+    "href": "ai_ml_evolution.html#data-loading",
+    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
+    "section": "Data Loading",
+    "text": "Data Loading\n\n\nTotal postings: 72,454\nColumns: 29"
+  },
+  {
+    "objectID": "ai_ml_evolution.html#defining-aiml-skills",
+    "href": "ai_ml_evolution.html#defining-aiml-skills",
+    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
+    "section": "Defining AI/ML Skills",
+    "text": "Defining AI/ML Skills\nWe define a comprehensive list of AI/ML-related keywords to search for within the skills columns. These keywords span core AI/ML concepts, popular frameworks, and adjacent technical skills that signal AI/ML expertise.\n\n\nPostings with AI/ML skills: 6,765 (9.3%)\nPostings without AI/ML skills: 65,689"
+  },
+  {
+    "objectID": "ai_ml_evolution.html#aiml-adoption-over-time",
+    "href": "ai_ml_evolution.html#aiml-adoption-over-time",
+    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
+    "section": "AI/ML Adoption Over Time",
+    "text": "AI/ML Adoption Over Time\nTo understand the temporal evolution, we examine how the proportion of AI/ML-requiring postings changes month by month. This approach aligns with the methodology of Acemoglu et al. (2022), who tracked AI-related job posting trends to measure the pace of AI adoption across the economy.\n\n\nMonth           Total    AI/ML  % AI/ML\n----------------------------------------\n2024-05        15,133    1,147     7.6%\n2024-06        14,381    1,235     8.6%\n2024-07        12,502    1,141     9.1%\n2024-08        15,105    1,491     9.9%\n2024-09        15,333    1,751    11.4%\n\n\n\n\n\nAI/ML Evolution Timeline"
+  },
+  {
+    "objectID": "ai_ml_evolution.html#most-common-aiml-skills-demanded",
+    "href": "ai_ml_evolution.html#most-common-aiml-skills-demanded",
+    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
+    "section": "Most Common AI/ML Skills Demanded",
+    "text": "Most Common AI/ML Skills Demanded\nWe now examine which specific AI/ML skills appear most frequently in job postings. Understanding the granularity of demand helps distinguish between postings seeking general AI awareness versus those requiring deep technical proficiency.\n\n\n\n=======================================================\nTOP 20 AI/ML SKILLS IN JOB POSTINGS\n=======================================================\nRank  Skill                                      Count\n-------------------------------------------------------\n1     Machine Learning                           8,016\n2     Artificial Intelligence                    6,280\n3     Generative Artificial Intelligence         2,280\n4     MLOps (Machine Learning Operations)          674\n5     Machine Learning Algorithms                  626\n6     TensorFlow                                   591\n7     Natural Language Processing (NLP)            566\n8     Scikit-Learn (Python Package)                504\n9     Deep Learning                                492\n10    PyTorch (Machine Learning Library)           453\n11    Artificial Neural Networks                   358\n12    Order Fulfillment                            310\n13    Machine Learning Model Training              242\n14    Feature Engineering                          218\n15    Large Language Modeling                      216\n16    Azure Machine Learning                       213\n17    Random Forest Algorithm                      208\n18    Computer Vision                              182\n19    Xgboost                                      147\n20    Keras (Neural Network Library)               138\n\n\n\n\n\nTop AI/ML Skills"
+  },
+  {
+    "objectID": "ai_ml_evolution.html#which-roles-are-increasingly-requiring-aiml",
+    "href": "ai_ml_evolution.html#which-roles-are-increasingly-requiring-aiml",
+    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
+    "section": "Which Roles Are Increasingly Requiring AI/ML?",
+    "text": "Which Roles Are Increasingly Requiring AI/ML?\nBeyond dedicated data science and ML engineer positions, AI/ML skills are spreading into roles that traditionally had no such requirements. Tambe et al. (2019) highlighted this diffusion pattern, noting that AI adoption extends well beyond the tech sector into healthcare, finance, and operations.\n\n\n\n============================================================\nTOP 20 JOB TITLES REQUIRING AI/ML SKILLS\n============================================================\nRank  Job Title                                   Count\n------------------------------------------------------------\n1     Data Analysts                                 801\n2     Enterprise Architects                         232\n3     Business Intelligence Analysts                209\n4     Data Science Analysts                         154\n5     Unclassified                                  148\n6     Enterprise Solutions Architects               119\n7     Data Analytics Leads                          113\n8     Data Analytics Engineers                      107\n9     Analytics and Insights Managers               103\n10    Data Analytics Interns                         96\n11    Data Modelers                                  96\n12    Solution Architect Managers                    96\n13    Principal Architects                           91\n14    Enterprise Data Architects                     83\n15    Solutions Architects                           78\n16    Data and Analytics Managers                    64\n17    IT Governance Analysts                         62\n18    Salesforce Architects                          60\n19    Analytics Managers                             60\n20    Business Intelligence Data Analysts            58"
+  },
+  {
+    "objectID": "ai_ml_evolution.html#industries-driving-aiml-demand",
+    "href": "ai_ml_evolution.html#industries-driving-aiml-demand",
+    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
+    "section": "Industries Driving AI/ML Demand",
+    "text": "Industries Driving AI/ML Demand\n\n\n\nAI/ML by Industry"
+  },
+  {
+    "objectID": "ai_ml_evolution.html#education-requirements-for-aiml-roles",
+    "href": "ai_ml_evolution.html#education-requirements-for-aiml-roles",
+    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
+    "section": "Education Requirements for AI/ML Roles",
+    "text": "Education Requirements for AI/ML Roles\nWe also examine whether AI/ML-requiring roles demand higher education levels compared to the overall dataset, which has implications for workforce development and academic program design.\n\n\n\nAI/ML Postings — Minimum Education Levels:\n  Bachelor's degree                         4,398 (65.0%)\n  No Education Listed                       1,327 (19.6%)\n  Associate degree                            445 (6.6%)\n  Master's degree                             390 (5.8%)\n  High school or GED                          189 (2.8%)\n  Ph.D. or professional degree                 16 (0.2%)\n\nNon-AI/ML Postings — Minimum Education Levels:\n  Bachelor's degree                        37,073 (56.4%)\n  No Education Listed                      20,783 (31.6%)\n  High school or GED                        3,559 (5.4%)\n  Associate degree                          2,696 (4.1%)\n  Master's degree                           1,484 (2.3%)\n  Ph.D. or professional degree                 94 (0.1%)"
+  },
+  {
+    "objectID": "ai_ml_evolution.html#conclusion",
+    "href": "ai_ml_evolution.html#conclusion",
+    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
+    "section": "Conclusion",
+    "text": "Conclusion\nOur analysis of the Lightcast dataset reveals several key findings about the evolution of AI/ML requirements in job postings:\n\nAI/ML skills are increasingly prevalent — A meaningful and growing share of job postings now explicitly require AI/ML expertise, extending beyond traditional data science and engineering roles.\nMachine Learning and Python dominate — Among AI/ML-specific skills, Machine Learning as a general competency and Python-based frameworks (TensorFlow, PyTorch, scikit-learn) are the most frequently cited, consistent with the findings of Tambe et al. (2019) on AI skill diffusion.\nDemand extends beyond tech — Industries such as finance, healthcare, and professional services are increasingly embedding AI/ML requirements into their job descriptions, reflecting the broader adoption trends documented by Acemoglu et al. (2022).\nHigher education expectations — AI/ML roles tend to require higher minimum education levels, with a greater proportion of postings specifying a Master’s or Doctoral degree compared to non-AI/ML roles.\nGenerative AI is emerging — Keywords related to generative AI, large language models, and tools like ChatGPT are beginning to appear in job postings, confirming the labor market shifts identified by Carnevale et al. (2023).\n\nThese findings underscore the importance of integrating AI/ML competencies into analytics and data science curricula to meet evolving employer expectations."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
     "objectID": "ba_career_outlook.html",
     "href": "ba_career_outlook.html",
     "title": "What Is the Career Outlook for Business Analytics Professionals?",
@@ -278,83 +404,6 @@
     "title": "What Is the Career Outlook for Business Analytics Professionals?",
     "section": "Conclusion",
     "text": "Conclusion\nOur analysis of the Lightcast dataset reveals a positive career outlook for business analytics professionals, with several key takeaways:\n\nSustained demand — Business analytics and BI roles represent a significant share of data-related job postings, and demand has remained steady over the observation period, confirming the field’s maturity and stability.\nCompetitive compensation — While BA salaries may trail those of data science and data engineering roles, they remain competitive and are bolstered by lower barriers to entry in terms of education and experience requirements.\nDistinctive skill profile — Consistent with the findings of Radovilsky et al. (2018) and Levendis et al. (2025), BA roles prioritize SQL, Excel, Tableau/Power BI, communication, and problem-solving over the Python-heavy, ML-focused profile of data science. This distinction creates a clear career path for professionals who prefer applied analytics and stakeholder engagement over model building.\nEvolving expectations — As Umamaheswaran et al. (2023) documented, employers are increasingly looking for BA professionals who can bridge the gap between technical analysis and business strategy, blending traditional BI skills with emerging competencies in machine learning and advanced analytics.\nBroad industry reach — Business analytics roles span professional services, finance, technology, healthcare, and beyond, offering professionals flexibility in choosing an industry that aligns with their interests.\nAccessible entry point — Compared to data science roles, business analytics positions tend to have more flexible education requirements, making the field accessible to professionals with diverse educational backgrounds — a pattern consistent with Verma et al. (2019)’s findings.\n\nFor aspiring analytics professionals, business analytics offers a strong career path with growing demand, competitive pay, and opportunities to develop into leadership roles in data strategy and management."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
-  },
-  {
-    "objectID": "ai_ml_evolution.html",
-    "href": "ai_ml_evolution.html",
-    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
-    "section": "",
-    "text": "The rapid advancement of artificial intelligence and machine learning technologies has fundamentally reshaped the labor market. As organizations increasingly integrate AI-driven tools into their operations, the demand for employees with AI/ML competencies has surged — not only in traditional tech roles, but across industries (Tambe et al. 2019). Carnevale et al. (2023) found that generative AI is already influencing job requirements, with employers beginning to embed AI-related skills into postings that previously had no such expectations.\nThis analysis examines the Lightcast job postings dataset to determine whether job descriptions have evolved over time to require AI/ML expertise. Specifically, we investigate the prevalence of AI/ML-related skills across job postings, the types of roles increasingly demanding these skills, and the industries driving this shift."
-  },
-  {
-    "objectID": "ai_ml_evolution.html#introduction",
-    "href": "ai_ml_evolution.html#introduction",
-    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
-    "section": "",
-    "text": "The rapid advancement of artificial intelligence and machine learning technologies has fundamentally reshaped the labor market. As organizations increasingly integrate AI-driven tools into their operations, the demand for employees with AI/ML competencies has surged — not only in traditional tech roles, but across industries (Tambe et al. 2019). Carnevale et al. (2023) found that generative AI is already influencing job requirements, with employers beginning to embed AI-related skills into postings that previously had no such expectations.\nThis analysis examines the Lightcast job postings dataset to determine whether job descriptions have evolved over time to require AI/ML expertise. Specifically, we investigate the prevalence of AI/ML-related skills across job postings, the types of roles increasingly demanding these skills, and the industries driving this shift."
-  },
-  {
-    "objectID": "ai_ml_evolution.html#data-loading",
-    "href": "ai_ml_evolution.html#data-loading",
-    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
-    "section": "Data Loading",
-    "text": "Data Loading\n\n\nTotal postings: 72,454\nColumns: 29"
-  },
-  {
-    "objectID": "ai_ml_evolution.html#defining-aiml-skills",
-    "href": "ai_ml_evolution.html#defining-aiml-skills",
-    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
-    "section": "Defining AI/ML Skills",
-    "text": "Defining AI/ML Skills\nWe define a comprehensive list of AI/ML-related keywords to search for within the skills columns. These keywords span core AI/ML concepts, popular frameworks, and adjacent technical skills that signal AI/ML expertise.\n\n\nPostings with AI/ML skills: 6,765 (9.3%)\nPostings without AI/ML skills: 65,689"
-  },
-  {
-    "objectID": "ai_ml_evolution.html#aiml-adoption-over-time",
-    "href": "ai_ml_evolution.html#aiml-adoption-over-time",
-    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
-    "section": "AI/ML Adoption Over Time",
-    "text": "AI/ML Adoption Over Time\nTo understand the temporal evolution, we examine how the proportion of AI/ML-requiring postings changes month by month. This approach aligns with the methodology of Acemoglu et al. (2022), who tracked AI-related job posting trends to measure the pace of AI adoption across the economy.\n\n\nMonth           Total    AI/ML  % AI/ML\n----------------------------------------\n2024-05        15,133    1,147     7.6%\n2024-06        14,381    1,235     8.6%\n2024-07        12,502    1,141     9.1%\n2024-08        15,105    1,491     9.9%\n2024-09        15,333    1,751    11.4%\n\n\n\n\n\nAI/ML Evolution Timeline"
-  },
-  {
-    "objectID": "ai_ml_evolution.html#most-common-aiml-skills-demanded",
-    "href": "ai_ml_evolution.html#most-common-aiml-skills-demanded",
-    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
-    "section": "Most Common AI/ML Skills Demanded",
-    "text": "Most Common AI/ML Skills Demanded\nWe now examine which specific AI/ML skills appear most frequently in job postings. Understanding the granularity of demand helps distinguish between postings seeking general AI awareness versus those requiring deep technical proficiency.\n\n\n\n=======================================================\nTOP 20 AI/ML SKILLS IN JOB POSTINGS\n=======================================================\nRank  Skill                                      Count\n-------------------------------------------------------\n1     Machine Learning                           8,016\n2     Artificial Intelligence                    6,280\n3     Generative Artificial Intelligence         2,280\n4     MLOps (Machine Learning Operations)          674\n5     Machine Learning Algorithms                  626\n6     TensorFlow                                   591\n7     Natural Language Processing (NLP)            566\n8     Scikit-Learn (Python Package)                504\n9     Deep Learning                                492\n10    PyTorch (Machine Learning Library)           453\n11    Artificial Neural Networks                   358\n12    Order Fulfillment                            310\n13    Machine Learning Model Training              242\n14    Feature Engineering                          218\n15    Large Language Modeling                      216\n16    Azure Machine Learning                       213\n17    Random Forest Algorithm                      208\n18    Computer Vision                              182\n19    Xgboost                                      147\n20    Keras (Neural Network Library)               138\n\n\n\n\n\nTop AI/ML Skills"
-  },
-  {
-    "objectID": "ai_ml_evolution.html#which-roles-are-increasingly-requiring-aiml",
-    "href": "ai_ml_evolution.html#which-roles-are-increasingly-requiring-aiml",
-    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
-    "section": "Which Roles Are Increasingly Requiring AI/ML?",
-    "text": "Which Roles Are Increasingly Requiring AI/ML?\nBeyond dedicated data science and ML engineer positions, AI/ML skills are spreading into roles that traditionally had no such requirements. Tambe et al. (2019) highlighted this diffusion pattern, noting that AI adoption extends well beyond the tech sector into healthcare, finance, and operations.\n\n\n\n============================================================\nTOP 20 JOB TITLES REQUIRING AI/ML SKILLS\n============================================================\nRank  Job Title                                   Count\n------------------------------------------------------------\n1     Data Analysts                                 801\n2     Enterprise Architects                         232\n3     Business Intelligence Analysts                209\n4     Data Science Analysts                         154\n5     Unclassified                                  148\n6     Enterprise Solutions Architects               119\n7     Data Analytics Leads                          113\n8     Data Analytics Engineers                      107\n9     Analytics and Insights Managers               103\n10    Data Analytics Interns                         96\n11    Data Modelers                                  96\n12    Solution Architect Managers                    96\n13    Principal Architects                           91\n14    Enterprise Data Architects                     83\n15    Solutions Architects                           78\n16    Data and Analytics Managers                    64\n17    IT Governance Analysts                         62\n18    Salesforce Architects                          60\n19    Analytics Managers                             60\n20    Business Intelligence Data Analysts            58"
-  },
-  {
-    "objectID": "ai_ml_evolution.html#industries-driving-aiml-demand",
-    "href": "ai_ml_evolution.html#industries-driving-aiml-demand",
-    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
-    "section": "Industries Driving AI/ML Demand",
-    "text": "Industries Driving AI/ML Demand\n\n\n\nAI/ML by Industry"
-  },
-  {
-    "objectID": "ai_ml_evolution.html#education-requirements-for-aiml-roles",
-    "href": "ai_ml_evolution.html#education-requirements-for-aiml-roles",
-    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
-    "section": "Education Requirements for AI/ML Roles",
-    "text": "Education Requirements for AI/ML Roles\nWe also examine whether AI/ML-requiring roles demand higher education levels compared to the overall dataset, which has implications for workforce development and academic program design.\n\n\n\nAI/ML Postings — Minimum Education Levels:\n  Bachelor's degree                         4,398 (65.0%)\n  No Education Listed                       1,327 (19.6%)\n  Associate degree                            445 (6.6%)\n  Master's degree                             390 (5.8%)\n  High school or GED                          189 (2.8%)\n  Ph.D. or professional degree                 16 (0.2%)\n\nNon-AI/ML Postings — Minimum Education Levels:\n  Bachelor's degree                        37,073 (56.4%)\n  No Education Listed                      20,783 (31.6%)\n  High school or GED                        3,559 (5.4%)\n  Associate degree                          2,696 (4.1%)\n  Master's degree                           1,484 (2.3%)\n  Ph.D. or professional degree                 94 (0.1%)"
-  },
-  {
-    "objectID": "ai_ml_evolution.html#conclusion",
-    "href": "ai_ml_evolution.html#conclusion",
-    "title": "Have Job Descriptions Evolved to Require AI/ML Expertise?",
-    "section": "Conclusion",
-    "text": "Conclusion\nOur analysis of the Lightcast dataset reveals several key findings about the evolution of AI/ML requirements in job postings:\n\nAI/ML skills are increasingly prevalent — A meaningful and growing share of job postings now explicitly require AI/ML expertise, extending beyond traditional data science and engineering roles.\nMachine Learning and Python dominate — Among AI/ML-specific skills, Machine Learning as a general competency and Python-based frameworks (TensorFlow, PyTorch, scikit-learn) are the most frequently cited, consistent with the findings of Tambe et al. (2019) on AI skill diffusion.\nDemand extends beyond tech — Industries such as finance, healthcare, and professional services are increasingly embedding AI/ML requirements into their job descriptions, reflecting the broader adoption trends documented by Acemoglu et al. (2022).\nHigher education expectations — AI/ML roles tend to require higher minimum education levels, with a greater proportion of postings specifying a Master’s or Doctoral degree compared to non-AI/ML roles.\nGenerative AI is emerging — Keywords related to generative AI, large language models, and tools like ChatGPT are beginning to appear in job postings, confirming the labor market shifts identified by Carnevale et al. (2023).\n\nThese findings underscore the importance of integrating AI/ML competencies into analytics and data science curricula to meet evolving employer expectations."
   },
   {
     "objectID": "data_cleaning.html",

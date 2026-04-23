@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Omar Mohd Haris">
-<meta name="dcterms.date" content="2026-04-23">
+<meta name="author" content="Omar Mohamed">
 
-<title>Most In-Demand Skills for Data Science, Business Analytics, and ML Roles – AD688 Team 1 Spring 2026</title>
+<title>Job Cluster Finder – AD688 Team 1 Spring 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,26 +24,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -176,7 +156,7 @@ div.csl-indent {
 <span class="menu-text">Machine Learning</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./cluster_finder.html"> 
+    <a class="nav-link active" href="./cluster_finder.html" aria-current="page"> 
 <span class="menu-text">Find Your Match</span></a>
   </li>  
   <li class="nav-item">
@@ -199,15 +179,12 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#data-loading" id="toc-data-loading" class="nav-link" data-scroll-target="#data-loading">Data Loading</a></li>
-  <li><a href="#filtering-for-relevant-roles" id="toc-filtering-for-relevant-roles" class="nav-link" data-scroll-target="#filtering-for-relevant-roles">Filtering for Relevant Roles</a></li>
-  <li><a href="#top-30-most-in-demand-skills-overall" id="toc-top-30-most-in-demand-skills-overall" class="nav-link" data-scroll-target="#top-30-most-in-demand-skills-overall">Top 30 Most In-Demand Skills (Overall)</a></li>
-  <li><a href="#top-20-software-and-tools" id="toc-top-20-software-and-tools" class="nav-link" data-scroll-target="#top-20-software-and-tools">Top 20 Software and Tools</a></li>
-  <li><a href="#skills-breakdown-by-role-category" id="toc-skills-breakdown-by-role-category" class="nav-link" data-scroll-target="#skills-breakdown-by-role-category">Skills Breakdown by Role Category</a></li>
-  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots">Plots</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
+  <li><a href="#cluster-landscape" id="toc-cluster-landscape" class="nav-link" data-scroll-target="#cluster-landscape">Cluster Landscape</a></li>
+  <li><a href="#find-your-own-cluster" id="toc-find-your-own-cluster" class="nav-link" data-scroll-target="#find-your-own-cluster">Find Your Own Cluster</a></li>
+  <li><a href="#interpreting-the-results" id="toc-interpreting-the-results" class="nav-link" data-scroll-target="#interpreting-the-results">Interpreting the Results</a></li>
+  <li><a href="#why-clustering-matters-for-career-planning" id="toc-why-clustering-matters-for-career-planning" class="nav-link" data-scroll-target="#why-clustering-matters-for-career-planning">Why Clustering Matters for Career Planning</a></li>
   </ul>
 </nav>
     </div>
@@ -216,7 +193,8 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Most In-Demand Skills for Data Science, Business Analytics, and ML Roles</h1>
+<h1 class="title">Job Cluster Finder</h1>
+<p class="subtitle lead">Discover which segment of the job market matches your skills</p>
 </div>
 
 
@@ -226,16 +204,10 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Omar Mohd Haris </p>
+             <p>Omar Mohamed </p>
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">April 23, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -245,186 +217,231 @@ div.csl-indent {
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The data science and analytics job market continues to expand rapidly, with the U.S. Bureau of Labor Statistics projecting 36% employment growth for data scientists from 2023 to 2033. As the field matures, understanding which specific skills employers demand is critical for job seekers, educators, and program designers alike.</p>
-<p>Previous research has examined skill requirements across analytics roles. <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span> conducted a comparative analysis of 1,050 job postings and found that data science roles emphasize computer systems, algorithms, and programming, while business data analytics roles place greater weight on statistical analysis and decision-making support. Similarly, <span class="citation" data-cites="verma2019investigation">Verma et al. (<a href="#ref-verma2019investigation" role="doc-biblioref">2019</a>)</span> performed a content analysis of job advertisements and identified SQL, Excel, and visualization tools as core requirements across analytics positions. More recently, <span class="citation" data-cites="levendis2025business">Levendis et al. (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span> identified the most sought-after skills for business analytics roles, highlighting both technical proficiency and communication as key employer expectations.</p>
-<p>This analysis extends that body of work by examining job postings from the Lightcast dataset to identify the most in-demand skills across Data Science, Business Analytics, Machine Learning, and related roles.</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>The Lightcast job postings dataset contains hundreds of thousands of postings spanning every industry, role, and seniority level. Rather than looking at jobs one at a time, this page groups them into <strong>ten natural clusters</strong> based on the skills they require — then lets you find which cluster your own skill set fits best.</p>
+<p>The goal is twofold: to surface the structure of the labor market at a glance, and to give job seekers a concrete, data-driven way to see where they sit within it.</p>
 </section>
-<section id="data-loading" class="level2">
-<h2 class="anchored" data-anchor-id="data-loading">Data Loading</h2>
-<p>We load the cleaned Lightcast dataset produced by our shared <a href="./data_cleaning.html">Data Cleaning</a> page. This file has already been deduplicated, date-parsed, and had its skills columns split into Python lists, so we can jump straight into analysis.</p>
-<div id="3ca94579" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-stdout">
-<pre><code>Total postings: 72,454</code></pre>
-</div>
-</div>
+<section id="methodology" class="level2">
+<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
+<p>I ran K-means clustering on a sample of roughly 50,000 Lightcast postings. Each posting was encoded as a 200-dimensional binary vector indicating which of the most common skills it required. The raw counts were then reweighted using TF-IDF so that distinctive skills (e.g.&nbsp;<em>PyTorch</em>, <em>Kubernetes</em>) carried more signal than ubiquitous ones (e.g.&nbsp;<em>Communication</em>, <em>Microsoft Office</em>), and each vector was L2-normalized so that cosine similarity could be used for matching.</p>
+<p>K-means with k=10 produced ten interpretable clusters covering software engineering, data science, healthcare, finance, operations, and several other role families. The full pipeline — vocabulary construction, TF-IDF weighting, clustering, and cluster summarization — lives in <code>build_clusters.py</code> in the repository root.</p>
 </section>
-<section id="filtering-for-relevant-roles" class="level2">
-<h2 class="anchored" data-anchor-id="filtering-for-relevant-roles">Filtering for Relevant Roles</h2>
-<p>To focus on data science, business analytics, and ML roles, we categorize each posting using keywords matched against the <code>title_name</code> (Lightcast’s standardized job title) and <code>onet_name</code> (Bureau of Labor Statistics occupation classification) columns. This dual-column approach ensures we capture roles that may have non-standard titles but are classified under relevant O*NET codes.</p>
-<div id="55d2363d" class="cell" data-execution_count="2">
-<div class="cell-output cell-output-stdout">
-<pre><code>Filtered to 72,454 relevant postings (100.0%)
-
-Role distribution:
-role_category
-Business Analytics / BI    71869
-Data Science / ML            585</code></pre>
-</div>
-</div>
-</section>
-<section id="top-30-most-in-demand-skills-overall" class="level2">
-<h2 class="anchored" data-anchor-id="top-30-most-in-demand-skills-overall">Top 30 Most In-Demand Skills (Overall)</h2>
-<p>We explode the skill lists so that each skill–posting pair becomes its own row, then count the frequency of each skill across all filtered postings. This gives us the overall demand landscape. This approach is consistent with how <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span> extracted and categorized skill keywords from job posting text.</p>
-<div id="c620b77b" class="cell" data-execution_count="3">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-=================================================================
-TOP 30 MOST IN-DEMAND SKILLS (DS + BA + ML + DE)
-=================================================================
-Rank  Skill                                      Count  % Posts
------------------------------------------------------------------
-1     Communication                             31,661    43.7%
-2     Data Analysis                             28,515    39.4%
-3     Management                                24,631    34.0%
-4     SQL (Programming Language)                21,733    30.0%
-5     Problem Solving                           18,522    25.6%
-6     Leadership                                17,561    24.2%
-7     Computer Science                          17,287    23.9%
-8     Operations                                14,767    20.4%
-9     Project Management                        13,711    18.9%
-10    Business Process                          13,278    18.3%
-11    Business Requirements                     13,035    18.0%
-12    Microsoft Excel                           12,826    17.7%
-13    Finance                                   12,438    17.2%
-14    Python (Programming Language)             12,253    16.9%
-15    SAP Applications                          12,123    16.7%
-16    Detail Oriented                           11,987    16.5%
-17    Presentations                             11,890    16.4%
-18    Dashboard                                 11,856    16.4%
-19    Tableau (Business Intelligence Software)  11,781    16.3%
-20    Planning                                  11,578    16.0%
-21    Writing                                   11,274    15.6%
-22    Power BI                                  10,850    15.0%
-23    Business Intelligence                     10,423    14.4%
-24    Research                                  10,038    13.9%
-25    Consulting                                 9,533    13.2%
-26    Agile Methodology                          9,131    12.6%
-27    Innovation                                 9,000    12.4%
-28    Troubleshooting (Problem Solving)          8,996    12.4%
-29    Information Technology                     8,852    12.2%
-30    Data Management                            8,691    12.0%</code></pre>
-</div>
-</div>
-</section>
-<section id="top-20-software-and-tools" class="level2">
-<h2 class="anchored" data-anchor-id="top-20-software-and-tools">Top 20 Software and Tools</h2>
-<p>Lightcast separately tags software and tool skills in the <code>software_skills_name</code> column, allowing us to isolate the specific technologies employers require. The dominance of SQL in this ranking aligns with findings from <span class="citation" data-cites="verma2019investigation">Verma et al. (<a href="#ref-verma2019investigation" role="doc-biblioref">2019</a>)</span>, who identified SQL as the most frequently listed technical requirement in analytics job advertisements.</p>
-<div id="0f9e53fe" class="cell" data-execution_count="4">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-=================================================================
-TOP 20 SOFTWARE / TOOLS
-=================================================================
-1     SQL (Programming Language)                21,733    30.0%
-2     Microsoft Excel                           12,826    17.7%
-3     Python (Programming Language)             12,253    16.9%
-4     SAP Applications                          12,123    16.7%
-5     Dashboard                                 11,856    16.4%
-6     Tableau (Business Intelligence Software)  11,781    16.3%
-7     Power BI                                  10,850    15.0%
-8     Microsoft Office                           7,564    10.4%
-9     Microsoft PowerPoint                       7,161     9.9%
-10    R (Programming Language)                   6,104     8.4%
-11    Microsoft Azure                            4,759     6.6%
-12    Amazon Web Services                        4,692     6.5%
-13    Oracle Cloud                               4,053     5.6%
-14    SAS (Software)                             3,539     4.9%
-15    Application Programming Interface (API)    3,509     4.8%
-16    Microsoft Access                           3,247     4.5%
-17    Relational Databases                       3,155     4.4%
-18    Salesforce                                 2,838     3.9%
-19    Java (Programming Language)                2,632     3.6%
-20    Microsoft Outlook                          2,437     3.4%</code></pre>
-</div>
-</div>
-</section>
-<section id="skills-breakdown-by-role-category" class="level2">
-<h2 class="anchored" data-anchor-id="skills-breakdown-by-role-category">Skills Breakdown by Role Category</h2>
-<p>Here we compare the top 10 skills within each role category. This comparison reveals important differences: Data Science/ML roles prioritize Python, Machine Learning, and Statistics, while Business Analytics/BI roles emphasize Communication, Management, and Business Process knowledge. This distinction echoes the findings of <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span>, who noted that data science emphasizes computer systems, algorithms, and programming skills, whereas business data analytics has a substantial focus on statistical and quantitative analysis of data. <span class="citation" data-cites="levendis2025business">Levendis et al. (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span> similarly found that business analytics employers seek a blend of technical and communication skills.</p>
-<div id="1c3f6ead" class="cell" data-execution_count="5">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  =======================================================
-  Data Science / ML (585 postings)
-  =======================================================
-    1. Data Science                           454 (77.6%)
-    2. Data Analysis                          435 (74.4%)
-    3. Python (Programming Language)          313 (53.5%)
-    4. SQL (Programming Language)             304 (52.0%)
-    5. Communication                          253 (43.2%)
-    6. Mathematics                            244 (41.7%)
-    7. Machine Learning                       240 (41.0%)
-    8. Statistics                             233 (39.8%)
-    9. Computer Science                       232 (39.7%)
-   10. R (Programming Language)               228 (39.0%)
-
-  =======================================================
-  Business Analytics / BI (71,869 postings)
-  =======================================================
-    1. Communication                       31,408 (43.7%)
-    2. Data Analysis                       28,080 (39.1%)
-    3. Management                          24,463 (34.0%)
-    4. SQL (Programming Language)          21,429 (29.8%)
-    5. Problem Solving                     18,346 (25.5%)
-    6. Leadership                          17,340 (24.1%)
-    7. Computer Science                    17,055 (23.7%)
-    8. Operations                          14,706 (20.5%)
-    9. Project Management                  13,599 (18.9%)
-   10. Business Process                    13,231 (18.4%)</code></pre>
-</div>
-</div>
-</section>
-<section id="plots" class="level2">
-<h2 class="anchored" data-anchor-id="plots">Plots</h2>
-<p>The four-panel chart below summarizes our findings: (1) the top 20 overall skills, (2) the top 15 software/tools, (3) the top 15 specialized technical skills, and (4) a comparison of key skills across role categories.</p>
+<section id="cluster-landscape" class="level2">
+<h2 class="anchored" data-anchor-id="cluster-landscape">Cluster Landscape</h2>
+<p>The plot below projects every posting down to two dimensions using PCA, colored by its assigned cluster. Points that sit close together share similar skill profiles; clusters that overlap in 2D often reflect role families with related skill bases (e.g.&nbsp;data analytics and business intelligence).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="skills_analysis.png" class="img-fluid figure-img"></p>
-<figcaption>Skills Analysis</figcaption>
+<p><img src="visualizations/cluster_scatter.png" class="img-fluid figure-img"></p>
+<figcaption>Job postings projected to 2D via PCA, colored by cluster assignment</figcaption>
+</figure>
+</div>
+<p>The clusters themselves are defined by their top skills. The chart below shows the most common skills within each cluster, which gives a quick sense of what kind of work each cluster represents.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="visualizations/cluster_top_skills.png" class="img-fluid figure-img"></p>
+<figcaption>Top skills within each of the ten clusters</figcaption>
 </figure>
 </div>
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>Our analysis of the Lightcast job postings dataset reveals several key findings:</p>
-<ol type="1">
-<li><p><strong>SQL is the universal requirement</strong> — appearing in roughly 30% of all postings, it is the single most demanded technical skill across every role category.</p></li>
-<li><p><strong>Data Science/ML roles are distinctly more technical</strong> — Python, Machine Learning, R, and Statistics are all significantly more prevalent in DS/ML postings compared to BA/BI roles, confirming the skill divergence identified by <span class="citation" data-cites="radovilsky2018skills">Radovilsky et al. (<a href="#ref-radovilsky2018skills" role="doc-biblioref">2018</a>)</span>.</p></li>
-<li><p><strong>Communication and soft skills dominate BA/BI roles</strong> — Communication, Management, and Problem Solving rank highest for Business Analytics, consistent with the findings of <span class="citation" data-cites="levendis2025business">Levendis et al. (<a href="#ref-levendis2025business" role="doc-biblioref">2025</a>)</span> that employers value both technical and interpersonal competencies.</p></li>
-<li><p><strong>The BI tool landscape is a three-way race</strong> — Tableau, Power BI, and Excel all appear in similar proportions, suggesting employers value familiarity with multiple visualization platforms rather than expertise in just one.</p></li>
-</ol>
-<p>These findings have practical implications for analytics program curricula and for job seekers looking to align their skill development with market demand, as emphasized by <span class="citation" data-cites="verma2019investigation">Verma et al. (<a href="#ref-verma2019investigation" role="doc-biblioref">2019</a>)</span>.</p>
+<section id="find-your-own-cluster" class="level2">
+<h2 class="anchored" data-anchor-id="find-your-own-cluster">Find Your Own Cluster</h2>
+<p>Pick the skills you have — or the ones you’d like to develop — and the tool below will find the cluster whose centroid is most similar to your profile. It returns the top match along with two runner-ups, plus typical job titles, top industries, median salary, and typical education level for the best-matching cluster.</p>
+<p>All of the matching happens client-side in your browser using cosine similarity against the exported cluster centroids, so the results are instant.</p>
+<!--
+  Interactive Job Cluster Finder
+  ==============================
+  Drop this block into any .qmd page. Assumes `cluster_data.json` sits
+  next to the rendered HTML (i.e. alongside ai_ml_evolution.html in _site/).
+  If you keep the JSON somewhere else, adjust the fetch() path below.
+-->
+<div id="cluster-finder" style="font-family: system-ui, sans-serif; max-width: 900px; margin: 2em 0;">
+<h3 style="margin-top: 0;" class="anchored">
+Find Your Job Cluster
+</h3>
+<p style="color: #555;">
+Select the skills you have (or want to develop). We’ll match you to the closest cluster of job postings in the Lightcast dataset using cosine similarity against the K-means centroids.
+</p>
+<div style="margin: 1em 0;">
+<pre><code>&lt;input
+  id="skill-search"
+  type="text"
+  placeholder="Search skills (e.g. Python, SQL, Tableau)..."
+  style="width: 100%; padding: 0.6em; font-size: 1em; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;"
+/&gt;</code></pre>
+</div>
+<div id="skill-grid" style="display: flex; flex-wrap: wrap; gap: 0.4em; max-height: 260px; overflow-y: auto; border: 1px solid #eee; padding: 0.8em; border-radius: 6px; background: #fafafa;">
+
+</div>
+<div id="selected-tray" style="margin-top: 0.8em; min-height: 2em; font-size: 0.9em; color: #333;">
+<pre><code>&lt;strong&gt;Selected (0):&lt;/strong&gt; &lt;span id="selected-list" style="color: #888;"&gt;none yet&lt;/span&gt;</code></pre>
+</div>
+<p><button id="match-btn" style="margin-top: 1em; padding: 0.7em 1.4em; font-size: 1em; border: none; border-radius: 6px; background: #2563eb; color: white; cursor: pointer;">Find My Cluster</button></p>
+<div id="results" style="margin-top: 1.5em;">
+
+</div>
+</div>
+<script>
+(function () {
+  const state = {
+    data: null,
+    selected: new Set(),
+  };
+
+  // ---- Load data ----
+  fetch("cluster_data.json")
+    .then(r => r.json())
+    .then(data => {
+      state.data = data;
+      renderSkillGrid();
+    })
+    .catch(err => {
+      document.getElementById("skill-grid").innerHTML =
+        '<p style="color:#b00;">Could not load cluster_data.json. Make sure it\'s deployed alongside this page.</p>';
+      console.error(err);
+    });
+
+  // ---- Render skill checkboxes ----
+  function renderSkillGrid(filter = "") {
+    if (!state.data) return;
+    const grid = document.getElementById("skill-grid");
+    const f = filter.toLowerCase();
+    const items = state.data.vocab
+      .filter(s => s.toLowerCase().includes(f))
+      .slice(0, 120); // cap for performance
+
+    grid.innerHTML = items.map(s => {
+      const active = state.selected.has(s);
+      return `
+        <button
+          data-skill="${escapeHtml(s)}"
+          class="skill-chip"
+          style="
+            padding: 0.35em 0.8em;
+            border-radius: 999px;
+            border: 1px solid ${active ? '#2563eb' : '#ccc'};
+            background: ${active ? '#2563eb' : 'white'};
+            color: ${active ? 'white' : '#333'};
+            font-size: 0.85em;
+            cursor: pointer;
+          ">${escapeHtml(s)}</button>`;
+    }).join("");
+
+    grid.querySelectorAll(".skill-chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const skill = btn.getAttribute("data-skill");
+        if (state.selected.has(skill)) state.selected.delete(skill);
+        else state.selected.add(skill);
+        renderSkillGrid(document.getElementById("skill-search").value);
+        renderSelected();
+      });
+    });
+  }
+
+  function renderSelected() {
+    const list = document.getElementById("selected-list");
+    const tray = document.getElementById("selected-tray");
+    const arr = [...state.selected];
+    tray.querySelector("strong").textContent = `Selected (${arr.length}):`;
+    list.textContent = arr.length ? arr.join(", ") : "none yet";
+    list.style.color = arr.length ? "#2563eb" : "#888";
+  }
+
+  // ---- Matching logic ----
+  function findBestCluster() {
+    const { vocab, idf, centroids, clusters } = state.data;
+    if (state.selected.size === 0) return null;
+
+    // Build binary user vector, apply IDF, L2-normalize
+    const v = new Float32Array(vocab.length);
+    const idx = {};
+    vocab.forEach((s, i) => idx[s] = i);
+    state.selected.forEach(s => {
+      if (idx[s] !== undefined) v[idx[s]] = 1;
+    });
+    for (let i = 0; i < v.length; i++) v[i] *= idf[i];
+    let norm = 0;
+    for (let i = 0; i < v.length; i++) norm += v[i] * v[i];
+    norm = Math.sqrt(norm);
+    if (norm === 0) return null;
+    for (let i = 0; i < v.length; i++) v[i] /= norm;
+
+    // Cosine similarity = dot product (both sides L2-normalized)
+    const scored = centroids.map((c, i) => {
+      let dot = 0;
+      for (let j = 0; j < c.length; j++) dot += c[j] * v[j];
+      return { cluster: clusters[i], score: dot };
+    });
+    scored.sort((a, b) => b.score - a.score);
+    return scored.slice(0, 3); // top 3
+  }
+
+  function renderResults() {
+    const results = document.getElementById("results");
+    const top = findBestCluster();
+    if (!top) {
+      results.innerHTML = '<p style="color:#b00;">Pick at least one skill that matches the vocabulary.</p>';
+      return;
+    }
+
+    const best = top[0].cluster;
+    const salary = best.median_salary
+      ? "$" + best.median_salary.toLocaleString()
+      : "not available";
+
+    results.innerHTML = `
+      <div style="border-left: 4px solid #2563eb; padding: 1em 1.2em; background: #f0f6ff; border-radius: 4px;">
+        <div style="font-size: 0.85em; color: #555;">Best match (similarity ${top[0].score.toFixed(2)})</div>
+        <h4 style="margin: 0.2em 0 0.6em 0;">${escapeHtml(best.label)}</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8em 1.5em; font-size: 0.92em;">
+          <div><strong>Typical titles:</strong><br>${best.top_titles.map(escapeHtml).join("<br>") || "—"}</div>
+          <div><strong>Top industries:</strong><br>${best.top_industries.map(escapeHtml).join("<br>") || "—"}</div>
+          <div><strong>Core skills:</strong><br>${best.top_skills.slice(0, 6).map(escapeHtml).join(", ")}</div>
+          <div>
+            <strong>Median salary:</strong> ${salary}<br>
+            <strong>Typical education:</strong> ${escapeHtml(best.typical_education || "—")}<br>
+            <strong>Postings in cluster:</strong> ${best.size.toLocaleString()}
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 1em; font-size: 0.9em; color: #555;">
+        <strong>Runner-ups:</strong>
+        ${top.slice(1).map(t =>
+          `<span style="display:inline-block; margin: 0 1em 0 0;">
+             ${escapeHtml(t.cluster.label)} <span style="color:#888;">(${t.score.toFixed(2)})</span>
+           </span>`
+        ).join("")}
+      </div>
+    `;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
+
+  // ---- Event wiring ----
+  document.getElementById("skill-search").addEventListener("input", e => {
+    renderSkillGrid(e.target.value);
+  });
+  document.getElementById("match-btn").addEventListener("click", renderResults);
+})();
+</script>
 </section>
-<section id="references" class="level2">
-
-
+<section id="interpreting-the-results" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-results">Interpreting the Results</h2>
+<p>A high similarity score (above ~0.5) means your skill set aligns strongly with the center of a cluster — you’d likely be competitive for the kinds of jobs it contains. A lower score (0.2–0.4) means you sit closer to the boundary between clusters, which is actually common for interdisciplinary skill sets. If your top match and your runner-up are close in score, it suggests your profile straddles two role families; this is worth knowing when you write resumes or frame applications.</p>
+<p>One caveat: the model only knows about the top 200 skills in the dataset. Very niche or very new skills may not appear in the vocabulary, so picking one or two adjacent skills (e.g.&nbsp;<em>Machine Learning</em> if <em>LangChain</em> isn’t listed) often gives a more stable match.</p>
+</section>
+<section id="why-clustering-matters-for-career-planning" class="level2">
+<h2 class="anchored" data-anchor-id="why-clustering-matters-for-career-planning">Why Clustering Matters for Career Planning</h2>
+<p>Traditional job-title taxonomies (SOC codes, O<em>NET categories) are slow to update and often lump together roles with very different skill requirements. Skill-based clustering reflects what employers are actually asking for </em>right now*, which makes it a more honest picture of the market. For the research questions this site explores — how AI/ML expertise is spreading across industries, which sectors are hiring data scientists, what the outlook is for business analytics — seeing the skill clusters side by side makes these trends much easier to spot.</p>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-levendis2025business" class="csl-entry" role="listitem">
-Levendis, John, Lori Dickes, and Sarah Wilks. 2025. <span>“The Business Analytics Skills Employers Are Looking For.”</span> <em>Decision Sciences Journal of Innovative Education</em>, ahead of print. <a href="https://doi.org/10.1111/dsji.70004">https://doi.org/10.1111/dsji.70004</a>.
-</div>
-<div id="ref-radovilsky2018skills" class="csl-entry" role="listitem">
-Radovilsky, Zinovy, Vishwanath Hegde, Ankur Acharya, and Ullas Uma. 2018. <span>“Skills Requirements of Business Data Analytics and Data Science Jobs: A Comparative Analysis.”</span> <em>Journal of Supply Chain and Operations Management</em> 16 (1): 82–101.
-</div>
-<div id="ref-verma2019investigation" class="csl-entry" role="listitem">
-Verma, Arun, Kirsten M. Yurov, Peggy L. Lane, and Yuliya V. Yurova. 2019. <span>“An Investigation of Skill Requirements for Business and Data Analytics Positions: A Content Analysis of Job Advertisements.”</span> <em>Journal of Education for Business</em> 94 (4): 243–50. <a href="https://doi.org/10.1080/08832323.2018.1520685">https://doi.org/10.1080/08832323.2018.1520685</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
