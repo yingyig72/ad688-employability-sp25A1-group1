@@ -1,7 +1,11 @@
 project:
   type: website
+  resources:
+    - cluster_data.json
   render:
     - "*.qmd"
+ 
+
 
 
 execute:
@@ -42,6 +46,8 @@ website:
             text: "What is the career outlook for business analytics professionals?"
       - href: ml_model.qmd
         text: Machine Learning
+      - href: cluster_finder.qmd
+        text: Find Your Match
       - href: references.qmd  
         text: References 
 format:

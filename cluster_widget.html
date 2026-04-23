@@ -1,0 +1,189 @@
+<!--
+  Interactive Job Cluster Finder
+  ==============================
+  Drop this block into any .qmd page. Assumes `cluster_data.json` sits
+  next to the rendered HTML (i.e. alongside ai_ml_evolution.html in _site/).
+  If you keep the JSON somewhere else, adjust the fetch() path below.
+-->
+
+<div id="cluster-finder" style="font-family: system-ui, sans-serif; max-width: 900px; margin: 2em 0;">
+  <h3 style="margin-top: 0;">Find Your Job Cluster</h3>
+  <p style="color: #555;">
+    Select the skills you have (or want to develop). We'll match you to the
+    closest cluster of job postings in the Lightcast dataset using cosine
+    similarity against the K-means centroids.
+  </p>
+
+  <div style="margin: 1em 0;">
+    <input
+      id="skill-search"
+      type="text"
+      placeholder="Search skills (e.g. Python, SQL, Tableau)..."
+      style="width: 100%; padding: 0.6em; font-size: 1em; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;"
+    />
+  </div>
+
+  <div
+    id="skill-grid"
+    style="display: flex; flex-wrap: wrap; gap: 0.4em; max-height: 260px; overflow-y: auto; border: 1px solid #eee; padding: 0.8em; border-radius: 6px; background: #fafafa;"
+  ></div>
+
+  <div id="selected-tray" style="margin-top: 0.8em; min-height: 2em; font-size: 0.9em; color: #333;">
+    <strong>Selected (0):</strong> <span id="selected-list" style="color: #888;">none yet</span>
+  </div>
+
+  <button
+    id="match-btn"
+    style="margin-top: 1em; padding: 0.7em 1.4em; font-size: 1em; border: none; border-radius: 6px; background: #2563eb; color: white; cursor: pointer;"
+  >Find My Cluster</button>
+
+  <div id="results" style="margin-top: 1.5em;"></div>
+</div>
+
+<script>
+(function () {
+  const state = {
+    data: null,
+    selected: new Set(),
+  };
+
+  // ---- Load data ----
+  fetch("cluster_data.json")
+    .then(r => r.json())
+    .then(data => {
+      state.data = data;
+      renderSkillGrid();
+    })
+    .catch(err => {
+      document.getElementById("skill-grid").innerHTML =
+        '<p style="color:#b00;">Could not load cluster_data.json. Make sure it\'s deployed alongside this page.</p>';
+      console.error(err);
+    });
+
+  // ---- Render skill checkboxes ----
+  function renderSkillGrid(filter = "") {
+    if (!state.data) return;
+    const grid = document.getElementById("skill-grid");
+    const f = filter.toLowerCase();
+    const items = state.data.vocab
+      .filter(s => s.toLowerCase().includes(f))
+      .slice(0, 120); // cap for performance
+
+    grid.innerHTML = items.map(s => {
+      const active = state.selected.has(s);
+      return `
+        <button
+          data-skill="${escapeHtml(s)}"
+          class="skill-chip"
+          style="
+            padding: 0.35em 0.8em;
+            border-radius: 999px;
+            border: 1px solid ${active ? '#2563eb' : '#ccc'};
+            background: ${active ? '#2563eb' : 'white'};
+            color: ${active ? 'white' : '#333'};
+            font-size: 0.85em;
+            cursor: pointer;
+          ">${escapeHtml(s)}</button>`;
+    }).join("");
+
+    grid.querySelectorAll(".skill-chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const skill = btn.getAttribute("data-skill");
+        if (state.selected.has(skill)) state.selected.delete(skill);
+        else state.selected.add(skill);
+        renderSkillGrid(document.getElementById("skill-search").value);
+        renderSelected();
+      });
+    });
+  }
+
+  function renderSelected() {
+    const list = document.getElementById("selected-list");
+    const tray = document.getElementById("selected-tray");
+    const arr = [...state.selected];
+    tray.querySelector("strong").textContent = `Selected (${arr.length}):`;
+    list.textContent = arr.length ? arr.join(", ") : "none yet";
+    list.style.color = arr.length ? "#2563eb" : "#888";
+  }
+
+  // ---- Matching logic ----
+  function findBestCluster() {
+    const { vocab, idf, centroids, clusters } = state.data;
+    if (state.selected.size === 0) return null;
+
+    // Build binary user vector, apply IDF, L2-normalize
+    const v = new Float32Array(vocab.length);
+    const idx = {};
+    vocab.forEach((s, i) => idx[s] = i);
+    state.selected.forEach(s => {
+      if (idx[s] !== undefined) v[idx[s]] = 1;
+    });
+    for (let i = 0; i < v.length; i++) v[i] *= idf[i];
+    let norm = 0;
+    for (let i = 0; i < v.length; i++) norm += v[i] * v[i];
+    norm = Math.sqrt(norm);
+    if (norm === 0) return null;
+    for (let i = 0; i < v.length; i++) v[i] /= norm;
+
+    // Cosine similarity = dot product (both sides L2-normalized)
+    const scored = centroids.map((c, i) => {
+      let dot = 0;
+      for (let j = 0; j < c.length; j++) dot += c[j] * v[j];
+      return { cluster: clusters[i], score: dot };
+    });
+    scored.sort((a, b) => b.score - a.score);
+    return scored.slice(0, 3); // top 3
+  }
+
+  function renderResults() {
+    const results = document.getElementById("results");
+    const top = findBestCluster();
+    if (!top) {
+      results.innerHTML = '<p style="color:#b00;">Pick at least one skill that matches the vocabulary.</p>';
+      return;
+    }
+
+    const best = top[0].cluster;
+    const salary = best.median_salary
+      ? "$" + best.median_salary.toLocaleString()
+      : "not available";
+
+    results.innerHTML = `
+      <div style="border-left: 4px solid #2563eb; padding: 1em 1.2em; background: #f0f6ff; border-radius: 4px;">
+        <div style="font-size: 0.85em; color: #555;">Best match (similarity ${top[0].score.toFixed(2)})</div>
+        <h4 style="margin: 0.2em 0 0.6em 0;">${escapeHtml(best.label)}</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8em 1.5em; font-size: 0.92em;">
+          <div><strong>Typical titles:</strong><br>${best.top_titles.map(escapeHtml).join("<br>") || "—"}</div>
+          <div><strong>Top industries:</strong><br>${best.top_industries.map(escapeHtml).join("<br>") || "—"}</div>
+          <div><strong>Core skills:</strong><br>${best.top_skills.slice(0, 6).map(escapeHtml).join(", ")}</div>
+          <div>
+            <strong>Median salary:</strong> ${salary}<br>
+            <strong>Typical education:</strong> ${escapeHtml(best.typical_education || "—")}<br>
+            <strong>Postings in cluster:</strong> ${best.size.toLocaleString()}
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 1em; font-size: 0.9em; color: #555;">
+        <strong>Runner-ups:</strong>
+        ${top.slice(1).map(t =>
+          `<span style="display:inline-block; margin: 0 1em 0 0;">
+             ${escapeHtml(t.cluster.label)} <span style="color:#888;">(${t.score.toFixed(2)})</span>
+           </span>`
+        ).join("")}
+      </div>
+    `;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
+
+  // ---- Event wiring ----
+  document.getElementById("skill-search").addEventListener("input", e => {
+    renderSkillGrid(e.target.value);
+  });
+  document.getElementById("match-btn").addEventListener("click", renderResults);
+})();
+</script>
