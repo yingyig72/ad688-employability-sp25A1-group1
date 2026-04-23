@@ -216,47 +216,57 @@ background: #1a2b4a;
   ============================================
   Drop this into index.qmd inside a ```{=html} ... ``` block.
   Requires hiring_timeline.json deployed alongside the page.
+
+  Polish pass:
+    - No Carto basemap; renders subtle US state outlines instead
+    - Smooth arc transitions when month changes
+    - Feathered edges via radial mask so it blends into the page
+    - Auto camera rotation when idle, pauses on user interaction
+    - Minimal floating overlays instead of heavy legend boxes
 -->
 
 <div id="hiring-viz-wrap" style="font-family: system-ui, sans-serif; margin: 2em 0;">
-  <div style="position: relative; width: 100%; height: 520px; border-radius: 10px; overflow: hidden; background: #0a0e1a;">
+  <div id="viz-frame" style="
+      position: relative;
+      width: 100%;
+      height: 540px;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, #141b2e 0%, #0a0e1a 55%, rgba(10,14,26,0) 100%);
+      -webkit-mask-image: radial-gradient(ellipse 75% 80% at center, black 55%, transparent 100%);
+      mask-image: radial-gradient(ellipse 75% 80% at center, black 55%, transparent 100%);
+    ">
     <div id="deck-container" style="position: absolute; inset: 0;"></div>
 
     <!-- Overlay: title + stats -->
-    <div id="viz-overlay" style="position: absolute; top: 16px; left: 20px; color: white; pointer-events: none; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">
-      <div style="font-size: 0.82em; opacity: 0.75; letter-spacing: 0.1em; text-transform: uppercase;">Hiring Activity</div>
-      <div id="viz-quarter" style="font-size: 2em; font-weight: 600; margin-top: 2px;">—</div>
-      <div id="viz-stats" style="font-size: 0.9em; opacity: 0.9; margin-top: 4px;"></div>
+    <div id="viz-overlay" style="position: absolute; top: 22px; left: 26px; color: white; pointer-events: none; text-shadow: 0 2px 8px rgba(0,0,0,0.9); z-index: 2;">
+      <div style="font-size: 0.72em; opacity: 0.55; letter-spacing: 0.18em; text-transform: uppercase;">Hiring Activity</div>
+      <div id="viz-quarter" style="font-size: 2.2em; font-weight: 300; margin-top: 4px; letter-spacing: -0.01em;">—</div>
+      <div id="viz-stats" style="font-size: 0.88em; opacity: 0.75; margin-top: 6px; font-weight: 300;"></div>
     </div>
 
-    <!-- Overlay: legend -->
-    <div style="position: absolute; top: 16px; right: 20px; color: white; font-size: 0.8em; background: rgba(10,14,26,0.7); padding: 10px 14px; border-radius: 6px; backdrop-filter: blur(6px);">
-      <div style="font-weight: 600; margin-bottom: 6px;">Arc color</div>
-      <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-        <span style="width: 14px; height: 3px; background: #3b82f6; display: inline-block;"></span>
-        <span>In-person heavy</span>
+    <!-- Minimal legend -->
+    <div style="position: absolute; bottom: 22px; right: 26px; color: white; font-size: 0.75em; opacity: 0.7; pointer-events: none; z-index: 2; text-align: right; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">
+      <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-bottom: 4px;">
+        <span>in-person</span>
+        <span style="width: 40px; height: 2px; background: linear-gradient(to right, #3b82f6, #f59e0b); display: inline-block;"></span>
+        <span>remote</span>
       </div>
-      <div style="display: flex; align-items: center; gap: 6px;">
-        <span style="width: 14px; height: 3px; background: #f59e0b; display: inline-block;"></span>
-        <span>Remote heavy</span>
-      </div>
-      <div style="margin-top: 8px; font-weight: 600; margin-bottom: 4px;">Arc height</div>
-      <div style="opacity: 0.85;">= posting volume</div>
+      <div style="opacity: 0.7;">arc height = posting volume</div>
     </div>
 
     <!-- Tooltip -->
-    <div id="viz-tooltip" style="position: absolute; pointer-events: none; background: rgba(10,14,26,0.9); color: white; padding: 8px 12px; border-radius: 6px; font-size: 0.85em; display: none; backdrop-filter: blur(4px);"></div>
+    <div id="viz-tooltip" style="position: absolute; pointer-events: none; background: rgba(10,14,26,0.92); color: white; padding: 8px 12px; border-radius: 6px; font-size: 0.85em; display: none; backdrop-filter: blur(6px); z-index: 3; border: 1px solid rgba(255,255,255,0.1);"></div>
   </div>
 
   <!-- Controls -->
-  <div style="margin-top: 14px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-    <button id="viz-play" style="padding: 0.55em 1.2em; font-size: 0.95em; border: none; border-radius: 6px; background: #2563eb; color: white; cursor: pointer; min-width: 90px;">▶ Play</button>
+  <div style="margin-top: 16px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 0 8px;">
+    <button id="viz-play" style="padding: 0.55em 1.3em; font-size: 0.9em; border: none; border-radius: 999px; background: #2563eb; color: white; cursor: pointer; min-width: 100px; font-weight: 500;">▶ Play</button>
     <input id="viz-slider" type="range" min="0" max="0" value="0" step="1" style="flex: 1; min-width: 200px; accent-color: #2563eb;">
-    <span id="viz-slider-label" style="font-size: 0.9em; color: #555; min-width: 70px; text-align: right;">—</span>
+    <span id="viz-slider-label" style="font-size: 0.9em; color: #555; min-width: 90px; text-align: right; font-variant-numeric: tabular-nums;">—</span>
   </div>
 
-  <p style="font-size: 0.85em; color: #666; margin-top: 10px;">
-    Each arc reaches from the geographic center of the U.S. to a hiring hub; arc <strong>height</strong> reflects posting volume and arc <strong>color</strong> reflects the share of remote roles. Drag to rotate, scroll to zoom, and scrub the timeline to see how hiring shifted over time.
+  <p style="font-size: 0.85em; color: #666; margin-top: 12px; padding: 0 8px;">
+    Hiring activity across major U.S. metros during mid-2024. Arc height shows posting volume; color shows the share of remote roles. Drag to rotate, scroll to zoom, and press play to animate across months.
   </p>
 </div>
 
@@ -269,6 +279,9 @@ background: #1a2b4a;
     playing: false,
     deck: null,
     animationId: null,
+    autoRotate: true,
+    bearing: 0,
+    lastInteraction: 0,
   };
 
   const elQuarter = document.getElementById("viz-quarter");
@@ -300,14 +313,21 @@ background: #1a2b4a;
       parent: document.getElementById("deck-container"),
       initialViewState: {
         longitude: -96,
-        latitude: 38,
-        zoom: 3.4,
-        pitch: 50,
+        latitude: 39,
+        zoom: 3.5,
+        pitch: 55,
         bearing: 0,
       },
       controller: true,
       layers: buildLayers(0),
-      // Dark basemap via tile layer
+      onViewStateChange: ({ viewState, interactionState }) => {
+        if (interactionState.isDragging || interactionState.isZooming) {
+          state.autoRotate = false;
+          state.lastInteraction = performance.now();
+        }
+        state.bearing = viewState.bearing;
+        return viewState;
+      },
       onHover: ({ object, x, y }) => {
         if (object && object.city) {
           elTooltip.style.display = "block";
@@ -325,6 +345,7 @@ background: #1a2b4a;
     });
 
     updateOverlay(0);
+    startAutoRotate();
   }
 
   function buildLayers(idx) {
@@ -334,54 +355,56 @@ background: #1a2b4a;
     const center = state.timeline.center;
     const maxPostings = Math.max(...rows.map(r => r.postings));
 
+    // Sort by volume so bigger arcs render on top
+    const sorted = [...rows].sort((a, b) => a.postings - b.postings);
+
     return [
-      // Dark basemap
-      new deck.TileLayer({
-        data: "https://basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png",
-        minZoom: 0,
-        maxZoom: 19,
-        tileSize: 256,
-        renderSubLayers: props => {
-          const { bbox: { west, south, east, north } } = props.tile;
-          return new deck.BitmapLayer(props, {
-            data: null,
-            image: props.data,
-            bounds: [west, south, east, north],
-          });
-        },
+      // Subtle US state outlines — no basemap tiles
+      new deck.GeoJsonLayer({
+        id: "states-geojson",
+        data: "https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json",
+        stroked: true,
+        filled: true,
+        getFillColor: [30, 41, 59, 160],
+        getLineColor: [100, 116, 139, 90],
+        lineWidthMinPixels: 0.5,
       }),
-      // Destination city dots
+      // City dots
       new deck.ScatterplotLayer({
         id: "cities",
-        data: rows,
+        data: sorted,
         getPosition: d => [d.lon, d.lat],
-        getRadius: d => 4000 + (d.postings / maxPostings) * 40000,
-        getFillColor: d => colorForRemote(d.remote_share),
+        getRadius: d => 2000 + (d.postings / maxPostings) * 14000,
+        getFillColor: d => [...colorForRemote(d.remote_share), 230],
         pickable: true,
-        opacity: 0.85,
-        stroked: true,
-        getLineColor: [255, 255, 255, 120],
-        lineWidthMinPixels: 1,
+        stroked: false,
+        radiusUnits: "meters",
+        transitions: { getRadius: 800, getFillColor: 800 },
       }),
       // Arcs from center to each city
       new deck.ArcLayer({
         id: "arcs",
-        data: rows,
+        data: sorted,
         getSourcePosition: () => [center.lon, center.lat],
         getTargetPosition: d => [d.lon, d.lat],
-        getSourceColor: [255, 255, 255, 40],
-        getTargetColor: d => [...colorForRemote(d.remote_share), 220],
-        getWidth: d => 1 + (d.postings / maxPostings) * 5,
-        getHeight: d => 0.3 + (d.postings / maxPostings) * 1.0,
+        getSourceColor: [255, 255, 255, 30],
+        getTargetColor: d => [...colorForRemote(d.remote_share), 200],
+        getWidth: d => 0.8 + (d.postings / maxPostings) * 4.5,
+        getHeight: d => 0.35 + (d.postings / maxPostings) * 0.9,
         pickable: true,
         greatCircle: false,
+        // Smooth animated transitions when the month changes
+        transitions: {
+          getTargetColor: { type: "interpolation", duration: 700 },
+          getWidth: { type: "interpolation", duration: 700 },
+          getHeight: { type: "interpolation", duration: 700 },
+        },
       }),
     ];
   }
 
   function colorForRemote(share) {
     // Interpolate blue -> amber based on remote share
-    // share=0 → blue (#3b82f6 = 59,130,246), share=1 → amber (#f59e0b = 245,158,11)
     const t = Math.min(1, Math.max(0, share));
     return [
       Math.round(59 + (245 - 59) * t),
@@ -399,12 +422,16 @@ background: #1a2b4a;
     const remotePct = total ? Math.round((weightedRemote / total) * 100) : 0;
     const topCity = [...rows].sort((a, b) => b.postings - a.postings)[0];
 
-    elQuarter.textContent = q;
+    // Format "2024-05" -> "May 2024"
+    const [year, month] = q.split("-");
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const nice = `${monthNames[parseInt(month, 10) - 1]} ${year}`;
+
+    elQuarter.textContent = nice;
     elStats.innerHTML =
-      `<strong>${total.toLocaleString()}</strong> postings across ${rows.length} cities &nbsp;·&nbsp; ` +
-      `<strong>${remotePct}%</strong> remote &nbsp;·&nbsp; ` +
-      `Top: ${topCity ? topCity.city : '—'}`;
-    elSliderLabel.textContent = q;
+      `${total.toLocaleString()} postings · ${remotePct}% remote · Top: ${topCity ? topCity.city : '—'}`;
+    elSliderLabel.textContent = nice;
   }
 
   function setQuarter(idx) {
@@ -416,7 +443,36 @@ background: #1a2b4a;
     updateOverlay(idx);
   }
 
-  // ---- Controls ----
+  // ---- Auto camera rotation ----
+  function startAutoRotate() {
+    let last = performance.now();
+    function frame(now) {
+      const dt = now - last;
+      last = now;
+
+      // Resume auto-rotate after 3s of no interaction
+      if (!state.autoRotate && now - state.lastInteraction > 3000) {
+        state.autoRotate = true;
+      }
+
+      if (state.autoRotate && state.deck) {
+        state.bearing = (state.bearing + dt * 0.005) % 360;
+        state.deck.setProps({
+          viewState: {
+            longitude: -96,
+            latitude: 39,
+            zoom: 3.5,
+            pitch: 55,
+            bearing: state.bearing,
+          },
+        });
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // ---- Timeline playback ----
   elSlider.addEventListener("input", e => {
     if (state.playing) togglePlay();
     setQuarter(parseInt(e.target.value, 10));
@@ -433,7 +489,7 @@ background: #1a2b4a;
   function tick(ts) {
     if (!state.playing) return;
     if (!ts) ts = performance.now();
-    if (ts - lastStep > 800) {  // step every 800ms
+    if (ts - lastStep > 1200) {  // slower — transitions take 700ms to settle
       let next = state.quarterIdx + 1;
       if (next >= state.timeline.quarters.length) next = 0;
       setQuarter(next);
