@@ -6,7 +6,6 @@ format:
   html:
     bibliography: references.bib
     toc: true
-eval: false
 echo: false
 jupyter: python3
 ---
@@ -36,6 +35,10 @@ These variables make it possible to analyze remote job postings at the industry-
 import pandas as pd
 import matplotlib.pyplot as plt
 from IPython import get_ipython
+
+import os
+os.makedirs('visualizations', exist_ok=True)
+
 
 ip = get_ipython()
 if ip is not None:
@@ -177,8 +180,7 @@ plt.xlabel('Change in Remote Share (Sep 2024 - May 2024, percentage points)')
 plt.ylabel('Industry')
 plt.title('Change in Remote Job Share by Industry (May to September 2024)')
 plt.tight_layout()
-plt.savefig("change_in_remote_share_may_to_sep.png", dpi=150, bbox_inches='tight')
-plt.show()
+plt.savefig("visualizations/change_in_remote_share_may_to_sep.png", dpi=150, bbox_inches='tight')
 ```
 The bar chart provides a clear visual comparison of changes in remote job share across industries between May and September 2024. The results show that remote job trends were mixed across industries rather than moving in one uniform direction. Several industries experienced increases in remote job share during this period. The strongest increase appeared in General Medical and Surgical Hospitals, followed by Unclassified Industry and All Other Professional, Scientific, and Technical Services. In contrast, the steepest decline appeared in Custom Computer Programming Services, followed by Computer Systems Design Services and Other Computer Related Services.
 
@@ -222,8 +224,7 @@ plt.title('Monthly Remote Share Trends for Industries with the Largest Increases
 plt.xticks(rotation=0)
 plt.legend(loc='center left', bbox_to_anchor=(1.02, 0.5), fontsize=8)
 plt.tight_layout()
-plt.savefig("monthly_remote_share_selected_industries.png", dpi=150, bbox_inches='tight')
-plt.show()
+plt.savefig("visualizations/monthly_remote_share_selected_industries.png", dpi=150, bbox_inches='tight')
 ```
 The line chart shows that remote job trends did not evolve in the same way across industries from month to month. Industries with positive end-of-period changes generally moved upward overall, whereas industries with negative end-of-period changes tended to move downward or remained volatile before ending lower in September than in May.
 
