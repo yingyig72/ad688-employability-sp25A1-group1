@@ -38,6 +38,7 @@ h1, h2, h3, h4, .quarto-title-block .title {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition: background-color 0.3s ease;
+  padding: 0.5rem 1rem;
 }
 
 .navbar-brand {
@@ -45,6 +46,8 @@ h1, h2, h3, h4, .quarto-title-block .title {
   font-weight: 600;
   color: var(--accent) !important;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  font-size: 1.05rem;
 }
 
 .navbar .nav-link,
@@ -54,7 +57,9 @@ h1, h2, h3, h4, .quarto-title-block .title {
   color: var(--text) !important;
   transition: color 0.2s ease;
   position: relative;
-  padding: 0.5rem 1rem !important;
+  padding: 0.5rem 0.75rem !important;
+  font-size: 0.95rem;
+  white-space: nowrap;   /* keep every link on one line */
 }
 
 /* Sliding underline on hover */
@@ -62,8 +67,8 @@ h1, h2, h3, h4, .quarto-title-block .title {
   content: "";
   position: absolute;
   bottom: 4px;
-  left: 1rem;
-  right: 1rem;
+  left: 0.75rem;
+  right: 0.75rem;
   height: 2px;
   background: var(--accent);
   transform: scaleX(0);
@@ -80,6 +85,19 @@ h1, h2, h3, h4, .quarto-title-block .title {
 .navbar .dropdown-toggle:hover,
 .navbar-brand:hover {
   color: var(--accent) !important;
+}
+
+/* Collapse into hamburger earlier so items never wrap awkwardly */
+@media (max-width: 1200px) {
+  .navbar-expand-lg .navbar-collapse {
+    display: none !important;
+  }
+  .navbar-expand-lg .navbar-collapse.show {
+    display: block !important;
+  }
+  .navbar-expand-lg .navbar-toggler {
+    display: block !important;
+  }
 }
 
 /* Dropdown polish */
@@ -316,7 +334,7 @@ h2.unnumbered, .unnumbered > h2 {
   .quarto-title-block .subtitle { font-size: 1rem; }
   .stat-card { font-size: 1.75rem; padding: 1.25rem 1rem; }
   h2.unnumbered, .unnumbered > h2 { font-size: 1.6rem; }
-  .navbar .nav-link::before { display: none; } /* cleaner on mobile collapsed menu */
+  .navbar .nav-link::before { display: none; }
 }
 
 /* ---- Smooth scroll ---- */
