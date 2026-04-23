@@ -62,6 +62,8 @@ df.head()
 
 
 ## Define AI，Area, and Skill Level keywords
+In the data processing stage, AI-related jobs were identified using a keyword-based approach applied to the SKILLS_NAME field, where postings containing terms such as machine learning, AI, deep learning, neural network, and NLP were classified as AI jobs. This method captures AI influence at the skill level rather than relying on job titles. For spatial classification, job postings were first geocoded using latitude and longitude, and then matched to the 2020 U.S. Census Urban Area boundaries (tl_2020_us_uac20_corrected.shp), a GIS shapefile representing official urban polygons. Based on this spatial join, jobs were labeled as urban or rural. The resulting dataset shows a strong imbalance, with urban jobs (67,569) far exceeding rural jobs (3,200), and non-AI jobs (43,449) outnumbering AI jobs (27,320), indicating both a geographic concentration of opportunities in urban areas and a relatively smaller but significant share of AI-related roles.
+
 ```{python}
 import re
 import numpy as np
