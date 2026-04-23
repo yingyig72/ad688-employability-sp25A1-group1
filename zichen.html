@@ -47,7 +47,7 @@ div.csl-indent {
 }</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -91,6 +91,9 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -275,6 +278,17 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="key-variables">Key Variables</h2>
 <p>This analysis uses the 2024 Lightcast job postings dataset to examine changes in remote job share across industries. To answer the research question, three variables are especially important: <code>NAICS_2022_6_NAME</code>, <code>REMOTE_TYPE_NAME</code>, and <code>POSTED</code>. Together, these fields provide the industry classification, the remote-work label, and the posting date needed to track industry-level changes in remote hiring over time.</p>
 <p>These variables make it possible to analyze remote job postings at the industry-month level. Specifically, <code>NAICS_2022_6_NAME</code> identifies the industry of each posting, <code>REMOTE_TYPE_NAME</code> indicates whether the position is labeled as remote or non-remote, and <code>POSTED</code> provides the time information needed to compare remote job share from May to September 2024.</p>
+<div id="d4476546" class="cell" data-message="false" data-execution_count="1">
+<div class="cell-output cell-output-stdout">
+<pre><code>Total postings: 72,498
+                            NAICS_2022_6_NAME REMOTE_TYPE_NAME    POSTED
+0  Automotive Parts and Accessories Retailers           [None]  6/2/2024
+1                     Temporary Help Services           Remote  6/2/2024
+2                            Claims Adjusting           [None]  6/2/2024
+3                          Commercial Banking           [None]  6/2/2024
+4                       Unclassified Industry           [None]  6/2/2024</code></pre>
+</div>
+</div>
 <p>The preview above confirms that the dataset contains the core variables required for this section. These fields provide the foundation for defining remote-work categories, calculating monthly remote job share, and comparing how remote opportunities changed across industries over time.</p>
 </section>
 </section>
@@ -288,6 +302,27 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="remote-work-classification">Remote Work Classification</h2>
 <p>Because the raw values in <code>REMOTE_TYPE_NAME</code> are not fully standardized, I grouped postings into three broader categories: <code>Remote</code>, <code>Hybrid</code>, and <code>Onsite</code>. Postings explicitly labeled <code>Remote</code> were classified as remote roles, postings labeled <code>Hybrid Remote</code> were classified as hybrid roles, and postings labeled <code>Not Remote</code> or missing values such as <code>[None]</code> were grouped with on-site roles for simplicity.</p>
 <p>This classification step makes the dataset easier to interpret and provides a more consistent basis for industry-level comparison. Since the goal of this section is to evaluate whether remote opportunities increased or decreased across industries, the later analysis focuses specifically on the share of postings classified as <code>Remote</code>.</p>
+<div id="ef5dfe58" class="cell" data-message="false" data-execution_count="2">
+<div class="cell-output cell-output-stdout">
+<pre><code>month
+2024-05    15133
+2024-06    14381
+2024-07    12502
+2024-08    15105
+2024-09    15333
+Freq: M, Name: count, dtype: int64
+remote_group
+Onsite    57697
+Remote    12497
+Hybrid     2260
+Name: count, dtype: int64
+   REMOTE_TYPE_NAME remote_group
+29    Hybrid Remote       Hybrid
+10       Not Remote       Onsite
+1            Remote       Remote
+0            [None]       Onsite</code></pre>
+</div>
+</div>
 <p>The output confirms that the postings can be organized into monthly periods and consolidated into broader remote-work categories for analysis. This preparation step supports a clearer comparison of remote job trends across industries over time.</p>
 </section>
 </section>
@@ -295,6 +330,207 @@ div.csl-indent {
 <h1>Monthly Remote Share by Industry</h1>
 <p>After defining the remote-work categories, the next step is to calculate the monthly share of postings classified as <code>Remote</code> within each industry. This measure is more informative than raw posting counts because industries differ substantially in overall hiring volume. By converting remote postings into percentages, I can compare remote hiring patterns across industries on a more consistent basis.</p>
 <p>This percentage-based approach is also appropriate for the research question because the goal is not simply to identify which industries posted the most jobs, but rather to examine how remote hiring changed within each industry over time. Prior research suggests that remote-work feasibility and remote-job prevalence vary substantially across industries rather than following a single labor market pattern <span class="citation" data-cites="dingel2020 hansen2023">(<a href="#ref-dingel2020" role="doc-biblioref">Dingel and Neiman 2020</a>; <a href="#ref-hansen2023" role="doc-biblioref">Hansen et al. 2023</a>)</span>. Measuring remote share at the industry-month level therefore provides a clearer basis for evaluating whether remote opportunities were increasing or decreasing across sectors.</p>
+<div id="134d4340" class="cell" data-message="false" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">NAICS_2022_6_NAME</th>
+<th data-quarto-table-cell-role="th">share_pct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2024-05</td>
+<td>Administrative Management and General Manageme...</td>
+<td>4.411765</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">46</th>
+<td>2024-06</td>
+<td>Administrative Management and General Manageme...</td>
+<td>5.805038</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">90</th>
+<td>2024-07</td>
+<td>Administrative Management and General Manageme...</td>
+<td>9.486781</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">135</th>
+<td>2024-08</td>
+<td>Administrative Management and General Manageme...</td>
+<td>17.567568</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">179</th>
+<td>2024-09</td>
+<td>Administrative Management and General Manageme...</td>
+<td>6.068841</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>2024-05</td>
+<td>All Other Professional, Scientific, and Techni...</td>
+<td>16.746411</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">49</th>
+<td>2024-06</td>
+<td>All Other Professional, Scientific, and Techni...</td>
+<td>17.647059</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">93</th>
+<td>2024-07</td>
+<td>All Other Professional, Scientific, and Techni...</td>
+<td>23.474178</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">138</th>
+<td>2024-08</td>
+<td>All Other Professional, Scientific, and Techni...</td>
+<td>27.192982</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">182</th>
+<td>2024-09</td>
+<td>All Other Professional, Scientific, and Techni...</td>
+<td>23.444976</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>2024-05</td>
+<td>Colleges, Universities, and Professional Schools</td>
+<td>14.285714</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">52</th>
+<td>2024-06</td>
+<td>Colleges, Universities, and Professional Schools</td>
+<td>17.355372</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">96</th>
+<td>2024-07</td>
+<td>Colleges, Universities, and Professional Schools</td>
+<td>12.367491</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">141</th>
+<td>2024-08</td>
+<td>Colleges, Universities, and Professional Schools</td>
+<td>17.314488</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">185</th>
+<td>2024-09</td>
+<td>Colleges, Universities, and Professional Schools</td>
+<td>12.286689</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>2024-05</td>
+<td>Commercial Banking</td>
+<td>11.737089</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">55</th>
+<td>2024-06</td>
+<td>Commercial Banking</td>
+<td>13.196481</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">99</th>
+<td>2024-07</td>
+<td>Commercial Banking</td>
+<td>11.377246</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">144</th>
+<td>2024-08</td>
+<td>Commercial Banking</td>
+<td>13.786008</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">188</th>
+<td>2024-09</td>
+<td>Commercial Banking</td>
+<td>7.658643</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>2024-05</td>
+<td>Computer Systems Design Services</td>
+<td>15.661376</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">58</th>
+<td>2024-06</td>
+<td>Computer Systems Design Services</td>
+<td>11.299435</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">102</th>
+<td>2024-07</td>
+<td>Computer Systems Design Services</td>
+<td>7.956104</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">147</th>
+<td>2024-08</td>
+<td>Computer Systems Design Services</td>
+<td>8.125819</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">191</th>
+<td>2024-09</td>
+<td>Computer Systems Design Services</td>
+<td>7.272727</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">17</th>
+<td>2024-05</td>
+<td>Custom Computer Programming Services</td>
+<td>20.049710</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">61</th>
+<td>2024-06</td>
+<td>Custom Computer Programming Services</td>
+<td>12.186788</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">105</th>
+<td>2024-07</td>
+<td>Custom Computer Programming Services</td>
+<td>14.345550</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">150</th>
+<td>2024-08</td>
+<td>Custom Computer Programming Services</td>
+<td>27.751196</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">194</th>
+<td>2024-09</td>
+<td>Custom Computer Programming Services</td>
+<td>9.576613</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 <p>The table above reports the monthly percentage of postings classified as remote within each industry. Focusing on remote share rather than raw counts helps control for differences in total posting volume across industries. This industry-month measure serves as the basis for the next section, where I compare how remote job share increased or decreased across industries over time.</p>
 </section>
 <section id="change-in-remote-job-share-from-may-to-september-2024" class="level1">
@@ -302,6 +538,54 @@ div.csl-indent {
 <section id="main-results" class="level2">
 <h2 class="anchored" data-anchor-id="main-results">Main Results</h2>
 <p>To evaluate whether remote jobs were increasing or decreasing across industries, I compared each industry’s remote job share in May 2024 with its corresponding share in September 2024. This comparison provides a straightforward summary of the overall direction of change during the period and helps identify which industries became more remote-oriented and which became less so.</p>
+<div id="4f1b31f6" class="cell" data-message="false" data-execution_count="4">
+<div class="cell-output cell-output-stdout">
+<pre><code>month                                                 2024-05    2024-09  \
+NAICS_2022_6_NAME                                                          
+General Medical and Surgical Hospitals              13.302752  22.727273   
+Unclassified Industry                               14.232731  23.147257   
+All Other Professional, Scientific, and Technic...  16.746411  23.444976   
+Employment Placement Agencies                       14.802982  20.510096   
+Other Scientific and Technical Consulting Services  24.242424  27.319588   
+Administrative Management and General Managemen...   4.411765   6.068841   
+Colleges, Universities, and Professional Schools    14.285714  12.286689   
+Temporary Help Services                             30.063291  27.000000   
+Offices of Certified Public Accountants              3.619910   0.225225   
+Direct Health and Medical Insurance Carriers        45.500000  41.945289   
+Commercial Banking                                  11.737089   7.658643   
+Software Publishers                                 22.277228  15.068493   
+Other Computer Related Services                     24.050633  16.014235   
+Computer Systems Design Services                    15.661376   7.272727   
+Custom Computer Programming Services                20.049710   9.576613   
+
+month                                               change_may_to_sep  
+NAICS_2022_6_NAME                                                      
+General Medical and Surgical Hospitals                       9.424520  
+Unclassified Industry                                        8.914526  
+All Other Professional, Scientific, and Technic...           6.698565  
+Employment Placement Agencies                                5.707114  
+Other Scientific and Technical Consulting Services           3.077163  
+Administrative Management and General Managemen...           1.657076  
+Colleges, Universities, and Professional Schools            -1.999025  
+Temporary Help Services                                     -3.063291  
+Offices of Certified Public Accountants                     -3.394684  
+Direct Health and Medical Insurance Carriers                -3.554711  
+Commercial Banking                                          -4.078446  
+Software Publishers                                         -7.208735  
+Other Computer Related Services                             -8.036398  
+Computer Systems Design Services                            -8.388648  
+Custom Computer Programming Services                       -10.473097  </code></pre>
+</div>
+</div>
+<div id="d8e01c66" class="cell" data-message="false" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="zichen_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>The bar chart provides a clear visual comparison of changes in remote job share across industries between May and September 2024. The results show that remote job trends were mixed across industries rather than moving in one uniform direction. Several industries experienced increases in remote job share during this period. The strongest increase appeared in General Medical and Surgical Hospitals, followed by Unclassified Industry and All Other Professional, Scientific, and Technical Services. In contrast, the steepest decline appeared in Custom Computer Programming Services, followed by Computer Systems Design Services and Other Computer Related Services.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -323,6 +607,15 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="month-to-month-patterns">Month-to-Month Patterns</h2>
 <p>Although the previous figure summarizes the net change in remote job share from May to September 2024, it does not show how that change developed from month to month. To better understand the time path of remote hiring, I plotted the industries with the largest increases and the largest decreases in remote job share over the period.</p>
 <p>This figure adds an important layer to the analysis because industries may arrive at a similar final increase or decrease through very different monthly patterns. Some industries may show relatively steady movement, while others may fluctuate substantially before ending higher or lower in September than in May.</p>
+<div id="67fb6f31" class="cell" data-message="false" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="zichen_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>The line chart shows that remote job trends did not evolve in the same way across industries from month to month. Industries with positive end-of-period changes generally moved upward overall, whereas industries with negative end-of-period changes tended to move downward or remained volatile before ending lower in September than in May.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
