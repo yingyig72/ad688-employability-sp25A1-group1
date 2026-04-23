@@ -9,9 +9,9 @@
   // --------------------------------------------
   // 1) ANIMATED STAT COUNTERS
   //
-  //    Targets the <strong> inside each .stat-card,
-  //    which is what Quarto renders for **72k+**.
-  //    Preserves suffix (k, m, +, %).
+  // Targets the <strong> inside each .stat-card,
+  // which is what Quarto renders for **72k+**.
+  // Preserves suffix (k, m, +, %).
   // --------------------------------------------
 
   function parseStatValue(raw) {
@@ -37,7 +37,6 @@
   }
 
   function animateCounter(card) {
-    // Find the <strong> element — that's where the number lives
     const numEl = card.querySelector('strong');
     if (!numEl) return;
 
@@ -45,8 +44,6 @@
     const parsed = parseStatValue(originalText);
     if (!parsed) return;
 
-    // Lock the width so the element doesn't jitter as digits change.
-    // Measure after setting to the widest state (the target).
     numEl.style.display = 'inline-block';
     numEl.style.minWidth = numEl.getBoundingClientRect().width + 'px';
     numEl.style.textAlign = 'center';
@@ -61,18 +58,16 @@
       const eased = ease(progress);
       const current = parsed.target * eased;
 
-      // While animating, round to integers for a clean counter feel;
-      // at the end, restore the original decimal precision.
-      const displayValue = progress < 1
-        ? Math.round(current).toLocaleString('en-US')
-        : formatNumber(parsed.target, parsed.decimals);
+      const displayValue =
+        progress < 1
+          ? Math.round(current).toLocaleString('en-US')
+          : formatNumber(parsed.target, parsed.decimals);
 
       numEl.textContent = displayValue + parsed.suffix;
 
       if (progress < 1) requestAnimationFrame(tick);
     }
 
-    // Start from 0 immediately so there's no flash of the final value
     numEl.textContent = '0' + parsed.suffix;
     requestAnimationFrame(tick);
   }
@@ -114,12 +109,23 @@
       const link = e.target.closest('a');
       if (!link) return;
 
+      // Ignore dropdown toggles / menu controls
+      if (
+        link.classList.contains('dropdown-toggle') ||
+        link.getAttribute('data-bs-toggle') === 'dropdown' ||
+        link.getAttribute('role') === 'button' ||
+        (link.closest('.dropdown') && link.getAttribute('aria-expanded') !== null)
+      ) {
+        return;
+      }
+
       const href = link.getAttribute('href');
       if (!href) return;
 
       if (
         link.target === '_blank' ||
         link.hasAttribute('download') ||
+        href === '#' ||
         href.startsWith('#') ||
         href.startsWith('mailto:') ||
         href.startsWith('tel:') ||
@@ -156,6 +162,9 @@
   }
 
   // --------------------------------------------
+  // INIT
+  // --------------------------------------------
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       initStatCounters();
