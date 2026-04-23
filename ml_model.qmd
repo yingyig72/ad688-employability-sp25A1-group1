@@ -122,6 +122,8 @@ format:
             .driver-neg { color: #c62828; }
           </style>
 jupyter: python3
+resources:
+  - assets/ml_model.json
 execute:
     echo: false
 ---
