@@ -9,6 +9,9 @@ format:
   html:
     css: styles.css
 ---
+```{=html}
+   {{< include hiring_arcs_widget.html >}}
+```
 
 ::: {.hero-intro}
 

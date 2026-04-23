@@ -211,6 +211,241 @@ background: #1a2b4a;
 
 
 
+<!--
+  Animated Hiring Arcs — 3D map with deck.gl
+  ============================================
+  Drop this into index.qmd inside a ```{=html} ... ``` block.
+  Requires hiring_timeline.json deployed alongside the page.
+-->
+
+<div id="hiring-viz-wrap" style="font-family: system-ui, sans-serif; margin: 2em 0;">
+  <div style="position: relative; width: 100%; height: 520px; border-radius: 10px; overflow: hidden; background: #0a0e1a;">
+    <div id="deck-container" style="position: absolute; inset: 0;"></div>
+
+    <!-- Overlay: title + stats -->
+    <div id="viz-overlay" style="position: absolute; top: 16px; left: 20px; color: white; pointer-events: none; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">
+      <div style="font-size: 0.82em; opacity: 0.75; letter-spacing: 0.1em; text-transform: uppercase;">Hiring Activity</div>
+      <div id="viz-quarter" style="font-size: 2em; font-weight: 600; margin-top: 2px;">—</div>
+      <div id="viz-stats" style="font-size: 0.9em; opacity: 0.9; margin-top: 4px;"></div>
+    </div>
+
+    <!-- Overlay: legend -->
+    <div style="position: absolute; top: 16px; right: 20px; color: white; font-size: 0.8em; background: rgba(10,14,26,0.7); padding: 10px 14px; border-radius: 6px; backdrop-filter: blur(6px);">
+      <div style="font-weight: 600; margin-bottom: 6px;">Arc color</div>
+      <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+        <span style="width: 14px; height: 3px; background: #3b82f6; display: inline-block;"></span>
+        <span>In-person heavy</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <span style="width: 14px; height: 3px; background: #f59e0b; display: inline-block;"></span>
+        <span>Remote heavy</span>
+      </div>
+      <div style="margin-top: 8px; font-weight: 600; margin-bottom: 4px;">Arc height</div>
+      <div style="opacity: 0.85;">= posting volume</div>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="viz-tooltip" style="position: absolute; pointer-events: none; background: rgba(10,14,26,0.9); color: white; padding: 8px 12px; border-radius: 6px; font-size: 0.85em; display: none; backdrop-filter: blur(4px);"></div>
+  </div>
+
+  <!-- Controls -->
+  <div style="margin-top: 14px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+    <button id="viz-play" style="padding: 0.55em 1.2em; font-size: 0.95em; border: none; border-radius: 6px; background: #2563eb; color: white; cursor: pointer; min-width: 90px;">▶ Play</button>
+    <input id="viz-slider" type="range" min="0" max="0" value="0" step="1" style="flex: 1; min-width: 200px; accent-color: #2563eb;">
+    <span id="viz-slider-label" style="font-size: 0.9em; color: #555; min-width: 70px; text-align: right;">—</span>
+  </div>
+
+  <p style="font-size: 0.85em; color: #666; margin-top: 10px;">
+    Each arc reaches from the geographic center of the U.S. to a hiring hub; arc <strong>height</strong> reflects posting volume and arc <strong>color</strong> reflects the share of remote roles. Drag to rotate, scroll to zoom, and scrub the timeline to see how hiring shifted over time.
+  </p>
+</div>
+
+<script src="https://unpkg.com/deck.gl@8.9.33/dist.min.js"></script>
+<script>
+(function () {
+  const state = {
+    timeline: null,
+    quarterIdx: 0,
+    playing: false,
+    deck: null,
+    animationId: null,
+  };
+
+  const elQuarter = document.getElementById("viz-quarter");
+  const elStats = document.getElementById("viz-stats");
+  const elSlider = document.getElementById("viz-slider");
+  const elSliderLabel = document.getElementById("viz-slider-label");
+  const elPlay = document.getElementById("viz-play");
+  const elTooltip = document.getElementById("viz-tooltip");
+
+  // ---- Load data ----
+  fetch("hiring_timeline.json")
+    .then(r => r.json())
+    .then(data => {
+      state.timeline = data;
+      initViz();
+    })
+    .catch(err => {
+      document.getElementById("deck-container").innerHTML =
+        '<div style="color:white;padding:20px;">Could not load hiring_timeline.json.</div>';
+      console.error(err);
+    });
+
+  function initViz() {
+    const { quarters } = state.timeline;
+    elSlider.max = quarters.length - 1;
+    elSlider.value = 0;
+
+    state.deck = new deck.Deck({
+      parent: document.getElementById("deck-container"),
+      initialViewState: {
+        longitude: -96,
+        latitude: 38,
+        zoom: 3.4,
+        pitch: 50,
+        bearing: 0,
+      },
+      controller: true,
+      layers: buildLayers(0),
+      // Dark basemap via tile layer
+      onHover: ({ object, x, y }) => {
+        if (object && object.city) {
+          elTooltip.style.display = "block";
+          elTooltip.style.left = x + 14 + "px";
+          elTooltip.style.top = y + 14 + "px";
+          const remotePct = Math.round(object.remote_share * 100);
+          elTooltip.innerHTML =
+            `<strong>${object.city}</strong><br>` +
+            `${object.postings.toLocaleString()} postings<br>` +
+            `${remotePct}% remote`;
+        } else {
+          elTooltip.style.display = "none";
+        }
+      },
+    });
+
+    updateOverlay(0);
+  }
+
+  function buildLayers(idx) {
+    const quarters = state.timeline.quarters;
+    const q = quarters[idx];
+    const rows = state.timeline.data[q];
+    const center = state.timeline.center;
+    const maxPostings = Math.max(...rows.map(r => r.postings));
+
+    return [
+      // Dark basemap
+      new deck.TileLayer({
+        data: "https://basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png",
+        minZoom: 0,
+        maxZoom: 19,
+        tileSize: 256,
+        renderSubLayers: props => {
+          const { bbox: { west, south, east, north } } = props.tile;
+          return new deck.BitmapLayer(props, {
+            data: null,
+            image: props.data,
+            bounds: [west, south, east, north],
+          });
+        },
+      }),
+      // Destination city dots
+      new deck.ScatterplotLayer({
+        id: "cities",
+        data: rows,
+        getPosition: d => [d.lon, d.lat],
+        getRadius: d => 4000 + (d.postings / maxPostings) * 40000,
+        getFillColor: d => colorForRemote(d.remote_share),
+        pickable: true,
+        opacity: 0.85,
+        stroked: true,
+        getLineColor: [255, 255, 255, 120],
+        lineWidthMinPixels: 1,
+      }),
+      // Arcs from center to each city
+      new deck.ArcLayer({
+        id: "arcs",
+        data: rows,
+        getSourcePosition: () => [center.lon, center.lat],
+        getTargetPosition: d => [d.lon, d.lat],
+        getSourceColor: [255, 255, 255, 40],
+        getTargetColor: d => [...colorForRemote(d.remote_share), 220],
+        getWidth: d => 1 + (d.postings / maxPostings) * 5,
+        getHeight: d => 0.3 + (d.postings / maxPostings) * 1.0,
+        pickable: true,
+        greatCircle: false,
+      }),
+    ];
+  }
+
+  function colorForRemote(share) {
+    // Interpolate blue -> amber based on remote share
+    // share=0 → blue (#3b82f6 = 59,130,246), share=1 → amber (#f59e0b = 245,158,11)
+    const t = Math.min(1, Math.max(0, share));
+    return [
+      Math.round(59 + (245 - 59) * t),
+      Math.round(130 + (158 - 130) * t),
+      Math.round(246 + (11 - 246) * t),
+    ];
+  }
+
+  function updateOverlay(idx) {
+    const quarters = state.timeline.quarters;
+    const q = quarters[idx];
+    const rows = state.timeline.data[q];
+    const total = rows.reduce((s, r) => s + r.postings, 0);
+    const weightedRemote = rows.reduce((s, r) => s + r.postings * r.remote_share, 0);
+    const remotePct = total ? Math.round((weightedRemote / total) * 100) : 0;
+    const topCity = [...rows].sort((a, b) => b.postings - a.postings)[0];
+
+    elQuarter.textContent = q;
+    elStats.innerHTML =
+      `<strong>${total.toLocaleString()}</strong> postings across ${rows.length} cities &nbsp;·&nbsp; ` +
+      `<strong>${remotePct}%</strong> remote &nbsp;·&nbsp; ` +
+      `Top: ${topCity ? topCity.city : '—'}`;
+    elSliderLabel.textContent = q;
+  }
+
+  function setQuarter(idx) {
+    state.quarterIdx = idx;
+    elSlider.value = idx;
+    if (state.deck) {
+      state.deck.setProps({ layers: buildLayers(idx) });
+    }
+    updateOverlay(idx);
+  }
+
+  // ---- Controls ----
+  elSlider.addEventListener("input", e => {
+    if (state.playing) togglePlay();
+    setQuarter(parseInt(e.target.value, 10));
+  });
+
+  function togglePlay() {
+    state.playing = !state.playing;
+    elPlay.textContent = state.playing ? "⏸ Pause" : "▶ Play";
+    if (state.playing) tick();
+    else if (state.animationId) cancelAnimationFrame(state.animationId);
+  }
+
+  let lastStep = 0;
+  function tick(ts) {
+    if (!state.playing) return;
+    if (!ts) ts = performance.now();
+    if (ts - lastStep > 800) {  // step every 800ms
+      let next = state.quarterIdx + 1;
+      if (next >= state.timeline.quarters.length) next = 0;
+      setQuarter(next);
+      lastStep = ts;
+    }
+    state.animationId = requestAnimationFrame(tick);
+  }
+
+  elPlay.addEventListener("click", togglePlay);
+})();
+</script>
+
 <section id="about-this-project" class="level2 hero-intro">
 <h2 class="anchored" data-anchor-id="about-this-project">About this project</h2>
 <p>We are <strong>Team 1 of AD688 (Spring 2026)</strong> five analysts exploring how the U.S. job market is evolving in the age of AI, remote work, and shifting industry demand. Drawing on <strong>thousands of job postings</strong> from the Lightcast dataset, we investigate where the opportunities are, which skills matter most, and how geography and industry shape career outcomes today.</p>

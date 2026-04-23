@@ -2,6 +2,7 @@ project:
   type: website
   resources:
     - cluster_data.json
+    - hiring_timeline.json
   render:
     - "*.qmd"
  
