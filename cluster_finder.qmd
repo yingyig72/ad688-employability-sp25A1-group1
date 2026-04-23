@@ -1,7 +1,7 @@
 ---
 title: "Job Cluster Finder"
 subtitle: "Discover which segment of the job market matches your skills"
-author: "Omar Mohamed"
+author: "Omar Mohd Haris"
 format:
   html:
     toc: true
@@ -36,7 +36,9 @@ Pick the skills you have — or the ones you'd like to develop — and the tool 
 
 All of the matching happens client-side in your browser using cosine similarity against the exported cluster centroids, so the results are instant.
 
+```{=html}
 {{< include cluster_widget.html >}}
+```
 
 ## Interpreting the Results
 
