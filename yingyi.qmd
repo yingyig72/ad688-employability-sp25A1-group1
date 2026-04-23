@@ -1,6 +1,7 @@
 ---
 title: "Urban vs. Rural Job Markets for AI and Non-AI Careers"
 author: "Yingyi"
+date: "2026-04-23"
 format:
   html:
     toc: true
