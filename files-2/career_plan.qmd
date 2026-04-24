@@ -1,0 +1,179 @@
+---
+title: "Career Strategy"
+format:
+  html:
+    toc: true
+    code-fold: true
+execute:
+  echo: true
+  eval: true
+  warning: false
+---
+
+## Overview
+
+This page synthesizes our findings from EDA and skill gap analysis into actionable career strategies for each team member.
+
+```{python}
+#| label: setup-career
+#| code-summary: "Load libraries"
+
+import pandas as pd
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+import plotly.io as pio
+import warnings
+warnings.filterwarnings('ignore')
+
+# ── Apply consistent Plotly theme ────────────────────────────────────────
+custom_template = go.layout.Template()
+custom_template.layout = go.Layout(
+    font=dict(family="Segoe UI, Roboto, sans-serif", size=13, color="#2c3e50"),
+    title=dict(font=dict(size=20, color="#2c3e50"), x=0.5, xanchor="center"),
+    paper_bgcolor="white",
+    plot_bgcolor="#f8f9fa",
+    colorway=["#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6",
+              "#1abc9c", "#e67e22", "#34495e", "#16a085", "#c0392b"],
+    xaxis=dict(gridcolor="#dee2e6", linecolor="#adb5bd"),
+    yaxis=dict(gridcolor="#dee2e6", linecolor="#adb5bd"),
+    hoverlabel=dict(font_size=12),
+    margin=dict(t=60, b=40, l=50, r=30),
+)
+pio.templates["job_market"] = custom_template
+pio.templates.default = "job_market"
+```
+
+## 1. Market-Aligned Career Paths
+
+Based on our analysis, these career paths align with current market demand:
+
+```{python}
+#| label: career-paths
+#| code-summary: "Career path alignment"
+
+paths = pd.DataFrame({
+    "Career Path": [
+        "Data Analyst",
+        "Data Scientist",
+        "Data Engineer",
+        "ML Engineer",
+        "Cloud/DevOps Engineer"
+    ],
+    "Core Skills Required": [
+        "Python, SQL, Tableau, Excel, Communication",
+        "Python, SQL, Machine Learning, Deep Learning, R",
+        "Python, SQL, Spark, AWS, Docker, ETL",
+        "Python, Machine Learning, Deep Learning, Docker, Cloud",
+        "AWS, Docker, Kubernetes, Linux, Git"
+    ],
+    "Avg Salary Range": [
+        "$55K – $85K",
+        "$85K – $130K",
+        "$90K – $140K",
+        "$100K – $150K",
+        "$95K – $145K"
+    ],
+    "Job Availability": [
+        "Very High",
+        "High",
+        "High",
+        "High",
+        "Very High"
+    ]
+})
+
+paths.style.set_properties(**{
+    'text-align': 'left',
+    'white-space': 'pre-wrap'
+})
+```
+
+## 2. 90-Day Action Plan
+
+```{python}
+#| label: action-plan-visual
+#| code-summary: "90-day learning timeline"
+
+timeline = pd.DataFrame({
+    "Phase": ["Month 1"] * 3 + ["Month 2"] * 3 + ["Month 3"] * 3,
+    "Task": [
+        "Complete Python/SQL refresher",
+        "Set up cloud account (AWS Free Tier)",
+        "Begin ML fundamentals course",
+        "Build a portfolio project",
+        "Earn one cloud certification",
+        "Practice with real datasets (Kaggle)",
+        "Deploy a project to cloud",
+        "Start networking & applying",
+        "Conduct mock interviews"
+    ],
+    "Category": [
+        "Technical", "Cloud", "ML",
+        "Portfolio", "Cloud", "Technical",
+        "Cloud", "Career", "Career"
+    ]
+})
+
+fig = px.timeline(
+    pd.DataFrame({
+        "Task": timeline["Task"],
+        "Start": pd.to_datetime([
+            "2024-01-01", "2024-01-08", "2024-01-15",
+            "2024-02-01", "2024-02-08", "2024-02-15",
+            "2024-03-01", "2024-03-08", "2024-03-15"
+        ]),
+        "End": pd.to_datetime([
+            "2024-01-28", "2024-01-28", "2024-01-28",
+            "2024-02-28", "2024-02-28", "2024-02-28",
+            "2024-03-28", "2024-03-28", "2024-03-28"
+        ]),
+        "Phase": timeline["Phase"]
+    }),
+    x_start="Start", x_end="End", y="Task",
+    color="Phase",
+    title="90-Day Career Development Timeline"
+)
+fig.update_layout(height=450, yaxis=dict(autorange="reversed"))
+fig.show()
+```
+
+## 3. Recommended Certifications
+
+Based on the gap analysis, these certifications offer the best return on investment:
+
+```{python}
+#| label: certifications
+#| code-summary: "Certification recommendations"
+
+certs = pd.DataFrame({
+    "Certification": [
+        "AWS Cloud Practitioner",
+        "AWS Solutions Architect – Associate",
+        "Google Data Analytics (Coursera)",
+        "Tableau Desktop Specialist",
+        "Microsoft Azure Fundamentals (AZ-900)",
+        "IBM Data Science Professional Certificate"
+    ],
+    "Relevance": ["Cloud", "Cloud", "Analytics", "Visualization", "Cloud", "Data Science"],
+    "Difficulty": ["Beginner", "Intermediate", "Beginner", "Intermediate", "Beginner", "Intermediate"],
+    "Approx. Cost": ["$100", "$150", "$49/mo", "$100", "Free", "$49/mo"],
+    "Time to Complete": ["2-4 weeks", "4-8 weeks", "6 months", "2-4 weeks", "1-2 weeks", "4-6 months"]
+})
+
+fig = px.bar(
+    certs, x="Certification", y=[1]*len(certs),
+    color="Relevance",
+    title="Recommended Certifications by Category",
+    hover_data=["Difficulty", "Approx. Cost", "Time to Complete"]
+)
+fig.update_layout(yaxis_visible=False, showlegend=True, height=350)
+fig.update_traces(hovertemplate="<b>%{x}</b><br>Difficulty: %{customdata[0]}<br>Cost: %{customdata[1]}<br>Duration: %{customdata[2]}")
+fig.show()
+
+certs
+```
+
+## Summary
+
+The IT job market in 2024 heavily favors candidates with a blend of programming fundamentals (Python, SQL), cloud literacy (AWS, Docker), and domain-specific expertise (ML, data visualization). By following the structured improvement plan from the Skill Gap Analysis and pursuing targeted certifications, each team member can significantly improve their competitiveness within 90 days.

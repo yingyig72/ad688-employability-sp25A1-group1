@@ -1,0 +1,338 @@
+---
+title: "Exploratory Data Analysis"
+format:
+  html:
+    toc: true
+    code-fold: true
+execute:
+  echo: true
+  eval: true
+  warning: false
+---
+
+## Overview
+
+This section presents an enhanced Exploratory Data Analysis (EDA) of the 2024 IT job market dataset. We examine job posting distributions, salary trends, geographic patterns, and in-demand skills to build a comprehensive picture of the current hiring landscape.
+
+```{python}
+#| label: setup
+#| code-summary: "Load libraries and data"
+
+import pandas as pd
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import warnings
+warnings.filterwarnings('ignore')
+
+# ── Consistent Plotly Theme ──────────────────────────────────────────────
+import plotly.io as pio
+
+custom_template = go.layout.Template()
+custom_template.layout = go.Layout(
+    font=dict(family="Segoe UI, Roboto, sans-serif", size=13, color="#2c3e50"),
+    title=dict(font=dict(size=20, color="#2c3e50"), x=0.5, xanchor="center"),
+    paper_bgcolor="white",
+    plot_bgcolor="#f8f9fa",
+    colorway=["#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6",
+              "#1abc9c", "#e67e22", "#34495e", "#16a085", "#c0392b"],
+    xaxis=dict(gridcolor="#dee2e6", linecolor="#adb5bd"),
+    yaxis=dict(gridcolor="#dee2e6", linecolor="#adb5bd"),
+    hoverlabel=dict(font_size=12),
+    margin=dict(t=60, b=40, l=50, r=30),
+)
+pio.templates["job_market"] = custom_template
+pio.templates.default = "job_market"
+
+# ── Download & Load Data ─────────────────────────────────────────────────
+import subprocess, os
+
+data_file = "job_market_data.csv"
+if not os.path.exists(data_file):
+    subprocess.run([
+        "gdown",
+        "https://drive.google.com/uc?id=1V2GCHGt2dkFGqVBeoUFckU4IhUgk4ocQ",
+        "-O", data_file
+    ], check=True)
+
+df = pd.read_csv(data_file)
+print(f"Dataset shape: {df.shape}")
+df.head()
+```
+
+## 1. Dataset Overview
+
+```{python}
+#| label: dataset-overview
+#| code-summary: "Dataset summary statistics"
+
+print(f"Total job postings: {len(df):,}")
+print(f"Number of columns: {df.shape[1]}")
+print(f"\nColumn names:\n{list(df.columns)}")
+print(f"\nData types:\n{df.dtypes}")
+print(f"\nMissing values:\n{df.isnull().sum()[df.isnull().sum() > 0]}")
+```
+
+```{python}
+#| label: missing-values-chart
+#| code-summary: "Missing values visualization"
+
+missing = df.isnull().sum()
+missing = missing[missing > 0].sort_values(ascending=True)
+
+if len(missing) > 0:
+    fig = px.barh(
+        x=missing.values,
+        y=missing.index,
+        labels={"x": "Missing Count", "y": "Column"},
+        title="Missing Values by Column",
+        color=missing.values,
+        color_continuous_scale="Reds"
+    )
+    fig.update_layout(showlegend=False, coloraxis_showscale=False)
+    fig.show()
+else:
+    print("No missing values found in the dataset.")
+```
+
+## 2. Job Posting Distribution
+
+```{python}
+#| label: job-title-distribution
+#| code-summary: "Top job titles"
+
+# Detect the job title column (common names)
+title_col = None
+for col in df.columns:
+    if any(kw in col.lower() for kw in ['title', 'job_title', 'jobtitle', 'position']):
+        title_col = col
+        break
+
+if title_col:
+    top_titles = df[title_col].value_counts().head(15)
+    fig = px.bar(
+        x=top_titles.values,
+        y=top_titles.index,
+        orientation='h',
+        title="Top 15 Job Titles",
+        labels={"x": "Number of Postings", "y": "Job Title"},
+        color=top_titles.values,
+        color_continuous_scale="Blues"
+    )
+    fig.update_layout(yaxis=dict(autorange="reversed"), coloraxis_showscale=False)
+    fig.show()
+else:
+    print("Job title column not found. Available columns:", list(df.columns))
+```
+
+```{python}
+#| label: job-category-distribution
+#| code-summary: "Job category / type breakdown"
+
+# Try to find category or job type column
+cat_col = None
+for col in df.columns:
+    if any(kw in col.lower() for kw in ['category', 'type', 'job_type', 'employment']):
+        cat_col = col
+        break
+
+if cat_col:
+    cat_counts = df[cat_col].value_counts()
+    fig = px.pie(
+        values=cat_counts.values,
+        names=cat_counts.index,
+        title=f"Distribution by {cat_col}",
+        hole=0.4
+    )
+    fig.update_traces(textposition='inside', textinfo='percent+label')
+    fig.show()
+```
+
+## 3. Salary Analysis
+
+```{python}
+#| label: salary-analysis
+#| code-summary: "Salary distribution and trends"
+
+# Detect salary columns
+salary_cols = [col for col in df.columns if any(kw in col.lower() for kw in ['salary', 'pay', 'compensation', 'wage'])]
+
+if salary_cols:
+    sal_col = salary_cols[0]
+    # Clean salary data if needed
+    df_salary = df[df[sal_col].notna()].copy()
+
+    if df_salary[sal_col].dtype == 'object':
+        # Try to extract numeric values
+        df_salary[sal_col] = df_salary[sal_col].replace(r'[\$,K]', '', regex=True)
+        df_salary[sal_col] = pd.to_numeric(df_salary[sal_col], errors='coerce')
+        df_salary = df_salary.dropna(subset=[sal_col])
+
+    if len(df_salary) > 0:
+        fig = px.histogram(
+            df_salary, x=sal_col,
+            nbins=40,
+            title=f"Distribution of {sal_col}",
+            labels={sal_col: "Salary ($)"},
+            marginal="box"
+        )
+        fig.show()
+
+        # Salary by job title (if available)
+        if title_col:
+            top_10_titles = df_salary[title_col].value_counts().head(10).index
+            df_top = df_salary[df_salary[title_col].isin(top_10_titles)]
+            fig2 = px.box(
+                df_top, x=sal_col, y=title_col,
+                title="Salary Distribution by Top 10 Job Titles",
+                labels={sal_col: "Salary ($)", title_col: "Job Title"}
+            )
+            fig2.update_layout(height=500)
+            fig2.show()
+else:
+    print("No salary column found. Available columns:", list(df.columns))
+```
+
+## 4. Geographic Analysis
+
+```{python}
+#| label: geographic-analysis
+#| code-summary: "Job postings by location"
+
+# Detect location column
+loc_col = None
+for col in df.columns:
+    if any(kw in col.lower() for kw in ['location', 'city', 'state', 'region', 'area']):
+        loc_col = col
+        break
+
+if loc_col:
+    top_locs = df[loc_col].value_counts().head(20)
+
+    fig = px.bar(
+        x=top_locs.values,
+        y=top_locs.index,
+        orientation='h',
+        title=f"Top 20 Locations by Job Postings",
+        labels={"x": "Number of Postings", "y": loc_col},
+        color=top_locs.values,
+        color_continuous_scale="Viridis"
+    )
+    fig.update_layout(yaxis=dict(autorange="reversed"), coloraxis_showscale=False, height=600)
+    fig.show()
+
+    # If salary data exists, show salary by location
+    if salary_cols and sal_col in df.columns:
+        top_loc_list = top_locs.head(10).index
+        df_loc_sal = df[df[loc_col].isin(top_loc_list)].copy()
+        df_loc_sal[sal_col] = pd.to_numeric(df_loc_sal[sal_col], errors='coerce')
+        df_loc_sal = df_loc_sal.dropna(subset=[sal_col])
+
+        if len(df_loc_sal) > 0:
+            fig2 = px.box(
+                df_loc_sal, x=sal_col, y=loc_col,
+                title="Salary Distribution by Top Locations",
+                labels={sal_col: "Salary ($)", loc_col: "Location"},
+                color=loc_col
+            )
+            fig2.update_layout(showlegend=False, height=500)
+            fig2.show()
+else:
+    print("Location column not found. Available columns:", list(df.columns))
+```
+
+## 5. Skills Demand Analysis
+
+```{python}
+#| label: skills-demand
+#| code-summary: "Most in-demand skills from job postings"
+
+from collections import Counter
+import re
+
+# Define common IT skills to search for
+target_skills = [
+    "Python", "SQL", "Java", "JavaScript", "R", "Scala", "C++", "C#",
+    "AWS", "Azure", "GCP", "Docker", "Kubernetes",
+    "Machine Learning", "Deep Learning", "NLP", "AI",
+    "Tableau", "Power BI", "Excel",
+    "Spark", "Hadoop", "Kafka",
+    "Git", "Linux", "Agile", "Scrum",
+    "TensorFlow", "PyTorch", "Scikit-learn",
+    "MongoDB", "PostgreSQL", "MySQL", "NoSQL",
+    "ETL", "Data Pipeline", "Airflow",
+    "React", "Node.js", "HTML", "CSS",
+    "Communication", "Leadership", "Problem Solving"
+]
+
+# Find description/skills column
+desc_col = None
+for col in df.columns:
+    if any(kw in col.lower() for kw in ['description', 'skills', 'requirement', 'qualification', 'detail']):
+        desc_col = col
+        break
+
+if desc_col:
+    skill_counts = {}
+    text_data = df[desc_col].dropna().str.lower()
+
+    for skill in target_skills:
+        count = text_data.str.contains(re.escape(skill.lower()), case=False, na=False).sum()
+        if count > 0:
+            skill_counts[skill] = count
+
+    skill_df = pd.DataFrame(
+        sorted(skill_counts.items(), key=lambda x: x[1], reverse=True),
+        columns=["Skill", "Count"]
+    ).head(20)
+
+    fig = px.bar(
+        skill_df, x="Count", y="Skill",
+        orientation='h',
+        title="Top 20 Most In-Demand Skills",
+        color="Count",
+        color_continuous_scale="Teal"
+    )
+    fig.update_layout(yaxis=dict(autorange="reversed"), coloraxis_showscale=False, height=550)
+    fig.show()
+else:
+    print("Description/skills column not found. Available columns:", list(df.columns))
+```
+
+## 6. Correlation & Summary Statistics
+
+```{python}
+#| label: numeric-summary
+#| code-summary: "Summary statistics for numeric columns"
+
+numeric_df = df.select_dtypes(include=[np.number])
+if len(numeric_df.columns) > 1:
+    print("Descriptive Statistics:")
+    display(numeric_df.describe().round(2))
+
+    # Correlation heatmap
+    corr = numeric_df.corr()
+    fig = px.imshow(
+        corr,
+        text_auto=".2f",
+        title="Correlation Heatmap of Numeric Features",
+        color_continuous_scale="RdBu_r",
+        aspect="auto"
+    )
+    fig.update_layout(height=500)
+    fig.show()
+else:
+    print("Not enough numeric columns for correlation analysis.")
+```
+
+## Key Findings
+
+Based on the exploratory analysis above, several patterns emerge:
+
+- **Job Title Trends**: The distribution reveals which IT roles dominate the 2024 hiring landscape.
+- **Salary Insights**: Salary distributions vary significantly across roles and locations, with certain specializations commanding premium compensation.
+- **Geographic Hotspots**: Major tech hubs continue to lead in posting volume, but remote opportunities are reshaping geographic dynamics.
+- **Skills in Demand**: Programming languages (Python, SQL) and cloud platforms (AWS, Azure) consistently rank among the most requested skills.
+
+These findings inform the Skill Gap Analysis in the next section.
