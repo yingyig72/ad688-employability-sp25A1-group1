@@ -55,7 +55,18 @@ pio.templates["job_market"] = custom_template
 pio.templates.default = "job_market"
 
 # ── Load Cleaned Lightcast Data ──────────────────────────────────────────
-df = pd.read_csv("data/lightcast_cleaned.csv", parse_dates=["posted", "expired"])
+import subprocess, os
+
+data_file = "lightcast_cleaned.csv"
+
+if not os.path.exists(data_file):
+    subprocess.run([
+        "gdown",
+        "https://drive.google.com/uc?id=1V2GCHGt2dkFGqVBeoUFckU4IhUgk4ocQ",
+        "-O", data_file
+    ], check=True)
+
+df = pd.read_csv(data_file, parse_dates=["posted", "expired"])
 
 # Skills columns are stored as pipe-separated strings — split back into lists
 for col in ["skills_name", "specialized_skills_name", "software_skills_name"]:
