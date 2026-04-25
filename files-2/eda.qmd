@@ -82,7 +82,7 @@ missing = df.isnull().sum()
 missing = missing[missing > 0].sort_values(ascending=True)
 
 if len(missing) > 0:
-    fig = px.barh(
+    fig = px.bar(
         x=missing.values,
         y=missing.index,
         labels={"x": "Missing Count", "y": "Column"},
