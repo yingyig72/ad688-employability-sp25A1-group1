@@ -161,7 +161,7 @@ fig.show()
 
 avg_skills = df_skills.mean().sort_values(ascending=True)
 
-fig = px.barh(
+fig = px.bar(
     x=avg_skills.values,
     y=avg_skills.index,
     title="Team Average Skill Levels",
