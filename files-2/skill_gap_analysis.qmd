@@ -1,0 +1,448 @@
+---
+title: "Skill Gap Analysis"
+format:
+  html:
+    toc: true
+    code-fold: true
+execute:
+  echo: true
+  eval: true
+  warning: false
+---
+
+## Overview
+
+This section compares the skills required in IT job postings against the actual skills of our team members. By identifying gaps between what the market demands and what we currently possess, we can develop targeted learning plans.
+
+```{python}
+#| label: setup-skill-gap
+#| code-summary: "Load libraries and data"
+
+import pandas as pd
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import seaborn as sns
+import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings('ignore')
+
+# ── Apply consistent Plotly theme ────────────────────────────────────────
+import plotly.io as pio
+
+custom_template = go.layout.Template()
+custom_template.layout = go.Layout(
+    font=dict(family="Segoe UI, Roboto, sans-serif", size=13, color="#2c3e50"),
+    title=dict(font=dict(size=20, color="#2c3e50"), x=0.5, xanchor="center"),
+    paper_bgcolor="white",
+    plot_bgcolor="#f8f9fa",
+    colorway=["#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6",
+              "#1abc9c", "#e67e22", "#34495e", "#16a085", "#c0392b"],
+    xaxis=dict(gridcolor="#dee2e6", linecolor="#adb5bd"),
+    yaxis=dict(gridcolor="#dee2e6", linecolor="#adb5bd"),
+    hoverlabel=dict(font_size=12),
+    margin=dict(t=60, b=40, l=50, r=30),
+)
+pio.templates["job_market"] = custom_template
+pio.templates.default = "job_market"
+
+# ── Load the job market dataset ──────────────────────────────────────────
+import subprocess, os
+
+data_file = "job_market_data.csv"
+if not os.path.exists(data_file):
+    subprocess.run([
+        "gdown",
+        "https://drive.google.com/uc?id=1V2GCHGt2dkFGqVBeoUFckU4IhUgk4ocQ",
+        "-O", data_file
+    ], check=True)
+
+df = pd.read_csv(data_file)
+```
+
+## 1. Team Skill Assessment
+
+Each team member rated their proficiency on a 1–5 scale:
+
+| Level | Description |
+|-------|-------------|
+| 1 | Beginner — minimal exposure |
+| 2 | Basic knowledge — can do simple tasks |
+| 3 | Intermediate — comfortable working independently |
+| 4 | Advanced — can tackle complex problems |
+| 5 | Expert — can mentor others |
+
+```{python}
+#| label: team-skills-dataframe
+#| code-summary: "Create team skill level DataFrame"
+
+# ══════════════════════════════════════════════════════════════════════════
+# 🔧 CUSTOMIZE: Replace names and skill ratings with your actual team data
+# ══════════════════════════════════════════════════════════════════════════
+
+skills_data = {
+    "Name":              ["Alice",  "Bob",  "Charlie",  "David",  "Eve"],
+    "Python":            [   5,       3,        4,         2,        4  ],
+    "SQL":               [   4,       2,        5,         3,        3  ],
+    "Machine Learning":  [   3,       1,        4,         2,        2  ],
+    "Cloud Computing":   [   2,       2,        3,         1,        3  ],
+    "Docker":            [   2,       1,        3,         1,        2  ],
+    "AWS":               [   2,       2,        2,         1,        3  ],
+    "Tableau":           [   3,       4,        2,         3,        2  ],
+    "Excel":             [   4,       5,        3,         4,        4  ],
+    "Git":               [   4,       2,        4,         2,        3  ],
+    "Communication":     [   4,       3,        3,         5,        4  ],
+    "R":                 [   3,       2,        2,         1,        2  ],
+    "JavaScript":        [   1,       1,        2,         3,        2  ],
+    "Spark":             [   1,       1,        2,         1,        1  ],
+    "Deep Learning":     [   2,       1,        3,         1,        1  ],
+    "NLP":               [   2,       1,        3,         1,        1  ],
+}
+
+df_skills = pd.DataFrame(skills_data)
+df_skills.set_index("Name", inplace=True)
+df_skills
+```
+
+### 1.1 Team Skill Heatmap
+
+```{python}
+#| label: skill-heatmap
+#| code-summary: "Heatmap of team skill levels"
+
+fig = px.imshow(
+    df_skills,
+    text_auto=True,
+    color_continuous_scale="RdYlGn",
+    title="Team Skill Levels Heatmap",
+    labels=dict(color="Proficiency"),
+    aspect="auto"
+)
+fig.update_layout(height=400)
+fig.show()
+```
+
+### 1.2 Individual Skill Profiles (Radar Charts)
+
+```{python}
+#| label: radar-charts
+#| code-summary: "Radar charts for each team member"
+
+categories = list(df_skills.columns)
+
+fig = go.Figure()
+
+for member in df_skills.index:
+    values = df_skills.loc[member].values.tolist()
+    values.append(values[0])  # close the polygon
+
+    fig.add_trace(go.Scatterpolar(
+        r=values,
+        theta=categories + [categories[0]],
+        fill='toself',
+        name=member,
+        opacity=0.6
+    ))
+
+fig.update_layout(
+    polar=dict(radialaxis=dict(visible=True, range=[0, 5])),
+    title="Individual Skill Profiles",
+    height=500
+)
+fig.show()
+```
+
+### 1.3 Team Average Strengths
+
+```{python}
+#| label: team-average
+#| code-summary: "Average skill levels across the team"
+
+avg_skills = df_skills.mean().sort_values(ascending=True)
+
+fig = px.barh(
+    x=avg_skills.values,
+    y=avg_skills.index,
+    title="Team Average Skill Levels",
+    labels={"x": "Average Proficiency (1–5)", "y": "Skill"},
+    color=avg_skills.values,
+    color_continuous_scale="Greens"
+)
+fig.update_layout(coloraxis_showscale=False)
+fig.show()
+```
+
+## 2. Industry Skill Requirements
+
+Extract the most in-demand skills from the job postings dataset to understand what employers are looking for.
+
+```{python}
+#| label: extract-industry-skills
+#| code-summary: "Extract skill demand from job descriptions"
+
+import re
+from collections import Counter
+
+# Skills to search for in job descriptions
+target_skills = list(df_skills.columns)
+additional_skills = ["Kubernetes", "Azure", "GCP", "Agile", "Scrum",
+                     "TensorFlow", "PyTorch", "Power BI", "Linux",
+                     "MongoDB", "PostgreSQL", "ETL", "Airflow", "Kafka",
+                     "Scikit-learn", "Data Pipeline", "React", "Node.js"]
+all_skills = target_skills + additional_skills
+
+# Find description column
+desc_col = None
+for col in df.columns:
+    if any(kw in col.lower() for kw in ['description', 'skills', 'requirement', 'qualification', 'detail']):
+        desc_col = col
+        break
+
+if desc_col:
+    text_data = df[desc_col].dropna().str.lower()
+    total_postings = len(text_data)
+
+    skill_demand = {}
+    for skill in all_skills:
+        count = text_data.str.contains(re.escape(skill.lower()), case=False, na=False).sum()
+        if count > 0:
+            skill_demand[skill] = round(count / total_postings * 100, 1)
+
+    demand_df = pd.DataFrame(
+        sorted(skill_demand.items(), key=lambda x: x[1], reverse=True),
+        columns=["Skill", "Demand (% of postings)"]
+    )
+
+    fig = px.bar(
+        demand_df.head(20),
+        x="Demand (% of postings)", y="Skill",
+        orientation='h',
+        title="Top 20 Skills — % of Job Postings Mentioning Each",
+        color="Demand (% of postings)",
+        color_continuous_scale="Blues"
+    )
+    fig.update_layout(yaxis=dict(autorange="reversed"), coloraxis_showscale=False, height=550)
+    fig.show()
+else:
+    # Fallback: use a manually curated demand list
+    print("Description column not found — using curated skill demand estimates.")
+    skill_demand = {
+        "Python": 72, "SQL": 65, "AWS": 48, "Machine Learning": 42,
+        "Cloud Computing": 38, "Docker": 32, "Excel": 30, "Tableau": 28,
+        "Git": 26, "Communication": 25, "R": 20, "JavaScript": 18,
+        "Spark": 15, "Deep Learning": 14, "NLP": 12
+    }
+    demand_df = pd.DataFrame(
+        sorted(skill_demand.items(), key=lambda x: x[1], reverse=True),
+        columns=["Skill", "Demand (% of postings)"]
+    )
+```
+
+## 3. Gap Analysis: Team vs. Market
+
+```{python}
+#| label: gap-analysis
+#| code-summary: "Compare team skills to industry demand"
+
+# Normalize team skills: average proficiency on 0-100 scale
+team_avg = df_skills.mean()
+team_avg_pct = (team_avg / 5 * 100).round(1)
+
+# Build comparison DataFrame for overlapping skills
+overlap_skills = [s for s in team_avg_pct.index if s in skill_demand]
+
+comparison = pd.DataFrame({
+    "Skill": overlap_skills,
+    "Team Proficiency (%)": [team_avg_pct[s] for s in overlap_skills],
+    "Market Demand (%)":    [skill_demand[s] for s in overlap_skills]
+})
+comparison["Gap"] = comparison["Market Demand (%)"] - comparison["Team Proficiency (%)"]
+comparison = comparison.sort_values("Gap", ascending=False)
+
+comparison
+```
+
+### 3.1 Gap Visualization
+
+```{python}
+#| label: gap-chart
+#| code-summary: "Side-by-side comparison chart"
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    name="Market Demand (%)",
+    y=comparison["Skill"],
+    x=comparison["Market Demand (%)"],
+    orientation='h',
+    marker_color="#e74c3c"
+))
+
+fig.add_trace(go.Bar(
+    name="Team Proficiency (%)",
+    y=comparison["Skill"],
+    x=comparison["Team Proficiency (%)"],
+    orientation='h',
+    marker_color="#2ecc71"
+))
+
+fig.update_layout(
+    barmode='group',
+    title="Skill Gap: Market Demand vs. Team Proficiency",
+    xaxis_title="Percentage",
+    yaxis=dict(autorange="reversed"),
+    height=500,
+    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5)
+)
+fig.show()
+```
+
+### 3.2 Gap Severity
+
+```{python}
+#| label: gap-severity
+#| code-summary: "Skills ranked by gap severity"
+
+fig = px.bar(
+    comparison.sort_values("Gap", ascending=True),
+    x="Gap", y="Skill",
+    orientation='h',
+    title="Skill Gaps Ranked (Positive = Need Improvement)",
+    labels={"Gap": "Gap (Market Demand − Team Proficiency)"},
+    color="Gap",
+    color_continuous_scale="RdYlGn_r"
+)
+fig.update_layout(coloraxis_showscale=False, height=500)
+fig.show()
+```
+
+### 3.3 Skills Missing from the Team
+
+```{python}
+#| label: missing-skills
+#| code-summary: "In-demand skills the team currently lacks"
+
+# Skills in demand but not in team's skill set
+missing = [s for s in skill_demand if s not in df_skills.columns]
+
+if missing:
+    missing_df = pd.DataFrame({
+        "Skill": missing,
+        "Market Demand (%)": [skill_demand[s] for s in missing]
+    }).sort_values("Market Demand (%)", ascending=False)
+
+    print("⚠️ These in-demand skills are NOT currently in the team's skill set:\n")
+    display(missing_df)
+
+    # Add them to team dataframe with 0
+    for skill in missing:
+        df_skills[skill] = 0
+else:
+    print("✅ The team has at least basic coverage of all tracked skills.")
+```
+
+## 4. Individual Gap Analysis
+
+```{python}
+#| label: individual-gaps
+#| code-summary: "Per-member gap priorities"
+
+print("=" * 60)
+print("INDIVIDUAL IMPROVEMENT PRIORITIES")
+print("=" * 60)
+
+for member in df_skills.index:
+    member_skills = df_skills.loc[member]
+    weak_skills = member_skills[member_skills <= 2].index.tolist()
+    critical = [s for s in weak_skills if s in skill_demand and skill_demand[s] > 20]
+
+    print(f"\n👤 {member}")
+    print(f"   Strongest skills: {', '.join(member_skills.nlargest(3).index)}")
+    if critical:
+        print(f"   ⚠️  Priority gaps:  {', '.join(critical)}")
+    elif weak_skills:
+        print(f"   📌 Areas to grow:   {', '.join(weak_skills)}")
+    else:
+        print(f"   ✅ Well-rounded profile!")
+```
+
+## 5. Improvement Plan
+
+Based on the gap analysis, here is a structured plan for the team:
+
+```{python}
+#| label: improvement-plan
+#| code-summary: "Recommended improvement plan"
+
+plan = {
+    "Skill": [],
+    "Gap Severity": [],
+    "Recommended Resources": [],
+    "Team Members to Focus": []
+}
+
+for _, row in comparison.sort_values("Gap", ascending=False).iterrows():
+    skill = row["Skill"]
+    gap = row["Gap"]
+    if gap <= 0:
+        continue
+
+    # Who on the team is weakest at this skill?
+    member_scores = df_skills[skill] if skill in df_skills.columns else pd.Series()
+    weak_members = member_scores[member_scores <= 2].index.tolist() if len(member_scores) > 0 else ["All"]
+
+    # Suggest resources based on skill
+    resources = {
+        "Python": "Coursera – Python for Everybody; LeetCode practice",
+        "SQL": "Mode Analytics SQL Tutorial; HackerRank SQL",
+        "Machine Learning": "Andrew Ng's ML Specialization (Coursera)",
+        "Cloud Computing": "AWS Cloud Practitioner cert; Azure Fundamentals",
+        "AWS": "AWS Cloud Practitioner / Solutions Architect prep",
+        "Docker": "Docker official docs; Play with Docker labs",
+        "Tableau": "Tableau Public tutorials; Coursera Tableau Specialization",
+        "Git": "GitHub Skills interactive courses",
+        "R": "R for Data Science (Hadley Wickham) – free online",
+        "Spark": "Databricks Academy free courses",
+        "Deep Learning": "fast.ai Practical Deep Learning; deeplearning.ai",
+        "NLP": "Hugging Face NLP course (free)",
+        "JavaScript": "freeCodeCamp JavaScript curriculum",
+        "Communication": "Toastmasters; business writing workshops",
+        "Excel": "Excel Skills for Business (Coursera)",
+    }
+
+    plan["Skill"].append(skill)
+    plan["Gap Severity"].append(f"{gap:+.1f}")
+    plan["Recommended Resources"].append(resources.get(skill, "Self-study & online tutorials"))
+    plan["Team Members to Focus"].append(", ".join(weak_members) if weak_members else "—")
+
+plan_df = pd.DataFrame(plan)
+plan_df
+```
+
+### 5.1 Collaboration Strategy
+
+The team can bridge skill gaps efficiently by leveraging internal expertise:
+
+```{python}
+#| label: peer-teaching
+#| code-summary: "Peer teaching opportunities"
+
+print("🤝 PEER TEACHING OPPORTUNITIES\n")
+for skill in df_skills.columns:
+    experts = df_skills[df_skills[skill] >= 4].index.tolist()
+    learners = df_skills[df_skills[skill] <= 2].index.tolist()
+
+    if experts and learners:
+        print(f"  {skill}:")
+        print(f"    Mentors  → {', '.join(experts)}")
+        print(f"    Learners → {', '.join(learners)}")
+        print()
+```
+
+## Key Takeaways
+
+- The largest gaps tend to be in **cloud technologies** (AWS, Docker, Cloud Computing) and **advanced analytics** (Deep Learning, NLP, Spark).
+- Core skills like **Python, SQL, and Excel** are relatively strong across the team.
+- A peer mentoring system can accelerate learning — team members with advanced skills in one area can coach others.
+- Each member has a personalized priority list to guide their professional development over the coming months.
