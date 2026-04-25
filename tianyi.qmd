@@ -7,89 +7,80 @@ execute:
   eval: false
 ---
 
-## Research Question
+## Do tech hubs still dominate AI-related hiring, or are other locations emerging?
 
-*How do urban vs. rural job markets differ for AI and non-AI careers?*
-
-This section examines how urban and rural labor markets differ for AI-related and non-AI careers using the Lightcast job postings dataset. The purpose is to understand whether AI-related opportunities are more concentrated in metropolitan areas and whether non-AI roles are distributed differently across regions.
+This section examines whether AI-related job opportunities remain concentrated in traditional technology hubs or are increasingly distributed across other metropolitan areas. Using the Lightcast job postings dataset, the analysis evaluates the geographic distribution of AI-related hiring and explores whether emerging cities are becoming significant contributors to the AI labor market.
 
 ## Introduction
 
-Geographic location remains an important factor in labor market outcomes, even as digital technologies and remote work continue to reshape employment patterns. Urban regions are often associated with stronger infrastructure, larger talent pools, and more advanced industries, which may give them an advantage in attracting technology-driven jobs. Rural regions, by contrast, may offer fewer opportunities in highly specialized occupations.
+Geographic concentration has long been a defining characteristic of technology-driven labor markets. Major metropolitan areas such as San Francisco, Seattle, Boston, and New York have historically dominated technology hiring due to strong innovation ecosystems, access to skilled labor, and the presence of major firms and research institutions.
 
-This analysis focuses on comparing urban and rural job markets for AI and non-AI careers. By identifying differences in job volume and job composition, this section helps explain whether advanced labor market opportunities remain concentrated in metropolitan areas in 2024.
+However, recent developments—including the rise of remote work, cloud-based collaboration, and widespread adoption of artificial intelligence across industries—suggest that AI-related hiring may no longer be confined to a small set of traditional tech hubs. This analysis investigates whether these hubs still dominate AI-related hiring or whether other metropolitan areas are emerging as meaningful contributors to the AI job market.
 
 ## Literature Review
 
-Existing literature suggests that AI-related jobs are geographically concentrated in urban areas due to stronger innovation ecosystems and access to skilled labor (@ather2024geography).
+Prior research suggests that AI-related labor demand tends to be geographically concentrated in regions with strong technical capabilities and innovation ecosystems. Evidence from online job postings shows that AI-related roles are often clustered in metropolitan areas with high demand for advanced skills (@acemoglu2022artificial).
 
-Studies also show that automation tends to favor high-skilled workers, particularly in metropolitan regions, contributing to skill-biased labor demand (@mookerjee2023ai).
+At the same time, recent analyses indicate that AI adoption is expanding across a broader set of industries and locations. Reports from the Council of Economic Advisers highlight that the impact of AI varies across regions depending on local economic structures, suggesting that AI-related opportunities may spread beyond traditional technology hubs (@cea2024ai).
 
-From a task-based perspective, AI transforms routine work while increasing demand for analytical and cognitive tasks (@shen2024tasks).
+Additionally, geographic analyses of AI job postings show that while major metropolitan areas remain central to AI hiring, other cities are beginning to participate more actively in AI-related labor markets (@umdlinkup2023msa).
 
-In addition, regional disparities remain significant, as rural areas often face limited job mobility and fewer reallocation opportunities compared to urban regions (@capello2023regional).
+These findings motivate the current analysis, which explores whether AI-related hiring remains concentrated in traditional tech hubs or is becoming more geographically distributed.
 
 ## Data Cleaning and Preparation
 
-The Lightcast job postings dataset was used for this analysis. To prepare the data:
+The Lightcast job postings dataset was used for this analysis. The data preparation process included the following steps:
 
-- Only the relevant variables were kept, including `TITLE`, `MSA_NAME`, `STATE_NAME`, and `SKILLS_NAME`.
-- Job titles and skill fields were cleaned and standardized into lowercase text for consistent keyword matching.
-- Jobs were classified as **AI-related** or **Non-AI** based on a combined text field using job titles and skills.
-- `MSA_NAME` was used to distinguish **Urban** and **Rural** locations:
-  - If `MSA_NAME` was present, the posting was classified as **Urban**
-  - If `MSA_NAME` was missing, the posting was classified as **Rural**
+- Selecting relevant variables, including job titles, skills, and geographic identifiers such as metropolitan statistical areas (MSAs).
+- Standardizing text data by converting job titles and skill descriptions to lowercase.
+- Classifying job postings into **AI-related** and **Non-AI** categories using keyword-based matching.
+- Identifying metropolitan areas using the `MSA_NAME` variable.
+- Defining a set of major metropolitan areas (e.g., San Francisco, Seattle, Boston, New York, Austin, and Washington D.C.) as **Traditional Tech Hubs**, while classifying all others as **Other Locations**.
 
-This approach provides a practical way to compare metropolitan and non-metropolitan labor markets using the available geographic information.
+This approach enables a comparison of AI-related job distribution between established technology centers and emerging locations.
 
 ## Classification Logic
 
-For this project, AI-related jobs were defined broadly to include data-, analytics-, and technology-oriented roles. This includes positions associated with artificial intelligence, machine learning, data science, analytics, software development, and technical tools such as Python and SQL.
+AI-related jobs were identified using keywords related to artificial intelligence, machine learning, data science, analytics, and programming skills such as Python and SQL. This broader definition captures a wide range of roles associated with AI and data-driven technologies, even when job titles do not explicitly include the term "AI."
 
-This broader classification is appropriate because many AI-related opportunities are embedded in adjacent technical fields rather than appearing only under explicit job titles such as “AI Engineer” or “Machine Learning Scientist.”
+## Visualization 1: Top Metropolitan Areas by AI-Related Job Postings
 
-## Visualization 1: Number of AI and Non-AI Jobs by Region Type
-
-![](figures/urban_rural_counts.png)
+![](figures/tianyi_top_ai_msas.png)
 
 ### Interpretation
 
-This chart compares the number of AI-related and non-AI job postings across urban and rural labor markets. The results show that urban areas account for the vast majority of total job postings. In both urban and rural locations, AI-related roles outnumber non-AI roles, but the total number of opportunities is much higher in urban regions.
+This chart displays the top metropolitan areas with the highest number of AI-related job postings. Traditional technology hubs such as New York, San Francisco, Boston, and Seattle remain prominent, indicating that established innovation centers continue to play a major role in AI hiring.
 
-The chart indicates that metropolitan labor markets remain the dominant centers of employment, especially for technology- and data-oriented positions.
+However, several non-traditional cities, including Dallas, Atlanta, and Chicago, also appear among the top locations. This suggests that AI-related hiring is not limited to a small set of coastal tech hubs but is spreading to a broader range of metropolitan areas.
 
-This pattern is consistent with prior research showing that AI-related jobs are concentrated in urban regions due to stronger innovation ecosystems.
+## Visualization 2: AI-Related Job Postings in Tech Hubs vs Other Locations
 
-## Visualization 2: Proportion of AI and Non-AI Jobs by Region Type
-
-![](figures/urban_rural_props.png)
+![](figures/tianyi_hub_vs_other.png)
 
 ### Interpretation
 
-This figure compares the proportion of AI-related and non-AI roles within urban and rural regions. AI-related jobs make up the larger share of postings in both regions. However, the AI share is slightly higher in urban areas than in rural areas.
+This figure compares the total number of AI-related job postings between traditional technology hubs and other locations. While traditional tech hubs still account for a substantial number of AI-related jobs, the majority of postings are found in other metropolitan areas.
 
-This suggests that while both regions contain AI-related opportunities, urban labor markets are more strongly specialized in advanced and technology-driven work.
+This indicates that although tech hubs remain important centers for AI employment, AI-related hiring is no longer exclusively concentrated in these regions. Instead, opportunities are increasingly distributed across a wider set of cities, reflecting the broader adoption of AI technologies across industries and locations.
 
 ## Findings
 
-The analysis reveals a significant difference between urban and rural job markets. First, urban areas have a substantially larger number of job postings compared to rural regions. This indicates that most employment opportunities are concentrated in metropolitan labor markets.
+The analysis reveals that traditional technology hubs continue to play a key role in AI-related hiring, as several major hubs remain among the top metropolitan areas in terms of job postings. This confirms the ongoing importance of established innovation ecosystems in supporting AI-related employment.
 
-In terms of job composition, AI-related roles dominate both urban and rural markets. However, the concentration is slightly higher in urban areas. Approximately 70% of jobs in urban regions are AI-related, compared to about 66% in rural regions.
+However, the results also show that a significant share of AI-related job postings is located outside these traditional hubs. Many non-traditional metropolitan areas appear in the top rankings, and overall job volume is higher in "other locations" than in tech hubs.
 
-This suggests that while AI-related roles are present in both regions, urban markets have a stronger concentration of technology-driven opportunities. In addition, the absolute number of AI jobs is dramatically higher in urban areas, which further highlights the dominance of cities in advanced labor markets.
+This suggests that AI-related hiring is becoming more geographically distributed. While tech hubs remain important, they no longer dominate AI employment to the same extent as in the past. Instead, AI-related opportunities are expanding into a wider range of regions, likely driven by digital transformation across industries and the increasing feasibility of remote or distributed work.
 
 ## Business and Career Implications
 
-These findings have practical implications for job seekers. Students and early-career professionals who want to pursue AI-, analytics-, or data-related roles may have access to more opportunities in urban labor markets, where the volume of postings is substantially larger and the concentration of technical jobs is slightly higher.
+These findings have important implications for job seekers. While traditional technology hubs still offer a high concentration of AI-related opportunities, individuals should not limit their job search to these locations alone.
 
-At the same time, the presence of AI-related roles in rural areas suggests that these opportunities are not limited entirely to major cities. However, the much smaller number of postings indicates that job seekers in rural markets may face more limited options and stronger competition when targeting advanced technical roles.
+Emerging metropolitan areas may offer growing opportunities in AI-related fields, often with lower living costs and less competition. As AI adoption spreads across industries, job seekers can benefit from considering a broader range of geographic locations when planning their careers.
 
 ## Conclusion
 
-In conclusion, there are clear differences between urban and rural job markets for AI and non-AI careers. Urban regions not only provide significantly more job opportunities overall, but also show a slightly higher concentration of AI-related roles.
+In conclusion, traditional technology hubs still play an important role in AI-related hiring, but they no longer exclusively dominate the job market. While these hubs continue to attract a large number of opportunities, AI-related hiring is increasingly distributed across a wider range of metropolitan areas.
 
-Although rural areas also contain AI-related positions, the total number of such opportunities is much smaller. This highlights the continued importance of geographic location in accessing technology-driven careers.
-
-Overall, the results suggest that urban areas remain the primary hubs for AI- and data-related jobs, reinforcing the idea that advanced career opportunities are still concentrated in major metropolitan regions despite the growth of remote work.
+This suggests a shift toward a more geographically diverse AI labor market, where both established tech hubs and emerging cities contribute to employment opportunities. As a result, job seekers and policymakers should recognize that AI-related careers are no longer confined to a few major cities but are becoming accessible across a broader set of regions.
 
 ## References
