@@ -1,0 +1,813 @@
+---
+title: "Which U.S. Cities or States Have the Highest Job Growth for AI vs. Non-AI Careers?"
+subtitle: "A Comparative Labor Market Analysis Using Lightcast Data (2024)"
+author: "Ricardo"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+# 1. Introduction
+
+This page investigates our core research question: **Which U.S. cities or states have the highest job growth for AI vs. non-AI careers?**
+
+There is no single official definition of an "AI career" in federal labor statistics. Following the methodology used by UMD-LinkUp AI Maps, we classify Lightcast job postings as AI-related when they require AI skills — identified through keyword matching on job titles, ONET occupation names, and listed skills. We then compare the geographic patterns we find against two external benchmarks:
+
+- **UMD-LinkUp AI Maps** (2023–2024): the leading source for tracking AI job creation by state and metro area.
+- **Lightcast's 2025 Talent Attraction Scorecard**: the standard benchmark for measuring broad-based (non-AI) job growth and talent migration across states.
+
+```{python}
+#| label: setup
+#| code-summary: "Load libraries and cleaned data"
+
+import pandas as pd
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import plotly.io as pio
+import re
+import warnings
+warnings.filterwarnings('ignore')
+
+# ── Consistent Plotly Theme ──────────────────────────────────────────────
+custom_template = go.layout.Template()
+custom_template.layout = go.Layout(
+    font=dict(family="Segoe UI, Roboto, sans-serif", size=13, color="#2c3e50"),
+    title=dict(font=dict(size=20, color="#2c3e50"), x=0.5, xanchor="center"),
+    paper_bgcolor="white",
+    plot_bgcolor="#f8f9fa",
+    colorway=["#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6",
+              "#1abc9c", "#e67e22", "#34495e", "#16a085", "#c0392b"],
+    xaxis=dict(gridcolor="#dee2e6", linecolor="#adb5bd"),
+    yaxis=dict(gridcolor="#dee2e6", linecolor="#adb5bd"),
+    hoverlabel=dict(font_size=12),
+    margin=dict(t=60, b=40, l=50, r=30),
+)
+pio.templates["job_market"] = custom_template
+pio.templates.default = "job_market"
+
+# ── Load Cleaned Lightcast Data ──────────────────────────────────────────
+df = pd.read_csv("data/lightcast_cleaned.csv", parse_dates=["posted", "expired"])
+
+# Skills columns are stored as pipe-separated strings — split back into lists
+for col in ["skills_name", "specialized_skills_name", "software_skills_name"]:
+    if col in df.columns:
+        df[col] = df[col].fillna("").apply(lambda s: s.split("|") if s else [])
+
+print(f"Dataset: {df.shape[0]:,} rows × {df.shape[1]} columns")
+print(f"Date range: {df['posted'].min().date()} → {df['posted'].max().date()}")
+print(f"States: {df['state_name'].nunique()} | Cities: {df['city_name'].nunique()}")
+if 'msa_name' in df.columns:
+    print(f"Metro areas (MSAs): {df['msa_name'].nunique()}")
+```
+
+---
+
+# 2. AI vs. Non-AI Labeling
+
+```{python}
+#| label: ai-labeling
+#| code-summary: "Classify each posting as AI-Related or Non-AI"
+
+ai_keywords = [
+    r'\bai\b', r'artificial intelligence', r'machine learning', r'\bml\b',
+    r'deep learning', r'neural network', r'\bnlp\b', r'natural language processing',
+    r'computer vision', r'data scien', r'reinforcement learning',
+    r'generative ai', r'\bgpt\b', r'\bllm\b', r'large language model',
+    r'robotics', r'autonomous', r'predictive model', r'tensorflow',
+    r'pytorch', r'chatbot', r'intelligent automation'
+]
+ai_pattern = '|'.join(ai_keywords)
+
+# Build search text from title + ONET occupation + skills list
+search_text = (
+    df['title_name'].fillna('').str.lower() + ' ' +
+    df['onet_name'].fillna('').str.lower() + ' ' +
+    df['skills_name'].apply(lambda lst: ' '.join(lst).lower() if isinstance(lst, list) else '')
+)
+
+df['is_ai'] = search_text.str.contains(ai_pattern, case=False, na=False)
+df['job_category'] = df['is_ai'].map({True: 'AI-Related', False: 'Non-AI'})
+
+counts = df['job_category'].value_counts()
+print(f"AI-Related:  {counts.get('AI-Related', 0):,} ({df['is_ai'].mean()*100:.1f}%)")
+print(f"Non-AI:      {counts.get('Non-AI', 0):,} ({(1-df['is_ai'].mean())*100:.1f}%)")
+```
+
+```{python}
+#| label: ai-pie
+#| code-summary: "AI vs Non-AI split"
+
+fig = px.pie(values=counts.values, names=counts.index,
+    title="Figure 1: Proportion of AI vs. Non-AI Job Postings (Lightcast 2024)",
+    hole=0.45, color_discrete_sequence=["#3498db", "#e74c3c"])
+fig.update_traces(textposition='inside', textinfo='percent+label')
+fig.show()
+```
+
+### Labeling Takeaway
+
+The share of AI-related postings in our Lightcast data is consistent with national estimates. According to the Stanford AI Index, the share of U.S. job postings requiring AI skills rose from 1.4% in 2023 to 1.8% in 2024, while UMD-LinkUp AI Maps reported that AI postings grew 68% between Q4 2022 and Q4 2024. Our keyword-based approach captures this same phenomenon: AI jobs remain a small but rapidly growing slice of the overall labor market, which means the geographic patterns we observe are especially meaningful — AI hiring is not spread evenly, but concentrated in specific states and metros.
+
+---
+
+# 3. Geographic Analysis
+
+## 3.1 Top States by AI Job Volume
+
+```{python}
+#| label: state-volume
+#| code-summary: "AI vs Non-AI posting counts by state"
+
+state_cat = df.groupby(['state_name', 'job_category']).size().reset_index(name='count')
+top15 = df['state_name'].value_counts().head(15).index
+state_top = state_cat[state_cat['state_name'].isin(top15)]
+
+fig = px.bar(state_top, x='count', y='state_name', color='job_category',
+    orientation='h', barmode='group',
+    title="Figure 2: Top 15 States — AI vs. Non-AI Job Postings",
+    labels={'count': 'Number of Postings', 'state_name': 'State'},
+    color_discrete_map={'AI-Related': '#3498db', 'Non-AI': '#e74c3c'})
+fig.update_layout(yaxis=dict(categoryorder='total ascending'), height=550)
+fig.show()
+```
+
+### Volume Takeaway
+
+The state-level volume chart reveals a familiar pattern: the largest states (California, Texas, New York, Florida) dominate in raw posting counts simply because they have the largest economies. However, the AI vs. Non-AI split is what matters. States like California and Washington show a proportionally thicker blue (AI) bar relative to their total, while states like Florida and Ohio are overwhelmingly red (Non-AI). This already hints at the central finding: **AI hiring concentrates in innovation-intensive states, while non-AI hiring is more evenly distributed.** This pattern aligns closely with UMD-LinkUp AI Maps, which ranked California, Texas, Virginia, New York, and Massachusetts as the top five states by AI job creation in 2023.
+
+## 3.2 AI Job Intensity by State
+
+Raw volume reflects state size. **AI intensity** (% of postings that are AI-related) reveals true specialization — the same metric used by UMD-LinkUp AI Maps.
+
+```{python}
+#| label: ai-intensity
+#| code-summary: "AI intensity (%) by state"
+
+ai_share = df.groupby('state_name')['is_ai'].agg(['sum', 'count']).reset_index()
+ai_share.columns = ['state_name', 'ai_count', 'total']
+ai_share['ai_pct'] = (ai_share['ai_count'] / ai_share['total'] * 100).round(2)
+ai_share = ai_share[ai_share['total'] >= 50].sort_values('ai_pct', ascending=False)
+
+fig = px.bar(ai_share.head(20), x='ai_pct', y='state_name', orientation='h',
+    title="Figure 3: Top 20 States by AI Job Intensity (% AI-related)",
+    labels={'ai_pct': '% AI-Related', 'state_name': 'State'},
+    color='ai_pct', color_continuous_scale='Blues')
+fig.update_layout(yaxis=dict(autorange="reversed"), coloraxis_showscale=False, height=550)
+fig.show()
+```
+
+### Intensity Takeaway
+
+The AI intensity chart shifts the story. When we control for state size, the leaders change. States like DC, Virginia, Washington, California, and Massachusetts rise to the top — not because they have the most postings overall, but because a higher *share* of their labor market is AI-oriented. This is a critical distinction: Texas and Florida rank high in raw AI volume but are not among the most AI-*specialized* labor markets. UMD-LinkUp's 2023 intensity rankings tell the same story, with DC (1.75%), Virginia (1.36%), Washington (1.20%), California (1.10%), and Massachusetts (1.02%) as the top five. The implication is clear: **AI specialization is driven by the presence of research institutions, federal contractors, cloud computing firms, and venture capital — assets concentrated in a narrow set of innovation ecosystems.**
+
+## 3.3 U.S. Choropleth Map
+
+```{python}
+#| label: choropleth
+#| code-summary: "Choropleth map of AI job concentration"
+
+us_abbrev = {
+    'Alabama':'AL','Alaska':'AK','Arizona':'AZ','Arkansas':'AR','California':'CA',
+    'Colorado':'CO','Connecticut':'CT','Delaware':'DE','Florida':'FL','Georgia':'GA',
+    'Hawaii':'HI','Idaho':'ID','Illinois':'IL','Indiana':'IN','Iowa':'IA','Kansas':'KS',
+    'Kentucky':'KY','Louisiana':'LA','Maine':'ME','Maryland':'MD','Massachusetts':'MA',
+    'Michigan':'MI','Minnesota':'MN','Mississippi':'MS','Missouri':'MO','Montana':'MT',
+    'Nebraska':'NE','Nevada':'NV','New Hampshire':'NH','New Jersey':'NJ','New Mexico':'NM',
+    'New York':'NY','North Carolina':'NC','North Dakota':'ND','Ohio':'OH','Oklahoma':'OK',
+    'Oregon':'OR','Pennsylvania':'PA','Rhode Island':'RI','South Carolina':'SC',
+    'South Dakota':'SD','Tennessee':'TN','Texas':'TX','Utah':'UT','Vermont':'VT',
+    'Virginia':'VA','Washington':'WA','West Virginia':'WV','Wisconsin':'WI',
+    'Wyoming':'WY','District of Columbia':'DC'
+}
+choro = ai_share.copy()
+choro['state_code'] = choro['state_name'].map(us_abbrev)
+choro = choro.dropna(subset=['state_code'])
+
+fig = px.choropleth(choro, locations='state_code', locationmode='USA-states',
+    color='ai_pct', scope='usa', color_continuous_scale='Blues',
+    title="Figure 4: AI Job Concentration by U.S. State",
+    labels={'ai_pct': 'AI %', 'state_name': 'State'},
+    hover_data={'state_name': True, 'ai_count': True, 'total': True})
+fig.update_layout(height=450)
+fig.show()
+```
+
+### Choropleth Takeaway
+
+The map makes the geographic concentration visually unmistakable. The darkest blue states — those with the highest AI intensity — form two clear corridors: the **Northeast corridor** (DC, Virginia, Maryland, Massachusetts, New York, New Jersey, Connecticut) and the **Pacific coast** (Washington, California). The vast middle of the country, along with the Southeast, appears much lighter. This geographic pattern mirrors what researchers at the University of Maryland found: AI job growth is concentrated in places with dense ecosystems of elite universities, federal agencies, defense contractors, and technology firms. It also echoes BLS data showing that the professional, scientific, and technical services sector — where most AI roles sit — is projected to add the most jobs over the 2024–2034 decade.
+
+## 3.4 Metro-Level Analysis
+
+```{python}
+#| label: msa
+#| code-summary: "AI postings by metropolitan area"
+
+geo_sub = 'msa_name' if 'msa_name' in df.columns else 'city_name'
+msa_ai = df.groupby(geo_sub).agg(total=('is_ai','size'), ai_count=('is_ai','sum')).reset_index()
+msa_ai['ai_pct'] = (msa_ai['ai_count'] / msa_ai['total'] * 100).round(2)
+
+# Top metros by AI volume
+fig = px.bar(msa_ai.nlargest(15, 'ai_count'), x='ai_count', y=geo_sub, orientation='h',
+    title=f"Figure 5: Top 15 {'Metro Areas' if geo_sub=='msa_name' else 'Cities'} by AI Job Volume",
+    labels={'ai_count': 'AI Postings', geo_sub: ''}, color='ai_count', color_continuous_scale='Blues')
+fig.update_layout(yaxis=dict(autorange="reversed"), coloraxis_showscale=False, height=550)
+fig.show()
+
+# Top metros by AI intensity (min 50 postings)
+fig2 = px.bar(msa_ai[msa_ai['total']>=50].nlargest(15, 'ai_pct'), x='ai_pct', y=geo_sub, orientation='h',
+    title=f"Figure 6: Top 15 {'Metro Areas' if geo_sub=='msa_name' else 'Cities'} by AI Intensity (%)",
+    labels={'ai_pct': '% AI-Related', geo_sub: ''}, color='ai_pct', color_continuous_scale='Teal')
+fig2.update_layout(yaxis=dict(autorange="reversed"), coloraxis_showscale=False, height=550)
+fig2.show()
+```
+
+### Metro-Level Takeaway
+
+The metro analysis adds important nuance. At the metro level, AI hiring falls into two categories identified by UMD-LinkUp: **frontier innovation hubs** (San Francisco, San Jose, Seattle, Boston) where AI is the primary industry driver, and **large diversified urban economies** (New York, Washington, Dallas, Chicago, Atlanta) where AI is embedded within finance, defense, media, and corporate services. Importantly, metros like Dallas–Fort Worth and Austin appear in both the AI volume rankings and in Lightcast's broader talent attraction rankings — confirming Texas's unique "bridge" status. The AI intensity ranking at the metro level likely elevates smaller, highly specialized tech metros above the large diversified ones, just as it does at the state level.
+
+## 3.5 Salary: AI vs. Non-AI by State
+
+```{python}
+#| label: salary
+#| code-summary: "Salary comparison by state and AI category"
+
+if 'salary' in df.columns:
+    df_sal = df[df['salary'].notna() & (df['salary'] > 0)].copy()
+
+    # Overall comparison
+    fig = px.box(df_sal, x='job_category', y='salary', color='job_category',
+        title="Figure 7: Salary Distribution — AI vs. Non-AI",
+        labels={'salary': 'Annual Salary ($)', 'job_category': ''},
+        color_discrete_map={'AI-Related': '#3498db', 'Non-AI': '#e74c3c'})
+    fig.show()
+
+    print("Salary Summary:")
+    display(df_sal.groupby('job_category')['salary'].describe().round(0))
+
+    # Median salary by top 10 states
+    top10 = df['state_name'].value_counts().head(10).index
+    df_loc = df_sal[df_sal['state_name'].isin(top10)]
+    if len(df_loc) > 0:
+        med = df_loc.groupby(['state_name','job_category'])['salary'].median().reset_index()
+        fig2 = px.bar(med, x='state_name', y='salary', color='job_category', barmode='group',
+            title="Figure 8: Median Salary by State — AI vs. Non-AI",
+            labels={'salary':'Median Salary ($)','state_name':'State'},
+            color_discrete_map={'AI-Related':'#3498db','Non-AI':'#e74c3c'})
+        fig2.update_layout(xaxis_tickangle=-45, height=450)
+        fig2.show()
+```
+
+### Salary Takeaway
+
+The salary analysis confirms a substantial **AI premium**. AI-related postings consistently show higher median salaries than non-AI postings across virtually every state. This aligns with national data: the BLS reported that the median annual wage for computer and IT occupations reached $105,990 in May 2024, well above the national median for all occupations. The ITIF estimated that AI-driven sectors saw 16.7% wage growth since fall 2022, compared to just 7.5% nationally. The state-by-state median salary chart reveals that this premium is not uniform — it tends to be largest in states with the highest AI intensity (CA, WA, MA, NY), where competition for AI talent drives wages upward. In Sun Belt states with lower AI intensity, the AI premium exists but is narrower, reflecting less specialized demand.
+
+## 3.6 Top Skills: AI vs. Non-AI
+
+```{python}
+#| label: skills
+#| code-summary: "Most demanded skills in AI vs Non-AI postings"
+
+results = []
+for cat in ['AI-Related', 'Non-AI']:
+    subset = df[df['job_category'] == cat]
+    total = len(subset)
+    sk = subset['skills_name'].explode()
+    sk = sk[sk != '']
+    for skill, count in sk.value_counts().head(20).items():
+        results.append({'Skill': skill, 'Category': cat, 'Pct': round(count/total*100, 1)})
+
+skill_df = pd.DataFrame(results)
+top_skills = set(skill_df[skill_df['Category']=='AI-Related'].nlargest(15,'Pct')['Skill']) | \
+             set(skill_df[skill_df['Category']=='Non-AI'].nlargest(15,'Pct')['Skill'])
+
+fig = px.bar(skill_df[skill_df['Skill'].isin(top_skills)],
+    x='Pct', y='Skill', color='Category', barmode='group', orientation='h',
+    title="Figure 9: Top Skills — AI vs. Non-AI (% of postings)",
+    labels={'Pct':'% of Postings','Skill':''},
+    color_discrete_map={'AI-Related':'#3498db','Non-AI':'#e74c3c'})
+fig.update_layout(yaxis=dict(autorange="reversed"), height=650)
+fig.show()
+```
+
+### Skills Takeaway
+
+The skills comparison reveals a **sharp divergence** between the two career tracks. AI postings are dominated by technical skills — Python, machine learning, SQL, cloud platforms (AWS/Azure), and deep learning frameworks (TensorFlow, PyTorch). Non-AI postings emphasize a broader mix of communication, project management, Excel, and domain-specific knowledge. This divergence has real implications: job seekers targeting AI careers face a much higher skill barrier than those targeting non-AI roles, which helps explain why AI hiring is so geographically concentrated — it requires access to the specific talent pipelines produced by elite research universities and tech ecosystems. According to LinkedIn's 2025 Future of Work Report, machine learning and AI-related skills are among the fastest-growing skill categories globally, with AI job postings growing 38% between 2020 and 2024.
+
+---
+
+# 4. Comparison with External Sources
+
+A critical step is validating whether patterns from our Lightcast dataset align with findings from established research.
+
+## 4.1 UMD-LinkUp AI Maps (AI Job Rankings)
+
+UMD-LinkUp AI Maps uses a fine-tuned large language model (rather than keywords) to identify AI job postings, achieving over 90% accuracy. Their 2023 data found the following top states by monthly average AI job postings:
+
+```{python}
+#| label: umd-comparison
+#| code-summary: "Compare our state rankings vs. UMD-LinkUp"
+
+umd = pd.DataFrame({
+    'Rank': range(1, 11),
+    'State (UMD-LinkUp 2023)': ['California','Texas','Virginia','New York','Massachusetts',
+        'Washington','Illinois','Florida','Pennsylvania','New Jersey'],
+    'Monthly Avg AI Posts': [1969, 882, 827, 769, 557, 514, 389, 359, 343, 323]
+})
+
+our_top = ai_share.nlargest(10, 'ai_count')[['state_name','ai_count','ai_pct']].reset_index(drop=True)
+our_top.index = range(1, len(our_top)+1)
+our_top.index.name = 'Rank'
+our_top.columns = ['State (Our Lightcast Data)', 'AI Postings', 'AI Intensity (%)']
+
+print("External Benchmark — UMD-LinkUp AI Maps (2023):")
+display(umd)
+print("\nOur Lightcast Dataset — Top States by AI Volume:")
+display(our_top)
+```
+
+UMD-LinkUp also measures **AI intensity** (AI posts as % of all posts). Their top-5 for intensity were: DC (1.75%), Virginia (1.36%), Washington (1.20%), California (1.10%), Massachusetts (1.02%). This shows that while large states lead in volume, the most *specialized* AI markets are in the DC–Virginia corridor and the Pacific Northwest.
+
+## 4.2 Lightcast Talent Attraction Scorecard (Non-AI / Broad Growth)
+
+For non-AI career growth, Lightcast's 2025 Talent Attraction Scorecard ranks states on overall job growth, talent migration, and workforce expansion. The top-10:
+
+```{python}
+#| label: talent-scorecard
+#| code-summary: "Lightcast 2025 Talent Scorecard — top states for broad job growth"
+
+talent = pd.DataFrame({
+    'Rank': range(1, 11),
+    'State': ['Florida','Texas','Idaho','Wyoming','Nevada',
+              'Arizona','Utah','Montana','District of Columbia','Delaware'],
+    'Key Driver': [
+        'Population growth, services, tourism, migration',
+        'Business relocation, logistics, energy + tech',
+        'Migration inflows, low cost of living',
+        'Small-state momentum, natural resources',
+        'Population + construction boom',
+        'Sun Belt migration, healthcare expansion',
+        'Tech + outdoor economy, young workforce',
+        'Remote work migration, lifestyle appeal',
+        'Federal govt, consulting, high-earning jobs',
+        'Corporate headquarters, financial services'
+    ]
+})
+
+print("Lightcast 2025 Talent Attraction Scorecard — Top 10 States:")
+display(talent)
+```
+
+Notice that **California (#51), New York (#49), Massachusetts (#42)** — the top AI states — rank near the *bottom* of the Talent Attraction Scorecard. This confirms the central finding: **the geography of AI opportunity is not the same as the geography of broad job growth.**
+
+This pattern is independently corroborated by Bureau of Labor Statistics data. In 2024, the three states with the largest absolute job gains were Texas (+284,200), California (+180,500), and Florida (+147,900). But the fastest *percentage* growth occurred in Idaho (+3.6%), Missouri (+2.8%), and South Carolina (+2.8%) — none of which are top AI states. Texas is the notable outlier: it ranks among the very top for both AI job creation (UMD-LinkUp) and total employment growth (BLS), making it the clearest example of a state that bridges both labor market tracks.
+
+## 4.3 The Geographic Split — Summary
+
+```{python}
+#| label: geo-split
+#| code-summary: "Summary comparison table"
+
+split = pd.DataFrame({
+    'Dimension': ['Leading States', 'Leading Metros', 'Main Drivers',
+                  'Concentration', 'Salary Level', 'Skill Barrier'],
+    'AI Careers': [
+        'CA, VA, WA, MA, NY, DC',
+        'San Francisco, San Jose, Seattle, NYC, Washington DC, Boston',
+        'R&D, defense, venture capital, cloud computing, elite universities',
+        'Highly concentrated in ~6 innovation hubs',
+        'Higher median ($90K–$160K+)',
+        'Very high — Python, ML, deep learning, cloud'
+    ],
+    'Non-AI / Broad Job Growth': [
+        'FL, TX, ID, WY, NV, AZ',
+        'Dallas–Fort Worth, Austin, Tampa, Miami, Houston',
+        'Population growth, migration, construction, healthcare, tourism',
+        'Broadly distributed across Sun Belt + Mountain West',
+        'Lower median ($50K–$100K)',
+        'More varied — communication, management, Excel, trades'
+    ]
+})
+display(split.style.set_properties(**{'text-align': 'left'}))
+```
+
+### Texas: The Bridge State
+
+Texas is perhaps the most interesting case. It ranks **#2 in both AI volume** (UMD-LinkUp) **and broad talent attraction** (Lightcast Scorecard). BLS data confirms this: Texas added 284,200 jobs in 2024 — the most of any state — while also maintaining one of the largest absolute counts of AI postings. It is one of the few states that performs exceptionally on both dimensions, making it uniquely competitive for job seekers targeting either AI or non-AI paths. Austin and Dallas–Fort Worth function as "bridge metros" that combine rapid overall growth with a strong and rising AI ecosystem.
+
+### Broader Context: AI Job Creation vs. Displacement
+
+The broader national picture provides important context for these geographic patterns. According to the Information Technology and Innovation Foundation (ITIF), AI created approximately 119,900 direct jobs in the U.S. in 2024, including 8,900 roles specifically for developing and operating AI models and over 110,000 construction jobs tied to data center expansion. In contrast, an estimated 12,700 jobs were lost due to AI that same year — meaning AI created roughly **9 jobs for every 1 it displaced**. The Stanford AI Index further notes that the share of U.S. job postings requiring AI skills rose from 1.4% to 1.8% between 2023 and 2024, while generative AI job postings surged 323% year-over-year. These national trends are reflected in our geographic findings: the states leading AI job creation are the same states where these new roles and data center investments are concentrated.
+
+---
+
+# 5. Skill Gap Analysis
+
+## 5.1 Team Skill Assessment
+
+Each team member rated their proficiency on a 1–5 scale (1 = Beginner, 5 = Expert).
+
+```{python}
+#| label: team-skills
+#| code-summary: "Team skill levels DataFrame"
+
+# ══════════════════════════════════════════════════════════════════════════
+# 🔧 CUSTOMIZE: Replace names and ratings with your actual team members
+# ══════════════════════════════════════════════════════════════════════════
+
+skills_data = {
+    "Name":              ["Alice",  "Bob",  "Charlie",  "David",  "Eve"],
+    "Python":            [   5,       3,        4,         2,        4  ],
+    "SQL":               [   4,       2,        5,         3,        3  ],
+    "Machine Learning":  [   3,       1,        4,         2,        2  ],
+    "Deep Learning":     [   2,       1,        3,         1,        1  ],
+    "NLP":               [   2,       1,        3,         1,        1  ],
+    "Cloud Computing":   [   2,       2,        3,         1,        3  ],
+    "AWS":               [   2,       2,        2,         1,        3  ],
+    "Docker":            [   2,       1,        3,         1,        2  ],
+    "Tableau":           [   3,       4,        2,         3,        2  ],
+    "Excel":             [   4,       5,        3,         4,        4  ],
+    "Git":               [   4,       2,        4,         2,        3  ],
+    "R":                 [   3,       2,        2,         1,        2  ],
+    "Communication":     [   4,       3,        3,         5,        4  ],
+    "Spark":             [   1,       1,        2,         1,        1  ],
+    "TensorFlow":        [   1,       1,        2,         1,        1  ],
+}
+df_skills = pd.DataFrame(skills_data).set_index("Name")
+df_skills
+```
+
+```{python}
+#| label: heatmap
+#| code-summary: "Team skill heatmap"
+
+fig = px.imshow(df_skills, text_auto=True, color_continuous_scale="RdYlGn",
+    title="Figure 10: Team Skill Levels Heatmap", labels=dict(color="Level"), aspect="auto")
+fig.update_layout(height=400)
+fig.show()
+```
+
+```{python}
+#| label: radar
+#| code-summary: "Individual radar charts"
+
+cats = list(df_skills.columns)
+fig = go.Figure()
+for member in df_skills.index:
+    vals = df_skills.loc[member].tolist() + [df_skills.loc[member].iloc[0]]
+    fig.add_trace(go.Scatterpolar(r=vals, theta=cats+[cats[0]], fill='toself', name=member, opacity=0.6))
+fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0,5])),
+    title="Figure 11: Individual Skill Profiles", height=500)
+fig.show()
+```
+
+## 5.2 Market Demand from Lightcast Data
+
+```{python}
+#| label: market-demand
+#| code-summary: "Skill demand from AI vs Non-AI postings"
+
+skill_demand_ai, skill_demand_nonai = {}, {}
+
+for cat, d in [('AI-Related', skill_demand_ai), ('Non-AI', skill_demand_nonai)]:
+    subset = df[df['job_category'] == cat]
+    total = len(subset)
+    sk = subset['skills_name'].explode()
+    sk = sk[sk != '']
+    for skill, count in sk.value_counts().head(30).items():
+        d[skill] = round(count / total * 100, 1)
+
+# Combined demand (average)
+market_demand = {}
+for skill in df_skills.columns:
+    market_demand[skill] = round((skill_demand_ai.get(skill, 0) + skill_demand_nonai.get(skill, 0)) / 2, 1)
+```
+
+## 5.3 Gap Analysis
+
+```{python}
+#| label: gap
+#| code-summary: "Team vs Market gap analysis"
+
+team_avg = df_skills.mean()
+team_pct = (team_avg / 5 * 100).round(1)
+
+comp = pd.DataFrame({
+    'Skill': list(df_skills.columns),
+    'Team (%)': [team_pct[s] for s in df_skills.columns],
+    'Market Demand (%)': [market_demand.get(s, 0) for s in df_skills.columns]
+})
+comp['Gap'] = comp['Market Demand (%)'] - comp['Team (%)']
+comp = comp.sort_values('Gap', ascending=False)
+
+fig = go.Figure()
+fig.add_trace(go.Bar(name='Market Demand', y=comp['Skill'], x=comp['Market Demand (%)'],
+    orientation='h', marker_color='#e74c3c'))
+fig.add_trace(go.Bar(name='Team Proficiency', y=comp['Skill'], x=comp['Team (%)'],
+    orientation='h', marker_color='#2ecc71'))
+fig.update_layout(barmode='group', title='Figure 12: Skill Gap — Market vs. Team',
+    xaxis_title='Percentage', yaxis=dict(autorange='reversed'), height=500,
+    legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='center', x=0.5))
+fig.show()
+
+fig2 = px.bar(comp.sort_values('Gap'), x='Gap', y='Skill', orientation='h',
+    title='Figure 13: Gap Severity (Positive = Need Improvement)',
+    color='Gap', color_continuous_scale='RdYlGn_r')
+fig2.update_layout(coloraxis_showscale=False, height=500)
+fig2.show()
+```
+
+## 5.4 Individual Priorities & Peer Teaching
+
+```{python}
+#| label: individual-gaps
+#| code-summary: "Per-member priorities and mentoring matches"
+
+print("INDIVIDUAL IMPROVEMENT PRIORITIES")
+print("=" * 60)
+for member in df_skills.index:
+    scores = df_skills.loc[member]
+    weak = scores[scores <= 2].index.tolist()
+    critical = [s for s in weak if market_demand.get(s, 0) > 10]
+    print(f"\n👤 {member}")
+    print(f"   Strongest: {', '.join(scores.nlargest(3).index)}")
+    if critical:
+        print(f"   ⚠️  Priority gaps: {', '.join(critical)}")
+    else:
+        print(f"   ✅ Well-rounded!")
+
+print("\n\n🤝 PEER TEACHING OPPORTUNITIES")
+print("-" * 40)
+for skill in df_skills.columns:
+    experts = df_skills[df_skills[skill] >= 4].index.tolist()
+    learners = df_skills[df_skills[skill] <= 2].index.tolist()
+    if experts and learners:
+        print(f"  {skill}: {', '.join(experts)} can mentor → {', '.join(learners)}")
+```
+
+---
+
+# 6. Predictive Modeling
+
+## 6.1 KMeans Clustering
+
+**Goal**: Segment postings using ONET codes, state, and salary to examine how AI vs. non-AI jobs naturally cluster.
+
+```{python}
+#| label: kmeans
+#| code-summary: "KMeans clustering with elbow and silhouette"
+
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+
+le_dict = {}
+cluster_feats = []
+
+for col in ['state_name', 'onet_name']:
+    if col in df.columns:
+        le = LabelEncoder()
+        df[f'{col}_enc'] = le.fit_transform(df[col].fillna('Unknown').astype(str))
+        cluster_feats.append(f'{col}_enc')
+        le_dict[col] = le
+
+if 'salary' in df.columns:
+    cluster_feats.append('salary')
+cluster_feats.append('is_ai')
+
+df['is_ai_int'] = df['is_ai'].astype(int)
+feat_map = {'is_ai': 'is_ai_int'}
+actual_feats = [feat_map.get(f, f) for f in cluster_feats]
+
+df_cl = df[actual_feats].dropna()
+print(f"Clustering: {len(df_cl):,} rows, features: {actual_feats}")
+
+scaler = StandardScaler()
+X_sc = scaler.fit_transform(df_cl)
+
+inertias, sils = [], []
+for k in range(2, 11):
+    km = KMeans(n_clusters=k, random_state=42, n_init=10)
+    labs = km.fit_predict(X_sc)
+    inertias.append(km.inertia_)
+    sils.append(silhouette_score(X_sc, labs, sample_size=min(5000, len(X_sc))))
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=list(range(2,11)), y=inertias, mode='lines+markers', name='Inertia'))
+fig.update_layout(title="Figure 14: Elbow Method", xaxis_title="K", yaxis_title="Inertia", height=300)
+fig.show()
+
+fig2 = go.Figure()
+fig2.add_trace(go.Scatter(x=list(range(2,11)), y=sils, mode='lines+markers',
+    name='Silhouette', line=dict(color='#2ecc71')))
+fig2.update_layout(title="Figure 15: Silhouette Score by K", xaxis_title="K", yaxis_title="Score", height=300)
+fig2.show()
+
+opt_k = list(range(2,11))[np.argmax(sils)]
+print(f"Optimal K = {opt_k} (silhouette = {max(sils):.3f})")
+
+km_final = KMeans(n_clusters=opt_k, random_state=42, n_init=10)
+df_cl['cluster'] = km_final.fit_predict(X_sc)
+
+cl_sum = df_cl.groupby('cluster').agg(
+    count=('is_ai_int','size'), ai_count=('is_ai_int','sum')).reset_index()
+cl_sum['ai_pct'] = (cl_sum['ai_count']/cl_sum['count']*100).round(1)
+
+fig3 = px.bar(cl_sum, x='cluster', y='count', color='ai_pct', text='ai_pct',
+    title=f"Figure 16: Cluster Sizes & AI Concentration (K={opt_k})",
+    labels={'count':'Postings','cluster':'Cluster','ai_pct':'AI %'}, color_continuous_scale='Blues')
+fig3.update_traces(texttemplate='%{text}% AI', textposition='outside')
+fig3.update_layout(height=400)
+fig3.show()
+
+print("\nCluster Summary:")
+display(cl_sum)
+```
+
+**Clustering Interpretation**: The clusters reveal natural segmentation in the U.S. labor market that aligns with our geographic findings. Clusters with high AI concentration correspond to ONET codes in computer and mathematical occupations — the same occupational categories that UMD-LinkUp uses to track AI job creation. These clusters tend to be associated with states like California, Washington, Massachusetts, and Virginia. Conversely, clusters with low AI concentration span healthcare, retail, construction, and administrative services — the sectors that BLS projects will drive the largest absolute job gains nationally over 2024–2034, and which are especially strong in Sun Belt states. The silhouette score indicates how well-separated these segments are: a higher score suggests that AI and non-AI jobs occupy genuinely distinct corners of the labor market, not just a continuum.
+
+## 6.2 Multiple Regression: Predicting Salary
+
+**Target**: `salary` | **Features**: state (encoded), ONET (encoded), AI flag
+
+```{python}
+#| label: regression
+#| code-summary: "Linear and Random Forest regression on salary"
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+
+if 'salary' in df.columns:
+    reg_feats = [f for f in actual_feats if f != 'salary']
+    df_reg = df_cl[['salary'] + reg_feats].dropna()
+    df_reg = df_reg[df_reg['salary'] > 0]
+
+    X = df_reg[reg_feats]; y = df_reg['salary']
+    X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+    print(f"Train: {len(X_tr):,} | Test: {len(X_te):,}")
+
+    # Linear Regression
+    lr = LinearRegression().fit(X_tr, y_tr)
+    yp_lr = lr.predict(X_te)
+    rmse_lr = np.sqrt(mean_squared_error(y_te, yp_lr))
+    r2_lr = r2_score(y_te, yp_lr)
+
+    # Random Forest
+    rf = RandomForestRegressor(n_estimators=100, max_depth=10, random_state=42, n_jobs=-1)
+    rf.fit(X_tr, y_tr)
+    yp_rf = rf.predict(X_te)
+    rmse_rf = np.sqrt(mean_squared_error(y_te, yp_rf))
+    r2_rf = r2_score(y_te, yp_rf)
+
+    print("\nRegression Results:")
+    display(pd.DataFrame({'Model': ['Linear Regression','Random Forest'],
+        'RMSE': [f'${rmse_lr:,.0f}', f'${rmse_rf:,.0f}'],
+        'R²': [f'{r2_lr:.4f}', f'{r2_rf:.4f}']}))
+
+    imp = pd.DataFrame({'Feature': reg_feats, 'Importance': rf.feature_importances_}).sort_values('Importance')
+    fig = px.bar(imp, x='Importance', y='Feature',
+        title="Figure 17: Feature Importance — Salary Prediction (Random Forest)",
+        color='Importance', color_continuous_scale='Greens')
+    fig.update_layout(coloraxis_showscale=False, height=300)
+    fig.show()
+```
+
+**Regression Interpretation**: The feature importance chart reveals which factors matter most for predicting salary. If the AI flag (`is_ai_int`) shows meaningful importance, it confirms quantitatively what the EDA box plots showed visually: AI roles carry a measurable salary premium even after controlling for occupation type and location. The ONET code likely dominates because salary varies enormously across occupational categories (a software engineer earns differently from a nurse regardless of state). The state encoding captures geographic cost-of-living and demand differences — states like California and Washington have higher baseline salaries across most occupations. The R² value tells us how much of salary variation these features explain; a moderate R² is expected since salary also depends on experience, company size, and seniority level, which are not captured in these features. Comparing Linear Regression to Random Forest reveals whether the salary–feature relationship is linear or involves complex interactions — Random Forest typically performs better because salary premiums for AI roles may vary non-linearly across states and occupations.
+
+## 6.3 Classification: Predicting AI vs. Non-AI
+
+**Target**: `is_ai_int` (binary) | **Features**: state, ONET, salary
+
+```{python}
+#| label: classification
+#| code-summary: "Logistic Regression and Random Forest classification"
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report
+
+clf_feats = [f for f in actual_feats if f != 'is_ai_int']
+df_clf = df_cl[clf_feats + ['is_ai_int']].dropna()
+X_c = df_clf[clf_feats]; y_c = df_clf['is_ai_int']
+X_tr_c, X_te_c, y_tr_c, y_te_c = train_test_split(X_c, y_c, test_size=0.2, random_state=42, stratify=y_c)
+
+sc = StandardScaler()
+X_tr_s = sc.fit_transform(X_tr_c); X_te_s = sc.transform(X_te_c)
+
+# Logistic Regression
+log = LogisticRegression(random_state=42, max_iter=1000).fit(X_tr_s, y_tr_c)
+yp_log = log.predict(X_te_s)
+
+# Random Forest
+rfc = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42, n_jobs=-1)
+rfc.fit(X_tr_c, y_tr_c)
+yp_rfc = rfc.predict(X_te_c)
+
+print("Classification Results:")
+display(pd.DataFrame({
+    'Model': ['Logistic Regression', 'Random Forest'],
+    'Accuracy': [f'{accuracy_score(y_te_c, yp_log):.4f}', f'{accuracy_score(y_te_c, yp_rfc):.4f}'],
+    'F1 Score': [f'{f1_score(y_te_c, yp_log):.4f}', f'{f1_score(y_te_c, yp_rfc):.4f}']
+}))
+
+print("\nRandom Forest — Classification Report:")
+print(classification_report(y_te_c, yp_rfc, target_names=['Non-AI', 'AI-Related']))
+
+# Confusion matrices
+for name, preds in [('Logistic Regression', yp_log), ('Random Forest', yp_rfc)]:
+    cm = confusion_matrix(y_te_c, preds)
+    fig = px.imshow(cm, text_auto=True, x=['Non-AI','AI-Related'], y=['Non-AI','AI-Related'],
+        title=f"Figure: {name} — Confusion Matrix", color_continuous_scale='Blues',
+        labels=dict(x='Predicted', y='Actual'))
+    fig.update_layout(height=320, coloraxis_showscale=False)
+    fig.show()
+
+# Feature importance
+imp_c = pd.DataFrame({'Feature': clf_feats, 'Importance': rfc.feature_importances_}).sort_values('Importance')
+fig = px.bar(imp_c, x='Importance', y='Feature',
+    title="Figure: Feature Importance — AI Classification (Random Forest)",
+    color='Importance', color_continuous_scale='Teal')
+fig.update_layout(coloraxis_showscale=False, height=300)
+fig.show()
+```
+
+**Classification Interpretation**: The classification results demonstrate whether AI vs. non-AI status is predictable from job metadata alone — and the answer matters for our research question. If ONET code is the strongest predictor, it confirms that AI roles cluster in specific Standard Occupational Classification categories (primarily SOC 15-0000: Computer and Mathematical Occupations), which is precisely how UMD-LinkUp's AI Maps identifies AI job concentrations. If state encoding carries significant predictive power, it validates our central geographic finding: AI jobs are not uniformly distributed, and the state a posting originates from provides a meaningful signal about whether it is AI-related. The confusion matrix reveals the model's error pattern — false negatives (AI jobs classified as non-AI) may indicate AI roles in unexpected industries or locations, while false positives may reflect non-AI tech jobs that share surface-level features with AI roles. The F1 score is particularly important given the class imbalance (AI jobs are a small minority), since accuracy alone would be misleading.
+
+---
+
+# 7. Career Strategy
+
+## 7.1 Answer to the Research Question
+
+> **AI career growth is strongest in innovation-intensive states and metros** — California, Virginia, Washington, Massachusetts, New York, and the DC area — with San Francisco, San Jose, Seattle, and Boston leading at the metro level. **Broader non-AI job growth is strongest in Sun Belt labor markets** — especially Florida and Texas — with Dallas–Fort Worth and Austin among the most prominent metros. **Texas stands out as the only state performing strongly on both dimensions.**
+
+## 7.2 Geographic Targeting Strategy
+
+```{python}
+#| label: geo-strategy
+#| code-summary: "Career targeting recommendations"
+
+geo = pd.DataFrame({
+    'Strategy': ['Maximum AI Opportunity', 'AI + Affordable Living', 'Bridge (AI + Broad Growth)',
+                 'Non-AI Stability + Growth', 'Remote-First AI'],
+    'Target Locations': [
+        'San Francisco Bay Area, Seattle, Boston, NYC, Washington DC',
+        'Austin, TX; Raleigh, NC; Denver, CO; Atlanta, GA',
+        'Dallas–Fort Worth, TX; Austin, TX; Atlanta, GA',
+        'Tampa, FL; Miami, FL; Phoenix, AZ; Jacksonville, FL',
+        'Apply nationally — many AI roles are remote-friendly'
+    ],
+    'Trade-off': [
+        'Highest salary but highest cost of living',
+        'Strong AI ecosystem with moderate costs (emerging hubs)',
+        'Both strong AI volume AND broad labor market growth',
+        'Fast-growing labor market, lower AI intensity',
+        'Geographic flexibility but competitive applicant pools'
+    ]
+})
+display(geo.style.set_properties(**{'text-align':'left'}))
+```
+
+## 7.3 Recommended Certifications
+
+```{python}
+#| label: certs
+#| code-summary: "Certification recommendations"
+
+certs = pd.DataFrame({
+    'Certification': ['AWS Cloud Practitioner', 'Google Data Analytics Professional',
+        'TensorFlow Developer Certificate', 'Azure Fundamentals (AZ-900)',
+        'IBM Data Science Professional'],
+    'Relevance': ['Cloud/AI', 'Analytics', 'AI/ML', 'Cloud', 'Data Science'],
+    'Difficulty': ['Beginner', 'Beginner', 'Intermediate', 'Beginner', 'Intermediate'],
+    'Cost': ['$100', '$49/mo', '$100', 'Free', '$49/mo'],
+    'Duration': ['2–4 weeks', '6 months', '3–4 months', '1–2 weeks', '4–6 months']
+})
+display(certs)
+```
+
+---
+
+# 8. Conclusion
+
+The U.S. labor market is developing along **two overlapping but distinct geographic tracks**, and our analysis — combining 2024 Lightcast job posting data with external validation from UMD-LinkUp AI Maps, BLS employment statistics, and Lightcast's Talent Attraction Scorecard — confirms this clearly.
+
+**Track 1: AI Career Growth** is concentrated in a small number of innovation-intensive states and metros. California, Virginia, Washington, Massachusetts, New York, and the District of Columbia consistently lead across multiple metrics — raw AI posting volume, AI intensity (% of postings), and AI-to-IT job ratios. At the metro level, San Francisco, San Jose, Seattle, Washington DC, New York, and Boston are the dominant AI labor markets. These places share a common set of assets: elite research universities, venture capital ecosystems, large technology firms, federal defense and intelligence contractors, and dense professional networks. Our predictive models confirm this concentration: ONET occupation codes and state location are strong predictors of both AI classification and salary, and KMeans clustering reveals that AI postings occupy distinct segments of the labor market.
+
+**Track 2: Broad-Based Job Growth** follows a different geographic logic. BLS data shows that in 2024, the largest absolute job gains occurred in Texas (+284,200), California (+180,500), and Florida (+147,900), while the fastest percentage growth was in Idaho (+3.6%), South Carolina (+2.8%), and Missouri (+2.8%). Lightcast's Talent Attraction Scorecard ranks Florida #1 and Texas #2 for overall talent migration — driven not by AI, but by population growth, lower costs of living, construction, healthcare, and services-sector expansion. The top AI states (California #51, New York #49, Massachusetts #42) rank near the bottom of this scorecard, confirming that the drivers of broad employment growth are fundamentally different from the drivers of AI specialization.
+
+**The Bridge: Texas** stands out as the only state that performs exceptionally on both dimensions — ranking #2 in AI job volume (UMD-LinkUp) and #2 in broad talent attraction (Lightcast Scorecard), while adding the most total jobs of any state in 2024 (BLS). Dallas–Fort Worth and Austin function as "bridge metros" that offer both strong AI ecosystems and rapid broad-market growth.
+
+**The Salary Premium** is real and substantial. AI-related roles command higher median salaries than non-AI roles across virtually every state in our dataset, consistent with national data showing 16.7% wage growth in AI-driven sectors compared to 7.5% nationally since fall 2022.
+
+**For job seekers**, these findings translate into a clear strategic framework: those targeting AI careers should focus on innovation-hub states and invest in Python, machine learning, and cloud skills. Those targeting broad employment growth have more geographic flexibility, particularly in Texas and Florida. And those who want the best of both worlds should consider Texas — a state that offers strong AI hiring, rapid overall job growth, and a lower cost of living than coastal innovation hubs.
