@@ -78,7 +78,9 @@ print(f"Dataset: {df.shape[0]:,} rows × {df.shape[1]} columns")
 if 'posted' in df.columns:
     print(f"Date range: {df['posted'].min().date()} → {df['posted'].max().date()}")
 
-print(f"States: {df['state_name'].nunique()} | Cities: {df['city_name'].nunique()}")
+if 'state_name' in df.columns and 'city_name' in df.columns:
+    print(f"States: {df['state_name'].nunique()} | Cities: {df['city_name'].nunique()}")
+
 if 'msa_name' in df.columns:
     print(f"Metro areas (MSAs): {df['msa_name'].nunique()}")
 ```
