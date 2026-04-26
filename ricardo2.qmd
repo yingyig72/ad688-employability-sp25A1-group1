@@ -116,7 +116,7 @@ if 'skills_name' in df.columns:
     search_text += df['skills_name'].apply(
         lambda lst: ' '.join(lst).lower() if isinstance(lst, list) else ''
     )
-    
+
 df['is_ai'] = search_text.str.contains(ai_pattern, case=False, na=False)
 df['job_category'] = df['is_ai'].map({True: 'AI-Related', False: 'Non-AI'})
 
@@ -146,9 +146,24 @@ fig.show()
 #| label: state-volume
 #| code-summary: "AI vs Non-AI posting counts by state"
 
-state_cat = df.groupby(['state_name', 'job_category']).size().reset_index(name='count')
-top15 = df['state_name'].value_counts().head(15).index
-state_top = state_cat[state_cat['state_name'].isin(top15)]
+if 'state_name' in df.columns:
+
+    state_cat = df.groupby(['state_name', 'job_category']).size().reset_index(name='count')
+    top15 = df['state_name'].value_counts().head(15).index
+    state_top = state_cat[state_cat['state_name'].isin(top15)]
+
+    fig = px.bar(
+        state_top, x='count', y='state_name', color='job_category',
+        orientation='h', barmode='group',
+        title="Figure 2: Top 15 States — AI vs. Non-AI Job Postings",
+        labels={'count': 'Number of Postings', 'state_name': 'State'},
+        color_discrete_map={'AI-Related': '#3498db', 'Non-AI': '#e74c3c'}
+    )
+    fig.update_layout(yaxis=dict(categoryorder='total ascending'), height=550)
+    fig.show()
+
+else:
+    print("state_name column not found in dataset — skipping state analysis.")
 
 fig = px.bar(state_top, x='count', y='state_name', color='job_category',
     orientation='h', barmode='group',
