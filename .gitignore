@@ -34,3 +34,9 @@ data/lightcast_job_postings.csv
 
 lightcast_job_postings.csv
 venv/quarto-*.deb
+
+# Auto-downloaded data files (regenerated from Google Drive on render)
+files-2/job_market_data.csv
+files-2/lightcast_cleaned.csv
+data/lightcast_job_postings.csv
+EOF
