@@ -25,13 +25,9 @@ We load the cleaned Lightcast dataset produced by our shared [Data Cleaning](dat
 
 ```{python}
 import pandas as pd
-import os
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import numpy as np
-
-os.makedirs('visualizations', exist_ok=True)
+import plotly.express as px
+import plotly.graph_objects as go
 
 df = pd.read_csv("data/lightcast_cleaned.csv", parse_dates=["posted", "expired"])
 
@@ -82,28 +78,25 @@ for r, (ind, count) in enumerate(industry_ds.items(), 1):
 ```
 
 ```{python}
-# Plot top 15 industries
-top15 = industry_ds.head(15)
+# Interactive bar chart: top 15 industries
+top15 = industry_ds.head(15).reset_index()
+top15.columns = ['Industry', 'Count']
+top15['Pct'] = (top15['Count'] / len(df_ds) * 100).round(1)
 
-fig, ax = plt.subplots(figsize=(14, 8))
-bars = ax.barh(range(len(top15)), top15.values,
-               color=plt.cm.viridis(np.linspace(0.3, 0.9, len(top15))))
-ax.set_yticks(range(len(top15)))
-ax.set_yticklabels(top15.index, fontsize=10)
-ax.invert_yaxis()
-ax.set_xlabel('Number of Job Postings', fontsize=11)
-ax.set_title('Top 15 Industries Hiring Data Scientists', fontweight='bold', fontsize=13)
-ax.grid(axis='x', alpha=0.3)
-
-for i, (count) in enumerate(top15.values):
-    ax.text(count + max(top15.values)*0.01, i, f'{count:,}', va='center', fontsize=9)
-
-plt.tight_layout()
-plt.savefig('visualizations/ds_top_industries.png', dpi=150, bbox_inches='tight')
-plt.close()
+fig = px.bar(
+    top15, x='Count', y='Industry', orientation='h',
+    color='Count', color_continuous_scale='Viridis',
+    title='Top 15 Industries Hiring Data Scientists',
+    hover_data={'Pct': ':.1f', 'Count': ':,'},
+    labels={'Count': 'Number of Job Postings', 'Pct': '% of DS Postings'}
+)
+fig.update_layout(
+    yaxis=dict(autorange='reversed'),
+    height=600, coloraxis_showscale=False,
+    margin=dict(l=240, r=40, t=60, b=40)
+)
+fig.show()
 ```
-
-![Top Industries Hiring Data Scientists](visualizations/ds_top_industries.png)
 
 ## Data Science Concentration by Industry
 
@@ -131,25 +124,31 @@ for ind, row in concentration.iterrows():
 ```
 
 ```{python}
-fig, ax = plt.subplots(figsize=(14, 8))
-bars = ax.barh(range(len(concentration)), concentration['ds_pct'].values,
-               color=plt.cm.plasma(np.linspace(0.3, 0.9, len(concentration))))
-ax.set_yticks(range(len(concentration)))
-ax.set_yticklabels(concentration.index, fontsize=10)
-ax.invert_yaxis()
-ax.set_xlabel('% of Industry Postings That Are Data Science Roles', fontsize=11)
-ax.set_title('Data Science Concentration Rate by Industry', fontweight='bold', fontsize=13)
-ax.grid(axis='x', alpha=0.3)
+# Interactive concentration chart
+conc_plot = concentration.reset_index().rename(columns={'index': 'Industry'})
 
-for i, val in enumerate(concentration['ds_pct'].values):
-    ax.text(val + max(concentration['ds_pct'].values)*0.01, i, f'{val:.1f}%', va='center', fontsize=9)
-
-plt.tight_layout()
-plt.savefig('visualizations/ds_concentration_by_industry.png', dpi=150, bbox_inches='tight')
-plt.close()
+fig = px.bar(
+    conc_plot, x='ds_pct', y='Industry', orientation='h',
+    color='ds_pct', color_continuous_scale='Plasma',
+    title='Data Science Concentration Rate by Industry',
+    hover_data={
+        'total_postings': ':,',
+        'ds_postings': ':,',
+        'ds_pct': ':.2f'
+    },
+    labels={
+        'ds_pct': '% of Industry Postings That Are DS',
+        'total_postings': 'Total Postings',
+        'ds_postings': 'DS Postings'
+    }
+)
+fig.update_layout(
+    yaxis=dict(autorange='reversed'),
+    height=600, coloraxis_showscale=False,
+    margin=dict(l=240, r=40, t=60, b=40)
+)
+fig.show()
 ```
-
-![DS Concentration by Industry](visualizations/ds_concentration_by_industry.png)
 
 ## Skills Demanded by Top Industries
 
@@ -172,7 +171,7 @@ for ind in top5_industries:
 ```
 
 ```{python}
-# Heatmap comparing key skills across top 5 industries
+# Interactive heatmap: key skills across top 5 industries
 key_skills = ['Python (Programming Language)', 'SQL (Programming Language)',
               'Machine Learning', 'Data Analysis', 'Statistics',
               'R (Programming Language)', 'Data Visualization',
@@ -181,36 +180,31 @@ key_skills = ['Python (Programming Language)', 'SQL (Programming Language)',
 heatmap_data = []
 for ind in top5_industries:
     sub = df_ds[df_ds['naics2_name'] == ind]
-    all_skills = sub['skills_name'].explode().value_counts()
-    row = [all_skills.get(s, 0) / len(sub) * 100 for s in key_skills]
+    all_skills_counts = sub['skills_name'].explode().value_counts()
+    row = [round(all_skills_counts.get(s, 0) / len(sub) * 100, 1) for s in key_skills]
     heatmap_data.append(row)
 
-heatmap_df = pd.DataFrame(heatmap_data, index=top5_industries, columns=key_skills)
+heatmap_df = pd.DataFrame(
+    heatmap_data,
+    index=[ind[:40] for ind in top5_industries],
+    columns=key_skills
+)
 
-fig, ax = plt.subplots(figsize=(16, 8))
-im = ax.imshow(heatmap_df.values, cmap='YlOrRd', aspect='auto')
-
-ax.set_xticks(range(len(key_skills)))
-ax.set_xticklabels(key_skills, rotation=45, ha='right', fontsize=10)
-ax.set_yticks(range(len(top5_industries)))
-ax.set_yticklabels([ind[:40] for ind in top5_industries], fontsize=10)
-
-# Add text annotations
-for i in range(len(top5_industries)):
-    for j in range(len(key_skills)):
-        val = heatmap_df.values[i, j]
-        color = 'white' if val > heatmap_df.values.max() * 0.6 else 'black'
-        ax.text(j, i, f'{val:.0f}%', ha='center', va='center', color=color, fontsize=9)
-
-plt.colorbar(im, label='% of Postings', shrink=0.8)
-ax.set_title('Key Skills Demanded by Top Industries (% of DS Postings)', fontweight='bold', fontsize=13)
-
-plt.tight_layout()
-plt.savefig('visualizations/ds_skills_by_industry_heatmap.png', dpi=150, bbox_inches='tight')
-plt.close()
+fig = px.imshow(
+    heatmap_df.values,
+    x=key_skills,
+    y=heatmap_df.index,
+    color_continuous_scale='YlOrRd',
+    aspect='auto',
+    text_auto='.0f',
+    labels=dict(x='Skill', y='Industry', color='% of Postings'),
+    title='Key Skills Demanded by Top Industries (% of DS Postings)'
+)
+fig.update_xaxes(tickangle=-45)
+fig.update_traces(texttemplate='%{z:.0f}%', textfont_size=11)
+fig.update_layout(height=500, margin=dict(l=120, r=40, t=80, b=180))
+fig.show()
 ```
-
-![Skills by Industry Heatmap](visualizations/ds_skills_by_industry_heatmap.png)
 
 ## Salary Comparison Across Industries
 
@@ -218,7 +212,6 @@ Compensation is a key indicator of how much an industry values data science tale
 
 ```{python}
 # Salary analysis for DS roles by industry.
-# The cleaning page already clipped unrealistic salaries and created `has_salary`.
 df_ds_salary = df_ds[df_ds['has_salary']].copy()
 
 salary_by_ind = df_ds_salary.groupby('naics2_name').agg(
@@ -240,29 +233,48 @@ for _, row in salary_by_ind.iterrows():
 ```
 
 ```{python}
-fig, ax = plt.subplots(figsize=(14, 8))
+# Interactive salary chart with IQR error bars
+sal_plot = salary_by_ind.copy().sort_values('median_salary', ascending=True)
+sal_plot['err_low'] = sal_plot['median_salary'] - sal_plot['p25']
+sal_plot['err_high'] = sal_plot['p75'] - sal_plot['median_salary']
 
-colors = plt.cm.cividis(np.linspace(0.3, 0.9, len(salary_by_ind)))
-bars = ax.barh(range(len(salary_by_ind)), salary_by_ind['median_salary'].values, color=colors)
-
-# Add error bars for IQR
-for i, (_, row) in enumerate(salary_by_ind.iterrows()):
-    ax.plot([row['p25'], row['p75']], [i, i], color='black', linewidth=1.5, alpha=0.6)
-
-ax.set_yticks(range(len(salary_by_ind)))
-ax.set_yticklabels(salary_by_ind['naics2_name'].values, fontsize=9)
-ax.invert_yaxis()
-ax.set_xlabel('Median Salary ($)', fontsize=11)
-ax.set_title('Median Data Scientist Salary by Industry (with IQR)', fontweight='bold', fontsize=13)
-ax.grid(axis='x', alpha=0.3)
-ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'${x:,.0f}'))
-
-plt.tight_layout()
-plt.savefig('visualizations/ds_salary_by_industry.png', dpi=150, bbox_inches='tight')
-plt.close()
+fig = go.Figure()
+fig.add_trace(go.Bar(
+    x=sal_plot['median_salary'],
+    y=sal_plot['naics2_name'],
+    orientation='h',
+    marker=dict(color=sal_plot['median_salary'], colorscale='Cividis'),
+    error_x=dict(
+        type='data',
+        symmetric=False,
+        array=sal_plot['err_high'],
+        arrayminus=sal_plot['err_low'],
+        color='rgba(0,0,0,0.5)'
+    ),
+    customdata=np.column_stack([
+        sal_plot['mean_salary'],
+        sal_plot['p25'],
+        sal_plot['p75'],
+        sal_plot['count']
+    ]),
+    hovertemplate=(
+        '<b>%{y}</b><br>'
+        'Median: $%{x:,.0f}<br>'
+        'Mean: $%{customdata[0]:,.0f}<br>'
+        '25th pct: $%{customdata[1]:,.0f}<br>'
+        '75th pct: $%{customdata[2]:,.0f}<br>'
+        'Postings: %{customdata[3]:,.0f}<extra></extra>'
+    )
+))
+fig.update_layout(
+    title='Median Data Scientist Salary by Industry (with IQR)',
+    xaxis_title='Median Salary ($)',
+    height=600,
+    margin=dict(l=240, r=40, t=60, b=40),
+    xaxis=dict(tickformat='$,.0f')
+)
+fig.show()
 ```
-
-![Salary by Industry](visualizations/ds_salary_by_industry.png)
 
 ## Education Requirements by Industry
 
@@ -277,6 +289,38 @@ for ind in top5:
     print(f"\n  {ind} ({len(sub):,} postings)")
     for level, count in edu_counts.items():
         print(f"    {level:<40} {count:>5,} ({count/len(sub)*100:.1f}%)")
+```
+
+```{python}
+# Interactive education chart - grouped bar across top 5 industries
+edu_records = []
+for ind in top5:
+    sub = df_ds[df_ds['naics2_name'] == ind]
+    edu_counts = sub['min_edulevels_name'].dropna().value_counts().head(5)
+    for level, count in edu_counts.items():
+        edu_records.append({
+            'Industry': ind[:35],
+            'Education Level': level,
+            'Pct': round(count / len(sub) * 100, 1),
+            'Count': int(count)
+        })
+
+edu_df = pd.DataFrame(edu_records)
+
+if len(edu_df) > 0:
+    fig = px.bar(
+        edu_df, x='Pct', y='Education Level', color='Industry',
+        orientation='h', barmode='group',
+        title='Education Requirements by Industry (Top 5)',
+        hover_data={'Count': ':,'},
+        labels={'Pct': '% of Industry Postings'}
+    )
+    fig.update_layout(
+        height=550,
+        legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='center', x=0.5),
+        margin=dict(l=200, r=40, t=80, b=40)
+    )
+    fig.show()
 ```
 
 ## Experience Requirements by Industry
@@ -297,6 +341,35 @@ print(f"{'Industry':<40} {'Avg Yrs':>8} {'Median':>8} {'N':>6}")
 print(f"{'-'*65}")
 for _, row in exp_by_ind.iterrows():
     print(f"{row['naics2_name'][:40]:<40} {row['avg_min_exp']:>7.1f} {row['median_min_exp']:>7.1f} {int(row['count']):>6,}")
+```
+
+```{python}
+# Interactive experience chart
+if len(exp_by_ind) > 0:
+    exp_plot = exp_by_ind.copy().sort_values('avg_min_exp', ascending=True)
+    
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=exp_plot['avg_min_exp'],
+        y=exp_plot['naics2_name'],
+        orientation='h',
+        name='Avg Min Years',
+        marker_color='#3498db',
+        customdata=np.column_stack([exp_plot['median_min_exp'], exp_plot['count']]),
+        hovertemplate=(
+            '<b>%{y}</b><br>'
+            'Avg min experience: %{x:.1f} years<br>'
+            'Median: %{customdata[0]:.1f} years<br>'
+            'Postings: %{customdata[1]:,.0f}<extra></extra>'
+        )
+    ))
+    fig.update_layout(
+        title='Average Minimum Years of Experience by Industry (Top 5)',
+        xaxis_title='Average Minimum Years of Experience',
+        height=400,
+        margin=dict(l=240, r=40, t=60, b=40)
+    )
+    fig.show()
 ```
 
 ## Conclusion

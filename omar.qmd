@@ -24,10 +24,9 @@ We load the cleaned Lightcast dataset produced by our shared [Data Cleaning](dat
 
 ```{python}
 import pandas as pd
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
 
 df = pd.read_csv("data/lightcast_cleaned.csv", parse_dates=["posted", "expired"])
 
@@ -86,6 +85,27 @@ for r,(s,c) in enumerate(all_counts.head(30).items(),1):
     print(f"{r:<5} {s:<40} {c:>7,} {c/len(df_filtered)*100:>7.1f}%")
 ```
 
+```{python}
+# Interactive bar chart: Top 20 overall skills
+t20 = all_counts.head(20).reset_index()
+t20.columns = ['Skill', 'Count']
+t20['Pct'] = (t20['Count'] / len(df_filtered) * 100).round(1)
+
+fig = px.bar(
+    t20, x='Count', y='Skill', orientation='h',
+    color='Count', color_continuous_scale='Viridis',
+    title='Top 20 Most In-Demand Skills (All Roles)',
+    hover_data={'Pct': ':.1f', 'Count': ':,'},
+    labels={'Count': 'Number of Postings', 'Pct': '% of Postings'}
+)
+fig.update_layout(
+    yaxis=dict(autorange='reversed'),
+    height=600, coloraxis_showscale=False,
+    margin=dict(l=200, r=40, t=60, b=40)
+)
+fig.show()
+```
+
 ## Top 20 Software and Tools
 
 Lightcast separately tags software and tool skills in the `software_skills_name` column, allowing us to isolate the specific technologies employers require. The dominance of SQL in this ranking aligns with findings from @verma2019investigation, who identified SQL as the most frequently listed technical requirement in analytics job advertisements.
@@ -100,6 +120,52 @@ print(f"TOP 20 SOFTWARE / TOOLS")
 print(f"{'='*65}")
 for r,(s,c) in enumerate(sw_counts.head(20).items(),1):
     print(f"{r:<5} {s:<40} {c:>7,} {c/len(df_filtered)*100:>7.1f}%")
+```
+
+```{python}
+# Interactive bar chart: Top 15 software / tools
+t15 = sw_counts.head(15).reset_index()
+t15.columns = ['Software', 'Count']
+t15['Pct'] = (t15['Count'] / len(df_filtered) * 100).round(1)
+
+fig = px.bar(
+    t15, x='Count', y='Software', orientation='h',
+    color='Count', color_continuous_scale='Plasma',
+    title='Top 15 Software & Tools',
+    hover_data={'Pct': ':.1f', 'Count': ':,'},
+    labels={'Count': 'Number of Postings', 'Pct': '% of Postings'}
+)
+fig.update_layout(
+    yaxis=dict(autorange='reversed'),
+    height=550, coloraxis_showscale=False,
+    margin=dict(l=200, r=40, t=60, b=40)
+)
+fig.show()
+```
+
+## Top 15 Specialized Technical Skills
+
+```{python}
+# Interactive bar chart: Top 15 specialized technical skills
+spec = df_filtered['specialized_skills_name'].explode().dropna()
+spec = spec[spec != '']
+spec_counts = spec.value_counts().head(15).reset_index()
+spec_counts.columns = ['Skill', 'Count']
+spec_counts['Pct'] = (spec_counts['Count'] / len(df_filtered) * 100).round(1)
+
+fig = px.bar(
+    spec_counts, x='Count', y='Skill', orientation='h',
+    color='Count', color_continuous_scale='Cividis',
+    title='Top 15 Specialized Technical Skills',
+    hover_data={'Pct': ':.1f', 'Count': ':,'},
+    labels={'Count': 'Number of Postings', 'Pct': '% of Postings'}
+)
+fig.update_layout(
+    yaxis=dict(autorange='reversed'),
+    height=550, coloraxis_showscale=False,
+    margin=dict(l=200, r=40, t=60, b=40)
+)
+fig.show()
 ```
 
 ## Skills Breakdown by Role Category
@@ -120,66 +186,46 @@ for cat in ['Data Science / ML','Business Analytics / BI','Data Analytics','Data
         print(f"  {r:>3}. {s:<35} {c:>6,} ({c/len(sub)*100:.1f}%)")
 ```
 
-## Plots
+## Key Skills by Role Category
 
-The four-panel chart below summarizes our findings: (1) the top 20 overall skills, (2) the top 15 software/tools, (3) the top 15 specialized technical skills, and (4) a comparison of key skills across role categories.
+The grouped bar chart below compares the prevalence of key skills across the four role categories. Hover any bar to see exact percentages.
 
 ```{python}
-fig, axes = plt.subplots(2, 2, figsize=(20, 16))
-fig.suptitle('Most In-Demand Skills — DS, BA & ML Roles (Lightcast)',
-             fontsize=16, fontweight='bold', y=0.98)
-
-# Chart 1: Top 20 overall
-ax = axes[0,0]
-t20 = all_counts.head(20)
-ax.barh(range(len(t20)), t20.values, color=plt.cm.viridis(np.linspace(.3,.9,len(t20))))
-ax.set_yticks(range(len(t20))); ax.set_yticklabels(t20.index, fontsize=9)
-ax.invert_yaxis(); ax.set_xlabel('Postings'); ax.set_title('Top 20 Skills (All)', fontweight='bold')
-
-# Chart 2: Top 15 software
-ax = axes[0,1]
-t15 = sw_counts.head(15)
-ax.barh(range(len(t15)), t15.values, color=plt.cm.plasma(np.linspace(.3,.9,len(t15))))
-ax.set_yticks(range(len(t15))); ax.set_yticklabels(t15.index, fontsize=9)
-ax.invert_yaxis(); ax.set_xlabel('Postings'); ax.set_title('Top 15 Software/Tools', fontweight='bold')
-
-# Chart 3: Specialized
-spec = df_filtered['specialized_skills_name'].explode().dropna()
-spec = spec[spec != '']
-spec_counts = spec.value_counts().head(15)
-ax = axes[1,0]
-ax.barh(range(len(spec_counts)), spec_counts.values, color=plt.cm.cividis(np.linspace(.3,.9,len(spec_counts))))
-ax.set_yticks(range(len(spec_counts))); ax.set_yticklabels(spec_counts.index, fontsize=9)
-ax.invert_yaxis(); ax.set_xlabel('Postings'); ax.set_title('Top 15 Technical Skills', fontweight='bold')
-
-# Chart 4: Comparison across roles
-ax = axes[1,1]
+# Interactive grouped bar chart: key skills by role category
 key_skills = ['Python (Programming Language)','SQL (Programming Language)',
               'Machine Learning','Data Analysis','Tableau (Business Intelligence Software)',
               'R (Programming Language)','Power BI','Statistics','Microsoft Excel','Data Visualization']
 cats = [c for c in ['Data Science / ML','Business Analytics / BI','Data Analytics','Data Engineering']
         if len(df_filtered[df_filtered['role_category']==c]) > 0]
 
-x = np.arange(len(key_skills))
-w = 0.8 / len(cats)
-for i, cat in enumerate(cats):
+records = []
+for cat in cats:
     sub = df_filtered[df_filtered['role_category']==cat]
     cc = sub['skills_name'].explode().value_counts()
-    vals = [cc.get(s,0)/len(sub)*100 for s in key_skills]
-    ax.barh(x + i*w, vals, w, label=cat, alpha=0.85)
+    for s in key_skills:
+        records.append({
+            'Role': cat,
+            'Skill': s,
+            'Pct': round(cc.get(s, 0) / len(sub) * 100, 1)
+        })
 
-ax.set_yticks(x + w*(len(cats)-1)/2)
-ax.set_yticklabels(key_skills, fontsize=9)
-ax.invert_yaxis(); ax.set_xlabel('% of Postings')
-ax.set_title('Key Skills by Role Category', fontweight='bold')
-ax.legend(fontsize=8, loc='lower right')
+cmp_df = pd.DataFrame(records)
 
-plt.tight_layout()
-plt.savefig('skills_analysis.png', dpi=150, bbox_inches='tight')
-plt.close()
+fig = px.bar(
+    cmp_df, x='Pct', y='Skill', color='Role',
+    orientation='h', barmode='group',
+    title='Key Skills by Role Category',
+    labels={'Pct': '% of Postings', 'Skill': '', 'Role': 'Role Category'},
+    color_discrete_sequence=['#2196F3', '#FF5722', '#4CAF50', '#9C27B0']
+)
+fig.update_layout(
+    yaxis=dict(autorange='reversed', categoryorder='array', categoryarray=key_skills[::-1]),
+    height=650,
+    legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='center', x=0.5),
+    margin=dict(l=240, r=40, t=80, b=40)
+)
+fig.show()
 ```
-
-![Skills Analysis](skills_analysis.png)
 
 ## Conclusion
 

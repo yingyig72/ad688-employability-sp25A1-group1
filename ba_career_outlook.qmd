@@ -25,13 +25,9 @@ We load the cleaned Lightcast dataset produced by our shared [Data Cleaning](dat
 
 ```{python}
 import pandas as pd
-import os
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import numpy as np
-
-os.makedirs('visualizations', exist_ok=True)
+import plotly.express as px
+import plotly.graph_objects as go
 
 df = pd.read_csv("data/lightcast_cleaned.csv", parse_dates=["posted", "expired"])
 
@@ -66,6 +62,14 @@ def categorize(row):
 df['role_category'] = df.apply(categorize, axis=1)
 df_roles = df[df['role_category'].notna()].copy()
 
+# Color scheme used across all charts on this page
+role_colors = {
+    'Business Analytics / BI': '#2196F3',
+    'Data Science / ML':       '#FF5722',
+    'Data Analytics':          '#4CAF50',
+    'Data Engineering':        '#9C27B0'
+}
+
 print(f"Filtered to {len(df_roles):,} relevant postings ({len(df_roles)/len(df)*100:.1f}%)\n")
 print("Role distribution:")
 print(df_roles['role_category'].value_counts().to_string())
@@ -86,28 +90,29 @@ print(monthly_roles.to_string())
 ```
 
 ```{python}
-fig, ax = plt.subplots(figsize=(14, 7))
+# Interactive line chart: monthly posting trends by role category
+monthly_long = monthly_roles.reset_index().melt(
+    id_vars='posted_month',
+    var_name='Role',
+    value_name='Postings'
+)
 
-colors = {'Business Analytics / BI': '#2196F3', 'Data Science / ML': '#FF5722',
-          'Data Analytics': '#4CAF50', 'Data Engineering': '#9C27B0'}
-
-for col in monthly_roles.columns:
-    ax.plot(range(len(monthly_roles)), monthly_roles[col], 'o-',
-            label=col, color=colors.get(col, '#999'), linewidth=2, markersize=5)
-
-ax.set_xticks(range(len(monthly_roles)))
-ax.set_xticklabels(monthly_roles.index, rotation=45, ha='right', fontsize=9)
-ax.set_ylabel('Number of Postings', fontsize=11)
-ax.set_title('Monthly Job Posting Trends by Role Category', fontweight='bold', fontsize=13)
-ax.legend(fontsize=10)
-ax.grid(axis='y', alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('visualizations/ba_demand_trends.png', dpi=150, bbox_inches='tight')
-plt.close()
+fig = px.line(
+    monthly_long, x='posted_month', y='Postings', color='Role',
+    markers=True,
+    title='Monthly Job Posting Trends by Role Category',
+    labels={'posted_month': 'Month', 'Postings': 'Number of Postings'},
+    color_discrete_map=role_colors
+)
+fig.update_layout(
+    height=500,
+    hovermode='x unified',
+    legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='center', x=0.5),
+    margin=dict(l=60, r=40, t=80, b=60)
+)
+fig.update_xaxes(tickangle=-45)
+fig.show()
 ```
-
-![Demand Trends by Role](visualizations/ba_demand_trends.png)
 
 ## Salary Outlook for Business Analytics
 
@@ -135,28 +140,47 @@ for _, row in salary_comp.iterrows():
 ```
 
 ```{python}
-fig, ax = plt.subplots(figsize=(12, 6))
+# Interactive salary chart with IQR error bars
+sal_plot = salary_comp.copy().sort_values('median', ascending=True)
+sal_plot['err_low'] = sal_plot['median'] - sal_plot['p25']
+sal_plot['err_high'] = sal_plot['p75'] - sal_plot['median']
 
-colors_list = [colors.get(cat, '#999') for cat in salary_comp['role_category']]
-bars = ax.barh(range(len(salary_comp)), salary_comp['median'].values, color=colors_list, alpha=0.85)
+fig = go.Figure()
+for _, row in sal_plot.iterrows():
+    fig.add_trace(go.Bar(
+        x=[row['median']],
+        y=[row['role_category']],
+        orientation='h',
+        marker_color=role_colors.get(row['role_category'], '#999'),
+        error_x=dict(
+            type='data',
+            symmetric=False,
+            array=[row['err_high']],
+            arrayminus=[row['err_low']],
+            color='rgba(0,0,0,0.5)'
+        ),
+        customdata=[[row['mean'], row['p25'], row['p75'], row['count']]],
+        hovertemplate=(
+            '<b>%{y}</b><br>'
+            'Median: $%{x:,.0f}<br>'
+            'Mean: $%{customdata[0]:,.0f}<br>'
+            '25th pct: $%{customdata[1]:,.0f}<br>'
+            '75th pct: $%{customdata[2]:,.0f}<br>'
+            'Postings: %{customdata[3]:,.0f}<extra></extra>'
+        ),
+        name=row['role_category'],
+        showlegend=False
+    ))
 
-for i, (_, row) in enumerate(salary_comp.iterrows()):
-    ax.plot([row['p25'], row['p75']], [i, i], color='black', linewidth=2, alpha=0.6)
-
-ax.set_yticks(range(len(salary_comp)))
-ax.set_yticklabels(salary_comp['role_category'].values, fontsize=11)
-ax.invert_yaxis()
-ax.set_xlabel('Median Salary ($)', fontsize=11)
-ax.set_title('Median Salary by Role Category (with IQR)', fontweight='bold', fontsize=13)
-ax.grid(axis='x', alpha=0.3)
-ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'${x:,.0f}'))
-
-plt.tight_layout()
-plt.savefig('visualizations/ba_salary_comparison.png', dpi=150, bbox_inches='tight')
-plt.close()
+fig.update_layout(
+    title='Median Salary by Role Category (with IQR)',
+    xaxis_title='Median Salary ($)',
+    height=400,
+    margin=dict(l=180, r=40, t=60, b=40),
+    xaxis=dict(tickformat='$,.0f')
+)
+fig.show()
 ```
-
-![Salary Comparison](visualizations/ba_salary_comparison.png)
 
 
 ## Skills Profile for Business Analytics Roles
@@ -179,66 +203,68 @@ for r, (s, c) in enumerate(ba_top.items(), 1):
 ```
 
 ```{python}
-fig, ax = plt.subplots(figsize=(12, 8))
-top15 = ba_top.head(15)
-bars = ax.barh(range(len(top15)), top15.values,
-               color=plt.cm.viridis(np.linspace(0.3, 0.9, len(top15))))
-ax.set_yticks(range(len(top15)))
-ax.set_yticklabels(top15.index, fontsize=10)
-ax.invert_yaxis()
-ax.set_xlabel('Number of Postings', fontsize=11)
-ax.set_title('Top 15 Skills for Business Analytics / BI Roles', fontweight='bold', fontsize=13)
-ax.grid(axis='x', alpha=0.3)
+# Interactive bar chart: top 15 skills for BA roles
+top15 = ba_top.head(15).reset_index()
+top15.columns = ['Skill', 'Count']
+top15['Pct'] = (top15['Count'] / len(ba_postings) * 100).round(1)
 
-plt.tight_layout()
-plt.savefig('visualizations/ba_top_skills.png', dpi=150, bbox_inches='tight')
-plt.close()
+fig = px.bar(
+    top15, x='Count', y='Skill', orientation='h',
+    color='Count', color_continuous_scale='Viridis',
+    title='Top 15 Skills for Business Analytics / BI Roles',
+    hover_data={'Pct': ':.1f', 'Count': ':,'},
+    labels={'Count': 'Number of Postings', 'Pct': '% of BA Postings'}
+)
+fig.update_layout(
+    yaxis=dict(autorange='reversed'),
+    height=600, coloraxis_showscale=False,
+    margin=dict(l=200, r=40, t=60, b=40)
+)
+fig.show()
 ```
-
-![Top BA Skills](visualizations/ba_top_skills.png)
 
 ## Skills Comparison: BA vs Other Data Roles
 
 @radovilsky2018skills noted that business analytics emphasizes statistical analysis and decision support while data science prioritizes programming and algorithms. We test this distinction by comparing the prevalence of key skills across all four role categories.
 
 ```{python}
+# Interactive grouped bar chart
 key_skills = ['SQL (Programming Language)', 'Python (Programming Language)',
               'Microsoft Excel', 'Tableau (Business Intelligence Software)',
               'Power BI', 'Data Analysis', 'Communication',
               'Machine Learning', 'Statistics', 'R (Programming Language)',
               'Data Visualization', 'Problem Solving', 'Management']
 
-comparison_data = []
+records = []
 for cat in ['Business Analytics / BI', 'Data Science / ML', 'Data Analytics', 'Data Engineering']:
     sub = df_roles[df_roles['role_category'] == cat]
     if len(sub) == 0:
         continue
-    all_skills = sub['skills_name'].explode().value_counts()
-    row = [all_skills.get(s, 0) / len(sub) * 100 for s in key_skills]
-    comparison_data.append({'role': cat, 'values': row})
+    all_skills_counts = sub['skills_name'].explode().value_counts()
+    for s in key_skills:
+        records.append({
+            'Role': cat,
+            'Skill': s,
+            'Pct': round(all_skills_counts.get(s, 0) / len(sub) * 100, 1)
+        })
 
-fig, ax = plt.subplots(figsize=(16, 8))
+cmp_df = pd.DataFrame(records)
 
-x = np.arange(len(key_skills))
-w = 0.8 / len(comparison_data)
-for i, item in enumerate(comparison_data):
-    ax.barh(x + i * w, item['values'], w, label=item['role'],
-            color=list(colors.values())[i], alpha=0.85)
-
-ax.set_yticks(x + w * (len(comparison_data) - 1) / 2)
-ax.set_yticklabels(key_skills, fontsize=10)
-ax.invert_yaxis()
-ax.set_xlabel('% of Postings', fontsize=11)
-ax.set_title('Key Skills Comparison Across Data Roles', fontweight='bold', fontsize=13)
-ax.legend(fontsize=9, loc='lower right')
-ax.grid(axis='x', alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('visualizations/ba_skills_comparison.png', dpi=150, bbox_inches='tight')
-plt.close()
+fig = px.bar(
+    cmp_df, x='Pct', y='Skill', color='Role',
+    orientation='h', barmode='group',
+    title='Key Skills Comparison Across Data Roles',
+    labels={'Pct': '% of Postings', 'Skill': '', 'Role': 'Role Category'},
+    color_discrete_map=role_colors
+)
+fig.update_layout(
+    yaxis=dict(autorange='reversed', categoryorder='array', categoryarray=key_skills[::-1]),
+    height=700,
+    legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='center', x=0.5),
+    margin=dict(l=240, r=40, t=80, b=40)
+)
+fig.show()
 ```
-
-![Skills Comparison Across Roles](visualizations/ba_skills_comparison.png)
 
 ## Industries Hiring Business Analytics Professionals
 
@@ -257,27 +283,25 @@ for r, (ind, count) in enumerate(ba_industries.items(), 1):
 ```
 
 ```{python}
-top10_ind = ba_industries.head(10)
+# Interactive bar chart: top 10 industries hiring BA professionals
+top10_ind = ba_industries.head(10).reset_index()
+top10_ind.columns = ['Industry', 'Count']
+top10_ind['Pct'] = (top10_ind['Count'] / len(ba_postings) * 100).round(1)
 
-fig, ax = plt.subplots(figsize=(14, 7))
-bars = ax.barh(range(len(top10_ind)), top10_ind.values,
-               color=plt.cm.plasma(np.linspace(0.3, 0.9, len(top10_ind))))
-ax.set_yticks(range(len(top10_ind)))
-ax.set_yticklabels(top10_ind.index, fontsize=10)
-ax.invert_yaxis()
-ax.set_xlabel('Number of Job Postings', fontsize=11)
-ax.set_title('Top 10 Industries Hiring Business Analytics Professionals', fontweight='bold', fontsize=13)
-ax.grid(axis='x', alpha=0.3)
-
-for i, count in enumerate(top10_ind.values):
-    ax.text(count + max(top10_ind.values)*0.01, i, f'{count:,}', va='center', fontsize=9)
-
-plt.tight_layout()
-plt.savefig('visualizations/ba_industries.png', dpi=150, bbox_inches='tight')
-plt.close()
+fig = px.bar(
+    top10_ind, x='Count', y='Industry', orientation='h',
+    color='Count', color_continuous_scale='Plasma',
+    title='Top 10 Industries Hiring Business Analytics Professionals',
+    hover_data={'Pct': ':.1f', 'Count': ':,'},
+    labels={'Count': 'Number of Job Postings', 'Pct': '% of BA Postings'}
+)
+fig.update_layout(
+    yaxis=dict(autorange='reversed'),
+    height=550, coloraxis_showscale=False,
+    margin=dict(l=240, r=40, t=60, b=40)
+)
+fig.show()
 ```
-
-![BA Industries](visualizations/ba_industries.png)
 
 ## Education and Experience Requirements
 
@@ -295,6 +319,38 @@ for cat in ['Business Analytics / BI', 'Data Science / ML', 'Data Analytics', 'D
 ```
 
 ```{python}
+# Interactive education comparison chart
+edu_records = []
+for cat in ['Business Analytics / BI', 'Data Science / ML', 'Data Analytics', 'Data Engineering']:
+    sub = df_roles[df_roles['role_category'] == cat]
+    edu_counts = sub['min_edulevels_name'].dropna().value_counts().head(5)
+    for level, count in edu_counts.items():
+        edu_records.append({
+            'Role': cat,
+            'Education Level': level,
+            'Pct': round(count / len(sub) * 100, 1),
+            'Count': int(count)
+        })
+
+if edu_records:
+    edu_df = pd.DataFrame(edu_records)
+    fig = px.bar(
+        edu_df, x='Pct', y='Education Level', color='Role',
+        orientation='h', barmode='group',
+        title='Education Requirements by Role Category',
+        hover_data={'Count': ':,'},
+        labels={'Pct': '% of Postings'},
+        color_discrete_map=role_colors
+    )
+    fig.update_layout(
+        height=550,
+        legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='center', x=0.5),
+        margin=dict(l=200, r=40, t=80, b=40)
+    )
+    fig.show()
+```
+
+```{python}
 print("EXPERIENCE REQUIREMENTS BY ROLE CATEGORY\n")
 exp_comp = df_roles.groupby('role_category').agg(
     avg_exp=('min_years_experience', 'mean'),
@@ -306,6 +362,35 @@ print(f"{'Role':<30} {'Avg Yrs':>8} {'Median':>8} {'N':>6}")
 print(f"{'-'*55}")
 for _, row in exp_comp.iterrows():
     print(f"{row['role_category']:<30} {row['avg_exp']:>7.1f} {row['median_exp']:>7.1f} {int(row['count']):>6,}")
+```
+
+```{python}
+# Interactive experience chart
+fig = go.Figure()
+for _, row in exp_comp.sort_values('avg_exp', ascending=True).iterrows():
+    fig.add_trace(go.Bar(
+        x=[row['avg_exp']],
+        y=[row['role_category']],
+        orientation='h',
+        marker_color=role_colors.get(row['role_category'], '#999'),
+        customdata=[[row['median_exp'], row['count']]],
+        hovertemplate=(
+            '<b>%{y}</b><br>'
+            'Avg min experience: %{x:.1f} years<br>'
+            'Median: %{customdata[0]:.1f} years<br>'
+            'Postings: %{customdata[1]:,.0f}<extra></extra>'
+        ),
+        name=row['role_category'],
+        showlegend=False
+    ))
+
+fig.update_layout(
+    title='Average Minimum Years of Experience by Role Category',
+    xaxis_title='Average Minimum Years of Experience',
+    height=400,
+    margin=dict(l=200, r=40, t=60, b=40)
+)
+fig.show()
 ```
 
 ## Remote Work Availability for BA Roles
@@ -323,13 +408,46 @@ for cat in ['Business Analytics / BI', 'Data Science / ML', 'Data Analytics', 'D
     print()
 ```
 
+```{python}
+# Interactive 100% stacked bar: remote work by role category
+remote_records = []
+for cat in ['Business Analytics / BI', 'Data Science / ML', 'Data Analytics', 'Data Engineering']:
+    sub = df_roles[df_roles['role_category'] == cat]
+    remote_counts = sub['remote_category'].dropna().value_counts()
+    total = remote_counts.sum()
+    for rtype in ['Remote', 'Hybrid', 'On-site']:
+        cnt = int(remote_counts.get(rtype, 0))
+        remote_records.append({
+            'Role': cat,
+            'Remote Type': rtype,
+            'Pct': round(cnt / total * 100, 1) if total > 0 else 0,
+            'Count': cnt
+        })
+
+remote_df = pd.DataFrame(remote_records)
+
+fig = px.bar(
+    remote_df, x='Pct', y='Role', color='Remote Type',
+    orientation='h',
+    title='Remote Work Distribution by Role Category',
+    hover_data={'Count': ':,'},
+    labels={'Pct': '% of Postings'},
+    color_discrete_map={'Remote': '#27ae60', 'Hybrid': '#f39c12', 'On-site': '#95a5a6'}
+)
+fig.update_layout(
+    height=400,
+    legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='center', x=0.5),
+    margin=dict(l=200, r=40, t=80, b=40),
+    barmode='stack'
+)
+fig.show()
+```
+
 ## Geographic Hotspots for Business Analytics Roles
 
 Understanding where BA opportunities are concentrated helps professionals target their job search. We map the distribution of business analytics postings across U.S. states to identify geographic hotspots.
 
 ```{python}
-import plotly.express as px
-
 state_counts = ba_postings['state_name'].dropna().value_counts().reset_index()
 state_counts.columns = ['state', 'count']
 
