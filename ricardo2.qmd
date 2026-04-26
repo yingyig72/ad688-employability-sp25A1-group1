@@ -102,8 +102,9 @@ print(df.columns.tolist()[:50])
 # Skills columns are stored as pipe-separated strings — split back into lists
 for col in ["skills_name", "specialized_skills_name", "software_skills_name"]:
     if col in df.columns:
-        df[col] = df[col].fillna("").apply(lambda s: s.split("|") if s else [])
-
+       df[col] = df[col].apply(
+    lambda s: s.split("|") if isinstance(s, str) else []
+)
 print(f"Dataset: {df.shape[0]:,} rows × {df.shape[1]} columns")
 
 if 'posted' in df.columns:
