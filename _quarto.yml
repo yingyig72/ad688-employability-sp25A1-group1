@@ -46,8 +46,6 @@ website:
             text: "What is the career outlook for business analytics professionals?"
       - href: files-2/skill_gap_analysis.qmd
         text: Skills Gap Analysis
-      - href: files-2/career_plan.qmd
-      - text: Career Plan
       - href: ml_model.qmd
         text: Machine Learning
       - href: cluster_finder.qmd

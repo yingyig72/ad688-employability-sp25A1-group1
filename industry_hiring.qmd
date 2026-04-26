@@ -125,7 +125,7 @@ for ind, row in concentration.iterrows():
 
 ```{python}
 # Interactive concentration chart
-conc_plot = concentration.reset_index().rename(columns={'index': 'Industry'})
+conc_plot = concentration.reset_index().rename(columns={'naics2_name': 'Industry'})
 
 fig = px.bar(
     conc_plot, x='ds_pct', y='Industry', orientation='h',
