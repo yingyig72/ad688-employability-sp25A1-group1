@@ -176,17 +176,34 @@ Raw volume reflects state size. **AI intensity** (% of postings that are AI-rela
 #| label: ai-intensity
 #| code-summary: "AI intensity (%) by state"
 
-ai_share = df.groupby('state_name')['is_ai'].agg(['sum', 'count']).reset_index()
-ai_share.columns = ['state_name', 'ai_count', 'total']
-ai_share['ai_pct'] = (ai_share['ai_count'] / ai_share['total'] * 100).round(2)
-ai_share = ai_share[ai_share['total'] >= 50].sort_values('ai_pct', ascending=False)
+if 'state_name' in df.columns:
 
-fig = px.bar(ai_share.head(20), x='ai_pct', y='state_name', orientation='h',
-    title="Figure 3: Top 20 States by AI Job Intensity (% AI-related)",
-    labels={'ai_pct': '% AI-Related', 'state_name': 'State'},
-    color='ai_pct', color_continuous_scale='Blues')
-fig.update_layout(yaxis=dict(autorange="reversed"), coloraxis_showscale=False, height=550)
-fig.show()
+    ai_share = df.groupby('state_name')['is_ai'].agg(['sum', 'count']).reset_index()
+    ai_share.columns = ['state_name', 'ai_count', 'total']
+    ai_share['ai_pct'] = (ai_share['ai_count'] / ai_share['total'] * 100).round(2)
+    ai_share = ai_share[ai_share['total'] >= 50].sort_values('ai_pct', ascending=False)
+
+    fig = px.bar(
+        ai_share.head(20),
+        x='ai_pct',
+        y='state_name',
+        orientation='h',
+        title="Figure 3: Top 20 States by AI Job Intensity (% AI-related)",
+        labels={'ai_pct': '% AI-Related', 'state_name': 'State'},
+        color='ai_pct',
+        color_continuous_scale='Blues'
+    )
+
+    fig.update_layout(
+        yaxis=dict(autorange="reversed"),
+        coloraxis_showscale=False,
+        height=550
+    )
+
+    fig.show()
+
+else:
+    print("state_name column not found — skipping AI intensity analysis.")
 ```
 
 ## 3.3 U.S. Choropleth Map
