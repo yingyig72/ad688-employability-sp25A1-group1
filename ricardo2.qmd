@@ -165,13 +165,7 @@ if 'state_name' in df.columns:
 else:
     print("state_name column not found in dataset — skipping state analysis.")
 
-fig = px.bar(state_top, x='count', y='state_name', color='job_category',
-    orientation='h', barmode='group',
-    title="Figure 2: Top 15 States — AI vs. Non-AI Job Postings",
-    labels={'count': 'Number of Postings', 'state_name': 'State'},
-    color_discrete_map={'AI-Related': '#3498db', 'Non-AI': '#e74c3c'})
-fig.update_layout(yaxis=dict(categoryorder='total ascending'), height=550)
-fig.show()
+
 ```
 
 ## 3.2 AI Job Intensity by State
