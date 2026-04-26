@@ -66,7 +66,7 @@ if not os.path.exists(data_file):
         "-O", data_file
     ], check=True)
 
-df = pd.read_csv(data_file, parse_dates=["posted", "expired"])
+df = pd.read_csv(data_file)
 
 # Skills columns are stored as pipe-separated strings — split back into lists
 for col in ["skills_name", "specialized_skills_name", "software_skills_name"]:
