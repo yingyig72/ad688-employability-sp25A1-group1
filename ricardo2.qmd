@@ -813,3 +813,5 @@ The U.S. labor market is developing along **two overlapping but distinct geograp
 This distinction matters for career planning. A location that is excellent for AI careers (e.g., San Francisco, Boston) is not necessarily the strongest for non-AI career growth (e.g., Tampa, Jacksonville). **Texas** — particularly Dallas–Fort Worth and Austin — represents the clearest bridge between these two tracks, performing strongly in both AI hiring and broad-based labor market expansion.
 
 For job seekers: targeting AI-specific skills (Python, ML, cloud) and innovation-hub states maximizes salary potential, while targeting Sun Belt states maximizes overall employment opportunity across many occupations.
+
+<!-- rerun deployment -->
