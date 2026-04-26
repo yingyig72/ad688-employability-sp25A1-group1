@@ -104,7 +104,7 @@ ai_keywords = [
 ai_pattern = '|'.join(ai_keywords)
 
 # Build search text from title + ONET occupation + skills list
-search_text = ""
+search_text = pd.Series("", index=df.index)
 
 if 'title_name' in df.columns:
     search_text += df['title_name'].fillna('').str.lower() + ' '
@@ -116,7 +116,7 @@ if 'skills_name' in df.columns:
     search_text += df['skills_name'].apply(
         lambda lst: ' '.join(lst).lower() if isinstance(lst, list) else ''
     )
-
+    
 df['is_ai'] = search_text.str.contains(ai_pattern, case=False, na=False)
 df['job_category'] = df['is_ai'].map({True: 'AI-Related', False: 'Non-AI'})
 
