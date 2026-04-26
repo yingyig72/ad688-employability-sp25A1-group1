@@ -68,6 +68,8 @@ if not os.path.exists(data_file):
 
 df = pd.read_csv(data_file)
 
+df = df.loc[:, ~df.columns.duplicated()]
+
 # Standardize column names to lowercase
 df.columns = df.columns.str.strip().str.lower()
 
