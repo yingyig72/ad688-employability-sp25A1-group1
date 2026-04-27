@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>Which U.S. Cities or States Have the Highest Job Growth for AI vs.&nbsp;Non-AI Careers? – AD688 Team 1 Spring 2026</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -22,8 +25,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +38,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -65,15 +69,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b03a11417efed39b2e2431882e1d3ba1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2a5212194e03ba571a46edef85f9d605.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -109,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -299,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="setup" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Load libraries and cleaned data</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
@@ -338,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Date range: </span><span class="sc">{</span>df[<span class="st">'posted'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">.</span>date()<span class="sc">}</span><span class="ss"> → </span><span class="sc">{</span>df[<span class="st">'posted'</span>]<span class="sc">.</span><span class="bu">max</span>()<span class="sc">.</span>date()<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"States: </span><span class="sc">{</span>df[<span class="st">'state_name'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss"> | Cities: </span><span class="sc">{</span>df[<span class="st">'city_name'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'msa_name'</span> <span class="kw">in</span> df.columns:</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Metro areas (MSAs): </span><span class="sc">{</span>df[<span class="st">'msa_name'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Metro areas (MSAs): </span><span class="sc">{</span>df[<span class="st">'msa_name'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Dataset: 72,454 rows × 29 columns
@@ -354,11 +359,11 @@ Metro areas (MSAs): 653</code></pre>
 <div id="ai-labeling" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Classify each posting as AI-Related or Non-AI</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ai_keywords <span class="op">=</span> [</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r'\bai\b'</span>, <span class="vs">r'artificial intelligence'</span>, <span class="vs">r'machine learning'</span>, <span class="vs">r'\bml\b'</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r'deep learning'</span>, <span class="vs">r'neural network'</span>, <span class="vs">r'\bnlp\b'</span>, <span class="vs">r'natural language processing'</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ai_keywords <span class="op">=</span> [</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r'</span><span class="dv">\b</span><span class="vs">ai</span><span class="dv">\b</span><span class="vs">'</span>, <span class="vs">r'artificial intelligence'</span>, <span class="vs">r'machine learning'</span>, <span class="vs">r'</span><span class="dv">\b</span><span class="vs">ml</span><span class="dv">\b</span><span class="vs">'</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r'deep learning'</span>, <span class="vs">r'neural network'</span>, <span class="vs">r'</span><span class="dv">\b</span><span class="vs">nlp</span><span class="dv">\b</span><span class="vs">'</span>, <span class="vs">r'natural language processing'</span>,</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r'computer vision'</span>, <span class="vs">r'data scien'</span>, <span class="vs">r'reinforcement learning'</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r'generative ai'</span>, <span class="vs">r'\bgpt\b'</span>, <span class="vs">r'\bllm\b'</span>, <span class="vs">r'large language model'</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r'generative ai'</span>, <span class="vs">r'</span><span class="dv">\b</span><span class="vs">gpt</span><span class="dv">\b</span><span class="vs">'</span>, <span class="vs">r'</span><span class="dv">\b</span><span class="vs">llm</span><span class="dv">\b</span><span class="vs">'</span>, <span class="vs">r'large language model'</span>,</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r'robotics'</span>, <span class="vs">r'autonomous'</span>, <span class="vs">r'predictive model'</span>, <span class="vs">r'tensorflow'</span>,</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r'pytorch'</span>, <span class="vs">r'chatbot'</span>, <span class="vs">r'intelligent automation'</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>]</span>
@@ -376,7 +381,7 @@ Metro areas (MSAs): 653</code></pre>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> df[<span class="st">'job_category'</span>].value_counts()</span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AI-Related:  </span><span class="sc">{</span>counts<span class="sc">.</span>get(<span class="st">'AI-Related'</span>, <span class="dv">0</span>)<span class="sc">:,}</span><span class="ss"> (</span><span class="sc">{</span>df[<span class="st">'is_ai'</span>]<span class="sc">.</span>mean()<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Non-AI:      </span><span class="sc">{</span>counts<span class="sc">.</span>get(<span class="st">'Non-AI'</span>, <span class="dv">0</span>)<span class="sc">:,}</span><span class="ss"> (</span><span class="sc">{</span>(<span class="dv">1</span><span class="op">-</span>df[<span class="st">'is_ai'</span>].mean())<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Non-AI:      </span><span class="sc">{</span>counts<span class="sc">.</span>get(<span class="st">'Non-AI'</span>, <span class="dv">0</span>)<span class="sc">:,}</span><span class="ss"> (</span><span class="sc">{</span>(<span class="dv">1</span><span class="op">-</span>df[<span class="st">'is_ai'</span>].mean())<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>AI-Related:  11,727 (16.2%)
@@ -386,11 +391,11 @@ Non-AI:      60,727 (83.8%)</code></pre>
 <div id="ai-pie" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>AI vs Non-AI split</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.pie(values<span class="op">=</span>counts.values, names<span class="op">=</span>counts.index,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.pie(values<span class="op">=</span>counts.values, names<span class="op">=</span>counts.index,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Figure 1: Proportion of AI vs. Non-AI Job Postings (Lightcast 2024)"</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    hole<span class="op">=</span><span class="fl">0.45</span>, color_discrete_sequence<span class="op">=</span>[<span class="st">"#3498db"</span>, <span class="st">"#e74c3c"</span>])</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>fig.update_traces(textposition<span class="op">=</span><span class="st">'inside'</span>, textinfo<span class="op">=</span><span class="st">'percent+label'</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="ai-pie-1" class="cell-output cell-output-display">
         <script>
@@ -438,7 +443,7 @@ if (outputEl) {{
 <div id="cell-state-volume" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>AI vs Non-AI posting counts by state</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>state_cat <span class="op">=</span> df.groupby([<span class="st">'state_name'</span>, <span class="st">'job_category'</span>]).size().reset_index(name<span class="op">=</span><span class="st">'count'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>state_cat <span class="op">=</span> df.groupby([<span class="st">'state_name'</span>, <span class="st">'job_category'</span>]).size().reset_index(name<span class="op">=</span><span class="st">'count'</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>top15 <span class="op">=</span> df[<span class="st">'state_name'</span>].value_counts().head(<span class="dv">15</span>).index</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>state_top <span class="op">=</span> state_cat[state_cat[<span class="st">'state_name'</span>].isin(top15)]</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -448,7 +453,7 @@ if (outputEl) {{
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">'count'</span>: <span class="st">'Number of Postings'</span>, <span class="st">'state_name'</span>: <span class="st">'State'</span>},</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    color_discrete_map<span class="op">=</span>{<span class="st">'AI-Related'</span>: <span class="st">'#3498db'</span>, <span class="st">'Non-AI'</span>: <span class="st">'#e74c3c'</span>})</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>fig.update_layout(yaxis<span class="op">=</span><span class="bu">dict</span>(categoryorder<span class="op">=</span><span class="st">'total ascending'</span>), height<span class="op">=</span><span class="dv">550</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="state-volume" class="cell-output cell-output-display">
 <div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
@@ -486,7 +491,7 @@ if (outputEl) {{
 <div id="cell-ai-intensity" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>AI intensity (%) by state</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ai_share <span class="op">=</span> df.groupby(<span class="st">'state_name'</span>)[<span class="st">'is_ai'</span>].agg([<span class="st">'sum'</span>, <span class="st">'count'</span>]).reset_index()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ai_share <span class="op">=</span> df.groupby(<span class="st">'state_name'</span>)[<span class="st">'is_ai'</span>].agg([<span class="st">'sum'</span>, <span class="st">'count'</span>]).reset_index()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ai_share.columns <span class="op">=</span> [<span class="st">'state_name'</span>, <span class="st">'ai_count'</span>, <span class="st">'total'</span>]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ai_share[<span class="st">'ai_pct'</span>] <span class="op">=</span> (ai_share[<span class="st">'ai_count'</span>] <span class="op">/</span> ai_share[<span class="st">'total'</span>] <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">2</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ai_share <span class="op">=</span> ai_share[ai_share[<span class="st">'total'</span>] <span class="op">&gt;=</span> <span class="dv">50</span>].sort_values(<span class="st">'ai_pct'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
@@ -496,7 +501,7 @@ if (outputEl) {{
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">'ai_pct'</span>: <span class="st">'% AI-Related'</span>, <span class="st">'state_name'</span>: <span class="st">'State'</span>},</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'ai_pct'</span>, color_continuous_scale<span class="op">=</span><span class="st">'Blues'</span>)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>fig.update_layout(yaxis<span class="op">=</span><span class="bu">dict</span>(autorange<span class="op">=</span><span class="st">"reversed"</span>), coloraxis_showscale<span class="op">=</span><span class="va">False</span>, height<span class="op">=</span><span class="dv">550</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="ai-intensity" class="cell-output cell-output-display">
 <div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
@@ -533,7 +538,7 @@ if (outputEl) {{
 <div id="cell-choropleth" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Choropleth map of AI job concentration</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>us_abbrev <span class="op">=</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>us_abbrev <span class="op">=</span> {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Alabama'</span>:<span class="st">'AL'</span>,<span class="st">'Alaska'</span>:<span class="st">'AK'</span>,<span class="st">'Arizona'</span>:<span class="st">'AZ'</span>,<span class="st">'Arkansas'</span>:<span class="st">'AR'</span>,<span class="st">'California'</span>:<span class="st">'CA'</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Colorado'</span>:<span class="st">'CO'</span>,<span class="st">'Connecticut'</span>:<span class="st">'CT'</span>,<span class="st">'Delaware'</span>:<span class="st">'DE'</span>,<span class="st">'Florida'</span>:<span class="st">'FL'</span>,<span class="st">'Georgia'</span>:<span class="st">'GA'</span>,</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Hawaii'</span>:<span class="st">'HI'</span>,<span class="st">'Idaho'</span>:<span class="st">'ID'</span>,<span class="st">'Illinois'</span>:<span class="st">'IL'</span>,<span class="st">'Indiana'</span>:<span class="st">'IN'</span>,<span class="st">'Iowa'</span>:<span class="st">'IA'</span>,<span class="st">'Kansas'</span>:<span class="st">'KS'</span>,</span>
@@ -556,7 +561,7 @@ if (outputEl) {{
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">'ai_pct'</span>: <span class="st">'AI %'</span>, <span class="st">'state_name'</span>: <span class="st">'State'</span>},</span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    hover_data<span class="op">=</span>{<span class="st">'state_name'</span>: <span class="va">True</span>, <span class="st">'ai_count'</span>: <span class="va">True</span>, <span class="st">'total'</span>: <span class="va">True</span>})</span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>fig.update_layout(height<span class="op">=</span><span class="dv">450</span>)</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="choropleth" class="cell-output cell-output-display">
 <div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
@@ -593,7 +598,7 @@ if (outputEl) {{
 <div id="msa" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>AI postings by metropolitan area</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>geo_sub <span class="op">=</span> <span class="st">'msa_name'</span> <span class="cf">if</span> <span class="st">'msa_name'</span> <span class="kw">in</span> df.columns <span class="cf">else</span> <span class="st">'city_name'</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>geo_sub <span class="op">=</span> <span class="st">'msa_name'</span> <span class="cf">if</span> <span class="st">'msa_name'</span> <span class="kw">in</span> df.columns <span class="cf">else</span> <span class="st">'city_name'</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>msa_ai <span class="op">=</span> df.groupby(geo_sub).agg(total<span class="op">=</span>(<span class="st">'is_ai'</span>,<span class="st">'size'</span>), ai_count<span class="op">=</span>(<span class="st">'is_ai'</span>,<span class="st">'sum'</span>)).reset_index()</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>msa_ai[<span class="st">'ai_pct'</span>] <span class="op">=</span> (msa_ai[<span class="st">'ai_count'</span>] <span class="op">/</span> msa_ai[<span class="st">'total'</span>] <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">2</span>)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -609,7 +614,7 @@ if (outputEl) {{
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="ss">f"Figure 6: Top 15 </span><span class="sc">{</span><span class="st">'Metro Areas'</span> <span class="cf">if</span> geo_sub<span class="op">==</span><span class="st">'msa_name'</span> <span class="cf">else</span> <span class="st">'Cities'</span><span class="sc">}</span><span class="ss"> by AI Intensity (%)"</span>,</span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">'ai_pct'</span>: <span class="st">'% AI-Related'</span>, geo_sub: <span class="st">''</span>}, color<span class="op">=</span><span class="st">'ai_pct'</span>, color_continuous_scale<span class="op">=</span><span class="st">'Teal'</span>)</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>fig2.update_layout(yaxis<span class="op">=</span><span class="bu">dict</span>(autorange<span class="op">=</span><span class="st">"reversed"</span>), coloraxis_showscale<span class="op">=</span><span class="va">False</span>, height<span class="op">=</span><span class="dv">550</span>)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>fig2.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>fig2.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="msa-1" class="cell-output cell-output-display">
 <div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
@@ -674,7 +679,7 @@ if (outputEl) {{
 <div id="salary" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Salary comparison by state and AI category</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'salary'</span> <span class="kw">in</span> df.columns:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'salary'</span> <span class="kw">in</span> df.columns:</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    df_sal <span class="op">=</span> df[df[<span class="st">'salary'</span>].notna() <span class="op">&amp;</span> (df[<span class="st">'salary'</span>] <span class="op">&gt;</span> <span class="dv">0</span>)].copy()</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Overall comparison</span></span>
@@ -697,7 +702,7 @@ if (outputEl) {{
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>            labels<span class="op">=</span>{<span class="st">'salary'</span>:<span class="st">'Median Salary ($)'</span>,<span class="st">'state_name'</span>:<span class="st">'State'</span>},</span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>            color_discrete_map<span class="op">=</span>{<span class="st">'AI-Related'</span>:<span class="st">'#3498db'</span>,<span class="st">'Non-AI'</span>:<span class="st">'#e74c3c'</span>})</span>
 <span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        fig2.update_layout(xaxis_tickangle<span class="op">=-</span><span class="dv">45</span>, height<span class="op">=</span><span class="dv">450</span>)</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        fig2.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        fig2.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="salary-1" class="cell-output cell-output-display">
 <div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
@@ -734,7 +739,7 @@ if (outputEl) {{
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -761,7 +766,7 @@ if (outputEl) {{
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">AI-Related</td>
+<th data-quarto-table-cell-role="th">AI-Related</th>
 <td>5958.0</td>
 <td>123212.0</td>
 <td>42989.0</td>
@@ -772,7 +777,7 @@ if (outputEl) {{
 <td>437500.0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">Non-AI</td>
+<th data-quarto-table-cell-role="th">Non-AI</th>
 <td>24849.0</td>
 <td>116697.0</td>
 <td>45540.0</td>
@@ -822,7 +827,7 @@ if (outputEl) {{
 <div id="cell-skills" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Most demanded skills in AI vs Non-AI postings</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> [<span class="st">'AI-Related'</span>, <span class="st">'Non-AI'</span>]:</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">'job_category'</span>] <span class="op">==</span> cat]</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="bu">len</span>(subset)</span>
@@ -841,7 +846,7 @@ if (outputEl) {{
 <span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">'Pct'</span>:<span class="st">'</span><span class="sc">% o</span><span class="st">f Postings'</span>,<span class="st">'Skill'</span>:<span class="st">''</span>},</span>
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    color_discrete_map<span class="op">=</span>{<span class="st">'AI-Related'</span>:<span class="st">'#3498db'</span>,<span class="st">'Non-AI'</span>:<span class="st">'#e74c3c'</span>})</span>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>fig.update_layout(yaxis<span class="op">=</span><span class="bu">dict</span>(autorange<span class="op">=</span><span class="st">"reversed"</span>), height<span class="op">=</span><span class="dv">650</span>)</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="skills" class="cell-output cell-output-display">
 <div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
@@ -884,7 +889,7 @@ if (outputEl) {{
 <div id="umd-comparison" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Compare our state rankings vs.&nbsp;UMD-LinkUp</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>umd <span class="op">=</span> pd.DataFrame({</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>umd <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Rank'</span>: <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>),</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'State (UMD-LinkUp 2023)'</span>: [<span class="st">'California'</span>,<span class="st">'Texas'</span>,<span class="st">'Virginia'</span>,<span class="st">'New York'</span>,<span class="st">'Massachusetts'</span>,</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Washington'</span>,<span class="st">'Illinois'</span>,<span class="st">'Florida'</span>,<span class="st">'Pennsylvania'</span>,<span class="st">'New Jersey'</span>],</span>
@@ -899,7 +904,7 @@ if (outputEl) {{
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"External Benchmark — UMD-LinkUp AI Maps (2023):"</span>)</span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>display(umd)</span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Our Lightcast Dataset — Top States by AI Volume:"</span>)</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>display(our_top)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>display(our_top)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>External Benchmark — UMD-LinkUp AI Maps (2023):</code></pre>
@@ -908,7 +913,7 @@ if (outputEl) {{
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -919,61 +924,61 @@ if (outputEl) {{
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>1</td>
 <td>California</td>
 <td>1969</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>2</td>
 <td>Texas</td>
 <td>882</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>3</td>
 <td>Virginia</td>
 <td>827</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>4</td>
 <td>New York</td>
 <td>769</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>5</td>
 <td>Massachusetts</td>
 <td>557</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
+<th data-quarto-table-cell-role="th">5</th>
 <td>6</td>
 <td>Washington</td>
 <td>514</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
+<th data-quarto-table-cell-role="th">6</th>
 <td>7</td>
 <td>Illinois</td>
 <td>389</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
+<th data-quarto-table-cell-role="th">7</th>
 <td>8</td>
 <td>Florida</td>
 <td>359</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
+<th data-quarto-table-cell-role="th">8</th>
 <td>9</td>
 <td>Pennsylvania</td>
 <td>343</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
+<th data-quarto-table-cell-role="th">9</th>
 <td>10</td>
 <td>New Jersey</td>
 <td>323</td>
@@ -991,7 +996,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1008,61 +1013,61 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>California</td>
 <td>1180</td>
 <td>16.66</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>Texas</td>
 <td>1148</td>
 <td>14.23</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>Virginia</td>
 <td>666</td>
 <td>18.32</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>New York</td>
 <td>657</td>
 <td>19.66</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">5</td>
+<th data-quarto-table-cell-role="th">5</th>
 <td>Illinois</td>
 <td>536</td>
 <td>15.15</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">6</td>
+<th data-quarto-table-cell-role="th">6</th>
 <td>Florida</td>
 <td>506</td>
 <td>13.88</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">7</td>
+<th data-quarto-table-cell-role="th">7</th>
 <td>Georgia</td>
 <td>457</td>
 <td>17.19</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">8</td>
+<th data-quarto-table-cell-role="th">8</th>
 <td>North Carolina</td>
 <td>414</td>
 <td>15.07</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">9</td>
+<th data-quarto-table-cell-role="th">9</th>
 <td>Ohio</td>
 <td>411</td>
 <td>15.65</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">10</td>
+<th data-quarto-table-cell-role="th">10</th>
 <td>Pennsylvania</td>
 <td>356</td>
 <td>15.79</td>
@@ -1081,7 +1086,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <div id="cell-talent-scorecard" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Lightcast 2025 Talent Scorecard — top states for broad job growth</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>talent <span class="op">=</span> pd.DataFrame({</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>talent <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Rank'</span>: <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>),</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'State'</span>: [<span class="st">'Florida'</span>,<span class="st">'Texas'</span>,<span class="st">'Idaho'</span>,<span class="st">'Wyoming'</span>,<span class="st">'Nevada'</span>,</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">'Arizona'</span>,<span class="st">'Utah'</span>,<span class="st">'Montana'</span>,<span class="st">'District of Columbia'</span>,<span class="st">'Delaware'</span>],</span>
@@ -1100,7 +1105,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Lightcast 2025 Talent Attraction Scorecard — Top 10 States:"</span>)</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>display(talent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>display(talent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Lightcast 2025 Talent Attraction Scorecard — Top 10 States:</code></pre>
@@ -1109,7 +1114,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1120,61 +1125,61 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>1</td>
 <td>Florida</td>
 <td>Population growth, services, tourism, migration</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>2</td>
 <td>Texas</td>
 <td>Business relocation, logistics, energy + tech</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>3</td>
 <td>Idaho</td>
 <td>Migration inflows, low cost of living</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>4</td>
 <td>Wyoming</td>
 <td>Small-state momentum, natural resources</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>5</td>
 <td>Nevada</td>
 <td>Population + construction boom</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
+<th data-quarto-table-cell-role="th">5</th>
 <td>6</td>
 <td>Arizona</td>
 <td>Sun Belt migration, healthcare expansion</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
+<th data-quarto-table-cell-role="th">6</th>
 <td>7</td>
 <td>Utah</td>
 <td>Tech + outdoor economy, young workforce</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
+<th data-quarto-table-cell-role="th">7</th>
 <td>8</td>
 <td>Montana</td>
 <td>Remote work migration, lifestyle appeal</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
+<th data-quarto-table-cell-role="th">8</th>
 <td>9</td>
 <td>District of Columbia</td>
 <td>Federal govt, consulting, high-earning jobs</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
+<th data-quarto-table-cell-role="th">9</th>
 <td>10</td>
 <td>Delaware</td>
 <td>Corporate headquarters, financial services</td>
@@ -1192,7 +1197,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <div id="cell-geo-split" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Summary comparison table</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>split <span class="op">=</span> pd.DataFrame({</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>split <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Dimension'</span>: [<span class="st">'Leading States'</span>, <span class="st">'Leading Metros'</span>, <span class="st">'Main Drivers'</span>,</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'Concentration'</span>, <span class="st">'Salary Level'</span>, <span class="st">'Skill Barrier'</span>],</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'AI Careers'</span>: [</span>
@@ -1212,7 +1217,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'More varied — communication, management, Excel, trades'</span></span>
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    ]</span>
 <span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>display(split.style.set_properties(<span class="op">**</span>{<span class="st">'text-align'</span>: <span class="st">'left'</span>}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>display(split.style.set_properties(<span class="op">**</span>{<span class="st">'text-align'</span>: <span class="st">'left'</span>}))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="geo-split" class="cell-output cell-output-display">
 <style type="text/css">
@@ -1221,7 +1226,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 }
 </style>
 
-<table id="T_42893" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table id="T_42893" class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
@@ -1232,37 +1237,37 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_42893_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">0</td>
+<th id="T_42893_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">0</th>
 <td id="T_42893_row0_col0" class="data row0 col0">Leading States</td>
 <td id="T_42893_row0_col1" class="data row0 col1">CA, VA, WA, MA, NY, DC</td>
 <td id="T_42893_row0_col2" class="data row0 col2">FL, TX, ID, WY, NV, AZ</td>
 </tr>
 <tr class="even">
-<td id="T_42893_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">1</td>
+<th id="T_42893_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">1</th>
 <td id="T_42893_row1_col0" class="data row1 col0">Leading Metros</td>
 <td id="T_42893_row1_col1" class="data row1 col1">San Francisco, San Jose, Seattle, NYC, Washington DC, Boston</td>
 <td id="T_42893_row1_col2" class="data row1 col2">Dallas–Fort Worth, Austin, Tampa, Miami, Houston</td>
 </tr>
 <tr class="odd">
-<td id="T_42893_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2</td>
+<th id="T_42893_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2</th>
 <td id="T_42893_row2_col0" class="data row2 col0">Main Drivers</td>
 <td id="T_42893_row2_col1" class="data row2 col1">R&amp;D, defense, venture capital, cloud computing, elite universities</td>
 <td id="T_42893_row2_col2" class="data row2 col2">Population growth, migration, construction, healthcare, tourism</td>
 </tr>
 <tr class="even">
-<td id="T_42893_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">3</td>
+<th id="T_42893_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">3</th>
 <td id="T_42893_row3_col0" class="data row3 col0">Concentration</td>
 <td id="T_42893_row3_col1" class="data row3 col1">Highly concentrated in ~6 innovation hubs</td>
 <td id="T_42893_row3_col2" class="data row3 col2">Broadly distributed across Sun Belt + Mountain West</td>
 </tr>
 <tr class="odd">
-<td id="T_42893_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">4</td>
+<th id="T_42893_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">4</th>
 <td id="T_42893_row4_col0" class="data row4 col0">Salary Level</td>
 <td id="T_42893_row4_col1" class="data row4 col1">Higher median ($90K–$160K+)</td>
 <td id="T_42893_row4_col2" class="data row4 col2">Lower median ($50K–$100K)</td>
 </tr>
 <tr class="even">
-<td id="T_42893_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">5</td>
+<th id="T_42893_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">5</th>
 <td id="T_42893_row5_col0" class="data row5 col0">Skill Barrier</td>
 <td id="T_42893_row5_col1" class="data row5 col1">Very high — Python, ML, deep learning, cloud</td>
 <td id="T_42893_row5_col2" class="data row5 col2">More varied — communication, management, Excel, trades</td>
@@ -1286,7 +1291,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <div id="cell-team-skills" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Team skill levels DataFrame</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ══════════════════════════════════════════════════════════════════════════</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ══════════════════════════════════════════════════════════════════════════</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 🔧 CUSTOMIZE: Replace names and ratings with your actual team members</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ══════════════════════════════════════════════════════════════════════════</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1309,13 +1314,13 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"TensorFlow"</span>:        [   <span class="dv">1</span>,       <span class="dv">1</span>,        <span class="dv">2</span>,         <span class="dv">1</span>,        <span class="dv">1</span>  ],</span>
 <span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>df_skills <span class="op">=</span> pd.DataFrame(skills_data).set_index(<span class="st">"Name"</span>)</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>df_skills</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>df_skills</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="team-skills" class="cell-output cell-output-display" data-execution_count="13">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1356,7 +1361,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">Alice</td>
+<th data-quarto-table-cell-role="th">Alice</th>
 <td>5</td>
 <td>4</td>
 <td>3</td>
@@ -1374,7 +1379,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <td>1</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">Bob</td>
+<th data-quarto-table-cell-role="th">Bob</th>
 <td>3</td>
 <td>2</td>
 <td>1</td>
@@ -1392,7 +1397,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">Charlie</td>
+<th data-quarto-table-cell-role="th">Charlie</th>
 <td>4</td>
 <td>5</td>
 <td>4</td>
@@ -1410,7 +1415,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <td>2</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">David</td>
+<th data-quarto-table-cell-role="th">David</th>
 <td>2</td>
 <td>3</td>
 <td>2</td>
@@ -1428,7 +1433,7 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">Eve</td>
+<th data-quarto-table-cell-role="th">Eve</th>
 <td>4</td>
 <td>3</td>
 <td>2</td>
@@ -1454,10 +1459,10 @@ Our Lightcast Dataset — Top States by AI Volume:</code></pre>
 <div id="cell-heatmap" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Team skill heatmap</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.imshow(df_skills, text_auto<span class="op">=</span><span class="va">True</span>, color_continuous_scale<span class="op">=</span><span class="st">"RdYlGn"</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.imshow(df_skills, text_auto<span class="op">=</span><span class="va">True</span>, color_continuous_scale<span class="op">=</span><span class="st">"RdYlGn"</span>,</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Figure 10: Team Skill Levels Heatmap"</span>, labels<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"Level"</span>), aspect<span class="op">=</span><span class="st">"auto"</span>)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>fig.update_layout(height<span class="op">=</span><span class="dv">400</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="heatmap" class="cell-output cell-output-display">
 <div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
@@ -1491,14 +1496,14 @@ if (outputEl) {{
 <div id="cell-radar" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Individual radar charts</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cats <span class="op">=</span> <span class="bu">list</span>(df_skills.columns)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cats <span class="op">=</span> <span class="bu">list</span>(df_skills.columns)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> go.Figure()</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> member <span class="kw">in</span> df_skills.index:</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    vals <span class="op">=</span> df_skills.loc[member].tolist() <span class="op">+</span> [df_skills.loc[member].iloc[<span class="dv">0</span>]]</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    fig.add_trace(go.Scatterpolar(r<span class="op">=</span>vals, theta<span class="op">=</span>cats<span class="op">+</span>[cats[<span class="dv">0</span>]], fill<span class="op">=</span><span class="st">'toself'</span>, name<span class="op">=</span>member, opacity<span class="op">=</span><span class="fl">0.6</span>))</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>fig.update_layout(polar<span class="op">=</span><span class="bu">dict</span>(radialaxis<span class="op">=</span><span class="bu">dict</span>(visible<span class="op">=</span><span class="va">True</span>, <span class="bu">range</span><span class="op">=</span>[<span class="dv">0</span>,<span class="dv">5</span>])),</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Figure 11: Individual Skill Profiles"</span>, height<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="radar" class="cell-output cell-output-display">
 <div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
@@ -1535,7 +1540,7 @@ if (outputEl) {{
 <div id="market-demand" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Skill demand from AI vs Non-AI postings</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>skill_demand_ai, skill_demand_nonai <span class="op">=</span> {}, {}</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>skill_demand_ai, skill_demand_nonai <span class="op">=</span> {}, {}</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat, d <span class="kw">in</span> [(<span class="st">'AI-Related'</span>, skill_demand_ai), (<span class="st">'Non-AI'</span>, skill_demand_nonai)]:</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">'job_category'</span>] <span class="op">==</span> cat]</span>
@@ -1548,7 +1553,7 @@ if (outputEl) {{
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined demand (average)</span></span>
 <span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>market_demand <span class="op">=</span> {}</span>
 <span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> skill <span class="kw">in</span> df_skills.columns:</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    market_demand[skill] <span class="op">=</span> <span class="bu">round</span>((skill_demand_ai.get(skill, <span class="dv">0</span>) <span class="op">+</span> skill_demand_nonai.get(skill, <span class="dv">0</span>)) <span class="op">/</span> <span class="dv">2</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    market_demand[skill] <span class="op">=</span> <span class="bu">round</span>((skill_demand_ai.get(skill, <span class="dv">0</span>) <span class="op">+</span> skill_demand_nonai.get(skill, <span class="dv">0</span>)) <span class="op">/</span> <span class="dv">2</span>, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -1557,7 +1562,7 @@ if (outputEl) {{
 <div id="gap" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Team vs Market gap analysis</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>team_avg <span class="op">=</span> df_skills.mean()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>team_avg <span class="op">=</span> df_skills.mean()</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>team_pct <span class="op">=</span> (team_avg <span class="op">/</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>comp <span class="op">=</span> pd.DataFrame({</span>
@@ -1582,7 +1587,7 @@ if (outputEl) {{
 <span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'Figure 13: Gap Severity (Positive = Need Improvement)'</span>,</span>
 <span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'Gap'</span>, color_continuous_scale<span class="op">=</span><span class="st">'RdYlGn_r'</span>)</span>
 <span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>fig2.update_layout(coloraxis_showscale<span class="op">=</span><span class="va">False</span>, height<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>fig2.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>fig2.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="gap-1" class="cell-output cell-output-display">
 <div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
@@ -1647,7 +1652,7 @@ if (outputEl) {{
 <div id="individual-gaps" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Per-member priorities and mentoring matches</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"INDIVIDUAL IMPROVEMENT PRIORITIES"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"INDIVIDUAL IMPROVEMENT PRIORITIES"</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">60</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> member <span class="kw">in</span> df_skills.index:</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    scores <span class="op">=</span> df_skills.loc[member]</span>
@@ -1666,7 +1671,7 @@ if (outputEl) {{
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    experts <span class="op">=</span> df_skills[df_skills[skill] <span class="op">&gt;=</span> <span class="dv">4</span>].index.tolist()</span>
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    learners <span class="op">=</span> df_skills[df_skills[skill] <span class="op">&lt;=</span> <span class="dv">2</span>].index.tolist()</span>
 <span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> experts <span class="kw">and</span> learners:</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>skill<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(experts)<span class="sc">}</span><span class="ss"> can mentor → </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(learners)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>skill<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(experts)<span class="sc">}</span><span class="ss"> can mentor → </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(learners)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>INDIVIDUAL IMPROVEMENT PRIORITIES
@@ -1713,7 +1718,7 @@ if (outputEl) {{
 <div id="kmeans" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>KMeans clustering with elbow and silhouette</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder, StandardScaler</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder, StandardScaler</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1777,7 +1782,7 @@ if (outputEl) {{
 <span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a>fig3.show()</span>
 <span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-64"><a href="#cb26-64" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Cluster Summary:"</span>)</span>
-<span id="cb26-65"><a href="#cb26-65" aria-hidden="true" tabindex="-1"></a>display(cl_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-65"><a href="#cb26-65" aria-hidden="true" tabindex="-1"></a>display(cl_sum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Clustering: 30,807 rows, features: ['state_name_enc', 'onet_name_enc', 'salary', 'is_ai_int']</code></pre>
@@ -1877,7 +1882,7 @@ Cluster Summary:</code></pre>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1889,14 +1894,14 @@ Cluster Summary:</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>0</td>
 <td>24849</td>
 <td>0</td>
 <td>0.0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>1</td>
 <td>5958</td>
 <td>5958</td>
@@ -1916,7 +1921,7 @@ Cluster Summary:</code></pre>
 <div id="regression" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Linear and Random Forest regression on salary</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
@@ -1953,7 +1958,7 @@ Cluster Summary:</code></pre>
 <span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"Figure 17: Feature Importance — Salary Prediction (Random Forest)"</span>,</span>
 <span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">'Importance'</span>, color_continuous_scale<span class="op">=</span><span class="st">'Greens'</span>)</span>
 <span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a>    fig.update_layout(coloraxis_showscale<span class="op">=</span><span class="va">False</span>, height<span class="op">=</span><span class="dv">300</span>)</span>
-<span id="cb30-38"><a href="#cb30-38" aria-hidden="true" tabindex="-1"></a>    fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-38"><a href="#cb30-38" aria-hidden="true" tabindex="-1"></a>    fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Train: 24,645 | Test: 6,162
@@ -1964,7 +1969,7 @@ Regression Results:</code></pre>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1975,13 +1980,13 @@ Regression Results:</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>Linear Regression</td>
 <td>$44,517</td>
 <td>0.0032</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>Random Forest</td>
 <td>$44,282</td>
 <td>0.0137</td>
@@ -2028,7 +2033,7 @@ if (outputEl) {{
 <div id="classification" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Logistic Regression and Random Forest classification</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, f1_score, confusion_matrix, classification_report</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2074,7 +2079,7 @@ if (outputEl) {{
 <span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Figure: Feature Importance — AI Classification (Random Forest)"</span>,</span>
 <span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'Importance'</span>, color_continuous_scale<span class="op">=</span><span class="st">'Teal'</span>)</span>
 <span id="cb32-46"><a href="#cb32-46" aria-hidden="true" tabindex="-1"></a>fig.update_layout(coloraxis_showscale<span class="op">=</span><span class="va">False</span>, height<span class="op">=</span><span class="dv">300</span>)</span>
-<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Classification Results:</code></pre>
@@ -2083,7 +2088,7 @@ if (outputEl) {{
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -2094,13 +2099,13 @@ if (outputEl) {{
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>Logistic Regression</td>
 <td>0.8066</td>
 <td>0.0000</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>Random Forest</td>
 <td>0.8132</td>
 <td>0.0785</td>
@@ -2225,7 +2230,7 @@ if (outputEl) {{
 <div id="cell-geo-strategy" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Career targeting recommendations</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> pd.DataFrame({</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Strategy'</span>: [<span class="st">'Maximum AI Opportunity'</span>, <span class="st">'AI + Affordable Living'</span>, <span class="st">'Bridge (AI + Broad Growth)'</span>,</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'Non-AI Stability + Growth'</span>, <span class="st">'Remote-First AI'</span>],</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Target Locations'</span>: [</span>
@@ -2243,7 +2248,7 @@ if (outputEl) {{
 <span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Geographic flexibility but competitive applicant pools'</span></span>
 <span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    ]</span>
 <span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>display(geo.style.set_properties(<span class="op">**</span>{<span class="st">'text-align'</span>:<span class="st">'left'</span>}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>display(geo.style.set_properties(<span class="op">**</span>{<span class="st">'text-align'</span>:<span class="st">'left'</span>}))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="geo-strategy" class="cell-output cell-output-display">
 <style type="text/css">
@@ -2252,7 +2257,7 @@ if (outputEl) {{
 }
 </style>
 
-<table id="T_55cd7" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table id="T_55cd7" class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
@@ -2263,31 +2268,31 @@ if (outputEl) {{
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_55cd7_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">0</td>
+<th id="T_55cd7_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">0</th>
 <td id="T_55cd7_row0_col0" class="data row0 col0">Maximum AI Opportunity</td>
 <td id="T_55cd7_row0_col1" class="data row0 col1">San Francisco Bay Area, Seattle, Boston, NYC, Washington DC</td>
 <td id="T_55cd7_row0_col2" class="data row0 col2">Highest salary but highest cost of living</td>
 </tr>
 <tr class="even">
-<td id="T_55cd7_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">1</td>
+<th id="T_55cd7_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">1</th>
 <td id="T_55cd7_row1_col0" class="data row1 col0">AI + Affordable Living</td>
 <td id="T_55cd7_row1_col1" class="data row1 col1">Austin, TX; Raleigh, NC; Denver, CO; Atlanta, GA</td>
 <td id="T_55cd7_row1_col2" class="data row1 col2">Strong AI ecosystem with moderate costs (emerging hubs)</td>
 </tr>
 <tr class="odd">
-<td id="T_55cd7_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2</td>
+<th id="T_55cd7_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2</th>
 <td id="T_55cd7_row2_col0" class="data row2 col0">Bridge (AI + Broad Growth)</td>
 <td id="T_55cd7_row2_col1" class="data row2 col1">Dallas–Fort Worth, TX; Austin, TX; Atlanta, GA</td>
 <td id="T_55cd7_row2_col2" class="data row2 col2">Both strong AI volume AND broad labor market growth</td>
 </tr>
 <tr class="even">
-<td id="T_55cd7_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">3</td>
+<th id="T_55cd7_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">3</th>
 <td id="T_55cd7_row3_col0" class="data row3 col0">Non-AI Stability + Growth</td>
 <td id="T_55cd7_row3_col1" class="data row3 col1">Tampa, FL; Miami, FL; Phoenix, AZ; Jacksonville, FL</td>
 <td id="T_55cd7_row3_col2" class="data row3 col2">Fast-growing labor market, lower AI intensity</td>
 </tr>
 <tr class="odd">
-<td id="T_55cd7_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">4</td>
+<th id="T_55cd7_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">4</th>
 <td id="T_55cd7_row4_col0" class="data row4 col0">Remote-First AI</td>
 <td id="T_55cd7_row4_col1" class="data row4 col1">Apply nationally — many AI roles are remote-friendly</td>
 <td id="T_55cd7_row4_col2" class="data row4 col2">Geographic flexibility but competitive applicant pools</td>
@@ -2302,7 +2307,7 @@ if (outputEl) {{
 <div id="cell-certs" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Certification recommendations</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>certs <span class="op">=</span> pd.DataFrame({</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>certs <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Certification'</span>: [<span class="st">'AWS Cloud Practitioner'</span>, <span class="st">'Google Data Analytics Professional'</span>,</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'TensorFlow Developer Certificate'</span>, <span class="st">'Azure Fundamentals (AZ-900)'</span>,</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'IBM Data Science Professional'</span>],</span>
@@ -2311,13 +2316,13 @@ if (outputEl) {{
 <span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Cost'</span>: [<span class="st">'$100'</span>, <span class="st">'$49/mo'</span>, <span class="st">'$100'</span>, <span class="st">'Free'</span>, <span class="st">'$49/mo'</span>],</span>
 <span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Duration'</span>: [<span class="st">'2–4 weeks'</span>, <span class="st">'6 months'</span>, <span class="st">'3–4 months'</span>, <span class="st">'1–2 weeks'</span>, <span class="st">'4–6 months'</span>]</span>
 <span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>display(certs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>display(certs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="certs" class="cell-output cell-output-display">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -2330,7 +2335,7 @@ if (outputEl) {{
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>AWS Cloud Practitioner</td>
 <td>Cloud/AI</td>
 <td>Beginner</td>
@@ -2338,7 +2343,7 @@ if (outputEl) {{
 <td>2–4 weeks</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>Google Data Analytics Professional</td>
 <td>Analytics</td>
 <td>Beginner</td>
@@ -2346,7 +2351,7 @@ if (outputEl) {{
 <td>6 months</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>TensorFlow Developer Certificate</td>
 <td>AI/ML</td>
 <td>Intermediate</td>
@@ -2354,7 +2359,7 @@ if (outputEl) {{
 <td>3–4 months</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>Azure Fundamentals (AZ-900)</td>
 <td>Cloud</td>
 <td>Beginner</td>
@@ -2362,7 +2367,7 @@ if (outputEl) {{
 <td>1–2 weeks</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>IBM Data Science Professional</td>
 <td>Data Science</td>
 <td>Intermediate</td>
@@ -2393,236 +2398,243 @@ if (outputEl) {{
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -2630,185 +2642,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 </div> <!-- /content -->
 <script src="./custom.js"></script>
 

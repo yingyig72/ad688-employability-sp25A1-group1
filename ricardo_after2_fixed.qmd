@@ -175,9 +175,8 @@ fig.update_layout(
         automargin=True
     ),
     coloraxis_showscale=False,
-    height=750,
-    width=1000,
-    margin=dict(l=180, r=50, t=80, b=60)
+    height=650,
+    margin=dict(l=150, r=30, t=70, b=50)
 )
 fig.show()
 ```
