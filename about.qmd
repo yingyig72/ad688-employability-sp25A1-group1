@@ -1,0 +1,105 @@
+---
+title: "About This Project"
+subtitle: "Navigating the Job Market — AD688 Team 1, Spring 2026"
+author: "Team 1 — Omar Mohd Haris, Ricardo, Tianyi, Yingyi, Zichen Zhang"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: false
+  docx:
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    # Uncomment the next line if you have a custom Word style template at assets/reference.docx:
+    # reference-doc: assets/reference.docx
+bibliography: references.bib
+---
+
+## Overview
+
+This project is the Spring 2026 capstone for **AD688: Web Analytics for Business** at Boston University, completed by Team 1 — five graduate students in Boston University's Applied Business Analytics program. The site investigates how the U.S. labor market is being reshaped by artificial intelligence, remote work, and shifts in industry demand. Using **72,454 cleaned job postings from the Lightcast dataset** (May–September 2024, covering all 50 states plus DC, 3,841 cities, and 653 metro areas), we tackle eight research questions across two interlocking themes: *where* the jobs are (geography and remote work) and *what* they require (skills, industries, and AI/ML expertise).
+
+Each team member owns one or more research questions. The pages share a common cleaned dataset (`data/lightcast_cleaned.csv`), a shared bibliography (`references.bib`), and a unified Plotly visual theme so the analyses read as one coherent study rather than five separate reports.
+
+## The Team & Research Questions
+
+| Member | Research Question | Page |
+|---|---|---|
+| **Ricardo** | Which U.S. cities or states have the highest job growth for AI vs. non-AI careers? | `ricardo_after.qmd` |
+| **Tianyi** | Do tech hubs still dominate AI-related hiring, or are other locations emerging? | `tianyi.qmd` |
+| **Zichen Zhang** | Are remote jobs increasing or decreasing across industries? | `zichen.qmd` |
+| **Yingyi** | How do urban vs. rural job markets compare for AI and non-AI careers? | `yingyi.qmd` |
+| **Omar Mohd Haris** | What are the most in-demand skills for DS, BA, and ML roles? | `omar.qmd` |
+| **Omar Mohd Haris** | Have job descriptions evolved in 2024 to require AI/ML expertise? | `ai_ml_evolution.qmd` |
+| **Omar Mohd Haris** | What industries are hiring the most data scientists, and why? | `industry_hiring.qmd` |
+| **Omar Mohd Haris** | What is the career outlook for business analytics professionals? | `ba_career_outlook.qmd` |
+
+In addition to the research-question pages, the site includes a **Data Cleaning** page documenting the shared pipeline, a **Machine Learning** page with an interactive in-browser AI/ML requirement classifier, a **Find Your Match** widget that uses K-means clustering to map a user's skills to job clusters, and a consolidated **Skills Gap Analysis**.
+
+## Data & Methodology
+
+The raw Lightcast file contained 72,498 postings across 131 columns. The team's shared cleaning pipeline pares it down to a single canonical file:
+
+- **Column reduction** — 131 columns down to 25 used columns (identifiers, timing, job info, skills, education, geography, remote work, salary), then derived columns (`posted_year`, `posted_month`, `has_salary`, `remote_category`) bring the final width to 29.
+- **Row hygiene** — Drop rows missing both posting date and title (44 dropped); deduplicate on `id` (none found in this batch).
+- **Salary cleaning** — Coerce numeric, then null out values outside a reasonable annual range of \$20,000–\$500,000. **30,807 rows (42.5%)** end up with valid salary data.
+- **Remote work standardization** — Collapse Lightcast's inconsistent labels into three buckets: `Remote` (15,884), `Hybrid`, and `On-site` (56,570).
+- **Skills parsing** — Lightcast stores skills as JSON arrays in string columns; we parse them into clean Python lists (and serialize back to pipe-separated strings for CSV portability).
+- **Geography** — Strip whitespace and normalize null sentinels in state, city, county, and MSA fields.
+
+The cleaned file covers postings from **May 1 – September 30, 2024**, includes **5,719 unique job titles**, and is the single source of truth for every downstream page. The most common skills overall are Communication (31,661), Data Analysis (28,515), Management (24,631), SQL (21,733), and Problem Solving (18,522).
+
+## Summary of Findings
+
+What follows is a synthesis of the eight research-question pages — read this as a one-paragraph executive summary per page if you want the conclusions without the figures.
+
+### Geography of AI vs. Non-AI Jobs (Ricardo)
+
+The U.S. labor market splits into **two overlapping but geographically distinct tracks**. AI hiring (16.2% of postings using a keyword classifier on title + ONET + skills) concentrates in innovation-intensive states — California, Virginia, Washington, Massachusetts, New York, and DC — and a narrow set of metros (San Francisco, San Jose, Seattle, NYC, Washington DC, Boston). Non-AI growth follows a different geography: Lightcast's 2025 Talent Attraction Scorecard ranks Florida and Texas first and second, with California (#51), New York (#49), and Massachusetts (#42) near the bottom. **Texas is the bridge state** — #2 in both AI volume (UMD-LinkUp) and broad talent attraction, with Austin and Dallas–Fort Worth functioning as bridge metros. AI postings carry a measurable salary premium (median \$120,425 vs. \$114,700), widest in the highest-AI-intensity states. Skills diverge sharply: AI postings demand Python, ML, SQL, AWS/Azure, and PyTorch/TensorFlow; non-AI postings spread across communication, project management, and Excel. Predictive models confirm the segmentation — KMeans clustering naturally separates AI from non-AI postings (silhouette = 0.443 at K=2), and ONET code is the strongest predictor of both salary and AI classification.
+
+### Tech Hubs vs. Emerging Cities (Tianyi)
+
+Traditional tech hubs (San Francisco, Seattle, Boston, NYC, Austin, DC) still account for a large share of AI postings, but **the majority of AI-related job postings now sit outside these hubs**. Dallas, Atlanta, Chicago, and other diversified urban economies appear in the top metro rankings, suggesting AI hiring is diffusing as digital transformation spreads across industries and remote/distributed work becomes more feasible. The implication for job seekers: don't restrict the search to coastal hubs — emerging metros offer growing AI opportunities, often with lower cost of living and less competition.
+
+### Remote Jobs by Industry (Zichen Zhang)
+
+Remote work in 2024 **did not move uniformly** across industries between May and September. Among the 15 highest-volume industries, several gained — General Medical and Surgical Hospitals (+9.4 pp), Unclassified Industry (+8.9 pp), Other Professional/Scientific/Technical Services (+6.7 pp) — while several **computer-related industries declined sharply**: Custom Computer Programming Services (-10.5 pp), Computer Systems Design Services (-8.4 pp), Other Computer Related Services (-8.0 pp). The takeaway: remote-work availability is industry-specific, not a single market-wide trend. Job seekers prioritizing flexibility should evaluate sector-by-sector rather than assuming a uniform direction.
+
+### Urban vs. Rural Job Markets (Yingyi)
+
+The dataset is heavily urban (67,569 urban vs. 3,200 rural postings after geocoding to U.S. Census Urban Area boundaries). High-skill jobs grow steadily in urban areas, while medium- and low-skill growth is weaker; rural areas show small changes across all skill levels. AI roles skew higher-skill in both urban and rural areas, but the **urban high-skill premium is larger**, and the AI wage premium is more pronounced in cities. The pattern matches the literature on AI as a skill-biased, geographically concentrated transformer of work — it amplifies existing urban–rural inequality rather than redistributing opportunity evenly.
+
+### Most In-Demand Skills (Omar)
+
+Across all DS/BA/ML postings, **Communication (43.7%), Data Analysis (39.4%), Management (34.0%), and SQL (30.0%)** lead overall demand. SQL is the **single most-demanded technical skill across every role category**. Among software/tools, the BI landscape is a three-way race: Tableau (16.3%), Power BI (15.0%), Excel (17.7%), with Python at 16.9%. The skill profile splits cleanly by role: Data Science / ML postings (n=585) emphasize Data Science (77.6%), Python (53.5%), SQL (52.0%), Mathematics, and ML; Business Analytics / BI postings (n=71,869) emphasize Communication, Management, Problem Solving, and Leadership. The technical–interpersonal divide is real and consistent with prior literature [@radovilsky2018skills; @verma2019investigation; @levendis2025business].
+
+### AI/ML in Job Descriptions (Omar)
+
+AI/ML skills appear in **9.3% of postings overall**, but the trend is steeply rising — from 7.6% in May 2024 to **11.4% in September 2024**, a ~50% relative increase in five months. The most-demanded AI/ML skills are Machine Learning (8,016), Artificial Intelligence (6,280), Generative AI (2,280), MLOps (674), and TensorFlow (591). Demand is no longer confined to data science titles: Data Analysts, Enterprise Architects, BI Analysts, and Data Modelers all show meaningful AI/ML requirements. AI/ML postings demand more education on average — 65.0% require a Bachelor's vs. 56.4% for non-AI/ML — and Master's degree requirements appear at 5.8% (vs. 2.3%). Generative AI and LLM keywords are emerging, confirming the labor-market shifts documented by @carnevale2023generative.
+
+### Industries Hiring Data Scientists (Omar)
+
+Filtering to data-science-related postings yields **14,214 jobs (19.6% of the dataset)**. By volume the leaders are Professional/Scientific/Technical Services (3,506), Administrative Support (2,322), Unclassified (1,804), Finance and Insurance (1,485), and Information (849). But by **concentration** (DS share of an industry's postings) the leaders shift: Public Administration (32.6%), Educational Services (30.7%), and Management of Companies (29.5%) top the list, showing that government and education are intensely focused on hiring DS talent relative to their overall hiring volume. **Information pays the most** (median \$134,500), followed by Retail Trade (\$115,000) and Finance (\$104,000). Skill profiles vary by industry: Information emphasizes Python, ETL, and Data Modeling; Finance emphasizes SQL, Communication, and Presentations.
+
+### Business Analytics Career Outlook (Omar)
+
+After re-categorizing into BA / Data Analytics / Data Science / Data Engineering, **demand for BA/BI roles is steady** at ~1,000–1,300 monthly postings. Compensation is competitive though not the highest: Data Engineering medians \$130,600, Data Science / ML \$126,947, **Business Analytics / BI \$110,000**, Data Analytics \$93,868. The BA skill profile is distinctive — Business Intelligence (64.0%), SQL (52.5%), Communication (47.3%), Power BI (37.4%), Tableau (34.5%) — confirming the "applied analytics + stakeholder engagement" identity that distinguishes BA from DS/ML's programming/algorithms focus. Education barriers are lower (71.5% Bachelor's, just 2.6% Master's), and the field spans Professional Services, Manufacturing, Finance, and Healthcare. Remote availability is moderate (22.7% remote). The path is accessible, the demand sustained, and the career trajectory clear.
+
+## Predictive Modeling
+
+Two predictive models live on the site as standalone deliverables. The **AI/ML Requirement Predictor** (`ml_model.qmd`) is a logistic regression — Test AUC 0.746, accuracy 0.908 — that takes industry, role, education, and a checklist of baseline skills (Python, SQL, R, Excel, Tableau, Power BI, Statistics, Data Visualization) and outputs a calibrated probability that the posting will require AI/ML expertise. The trained coefficients are exported to JSON and the prediction runs entirely in the browser. The **Find Your Match** widget (`cluster_finder.qmd`) uses K-means clustering on the postings and a cosine-similarity skill matcher so users can paste their skills and see which job clusters they're closest to.
+
+## Tools & Reproducibility
+
+The site is built with **Quarto** and deployed via **GitHub Actions** to GitHub Pages. The analysis stack is **Python** (pandas, scikit-learn, matplotlib, plotly), with deck.gl and custom WebGL fragment shaders powering the home page's silk-flow and aurora visual elements. References are managed in a shared `references.bib` file. The cleaned Lightcast file is regenerated only when the cleaning page changes; downstream pages use Quarto's `freeze: true` execution caching so renders are fast and reproducible across team members. The site is at <https://yingyig72.github.io/ad688-employability-sp25A1-group1>.
+
+## How to Read This Report
+
+If you're rendering this document as a Word file, the navigation links from the live site won't be clickable — but every research-question page is reachable from the sidebar of the HTML version, and every claim in the **Summary of Findings** maps to one author's page. For the full methodology, code, and figures behind any claim, follow the link in the **Team & Research Questions** table to the corresponding `.qmd` page.
+
+## References {.unnumbered}
+
+::: {#refs}
+:::
