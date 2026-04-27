@@ -170,9 +170,14 @@ fig = px.bar(ai_share.head(20), x='ai_pct', y='state_name', orientation='h',
     labels={'ai_pct': '% AI-Related', 'state_name': 'State'},
     color='ai_pct', color_continuous_scale='Blues')
 fig.update_layout(
-    yaxis=dict(autorange="reversed"),
+    yaxis=dict(
+        autorange="reversed",
+        automargin=True
+    ),
     coloraxis_showscale=False,
-    height=600
+    height=750,
+    width=1000,
+    margin=dict(l=180, r=50, t=80, b=60)
 )
 fig.show()
 ```
