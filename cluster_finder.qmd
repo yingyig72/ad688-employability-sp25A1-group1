@@ -6,6 +6,9 @@ format:
   html:
     toc: true
     toc-depth: 3
+jupyter: python3
+execute:
+  echo: false
 ---
 
 ## Overview
@@ -22,13 +25,178 @@ K-means with k=10 produced ten interpretable clusters covering software engineer
 
 ## Cluster Landscape
 
-The plot below projects every posting down to two dimensions using PCA, colored by its assigned cluster. Points that sit close together share similar skill profiles; clusters that overlap in 2D often reflect role families with related skill bases (e.g. data analytics and business intelligence).
+The plot below projects every posting down to two dimensions using PCA, colored by its assigned cluster. **Hover over any point** to see the job title and cluster, **click cluster names in the legend** to isolate them, and use the **box/lasso tools** in the top-right corner to zoom into dense regions.
 
-![Job postings projected to 2D via PCA, colored by cluster assignment](visualizations/cluster_scatter.png)
+```{python}
+#| label: fig-cluster-scatter
+#| fig-cap: "Job postings projected to 2D via PCA, colored by cluster assignment. Hover for job titles; click legend items to filter."
 
-The clusters themselves are defined by their top skills. The chart below shows the most common skills within each cluster, which gives a quick sense of what kind of work each cluster represents.
+import json
+import numpy as np
+import pandas as pd
+import plotly.graph_objects as go
+import plotly.express as px
 
-![Top skills within each of the ten clusters](visualizations/cluster_top_skills.png)
+# Load the cluster artifacts produced by build_clusters.py.
+# Expected files (adjust paths if your build script writes elsewhere):
+#   assets/cluster_data.json   - cluster summaries (top skills, titles, industries, etc.)
+#   assets/cluster_points.csv  - per-posting PCA coords + cluster assignments
+with open("assets/cluster_data.json") as f:
+    cluster_data = json.load(f)
+
+points = pd.read_csv("assets/cluster_points.csv")
+# Expected columns: pc1, pc2, cluster, title (job title), and optionally industry
+
+# A clean qualitative palette with enough contrast for 10 clusters
+palette = px.colors.qualitative.Bold + px.colors.qualitative.Set2
+palette = palette[:10]
+
+# Build human-readable cluster labels from the top skills in each cluster
+def cluster_label(cid):
+    info = cluster_data["clusters"][str(cid)]
+    # Prefer a curated short name if present; otherwise stitch the top 2 skills
+    if "name" in info:
+        return info["name"]
+    top2 = info.get("top_skills", [])[:2]
+    if top2:
+        return f"{cid}: " + " / ".join(top2)
+    return f"Cluster {cid}"
+
+cluster_ids = sorted(points["cluster"].unique())
+labels = {cid: cluster_label(cid) for cid in cluster_ids}
+
+# Down-sample very large clusters so the plot stays responsive.
+# (Plain-loop version: groupby(...).apply(...) drops the grouping column
+#  in pandas 2.2+, so we iterate the groups explicitly instead.)
+MAX_PER_CLUSTER = 1500
+sampled = pd.concat([
+    g.sample(min(len(g), MAX_PER_CLUSTER), random_state=42)
+    for _, g in points.groupby("cluster")
+], ignore_index=True)
+
+fig = go.Figure()
+for i, cid in enumerate(cluster_ids):
+    sub = sampled[sampled["cluster"] == cid]
+    hover = [
+        f"<b>{t}</b><br>{labels[cid]}"
+        for t in sub.get("title", pd.Series([""] * len(sub)))
+    ]
+    fig.add_trace(go.Scattergl(
+        x=sub["pc1"],
+        y=sub["pc2"],
+        mode="markers",
+        name=labels[cid],
+        marker=dict(
+            color=palette[i % len(palette)],
+            size=4.5,
+            opacity=0.6,
+            line=dict(width=0),
+        ),
+        hovertext=hover,
+        hoverinfo="text",
+    ))
+
+fig.update_layout(
+    title=dict(text="<b>Job postings clustered by skill profile</b>", x=0.02, font=dict(size=15)),
+    xaxis=dict(title="PC1", showgrid=True, gridcolor="#eee", zeroline=False),
+    yaxis=dict(title="PC2", showgrid=True, gridcolor="#eee", zeroline=False),
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    height=580,
+    margin=dict(l=40, r=40, t=60, b=50),
+    legend=dict(
+        title="Cluster",
+        font=dict(size=10),
+        bgcolor="rgba(255,255,255,0.85)",
+        bordercolor="#ddd",
+        borderwidth=1,
+        x=1.02, y=1,
+    ),
+    font=dict(family="inherit"),
+)
+
+fig.show()
+```
+
+The clusters themselves are defined by their top skills. The chart below lets you **pick any cluster** to see its most defining skills, ranked by how strongly they distinguish that cluster from the rest of the market.
+
+```{python}
+#| label: fig-cluster-skills
+#| fig-cap: "Top defining skills per cluster. Use the dropdown to switch between clusters."
+
+# Build one trace per cluster; only the first is visible by default.
+# A dropdown menu toggles visibility.
+N_TOP_SKILLS = 12
+
+traces = []
+buttons = []
+for i, cid in enumerate(cluster_ids):
+    info = cluster_data["clusters"][str(cid)]
+    skills = info.get("top_skills", [])[:N_TOP_SKILLS]
+    weights = info.get("top_skill_weights", list(range(len(skills), 0, -1)))[:N_TOP_SKILLS]
+
+    # Reverse so the top skill is at the top of the horizontal bar chart
+    skills_r = list(reversed(skills))
+    weights_r = list(reversed(weights))
+
+    traces.append(go.Bar(
+        x=weights_r,
+        y=skills_r,
+        orientation="h",
+        marker=dict(color=palette[i % len(palette)]),
+        name=labels[cid],
+        visible=(i == 0),
+        hovertemplate="<b>%{y}</b><br>Importance: %{x:.3f}<extra></extra>",
+        text=[f"{w:.2f}" for w in weights_r],
+        textposition="outside",
+        textfont=dict(size=9, color="#555"),
+    ))
+
+# One button per cluster — sets visibility array and updates the title
+for i, cid in enumerate(cluster_ids):
+    visibility = [j == i for j in range(len(cluster_ids))]
+    buttons.append(dict(
+        label=labels[cid],
+        method="update",
+        args=[
+            {"visible": visibility},
+            {"title.text": f"<b>Top skills — {labels[cid]}</b>"},
+        ],
+    ))
+
+fig2 = go.Figure(data=traces)
+fig2.update_layout(
+    title=dict(text=f"<b>Top skills — {labels[cluster_ids[0]]}</b>", x=0.02, font=dict(size=15)),
+    xaxis=dict(title="Skill importance (TF-IDF weight at centroid)", gridcolor="#eee"),
+    yaxis=dict(title="", automargin=True),
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    height=520,
+    margin=dict(l=20, r=80, t=80, b=60),
+    showlegend=False,
+    font=dict(family="inherit"),
+    updatemenus=[dict(
+        buttons=buttons,
+        direction="down",
+        x=1.02, xanchor="left",
+        y=1.0, yanchor="top",
+        bgcolor="white",
+        bordercolor="#ccc",
+        borderwidth=1,
+        font=dict(size=11),
+        showactive=True,
+    )],
+    annotations=[dict(
+        text="<b>Cluster:</b>",
+        x=1.02, xanchor="left",
+        y=1.08, yanchor="bottom",
+        xref="paper", yref="paper",
+        showarrow=False,
+        font=dict(size=11, color="#555"),
+    )],
+)
+fig2.show()
+```
 
 ## Find Your Own Cluster
 

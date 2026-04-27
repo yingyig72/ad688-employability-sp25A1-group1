@@ -141,9 +141,7 @@ import pandas as pd
 import json
 import os
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score, classification_report, confusion_matrix
@@ -268,26 +266,87 @@ print(classification_report(y_test, y_pred, digits=3))
 
 ## What the Model Learned
 
-The chart below shows the 15 features with the largest absolute coefficients. Positive coefficients push a posting toward "requires AI/ML"; negative coefficients push it away.
+The chart below shows the features with the largest absolute coefficients. Positive coefficients (green) push a posting toward "requires AI/ML"; negative coefficients (red) push it away. **Hover over any bar** for the exact log-odds value and the implied multiplicative effect on the odds.
 
 ```{python}
+#| label: fig-coefficients
+#| fig-cap: "Strongest predictors of AI/ML skill requirements (top 20 by absolute coefficient). Hover for details."
+
 coefs = pd.Series(model.coef_[0], index=X.columns).sort_values()
-top = pd.concat([coefs.head(8), coefs.tail(7)])
 
-fig, ax = plt.subplots(figsize=(9, 7))
-colors = ["#c62828" if v < 0 else "#2e7d32" for v in top.values]
-ax.barh(range(len(top)), top.values, color=colors)
-ax.set_yticks(range(len(top)))
-ax.set_yticklabels([c.replace("_", " ").replace("has ", "").title() for c in top.index], fontsize=9)
-ax.axvline(0, color="black", lw=0.6)
-ax.set_xlabel("Log-odds coefficient")
-ax.set_title("Strongest predictors of AI/ML skill requirements", fontweight="bold")
-plt.tight_layout()
-plt.savefig("visualizations/ml_coefficients.png", dpi=150, bbox_inches="tight")
-plt.close()
+# Show top 10 negative + top 10 positive, sorted ascending so largest positive is on top
+top_neg = coefs.head(10)
+top_pos = coefs.tail(10)
+top = pd.concat([top_neg, top_pos]).sort_values()
+
+# Pretty labels
+def prettify(c):
+    return (
+        c.replace("industry_", "Industry: ")
+         .replace("role_category_", "Role: ")
+         .replace("education_", "Education: ")
+         .replace("has_", "Skill: ")
+         .replace("_", " ")
+         .title()
+         .replace("Industry:", "Industry:")  # title() preservation
+    )
+
+labels = [prettify(c) for c in top.index]
+values = top.values
+colors = ["#c62828" if v < 0 else "#2e7d32" for v in values]
+odds_ratios = np.exp(values)
+
+# Custom hover text
+hover = [
+    f"<b>{lbl}</b><br>"
+    f"Log-odds coefficient: {v:+.3f}<br>"
+    f"Odds multiplier: ×{o:.2f}<br>"
+    f"Direction: {'Increases' if v > 0 else 'Decreases'} AI/ML probability"
+    for lbl, v, o in zip(labels, values, odds_ratios)
+]
+
+fig = go.Figure(go.Bar(
+    x=values,
+    y=labels,
+    orientation="h",
+    marker=dict(
+        color=colors,
+        line=dict(color="rgba(0,0,0,0.15)", width=0.5),
+    ),
+    hovertext=hover,
+    hoverinfo="text",
+    text=[f"{v:+.2f}" for v in values],
+    textposition="outside",
+    textfont=dict(size=10, color="#444"),
+))
+
+fig.update_layout(
+    title=dict(
+        text="<b>Strongest predictors of AI/ML skill requirements</b>",
+        font=dict(size=15),
+        x=0.02,
+    ),
+    xaxis=dict(
+        title="Log-odds coefficient",
+        zeroline=True,
+        zerolinecolor="black",
+        zerolinewidth=1,
+        gridcolor="#eee",
+    ),
+    yaxis=dict(
+        title="",
+        automargin=True,
+    ),
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    height=620,
+    margin=dict(l=20, r=60, t=60, b=50),
+    font=dict(family="inherit", size=11),
+    showlegend=False,
+)
+
+fig.show()
 ```
-
-![Model coefficients](visualizations/ml_coefficients.png)
 
 ## Exporting the Model for the Browser
 
