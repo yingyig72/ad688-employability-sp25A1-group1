@@ -1,9 +1,10 @@
 # Virtual environment
 .venv/
 
+
 # Quarto build files
 .quarto/
-_site/
+
 
 # Data files
 data/

@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Team 1 — Omar Mohd Haris, Ricardo, Tianyi, Yingyi, Zichen Zhang">
+<meta name="dcterms.date" content="2026-04-27">
 
-<title>Tianyi – AD688 Team 1 Spring 2026</title>
+<title>About This Project – AD688 Team 1 Spring 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -116,7 +118,7 @@ div.csl-indent {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link active" href="./about.html" aria-current="page"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
@@ -201,39 +203,53 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#do-tech-hubs-still-dominate-ai-related-hiring-or-are-other-locations-emerging" id="toc-do-tech-hubs-still-dominate-ai-related-hiring-or-are-other-locations-emerging" class="nav-link active" data-scroll-target="#do-tech-hubs-still-dominate-ai-related-hiring-or-are-other-locations-emerging">Do tech hubs still dominate AI-related hiring, or are other locations emerging?</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">Literature Review</a></li>
-  <li><a href="#data-cleaning-and-preparation" id="toc-data-cleaning-and-preparation" class="nav-link" data-scroll-target="#data-cleaning-and-preparation">Data Cleaning and Preparation</a></li>
-  <li><a href="#classification-logic" id="toc-classification-logic" class="nav-link" data-scroll-target="#classification-logic">Classification Logic</a></li>
-  <li><a href="#visualization-1-top-metropolitan-areas-by-ai-related-job-postings" id="toc-visualization-1-top-metropolitan-areas-by-ai-related-job-postings" class="nav-link" data-scroll-target="#visualization-1-top-metropolitan-areas-by-ai-related-job-postings">Visualization 1: Top Metropolitan Areas by AI-Related Job Postings</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#the-team-research-questions" id="toc-the-team-research-questions" class="nav-link" data-scroll-target="#the-team-research-questions">The Team &amp; Research Questions</a></li>
+  <li><a href="#data-methodology" id="toc-data-methodology" class="nav-link" data-scroll-target="#data-methodology">Data &amp; Methodology</a></li>
+  <li><a href="#summary-of-findings" id="toc-summary-of-findings" class="nav-link" data-scroll-target="#summary-of-findings">Summary of Findings</a>
   <ul class="collapse">
-  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#geography-of-ai-vs.-non-ai-jobs-ricardo" id="toc-geography-of-ai-vs.-non-ai-jobs-ricardo" class="nav-link" data-scroll-target="#geography-of-ai-vs.-non-ai-jobs-ricardo">Geography of AI vs.&nbsp;Non-AI Jobs (Ricardo)</a></li>
+  <li><a href="#tech-hubs-vs.-emerging-cities-tianyi" id="toc-tech-hubs-vs.-emerging-cities-tianyi" class="nav-link" data-scroll-target="#tech-hubs-vs.-emerging-cities-tianyi">Tech Hubs vs.&nbsp;Emerging Cities (Tianyi)</a></li>
+  <li><a href="#remote-jobs-by-industry-zichen-zhang" id="toc-remote-jobs-by-industry-zichen-zhang" class="nav-link" data-scroll-target="#remote-jobs-by-industry-zichen-zhang">Remote Jobs by Industry (Zichen Zhang)</a></li>
+  <li><a href="#urban-vs.-rural-job-markets-yingyi" id="toc-urban-vs.-rural-job-markets-yingyi" class="nav-link" data-scroll-target="#urban-vs.-rural-job-markets-yingyi">Urban vs.&nbsp;Rural Job Markets (Yingyi)</a></li>
+  <li><a href="#most-in-demand-skills-omar" id="toc-most-in-demand-skills-omar" class="nav-link" data-scroll-target="#most-in-demand-skills-omar">Most In-Demand Skills (Omar)</a></li>
+  <li><a href="#aiml-in-job-descriptions-omar" id="toc-aiml-in-job-descriptions-omar" class="nav-link" data-scroll-target="#aiml-in-job-descriptions-omar">AI/ML in Job Descriptions (Omar)</a></li>
+  <li><a href="#industries-hiring-data-scientists-omar" id="toc-industries-hiring-data-scientists-omar" class="nav-link" data-scroll-target="#industries-hiring-data-scientists-omar">Industries Hiring Data Scientists (Omar)</a></li>
+  <li><a href="#business-analytics-career-outlook-omar" id="toc-business-analytics-career-outlook-omar" class="nav-link" data-scroll-target="#business-analytics-career-outlook-omar">Business Analytics Career Outlook (Omar)</a></li>
   </ul></li>
-  <li><a href="#visualization-2-ai-related-job-postings-in-tech-hubs-vs-other-locations" id="toc-visualization-2-ai-related-job-postings-in-tech-hubs-vs-other-locations" class="nav-link" data-scroll-target="#visualization-2-ai-related-job-postings-in-tech-hubs-vs-other-locations">Visualization 2: AI-Related Job Postings in Tech Hubs vs Other Locations</a>
-  <ul class="collapse">
-  <li><a href="#interpretation-1" id="toc-interpretation-1" class="nav-link" data-scroll-target="#interpretation-1">Interpretation</a></li>
-  </ul></li>
-  <li><a href="#findings" id="toc-findings" class="nav-link" data-scroll-target="#findings">Findings</a></li>
-  <li><a href="#business-and-career-implications" id="toc-business-and-career-implications" class="nav-link" data-scroll-target="#business-and-career-implications">Business and Career Implications</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#predictive-modeling" id="toc-predictive-modeling" class="nav-link" data-scroll-target="#predictive-modeling">Predictive Modeling</a></li>
+  <li><a href="#tools-reproducibility" id="toc-tools-reproducibility" class="nav-link" data-scroll-target="#tools-reproducibility">Tools &amp; Reproducibility</a></li>
+  <li><a href="#how-to-read-this-report" id="toc-how-to-read-this-report" class="nav-link" data-scroll-target="#how-to-read-this-report">How to Read This Report</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="about.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Tianyi</h1>
+<h1 class="title">About This Project</h1>
+<p class="subtitle lead">Navigating the Job Market — AD688 Team 1, Spring 2026</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Team 1 — Omar Mohd Haris, Ricardo, Tianyi, Yingyi, Zichen Zhang </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 27, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -243,90 +259,153 @@ div.csl-indent {
 </header>
 
 
-<section id="do-tech-hubs-still-dominate-ai-related-hiring-or-are-other-locations-emerging" class="level2">
-<h2 class="anchored" data-anchor-id="do-tech-hubs-still-dominate-ai-related-hiring-or-are-other-locations-emerging">Do tech hubs still dominate AI-related hiring, or are other locations emerging?</h2>
-<p>This section examines whether AI-related job opportunities remain concentrated in traditional technology hubs or are increasingly distributed across other metropolitan areas. Using the Lightcast job postings dataset, the analysis evaluates the geographic distribution of AI-related hiring and explores whether emerging cities are becoming significant contributors to the AI labor market.</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This project is the Spring 2026 capstone for <strong>AD688: Web Analytics for Business</strong> at Boston University, completed by Team 1 — five graduate students in Boston University’s Applied Business Analytics program. The site investigates how the U.S. labor market is being reshaped by artificial intelligence, remote work, and shifts in industry demand. Using <strong>72,454 cleaned job postings from the Lightcast dataset</strong> (May–September 2024, covering all 50 states plus DC, 3,841 cities, and 653 metro areas), we tackle eight research questions across two interlocking themes: <em>where</em> the jobs are (geography and remote work) and <em>what</em> they require (skills, industries, and AI/ML expertise).</p>
+<p>Each team member owns one or more research questions. The pages share a common cleaned dataset (<code>data/lightcast_cleaned.csv</code>), a shared bibliography (<code>references.bib</code>), and a unified Plotly visual theme so the analyses read as one coherent study rather than five separate reports.</p>
 </section>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Geographic concentration has long been a defining characteristic of technology-driven labor markets. Major metropolitan areas such as San Francisco, Seattle, Boston, and New York have historically dominated technology hiring due to strong innovation ecosystems, access to skilled labor, and the presence of major firms and research institutions.</p>
-<p>However, recent developments—including the rise of remote work, cloud-based collaboration, and widespread adoption of artificial intelligence across industries—suggest that AI-related hiring may no longer be confined to a small set of traditional tech hubs. This analysis investigates whether these hubs still dominate AI-related hiring or whether other metropolitan areas are emerging as meaningful contributors to the AI job market.</p>
+<section id="the-team-research-questions" class="level2">
+<h2 class="anchored" data-anchor-id="the-team-research-questions">The Team &amp; Research Questions</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Member</th>
+<th>Research Question</th>
+<th>Page</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Ricardo</strong></td>
+<td>Which U.S. cities or states have the highest job growth for AI vs.&nbsp;non-AI careers?</td>
+<td><code>ricardo_after.qmd</code></td>
+</tr>
+<tr class="even">
+<td><strong>Tianyi</strong></td>
+<td>Do tech hubs still dominate AI-related hiring, or are other locations emerging?</td>
+<td><code>tianyi.qmd</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Zichen Zhang</strong></td>
+<td>Are remote jobs increasing or decreasing across industries?</td>
+<td><code>zichen.qmd</code></td>
+</tr>
+<tr class="even">
+<td><strong>Yingyi</strong></td>
+<td>How do urban vs.&nbsp;rural job markets compare for AI and non-AI careers?</td>
+<td><code>yingyi.qmd</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Omar Mohd Haris</strong></td>
+<td>What are the most in-demand skills for DS, BA, and ML roles?</td>
+<td><code>omar.qmd</code></td>
+</tr>
+<tr class="even">
+<td><strong>Omar Mohd Haris</strong></td>
+<td>Have job descriptions evolved in 2024 to require AI/ML expertise?</td>
+<td><code>ai_ml_evolution.qmd</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Omar Mohd Haris</strong></td>
+<td>What industries are hiring the most data scientists, and why?</td>
+<td><code>industry_hiring.qmd</code></td>
+</tr>
+<tr class="even">
+<td><strong>Omar Mohd Haris</strong></td>
+<td>What is the career outlook for business analytics professionals?</td>
+<td><code>ba_career_outlook.qmd</code></td>
+</tr>
+</tbody>
+</table>
+<p>In addition to the research-question pages, the site includes a <strong>Data Cleaning</strong> page documenting the shared pipeline, a <strong>Machine Learning</strong> page with an interactive in-browser AI/ML requirement classifier, a <strong>Find Your Match</strong> widget that uses K-means clustering to map a user’s skills to job clusters, and a consolidated <strong>Skills Gap Analysis</strong>.</p>
 </section>
-<section id="literature-review" class="level2">
-<h2 class="anchored" data-anchor-id="literature-review">Literature Review</h2>
-<p>Prior research suggests that AI-related labor demand tends to be geographically concentrated in regions with strong technical capabilities and innovation ecosystems. Evidence from online job postings shows that AI-related roles are often clustered in metropolitan areas with high demand for advanced skills (<span class="citation" data-cites="acemoglu2022artificial">Acemoglu et al. (<a href="#ref-acemoglu2022artificial" role="doc-biblioref">2022</a>)</span>).</p>
-<p>At the same time, recent analyses indicate that AI adoption is expanding across a broader set of industries and locations. Reports from the Council of Economic Advisers highlight that the impact of AI varies across regions depending on local economic structures, suggesting that AI-related opportunities may spread beyond traditional technology hubs (<span class="citation" data-cites="cea2024ai">Council of Economic Advisers (<a href="#ref-cea2024ai" role="doc-biblioref">2024</a>)</span>).</p>
-<p>Additionally, geographic analyses of AI job postings show that while major metropolitan areas remain central to AI hiring, other cities are beginning to participate more actively in AI-related labor markets (<span class="citation" data-cites="umdlinkup2023msa">UMD-LinkUp AI Maps (<a href="#ref-umdlinkup2023msa" role="doc-biblioref">2023</a>)</span>).</p>
-<p>These findings motivate the current analysis, which explores whether AI-related hiring remains concentrated in traditional tech hubs or is becoming more geographically distributed.</p>
-</section>
-<section id="data-cleaning-and-preparation" class="level2">
-<h2 class="anchored" data-anchor-id="data-cleaning-and-preparation">Data Cleaning and Preparation</h2>
-<p>The Lightcast job postings dataset was used for this analysis. The data preparation process included the following steps:</p>
+<section id="data-methodology" class="level2">
+<h2 class="anchored" data-anchor-id="data-methodology">Data &amp; Methodology</h2>
+<p>The raw Lightcast file contained 72,498 postings across 131 columns. The team’s shared cleaning pipeline pares it down to a single canonical file:</p>
 <ul>
-<li>Selecting relevant variables, including job titles, skills, and geographic identifiers such as metropolitan statistical areas (MSAs).</li>
-<li>Standardizing text data by converting job titles and skill descriptions to lowercase.</li>
-<li>Classifying job postings into <strong>AI-related</strong> and <strong>Non-AI</strong> categories using keyword-based matching.</li>
-<li>Identifying metropolitan areas using the <code>MSA_NAME</code> variable.</li>
-<li>Defining a set of major metropolitan areas (e.g., San Francisco, Seattle, Boston, New York, Austin, and Washington D.C.) as <strong>Traditional Tech Hubs</strong>, while classifying all others as <strong>Other Locations</strong>.</li>
+<li><strong>Column reduction</strong> — 131 columns down to 25 used columns (identifiers, timing, job info, skills, education, geography, remote work, salary), then derived columns (<code>posted_year</code>, <code>posted_month</code>, <code>has_salary</code>, <code>remote_category</code>) bring the final width to 29.</li>
+<li><strong>Row hygiene</strong> — Drop rows missing both posting date and title (44 dropped); deduplicate on <code>id</code> (none found in this batch).</li>
+<li><strong>Salary cleaning</strong> — Coerce numeric, then null out values outside a reasonable annual range of $20,000–$500,000. <strong>30,807 rows (42.5%)</strong> end up with valid salary data.</li>
+<li><strong>Remote work standardization</strong> — Collapse Lightcast’s inconsistent labels into three buckets: <code>Remote</code> (15,884), <code>Hybrid</code>, and <code>On-site</code> (56,570).</li>
+<li><strong>Skills parsing</strong> — Lightcast stores skills as JSON arrays in string columns; we parse them into clean Python lists (and serialize back to pipe-separated strings for CSV portability).</li>
+<li><strong>Geography</strong> — Strip whitespace and normalize null sentinels in state, city, county, and MSA fields.</li>
 </ul>
-<p>This approach enables a comparison of AI-related job distribution between established technology centers and emerging locations.</p>
+<p>The cleaned file covers postings from <strong>May 1 – September 30, 2024</strong>, includes <strong>5,719 unique job titles</strong>, and is the single source of truth for every downstream page. The most common skills overall are Communication (31,661), Data Analysis (28,515), Management (24,631), SQL (21,733), and Problem Solving (18,522).</p>
 </section>
-<section id="classification-logic" class="level2">
-<h2 class="anchored" data-anchor-id="classification-logic">Classification Logic</h2>
-<p>AI-related jobs were identified using keywords related to artificial intelligence, machine learning, data science, analytics, and programming skills such as Python and SQL. This broader definition captures a wide range of roles associated with AI and data-driven technologies, even when job titles do not explicitly include the term “AI.”</p>
+<section id="summary-of-findings" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-findings">Summary of Findings</h2>
+<p>What follows is a synthesis of the eight research-question pages — read this as a one-paragraph executive summary per page if you want the conclusions without the figures.</p>
+<section id="geography-of-ai-vs.-non-ai-jobs-ricardo" class="level3">
+<h3 class="anchored" data-anchor-id="geography-of-ai-vs.-non-ai-jobs-ricardo">Geography of AI vs.&nbsp;Non-AI Jobs (Ricardo)</h3>
+<p>The U.S. labor market splits into <strong>two overlapping but geographically distinct tracks</strong>. AI hiring (16.2% of postings using a keyword classifier on title + ONET + skills) concentrates in innovation-intensive states — California, Virginia, Washington, Massachusetts, New York, and DC — and a narrow set of metros (San Francisco, San Jose, Seattle, NYC, Washington DC, Boston). Non-AI growth follows a different geography: Lightcast’s 2025 Talent Attraction Scorecard ranks Florida and Texas first and second, with California (#51), New York (#49), and Massachusetts (#42) near the bottom. <strong>Texas is the bridge state</strong> — #2 in both AI volume (UMD-LinkUp) and broad talent attraction, with Austin and Dallas–Fort Worth functioning as bridge metros. AI postings carry a measurable salary premium (median $120,425 vs.&nbsp;$114,700), widest in the highest-AI-intensity states. Skills diverge sharply: AI postings demand Python, ML, SQL, AWS/Azure, and PyTorch/TensorFlow; non-AI postings spread across communication, project management, and Excel. Predictive models confirm the segmentation — KMeans clustering naturally separates AI from non-AI postings (silhouette = 0.443 at K=2), and ONET code is the strongest predictor of both salary and AI classification.</p>
 </section>
-<section id="visualization-1-top-metropolitan-areas-by-ai-related-job-postings" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-1-top-metropolitan-areas-by-ai-related-job-postings">Visualization 1: Top Metropolitan Areas by AI-Related Job Postings</h2>
-<p><img src="figures/tianyi_top_ai_msas.png" class="img-fluid"></p>
-<section id="interpretation" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
-<p>This chart displays the top metropolitan areas with the highest number of AI-related job postings. Traditional technology hubs such as New York, San Francisco, Boston, and Seattle remain prominent, indicating that established innovation centers continue to play a major role in AI hiring.</p>
-<p>However, several non-traditional cities, including Dallas, Atlanta, and Chicago, also appear among the top locations. This suggests that AI-related hiring is not limited to a small set of coastal tech hubs but is spreading to a broader range of metropolitan areas.</p>
+<section id="tech-hubs-vs.-emerging-cities-tianyi" class="level3">
+<h3 class="anchored" data-anchor-id="tech-hubs-vs.-emerging-cities-tianyi">Tech Hubs vs.&nbsp;Emerging Cities (Tianyi)</h3>
+<p>Traditional tech hubs (San Francisco, Seattle, Boston, NYC, Austin, DC) still account for a large share of AI postings, but <strong>the majority of AI-related job postings now sit outside these hubs</strong>. Dallas, Atlanta, Chicago, and other diversified urban economies appear in the top metro rankings, suggesting AI hiring is diffusing as digital transformation spreads across industries and remote/distributed work becomes more feasible. The implication for job seekers: don’t restrict the search to coastal hubs — emerging metros offer growing AI opportunities, often with lower cost of living and less competition.</p>
+</section>
+<section id="remote-jobs-by-industry-zichen-zhang" class="level3">
+<h3 class="anchored" data-anchor-id="remote-jobs-by-industry-zichen-zhang">Remote Jobs by Industry (Zichen Zhang)</h3>
+<p>Remote work in 2024 <strong>did not move uniformly</strong> across industries between May and September. Among the 15 highest-volume industries, several gained — General Medical and Surgical Hospitals (+9.4 pp), Unclassified Industry (+8.9 pp), Other Professional/Scientific/Technical Services (+6.7 pp) — while several <strong>computer-related industries declined sharply</strong>: Custom Computer Programming Services (-10.5 pp), Computer Systems Design Services (-8.4 pp), Other Computer Related Services (-8.0 pp). The takeaway: remote-work availability is industry-specific, not a single market-wide trend. Job seekers prioritizing flexibility should evaluate sector-by-sector rather than assuming a uniform direction.</p>
+</section>
+<section id="urban-vs.-rural-job-markets-yingyi" class="level3">
+<h3 class="anchored" data-anchor-id="urban-vs.-rural-job-markets-yingyi">Urban vs.&nbsp;Rural Job Markets (Yingyi)</h3>
+<p>The dataset is heavily urban (67,569 urban vs.&nbsp;3,200 rural postings after geocoding to U.S. Census Urban Area boundaries). High-skill jobs grow steadily in urban areas, while medium- and low-skill growth is weaker; rural areas show small changes across all skill levels. AI roles skew higher-skill in both urban and rural areas, but the <strong>urban high-skill premium is larger</strong>, and the AI wage premium is more pronounced in cities. The pattern matches the literature on AI as a skill-biased, geographically concentrated transformer of work — it amplifies existing urban–rural inequality rather than redistributing opportunity evenly.</p>
+</section>
+<section id="most-in-demand-skills-omar" class="level3">
+<h3 class="anchored" data-anchor-id="most-in-demand-skills-omar">Most In-Demand Skills (Omar)</h3>
+<p>Across all DS/BA/ML postings, <strong>Communication (43.7%), Data Analysis (39.4%), Management (34.0%), and SQL (30.0%)</strong> lead overall demand. SQL is the <strong>single most-demanded technical skill across every role category</strong>. Among software/tools, the BI landscape is a three-way race: Tableau (16.3%), Power BI (15.0%), Excel (17.7%), with Python at 16.9%. The skill profile splits cleanly by role: Data Science / ML postings (n=585) emphasize Data Science (77.6%), Python (53.5%), SQL (52.0%), Mathematics, and ML; Business Analytics / BI postings (n=71,869) emphasize Communication, Management, Problem Solving, and Leadership. The technical–interpersonal divide is real and consistent with prior literature <span class="citation" data-cites="radovilsky2018skills verma2019investigation levendis2025business">(<a href="#ref-radovilsky2018skills" role="doc-biblioref">Radovilsky et al. 2018</a>; <a href="#ref-verma2019investigation" role="doc-biblioref">Verma et al. 2019</a>; <a href="#ref-levendis2025business" role="doc-biblioref">Levendis et al. 2025</a>)</span>.</p>
+</section>
+<section id="aiml-in-job-descriptions-omar" class="level3">
+<h3 class="anchored" data-anchor-id="aiml-in-job-descriptions-omar">AI/ML in Job Descriptions (Omar)</h3>
+<p>AI/ML skills appear in <strong>9.3% of postings overall</strong>, but the trend is steeply rising — from 7.6% in May 2024 to <strong>11.4% in September 2024</strong>, a ~50% relative increase in five months. The most-demanded AI/ML skills are Machine Learning (8,016), Artificial Intelligence (6,280), Generative AI (2,280), MLOps (674), and TensorFlow (591). Demand is no longer confined to data science titles: Data Analysts, Enterprise Architects, BI Analysts, and Data Modelers all show meaningful AI/ML requirements. AI/ML postings demand more education on average — 65.0% require a Bachelor’s vs.&nbsp;56.4% for non-AI/ML — and Master’s degree requirements appear at 5.8% (vs.&nbsp;2.3%). Generative AI and LLM keywords are emerging, confirming the labor-market shifts documented by <span class="citation" data-cites="carnevale2023generative">Carnevale et al. (<a href="#ref-carnevale2023generative" role="doc-biblioref">2023</a>)</span>.</p>
+</section>
+<section id="industries-hiring-data-scientists-omar" class="level3">
+<h3 class="anchored" data-anchor-id="industries-hiring-data-scientists-omar">Industries Hiring Data Scientists (Omar)</h3>
+<p>Filtering to data-science-related postings yields <strong>14,214 jobs (19.6% of the dataset)</strong>. By volume the leaders are Professional/Scientific/Technical Services (3,506), Administrative Support (2,322), Unclassified (1,804), Finance and Insurance (1,485), and Information (849). But by <strong>concentration</strong> (DS share of an industry’s postings) the leaders shift: Public Administration (32.6%), Educational Services (30.7%), and Management of Companies (29.5%) top the list, showing that government and education are intensely focused on hiring DS talent relative to their overall hiring volume. <strong>Information pays the most</strong> (median $134,500), followed by Retail Trade ($115,000) and Finance ($104,000). Skill profiles vary by industry: Information emphasizes Python, ETL, and Data Modeling; Finance emphasizes SQL, Communication, and Presentations.</p>
+</section>
+<section id="business-analytics-career-outlook-omar" class="level3">
+<h3 class="anchored" data-anchor-id="business-analytics-career-outlook-omar">Business Analytics Career Outlook (Omar)</h3>
+<p>After re-categorizing into BA / Data Analytics / Data Science / Data Engineering, <strong>demand for BA/BI roles is steady</strong> at ~1,000–1,300 monthly postings. Compensation is competitive though not the highest: Data Engineering medians $130,600, Data Science / ML $126,947, <strong>Business Analytics / BI $110,000</strong>, Data Analytics $93,868. The BA skill profile is distinctive — Business Intelligence (64.0%), SQL (52.5%), Communication (47.3%), Power BI (37.4%), Tableau (34.5%) — confirming the “applied analytics + stakeholder engagement” identity that distinguishes BA from DS/ML’s programming/algorithms focus. Education barriers are lower (71.5% Bachelor’s, just 2.6% Master’s), and the field spans Professional Services, Manufacturing, Finance, and Healthcare. Remote availability is moderate (22.7% remote). The path is accessible, the demand sustained, and the career trajectory clear.</p>
 </section>
 </section>
-<section id="visualization-2-ai-related-job-postings-in-tech-hubs-vs-other-locations" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-2-ai-related-job-postings-in-tech-hubs-vs-other-locations">Visualization 2: AI-Related Job Postings in Tech Hubs vs Other Locations</h2>
-<p><img src="figures/tianyi_hub_vs_other.png" class="img-fluid"></p>
-<section id="interpretation-1" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
-<p>This figure compares the total number of AI-related job postings between traditional technology hubs and other locations. While traditional tech hubs still account for a substantial number of AI-related jobs, the majority of postings are found in other metropolitan areas.</p>
-<p>This indicates that although tech hubs remain important centers for AI employment, AI-related hiring is no longer exclusively concentrated in these regions. Instead, opportunities are increasingly distributed across a wider set of cities, reflecting the broader adoption of AI technologies across industries and locations.</p>
+<section id="predictive-modeling" class="level2">
+<h2 class="anchored" data-anchor-id="predictive-modeling">Predictive Modeling</h2>
+<p>Two predictive models live on the site as standalone deliverables. The <strong>AI/ML Requirement Predictor</strong> (<code>ml_model.qmd</code>) is a logistic regression — Test AUC 0.746, accuracy 0.908 — that takes industry, role, education, and a checklist of baseline skills (Python, SQL, R, Excel, Tableau, Power BI, Statistics, Data Visualization) and outputs a calibrated probability that the posting will require AI/ML expertise. The trained coefficients are exported to JSON and the prediction runs entirely in the browser. The <strong>Find Your Match</strong> widget (<code>cluster_finder.qmd</code>) uses K-means clustering on the postings and a cosine-similarity skill matcher so users can paste their skills and see which job clusters they’re closest to.</p>
 </section>
+<section id="tools-reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="tools-reproducibility">Tools &amp; Reproducibility</h2>
+<p>The site is built with <strong>Quarto</strong> and deployed via <strong>GitHub Actions</strong> to GitHub Pages. The analysis stack is <strong>Python</strong> (pandas, scikit-learn, matplotlib, plotly), with deck.gl and custom WebGL fragment shaders powering the home page’s silk-flow and aurora visual elements. References are managed in a shared <code>references.bib</code> file. The cleaned Lightcast file is regenerated only when the cleaning page changes; downstream pages use Quarto’s <code>freeze: true</code> execution caching so renders are fast and reproducible across team members. The site is at <a href="https://yingyig72.github.io/ad688-employability-sp25A1-group1" class="uri">https://yingyig72.github.io/ad688-employability-sp25A1-group1</a>.</p>
 </section>
-<section id="findings" class="level2">
-<h2 class="anchored" data-anchor-id="findings">Findings</h2>
-<p>The analysis reveals that traditional technology hubs continue to play a key role in AI-related hiring, as several major hubs remain among the top metropolitan areas in terms of job postings. This confirms the ongoing importance of established innovation ecosystems in supporting AI-related employment.</p>
-<p>However, the results also show that a significant share of AI-related job postings is located outside these traditional hubs. Many non-traditional metropolitan areas appear in the top rankings, and overall job volume is higher in “other locations” than in tech hubs.</p>
-<p>This suggests that AI-related hiring is becoming more geographically distributed. While tech hubs remain important, they no longer dominate AI employment to the same extent as in the past. Instead, AI-related opportunities are expanding into a wider range of regions, likely driven by digital transformation across industries and the increasing feasibility of remote or distributed work.</p>
+<section id="how-to-read-this-report" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-read-this-report">How to Read This Report</h2>
+<p>If you’re rendering this document as a Word file, the navigation links from the live site won’t be clickable — but every research-question page is reachable from the sidebar of the HTML version, and every claim in the <strong>Summary of Findings</strong> maps to one author’s page. For the full methodology, code, and figures behind any claim, follow the link in the <strong>Team &amp; Research Questions</strong> table to the corresponding <code>.qmd</code> page.</p>
 </section>
-<section id="business-and-career-implications" class="level2">
-<h2 class="anchored" data-anchor-id="business-and-career-implications">Business and Career Implications</h2>
-<p>These findings have important implications for job seekers. While traditional technology hubs still offer a high concentration of AI-related opportunities, individuals should not limit their job search to these locations alone.</p>
-<p>Emerging metropolitan areas may offer growing opportunities in AI-related fields, often with lower living costs and less competition. As AI adoption spreads across industries, job seekers can benefit from considering a broader range of geographic locations when planning their careers.</p>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>In conclusion, traditional technology hubs still play an important role in AI-related hiring, but they no longer exclusively dominate the job market. While these hubs continue to attract a large number of opportunities, AI-related hiring is increasingly distributed across a wider range of metropolitan areas.</p>
-<p>This suggests a shift toward a more geographically diverse AI labor market, where both established tech hubs and emerging cities contribute to employment opportunities. As a result, job seekers and policymakers should recognize that AI-related careers are no longer confined to a few major cities but are becoming accessible across a broader set of regions.</p>
-</section>
-<section id="references" class="level2">
-
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-acemoglu2022artificial" class="csl-entry" role="listitem">
-Acemoglu, Daron, David Autor, Jonathon Hazell, and Pascual Restrepo. 2022. <span>“Artificial Intelligence and Jobs: Evidence from Online Vacancies.”</span> <em>Journal of Labor Economics</em> 40 (S1): S293–340. <a href="https://doi.org/10.1086/718327">https://doi.org/10.1086/718327</a>.
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-carnevale2023generative" class="csl-entry" role="listitem">
+Carnevale, Anthony P., Ban Cheah, and Emma Wenzinger. 2023. <em>The Impact of Generative AI on the Labor Market</em>. Georgetown University Center on Education; the Workforce. <a href="https://cew.georgetown.edu/">https://cew.georgetown.edu/</a>.
 </div>
-<div id="ref-cea2024ai" class="csl-entry" role="listitem">
-Council of Economic Advisers. 2024. <em>Potential Labor Market Impacts of Artificial Intelligence: An Empirical Analysis</em>. Executive Office of the President. <a href="https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/07/Potential-Labor-Market-Impacts-of-Artificial-Intelligence-An-Empirical-Analysis-July-2024.pdf">https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/07/Potential-Labor-Market-Impacts-of-Artificial-Intelligence-An-Empirical-Analysis-July-2024.pdf</a>.
+<div id="ref-levendis2025business" class="csl-entry" role="listitem">
+Levendis, John, Lori Dickes, and Sarah Wilks. 2025. <span>“The Business Analytics Skills Employers Are Looking For.”</span> <em>Decision Sciences Journal of Innovative Education</em>, ahead of print. <a href="https://doi.org/10.1111/dsji.70004">https://doi.org/10.1111/dsji.70004</a>.
 </div>
-<div id="ref-umdlinkup2023msa" class="csl-entry" role="listitem">
-UMD-LinkUp AI Maps. 2023. <em>Top 50 MSAs by AI Jobs Creation: Monthly Average of AI Job Postings During Jan–Dec 2023</em>. <a href="https://www.aimaps.ai/download/ranking-sheets/5-AI-Jobs-Creation-Top-50-MSAs.pdf">https://www.aimaps.ai/download/ranking-sheets/5-AI-Jobs-Creation-Top-50-MSAs.pdf</a>.
+<div id="ref-radovilsky2018skills" class="csl-entry" role="listitem">
+Radovilsky, Zinovy, Vishwanath Hegde, Ankur Acharya, and Ullas Uma. 2018. <span>“Skills Requirements of Business Data Analytics and Data Science Jobs: A Comparative Analysis.”</span> <em>Journal of Supply Chain and Operations Management</em> 16 (1): 82–101.
 </div>
-</div></section></div></main> <!-- /main -->
+<div id="ref-verma2019investigation" class="csl-entry" role="listitem">
+Verma, Arun, Kirsten M. Yurov, Peggy L. Lane, and Yuliya V. Yurova. 2019. <span>“An Investigation of Skill Requirements for Business and Data Analytics Positions: A Content Analysis of Job Advertisements.”</span> <em>Journal of Education for Business</em> 94 (4): 243–50. <a href="https://doi.org/10.1080/08832323.2018.1520685">https://doi.org/10.1080/08832323.2018.1520685</a>.
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

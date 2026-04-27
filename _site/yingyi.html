@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Yingyi">
+<meta name="dcterms.date" content="2026-04-23">
 
-<title>Tianyi – AD688 Team 1 Spring 2026</title>
+<title>Urban vs.&nbsp;Rural Job Markets for AI and Non-AI Careers – AD688 Team 1 Spring 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,26 +25,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -201,23 +184,22 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#do-tech-hubs-still-dominate-ai-related-hiring-or-are-other-locations-emerging" id="toc-do-tech-hubs-still-dominate-ai-related-hiring-or-are-other-locations-emerging" class="nav-link active" data-scroll-target="#do-tech-hubs-still-dominate-ai-related-hiring-or-are-other-locations-emerging">Do tech hubs still dominate AI-related hiring, or are other locations emerging?</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">Literature Review</a></li>
-  <li><a href="#data-cleaning-and-preparation" id="toc-data-cleaning-and-preparation" class="nav-link" data-scroll-target="#data-cleaning-and-preparation">Data Cleaning and Preparation</a></li>
-  <li><a href="#classification-logic" id="toc-classification-logic" class="nav-link" data-scroll-target="#classification-logic">Classification Logic</a></li>
-  <li><a href="#visualization-1-top-metropolitan-areas-by-ai-related-job-postings" id="toc-visualization-1-top-metropolitan-areas-by-ai-related-job-postings" class="nav-link" data-scroll-target="#visualization-1-top-metropolitan-areas-by-ai-related-job-postings">Visualization 1: Top Metropolitan Areas by AI-Related Job Postings</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review"><span class="header-section-number">2</span> Literature Review</a></li>
+  <li><a href="#data-methodology" id="toc-data-methodology" class="nav-link" data-scroll-target="#data-methodology"><span class="header-section-number">3</span> Data &amp; Methodology</a></li>
+  <li><a href="#data-processing" id="toc-data-processing" class="nav-link" data-scroll-target="#data-processing"><span class="header-section-number">4</span> Data Processing</a>
   <ul class="collapse">
-  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#data-loading" id="toc-data-loading" class="nav-link" data-scroll-target="#data-loading"><span class="header-section-number">4.1</span> Data Loading</a></li>
+  <li><a href="#define-aiarea-and-skill-level-keywords" id="toc-define-aiarea-and-skill-level-keywords" class="nav-link" data-scroll-target="#define-aiarea-and-skill-level-keywords"><span class="header-section-number">4.2</span> Define AI，Area, and Skill Level keywords</a></li>
   </ul></li>
-  <li><a href="#visualization-2-ai-related-job-postings-in-tech-hubs-vs-other-locations" id="toc-visualization-2-ai-related-job-postings-in-tech-hubs-vs-other-locations" class="nav-link" data-scroll-target="#visualization-2-ai-related-job-postings-in-tech-hubs-vs-other-locations">Visualization 2: AI-Related Job Postings in Tech Hubs vs Other Locations</a>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">5</span> Results</a>
   <ul class="collapse">
-  <li><a href="#interpretation-1" id="toc-interpretation-1" class="nav-link" data-scroll-target="#interpretation-1">Interpretation</a></li>
+  <li><a href="#wage-inequality---job-counts-over-time-by-skill-level-in-urban-and-rural-areas" id="toc-wage-inequality---job-counts-over-time-by-skill-level-in-urban-and-rural-areas" class="nav-link" data-scroll-target="#wage-inequality---job-counts-over-time-by-skill-level-in-urban-and-rural-areas"><span class="header-section-number">5.1</span> Wage Inequality - Job Counts Over Time by Skill Level in Urban and Rural Areas</a></li>
+  <li><a href="#skill-distribution---skill-composition-in-ai-vs-non-ai-jobs-by-area" id="toc-skill-distribution---skill-composition-in-ai-vs-non-ai-jobs-by-area" class="nav-link" data-scroll-target="#skill-distribution---skill-composition-in-ai-vs-non-ai-jobs-by-area"><span class="header-section-number">5.2</span> Skill Distribution - Skill Composition in AI vs Non-AI Jobs by Area</a></li>
+  <li><a href="#skill-composition-across-regions---skill-distribution-proportion-in-ai-vs-non-ai-jobs" id="toc-skill-composition-across-regions---skill-distribution-proportion-in-ai-vs-non-ai-jobs" class="nav-link" data-scroll-target="#skill-composition-across-regions---skill-distribution-proportion-in-ai-vs-non-ai-jobs"><span class="header-section-number">5.3</span> Skill Composition Across Regions - Skill Distribution (Proportion) in AI vs Non-AI Jobs</a></li>
+  <li><a href="#job-trends-over-time---high-skill-job-salary-urban-vs-rural" id="toc-job-trends-over-time---high-skill-job-salary-urban-vs-rural" class="nav-link" data-scroll-target="#job-trends-over-time---high-skill-job-salary-urban-vs-rural"><span class="header-section-number">5.4</span> Job Trends Over Time - High-Skill Job Salary: Urban vs Rural</a></li>
   </ul></li>
-  <li><a href="#findings" id="toc-findings" class="nav-link" data-scroll-target="#findings">Findings</a></li>
-  <li><a href="#business-and-career-implications" id="toc-business-and-career-implications" class="nav-link" data-scroll-target="#business-and-career-implications">Business and Career Implications</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -226,14 +208,26 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Tianyi</h1>
+<h1 class="title">Urban vs.&nbsp;Rural Job Markets for AI and Non-AI Careers</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Yingyi </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 23, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -243,90 +237,75 @@ div.csl-indent {
 </header>
 
 
-<section id="do-tech-hubs-still-dominate-ai-related-hiring-or-are-other-locations-emerging" class="level2">
-<h2 class="anchored" data-anchor-id="do-tech-hubs-still-dominate-ai-related-hiring-or-are-other-locations-emerging">Do tech hubs still dominate AI-related hiring, or are other locations emerging?</h2>
-<p>This section examines whether AI-related job opportunities remain concentrated in traditional technology hubs or are increasingly distributed across other metropolitan areas. Using the Lightcast job postings dataset, the analysis evaluates the geographic distribution of AI-related hiring and explores whether emerging cities are becoming significant contributors to the AI labor market.</p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>Artificial intelligence (AI) is rapidly transforming labor markets, but its impact is not uniform across regions or skill groups. Rather than simply increasing or decreasing employment, AI reshapes the structure of work by altering skill demand, wage distribution, and geographic concentration of opportunities. Existing research suggests that AI disproportionately benefits high-skilled workers while displacing routine and low-skilled labor, particularly in urban areas <span class="citation" data-cites="mookerjee2025">(<a href="#ref-mookerjee2025" role="doc-biblioref"><strong>mookerjee2025?</strong></a>)</span>. At the same time, rural labor markets face structural constraints, where limited opportunities interact with strong geographic attachment, leading individuals to adjust their career expectations downward <span class="citation" data-cites="niccolai2022">(<a href="#ref-niccolai2022" role="doc-biblioref"><strong>niccolai2022?</strong></a>)</span>.</p>
+<p>This paper investigates how AI affects labor market outcomes across urban and rural areas by focusing on three key dimensions: skill composition, wage inequality, and job distribution over time. By combining descriptive visualization and regression analysis, this study aims to understand whether AI amplifies spatial inequality and how skill-based transformations shape these patterns.</p>
 </section>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Geographic concentration has long been a defining characteristic of technology-driven labor markets. Major metropolitan areas such as San Francisco, Seattle, Boston, and New York have historically dominated technology hiring due to strong innovation ecosystems, access to skilled labor, and the presence of major firms and research institutions.</p>
-<p>However, recent developments—including the rise of remote work, cloud-based collaboration, and widespread adoption of artificial intelligence across industries—suggest that AI-related hiring may no longer be confined to a small set of traditional tech hubs. This analysis investigates whether these hubs still dominate AI-related hiring or whether other metropolitan areas are emerging as meaningful contributors to the AI job market.</p>
+<section id="literature-review" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Literature Review</h1>
+<p>A growing body of literature highlights that AI does not affect all workers equally. <span class="citation" data-cites="mookerjee2025">(<a href="#ref-mookerjee2025" role="doc-biblioref"><strong>mookerjee2025?</strong></a>)</span> finds that AI increases demand for high-skilled labor while reducing opportunities for routine and low-skilled jobs, particularly in urban economies. This suggests that AI contributes to wage polarization and skill-biased inequality.</p>
+<p>From a structural perspective, <span class="citation" data-cites="shen2024">(<a href="#ref-shen2024" role="doc-biblioref"><strong>shen2024?</strong></a>)</span> argues that AI primarily transforms tasks rather than eliminating entire occupations. Routine tasks are increasingly automated, while non-routine, cognitive, and analytical tasks become more valuable. As a result, labor demand shifts toward medium- and high-skill roles, leading to a reconfiguration of skill composition.</p>
+<p>Spatial inequality is further emphasized by <span class="citation" data-cites="capello2023">(<a href="#ref-capello2023" role="doc-biblioref"><strong>capello2023?</strong></a>)</span>, who show that automation produces different outcomes across regions. In rural areas, low-skilled workers are more likely to exit the labor market entirely due to limited reallocation opportunities. In contrast, urban areas experience restructuring rather than simple job loss, with increasing dominance of high-skilled employment but also rising inequality.</p>
+<p>Geographic concentration also plays a key role. AI-related jobs remain heavily clustered in major metropolitan areas such as San Francisco, New York, and Seattle, although some diffusion to secondary cities is emerging <span class="citation" data-cites="ather2024">(<a href="#ref-ather2024" role="doc-biblioref"><strong>ather2024?</strong></a>)</span>. Despite this, access to opportunities remains uneven.</p>
+<p>Finally, beyond economic constraints, social factors also shape labor outcomes.@niccolai2022 show that rural workers often prioritize staying in their communities despite limited job availability, creating a tension between aspiration and opportunity. This highlights that labor market outcomes are shaped not only by demand but also by social and geographic constraints.</p>
 </section>
-<section id="literature-review" class="level2">
-<h2 class="anchored" data-anchor-id="literature-review">Literature Review</h2>
-<p>Prior research suggests that AI-related labor demand tends to be geographically concentrated in regions with strong technical capabilities and innovation ecosystems. Evidence from online job postings shows that AI-related roles are often clustered in metropolitan areas with high demand for advanced skills (<span class="citation" data-cites="acemoglu2022artificial">Acemoglu et al. (<a href="#ref-acemoglu2022artificial" role="doc-biblioref">2022</a>)</span>).</p>
-<p>At the same time, recent analyses indicate that AI adoption is expanding across a broader set of industries and locations. Reports from the Council of Economic Advisers highlight that the impact of AI varies across regions depending on local economic structures, suggesting that AI-related opportunities may spread beyond traditional technology hubs (<span class="citation" data-cites="cea2024ai">Council of Economic Advisers (<a href="#ref-cea2024ai" role="doc-biblioref">2024</a>)</span>).</p>
-<p>Additionally, geographic analyses of AI job postings show that while major metropolitan areas remain central to AI hiring, other cities are beginning to participate more actively in AI-related labor markets (<span class="citation" data-cites="umdlinkup2023msa">UMD-LinkUp AI Maps (<a href="#ref-umdlinkup2023msa" role="doc-biblioref">2023</a>)</span>).</p>
-<p>These findings motivate the current analysis, which explores whether AI-related hiring remains concentrated in traditional tech hubs or is becoming more geographically distributed.</p>
+<section id="data-methodology" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Data &amp; Methodology</h1>
+<p>This study uses job-level data including salary, skill level, AI classification, geographic classification (urban vs rural), and years of experience.</p>
+<p>The analysis includes:</p>
+<p>Descriptive visualizations:</p>
+<p>Salary distribution (boxplots)</p>
+<p>Skill composition (stacked bars)</p>
+<p>Skill distribution (proportions)</p>
+<p>Job trends over time (line charts)</p>
 </section>
-<section id="data-cleaning-and-preparation" class="level2">
-<h2 class="anchored" data-anchor-id="data-cleaning-and-preparation">Data Cleaning and Preparation</h2>
-<p>The Lightcast job postings dataset was used for this analysis. The data preparation process included the following steps:</p>
-<ul>
-<li>Selecting relevant variables, including job titles, skills, and geographic identifiers such as metropolitan statistical areas (MSAs).</li>
-<li>Standardizing text data by converting job titles and skill descriptions to lowercase.</li>
-<li>Classifying job postings into <strong>AI-related</strong> and <strong>Non-AI</strong> categories using keyword-based matching.</li>
-<li>Identifying metropolitan areas using the <code>MSA_NAME</code> variable.</li>
-<li>Defining a set of major metropolitan areas (e.g., San Francisco, Seattle, Boston, New York, Austin, and Washington D.C.) as <strong>Traditional Tech Hubs</strong>, while classifying all others as <strong>Other Locations</strong>.</li>
-</ul>
-<p>This approach enables a comparison of AI-related job distribution between established technology centers and emerging locations.</p>
+<section id="data-processing" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Data Processing</h1>
+<section id="data-loading" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="data-loading"><span class="header-section-number">4.1</span> Data Loading</h2>
 </section>
-<section id="classification-logic" class="level2">
-<h2 class="anchored" data-anchor-id="classification-logic">Classification Logic</h2>
-<p>AI-related jobs were identified using keywords related to artificial intelligence, machine learning, data science, analytics, and programming skills such as Python and SQL. This broader definition captures a wide range of roles associated with AI and data-driven technologies, even when job titles do not explicitly include the term “AI.”</p>
-</section>
-<section id="visualization-1-top-metropolitan-areas-by-ai-related-job-postings" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-1-top-metropolitan-areas-by-ai-related-job-postings">Visualization 1: Top Metropolitan Areas by AI-Related Job Postings</h2>
-<p><img src="figures/tianyi_top_ai_msas.png" class="img-fluid"></p>
-<section id="interpretation" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
-<p>This chart displays the top metropolitan areas with the highest number of AI-related job postings. Traditional technology hubs such as New York, San Francisco, Boston, and Seattle remain prominent, indicating that established innovation centers continue to play a major role in AI hiring.</p>
-<p>However, several non-traditional cities, including Dallas, Atlanta, and Chicago, also appear among the top locations. This suggests that AI-related hiring is not limited to a small set of coastal tech hubs but is spreading to a broader range of metropolitan areas.</p>
+<section id="define-aiarea-and-skill-level-keywords" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="define-aiarea-and-skill-level-keywords"><span class="header-section-number">4.2</span> Define AI，Area, and Skill Level keywords</h2>
+<p>In the data processing stage, AI-related jobs were identified using a keyword-based approach applied to the SKILLS_NAME field, where postings containing terms such as machine learning, AI, deep learning, neural network, and NLP were classified as AI jobs. This method captures AI influence at the skill level rather than relying on job titles. For spatial classification, job postings were first geocoded using latitude and longitude, and then matched to the 2020 U.S. Census Urban Area boundaries (tl_2020_us_uac20_corrected.shp), a GIS shapefile representing official urban polygons. Based on this spatial join, jobs were labeled as urban or rural. The resulting dataset shows a strong imbalance, with urban jobs (67,569) far exceeding rural jobs (3,200), and non-AI jobs (43,449) outnumbering AI jobs (27,320), indicating both a geographic concentration of opportunities in urban areas and a relatively smaller but significant share of AI-related roles.</p>
 </section>
 </section>
-<section id="visualization-2-ai-related-job-postings-in-tech-hubs-vs-other-locations" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-2-ai-related-job-postings-in-tech-hubs-vs-other-locations">Visualization 2: AI-Related Job Postings in Tech Hubs vs Other Locations</h2>
-<p><img src="figures/tianyi_hub_vs_other.png" class="img-fluid"></p>
-<section id="interpretation-1" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
-<p>This figure compares the total number of AI-related job postings between traditional technology hubs and other locations. While traditional tech hubs still account for a substantial number of AI-related jobs, the majority of postings are found in other metropolitan areas.</p>
-<p>This indicates that although tech hubs remain important centers for AI employment, AI-related hiring is no longer exclusively concentrated in these regions. Instead, opportunities are increasingly distributed across a wider set of cities, reflecting the broader adoption of AI technologies across industries and locations.</p>
+<section id="results" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Results</h1>
+<section id="wage-inequality---job-counts-over-time-by-skill-level-in-urban-and-rural-areas" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="wage-inequality---job-counts-over-time-by-skill-level-in-urban-and-rural-areas"><span class="header-section-number">5.1</span> Wage Inequality - Job Counts Over Time by Skill Level in Urban and Rural Areas</h2>
+<p>This graph clearly shows a distinct trend of skill and spatial differentiation. The number of high-skilled positions in urban areas has continued to grow significantly, while the growth of medium and low-skilled positions has been relatively slow; in contrast, the overall number of positions in rural areas is lower, and the changes in each skill level are relatively small. This indicates that employment growth is mainly concentrated in high-skilled fields in cities, while the overall development of the rural labor market is relatively sluggish. This trend suggests that AI is driving the labor market to concentrate on high-skilled and urban areas, and exacerbating structural inequality.</p>
+<p>Specifically, high-skilled positions continue to expand in cities, while medium and low-skilled positions have limited growth or even face pressure, and the overall changes in rural areas are relatively weak, further widening the urban-rural gap <span class="citation" data-cites="mookerjee2025">(<a href="#ref-mookerjee2025" role="doc-biblioref"><strong>mookerjee2025?</strong></a>)</span>.</p>
+</section>
+<section id="skill-distribution---skill-composition-in-ai-vs-non-ai-jobs-by-area" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="skill-distribution---skill-composition-in-ai-vs-non-ai-jobs-by-area"><span class="header-section-number">5.2</span> Skill Distribution - Skill Composition in AI vs Non-AI Jobs by Area</h2>
+<p>This chart illustrates the differences in skill structures between AI positions and non-AI positions across urban and rural areas. It can be observed that in both cities and rural areas, the proportion of highly skilled labor in AI positions is generally higher than that in non-AI positions, while the proportion of low-skilled workers is lower. This indicates that AI-related work has a stronger demand for high-skilled individuals. Additionally, medium-skilled workers still dominate in both types of positions, but their proportion is slightly reduced in AI positions, reflecting a structural shift towards the higher-skilled end.</p>
+<p>This distribution indicates that AI does not uniformly affect all skill levels, but rather drives the labor force structure towards a higher-skilled orientation and reduces the demand for low-skilled labor. This “skill-biased change” will further intensify the differentiation in the labor market, benefiting the high-skilled group more while imposing greater adjustment pressure on the middle and low-skilled groups <span class="citation" data-cites="mookerjee2025">(<a href="#ref-mookerjee2025" role="doc-biblioref"><strong>mookerjee2025?</strong></a>)</span></p>
+</section>
+<section id="skill-composition-across-regions---skill-distribution-proportion-in-ai-vs-non-ai-jobs" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="skill-composition-across-regions---skill-distribution-proportion-in-ai-vs-non-ai-jobs"><span class="header-section-number">5.3</span> Skill Composition Across Regions - Skill Distribution (Proportion) in AI vs Non-AI Jobs</h2>
+<p>This chart further compares the differences in skill proportions between AI-related positions and non-AI positions. It can be seen that in AI positions, the proportion of highly skilled workers is significantly higher than in non-AI positions, while the proportion of medium-skilled workers has decreased, and the proportion of low-skilled workers remains at a relatively low level. At the same time, this structure is basically the same in urban and rural areas, but the proportion of highly skilled workers is slightly higher in cities, indicating that AI-related positions have a more concentrated demand for highly skilled labor.</p>
+<p>This result indicates that AI is driving the transformation of the labor force structure from being “dominated by medium skills” to “favoring high skills”, and it shows a consistent but varying trend in different regions. This change reflects the selective demands of AI for tasks and capabilities, giving an advantage to high-skilled workers while weakening the relative position of those with medium and low skills, thereby exacerbating the inequality between skill levels <span class="citation" data-cites="mookerjee2025">(<a href="#ref-mookerjee2025" role="doc-biblioref"><strong>mookerjee2025?</strong></a>)</span></p>
+</section>
+<section id="job-trends-over-time---high-skill-job-salary-urban-vs-rural" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="job-trends-over-time---high-skill-job-salary-urban-vs-rural"><span class="header-section-number">5.4</span> Job Trends Over Time - High-Skill Job Salary: Urban vs Rural</h2>
+<p>The chart provides partial evidence that AI does not affect workers uniformly. While AI-related jobs tend to offer slightly higher salaries, the wide overlap in distributions suggests that not all workers benefit equally. This aligns with the idea that AI creates uneven outcomes, enhancing some workers while offering limited gains to others.</p>
+<p>More importantly, the urban–rural comparison shows that the wage premium associated with AI is more pronounced in urban areas. This suggests that AI-driven economic benefits are geographically concentrated, potentially widening existing disparities between urban and rural labor markets.</p>
 </section>
 </section>
-<section id="findings" class="level2">
-<h2 class="anchored" data-anchor-id="findings">Findings</h2>
-<p>The analysis reveals that traditional technology hubs continue to play a key role in AI-related hiring, as several major hubs remain among the top metropolitan areas in terms of job postings. This confirms the ongoing importance of established innovation ecosystems in supporting AI-related employment.</p>
-<p>However, the results also show that a significant share of AI-related job postings is located outside these traditional hubs. Many non-traditional metropolitan areas appear in the top rankings, and overall job volume is higher in “other locations” than in tech hubs.</p>
-<p>This suggests that AI-related hiring is becoming more geographically distributed. While tech hubs remain important, they no longer dominate AI employment to the same extent as in the past. Instead, AI-related opportunities are expanding into a wider range of regions, likely driven by digital transformation across industries and the increasing feasibility of remote or distributed work.</p>
-</section>
-<section id="business-and-career-implications" class="level2">
-<h2 class="anchored" data-anchor-id="business-and-career-implications">Business and Career Implications</h2>
-<p>These findings have important implications for job seekers. While traditional technology hubs still offer a high concentration of AI-related opportunities, individuals should not limit their job search to these locations alone.</p>
-<p>Emerging metropolitan areas may offer growing opportunities in AI-related fields, often with lower living costs and less competition. As AI adoption spreads across industries, job seekers can benefit from considering a broader range of geographic locations when planning their careers.</p>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>In conclusion, traditional technology hubs still play an important role in AI-related hiring, but they no longer exclusively dominate the job market. While these hubs continue to attract a large number of opportunities, AI-related hiring is increasingly distributed across a wider range of metropolitan areas.</p>
-<p>This suggests a shift toward a more geographically diverse AI labor market, where both established tech hubs and emerging cities contribute to employment opportunities. As a result, job seekers and policymakers should recognize that AI-related careers are no longer confined to a few major cities but are becoming accessible across a broader set of regions.</p>
-</section>
-<section id="references" class="level2">
-
-
+<section id="conclusion" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Conclusion</h1>
+<p>AI is not simply a job killer or job creator—it is a labor market transformer. It reshapes employment by:</p>
+<p>Increasing demand for high-skill labor</p>
+<p>Reducing routine and low-skill opportunities</p>
+<p>Concentrating job growth in urban areas</p>
+<p>Expanding inequality across both skill and geographic dimensions</p>
+<p>Ultimately, AI does not affect all workers equally. Instead, it redistributes opportunities, creating growth and innovation in urban regions while leaving rural areas with fewer pathways for adaptation.</p>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-acemoglu2022artificial" class="csl-entry" role="listitem">
-Acemoglu, Daron, David Autor, Jonathon Hazell, and Pascual Restrepo. 2022. <span>“Artificial Intelligence and Jobs: Evidence from Online Vacancies.”</span> <em>Journal of Labor Economics</em> 40 (S1): S293–340. <a href="https://doi.org/10.1086/718327">https://doi.org/10.1086/718327</a>.
-</div>
-<div id="ref-cea2024ai" class="csl-entry" role="listitem">
-Council of Economic Advisers. 2024. <em>Potential Labor Market Impacts of Artificial Intelligence: An Empirical Analysis</em>. Executive Office of the President. <a href="https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/07/Potential-Labor-Market-Impacts-of-Artificial-Intelligence-An-Empirical-Analysis-July-2024.pdf">https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/07/Potential-Labor-Market-Impacts-of-Artificial-Intelligence-An-Empirical-Analysis-July-2024.pdf</a>.
-</div>
-<div id="ref-umdlinkup2023msa" class="csl-entry" role="listitem">
-UMD-LinkUp AI Maps. 2023. <em>Top 50 MSAs by AI Jobs Creation: Monthly Average of AI Job Postings During Jan–Dec 2023</em>. <a href="https://www.aimaps.ai/download/ranking-sheets/5-AI-Jobs-Creation-Top-50-MSAs.pdf">https://www.aimaps.ai/download/ranking-sheets/5-AI-Jobs-Creation-Top-50-MSAs.pdf</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

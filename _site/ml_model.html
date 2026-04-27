@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Omar Mohd Haris">
+<meta name="dcterms.date" content="2026-04-27">
+
+<title>Predicting AI/ML Skill Requirements: An Interactive Classifier – AD688 Team 1 Spring 2026</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-2a5212194e03ba571a46edef85f9d605.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<style>
+  .ml-predictor {
+    font-family: inherit;
+    max-width: 860px;
+    margin: 2rem auto;
+    padding: 1.75rem 1.5rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    background: #fbfbfb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .ml-predictor h3 {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+  }
+  .ml-predictor .subtitle {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+  .ml-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.9rem 1.2rem;
+    margin-bottom: 1.25rem;
+  }
+  .ml-field label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #555;
+    margin-bottom: 0.35rem;
+  }
+  .ml-field select, .ml-field .skills-box {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid #c9c9c9;
+    border-radius: 6px;
+    background: white;
+    font-size: 0.95rem;
+    font-family: inherit;
+  }
+  .skills-box {
+    max-height: 160px;
+    overflow-y: auto;
+    padding: 0.5rem;
+  }
+  .skills-box label {
+    display: block;
+    font-size: 0.88rem;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #222;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    cursor: pointer;
+  }
+  .skills-box input { margin-right: 0.4rem; }
+  .ml-result {
+    margin-top: 1rem;
+    padding: 1.25rem 1.25rem 1rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+  }
+  .ml-result .label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #666;
+    margin-bottom: 0.35rem;
+  }
+  .ml-result .prob {
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .ml-result .verdict {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.9rem;
+  }
+  .ml-bar {
+    height: 10px;
+    background: #ececec;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .ml-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2e7d32, #66bb6a);
+    transition: width 0.35s ease;
+  }
+  .ml-drivers {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  .ml-drivers h4 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #555;
+    margin: 0 0 0.5rem;
+  }
+  .ml-drivers ul { margin: 0; padding-left: 1.2rem; }
+  .ml-drivers li { margin-bottom: 0.15rem; }
+  .driver-pos { color: #2e7d32; }
+  .driver-neg { color: #c62828; }
+</style>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">AD688 Team 1 Spring 2026</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.html"> 
+<span class="menu-text">Data Cleaning</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research-questions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Research Questions</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-research-questions">    
+        <li>
+    <a class="dropdown-item" href="./ricardo_after2_fixed.html">
+ <span class="dropdown-text">Which Cities/States Have the Highest Job Growth?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tianyi.html">
+ <span class="dropdown-text">Do Tech Hubs Still Dominate Hiring?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./zichen.html">
+ <span class="dropdown-text">Are remote jobs increasing or decreasing across industries?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./yingyi.html">
+ <span class="dropdown-text">Urban vs.&nbsp;Rural Job Markets for AI &amp; Non-AI Careers</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ml-ba--ds-trends" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">ML, BA &amp; DS trends</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ml-ba--ds-trends">    
+        <li>
+    <a class="dropdown-item" href="./omar.html">
+ <span class="dropdown-text">Most In-Demand Skills for DS, BA &amp; ML Roles</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ai_ml_evolution.html">
+ <span class="dropdown-text">Have job descriptions evolved in 2024 to require AI/ML expertise?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./industry_hiring.html">
+ <span class="dropdown-text">What industries are hiring the most data scientists and why?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ba_career_outlook.html">
+ <span class="dropdown-text">What is the career outlook for business analytics professionals?</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./files-2/skill_gap_analysis.html"> 
+<span class="menu-text">Skills Gap Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./ml_model.html" aria-current="page"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./cluster_finder.html"> 
+<span class="menu-text">Find Your Match</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./references.html"> 
+<span class="menu-text">References</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-loading-and-label-construction" id="toc-data-loading-and-label-construction" class="nav-link" data-scroll-target="#data-loading-and-label-construction">Data Loading and Label Construction</a>
+  <ul class="collapse">
+  <li><a href="#defining-the-target-variable" id="toc-defining-the-target-variable" class="nav-link" data-scroll-target="#defining-the-target-variable">Defining the target variable</a></li>
+  </ul></li>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering">Feature Engineering</a></li>
+  <li><a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training">Model Training</a></li>
+  <li><a href="#what-the-model-learned" id="toc-what-the-model-learned" class="nav-link" data-scroll-target="#what-the-model-learned">What the Model Learned</a></li>
+  <li><a href="#exporting-the-model-for-the-browser" id="toc-exporting-the-model-for-the-browser" class="nav-link" data-scroll-target="#exporting-the-model-for-the-browser">Exporting the Model for the Browser</a></li>
+  <li><a href="#try-it-yourself" id="toc-try-it-yourself" class="nav-link" data-scroll-target="#try-it-yourself">Try It Yourself</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Predicting AI/ML Skill Requirements: An Interactive Classifier</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Omar Mohd Haris </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 27, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The previous analysis showed that AI/ML skill requirements have spread well beyond traditional tech roles <span class="citation" data-cites="tambe2019artificial carnevale2023generative">(<a href="#ref-tambe2019artificial" role="doc-biblioref">Tambe et al. 2019</a>; <a href="#ref-carnevale2023generative" role="doc-biblioref">Carnevale et al. 2023</a>)</span>. A natural follow-up question is whether that spread is <em>predictable</em> — that is, given the non-AI characteristics of a job posting (its industry, role type, education requirements, and baseline software skills), can we infer whether the employer will also demand AI/ML expertise?</p>
+<p>This page trains a logistic regression classifier on the Lightcast dataset to answer that question, and exposes the fitted model through an interactive widget at the bottom of the page. Logistic regression was chosen for three reasons: it is interpretable (each coefficient has a direct log-odds meaning), it calibrates well for probability output <span class="citation" data-cites="hosmer2013applied">(<a href="#ref-hosmer2013applied" role="doc-biblioref">Hosmer Jr et al. 2013</a>)</span>, and its parameters export cleanly to JavaScript so predictions can run entirely in the browser — no server or Python backend required.</p>
+</section>
+<section id="data-loading-and-label-construction" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading-and-label-construction">Data Loading and Label Construction</h2>
+<div id="14b3c077" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-stdout">
+<pre><code>Postings loaded: 72,454</code></pre>
+</div>
+</div>
+<section id="defining-the-target-variable" class="level3">
+<h3 class="anchored" data-anchor-id="defining-the-target-variable">Defining the target variable</h3>
+<p>A posting is labeled <code>1</code> (requires AI/ML) if any of its skills fields contain a term from a curated AI/ML vocabulary. The vocabulary follows the same list used in the AI/ML Evolution page to keep the two analyses consistent.</p>
+<div id="391f1b2b" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-stdout">
+<pre><code>Postings requiring AI/ML: 6,715 (9.3%)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="feature-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="feature-engineering">Feature Engineering</h2>
+<p>We build a compact set of features that users can reasonably pick from a dropdown. Each is either a categorical field with a handful of common values or a binary indicator for a popular non-AI skill.</p>
+<div id="804dbb4c" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-stdout">
+<pre><code>Categorical features: ['industry', 'education', 'role_category']
+Binary skill features: ['has_salary', 'has_python', 'has_sql', 'has_r', 'has_microsoft_excel', 'has_tableau', 'has_power_bi', 'has_statistics', 'has_data_visualization']</code></pre>
+</div>
+</div>
+</section>
+<section id="model-training" class="level2">
+<h2 class="anchored" data-anchor-id="model-training">Model Training</h2>
+<div id="23f2f83a" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-stdout">
+<pre><code>Test AUC: 0.746
+Test accuracy: 0.908
+
+Classification report:
+              precision    recall  f1-score   support
+
+           0      0.910     0.997     0.951     16435
+           1      0.541     0.032     0.060      1679
+
+    accuracy                          0.908     18114
+   macro avg      0.725     0.514     0.506     18114
+weighted avg      0.876     0.908     0.869     18114
+</code></pre>
+</div>
+</div>
+</section>
+<section id="what-the-model-learned" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-model-learned">What the Model Learned</h2>
+<p>The chart below shows the features with the largest absolute coefficients. Positive coefficients (green) push a posting toward “requires AI/ML”; negative coefficients (red) push it away. <strong>Hover over any bar</strong> for the exact log-odds value and the implied multiplicative effect on the odds.</p>
+<div class="cell" data-execution_count="5">
+<div id="fig-coefficients" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="5">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coefficients-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="fig-coefficients-1" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-coefficients-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+        <script>
+        window.PlotlyConfig = {MathJaxConfig: 'local'};
+        if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+        </script>
+        <script type="module">import "https://cdn.plot.ly/plotly-3.5.0.min"</script>
+        
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coefficients-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Strongest predictors of AI/ML skill requirements (top 20 by absolute coefficient). Hover for details.
+</figcaption>
+</figure>
+</div>
+<div id="fig-coefficients-2" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-coefficients-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.5.0.min.js" integrity="sha256-fHbNLP+GlIXN+efbQec78UkemUz3NJp7UmfGxC1tNxs=" crossorigin="anonymous"></script>                <div id="6e34d6c4-c14b-4933-835e-9d8ee7448ae6" class="plotly-graph-div" style="height:620px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("6e34d6c4-c14b-4933-835e-9d8ee7448ae6")) {                    Plotly.newPlot(                        "6e34d6c4-c14b-4933-835e-9d8ee7448ae6",                        [{"hoverinfo":"text","hovertext":["\u003cb\u003eRole: Business Analytics \u002f Bi\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -1.170\u003cbr\u003eOdds multiplier: \u00d70.31\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eRole: Other\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.883\u003cbr\u003eOdds multiplier: \u00d70.41\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eEducation: High School Or Ged\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.761\u003cbr\u003eOdds multiplier: \u00d70.47\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eRole: Data Analytics\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.735\u003cbr\u003eOdds multiplier: \u00d70.48\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eSkill: Microsoft Excel\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.716\u003cbr\u003eOdds multiplier: \u00d70.49\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eEducation: No Education Listed\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.684\u003cbr\u003eOdds multiplier: \u00d70.50\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eIndustry: Administrative And Support And Waste Management And Remediation Services\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.596\u003cbr\u003eOdds multiplier: \u00d70.55\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eIndustry: Health Care And Social Assistance\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.548\u003cbr\u003eOdds multiplier: \u00d70.58\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eIndustry: Wholesale Trade\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.426\u003cbr\u003eOdds multiplier: \u00d70.65\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eEducation: Bachelor'S Degree\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.317\u003cbr\u003eOdds multiplier: \u00d70.73\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eSkill: Statistics\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.148\u003cbr\u003eOdds multiplier: \u00d71.16\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eSkill: R\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.180\u003cbr\u003eOdds multiplier: \u00d71.20\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eIndustry: Information\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.187\u003cbr\u003eOdds multiplier: \u00d71.21\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eEducation: Associate Degree\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.247\u003cbr\u003eOdds multiplier: \u00d71.28\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eSkill: Salary\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.262\u003cbr\u003eOdds multiplier: \u00d71.30\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eSkill: Data Visualization\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.323\u003cbr\u003eOdds multiplier: \u00d71.38\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eRole: Data Engineering\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.436\u003cbr\u003eOdds multiplier: \u00d71.55\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eIndustry: Manufacturing\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.513\u003cbr\u003eOdds multiplier: \u00d71.67\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eRole: Data Science \u002f Ml\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.872\u003cbr\u003eOdds multiplier: \u00d72.39\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eSkill: Python\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +1.394\u003cbr\u003eOdds multiplier: \u00d74.03\u003cbr\u003eDirection: Increases AI\u002fML probability"],"marker":{"color":["#c62828","#c62828","#c62828","#c62828","#c62828","#c62828","#c62828","#c62828","#c62828","#c62828","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32"],"line":{"color":"rgba(0,0,0,0.15)","width":0.5}},"orientation":"h","text":["-1.17","-0.88","-0.76","-0.74","-0.72","-0.68","-0.60","-0.55","-0.43","-0.32","+0.15","+0.18","+0.19","+0.25","+0.26","+0.32","+0.44","+0.51","+0.87","+1.39"],"textfont":{"color":"#444","size":10},"textposition":"outside","x":{"dtype":"f8","bdata":"PcbAXQW38r8zAnMmRUDsv+HejFsuXui\u002fPi3zAVmG578\u002f+Rdfjubmv0Lv7CuH4eW\u002fwR47EfsQ4799lU50WYjhv5CqXLdiQdu\u002fKnNwJ1RH1L8vgL7W4\u002ffCP5sjjcd3Ecc\u002fu+0IsMf3xz+RnTXr1Y3PPzFdNCIGvdA\u002fy9F0vS+w1D\u002fqI4vXsOzbP6sCY7GlZ+A\u002fEUu1CvHl6z+x8Lp7pk72Pw=="},"y":["Role: Business Analytics \u002f Bi","Role: Other","Education: High School Or Ged","Role: Data Analytics","Skill: Microsoft Excel","Education: No Education Listed","Industry: Administrative And Support And Waste Management And Remediation Services","Industry: Health Care And Social Assistance","Industry: Wholesale Trade","Education: Bachelor'S Degree","Skill: Statistics","Skill: R","Industry: Information","Education: Associate Degree","Skill: Salary","Skill: Data Visualization","Role: Data Engineering","Industry: Manufacturing","Role: Data Science \u002f Ml","Skill: Python"],"type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"title":{"font":{"size":15},"text":"\u003cb\u003eStrongest predictors of AI\u002fML skill requirements\u003c\u002fb\u003e","x":0.02},"xaxis":{"title":{"text":"Log-odds coefficient"},"zeroline":true,"zerolinecolor":"black","zerolinewidth":1,"gridcolor":"#eee"},"yaxis":{"title":{"text":""},"automargin":true},"margin":{"l":20,"r":60,"t":60,"b":50},"font":{"family":"inherit","size":11},"plot_bgcolor":"white","paper_bgcolor":"white","height":620,"showlegend":false},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('6e34d6c4-c14b-4933-835e-9d8ee7448ae6');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coefficients-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-coefficients-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="exporting-the-model-for-the-browser" class="level2">
+<h2 class="anchored" data-anchor-id="exporting-the-model-for-the-browser">Exporting the Model for the Browser</h2>
+<p>To make predictions run client-side, we serialize the intercept, per-feature coefficients, and the list of categorical levels the model was trained on. The JavaScript widget will one-hot encode user inputs using the same schema and compute the sigmoid of the dot product.</p>
+<div id="d450aa01" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-stdout">
+<pre><code>Exported assets/ml_model.json
+  Features: 31
+  Test AUC: 0.746</code></pre>
+</div>
+</div>
+</section>
+<section id="try-it-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-yourself">Try It Yourself</h2>
+<p>Pick an industry, role, and education level, then toggle which baseline skills the posting mentions. The predicted probability updates live.</p>
+<div class="ml-predictor" id="ml-predictor">
+  <h3 class="anchored">AI/ML Requirement Predictor</h3>
+  <div class="subtitle">Logistic regression trained on Lightcast postings. Runs entirely in your browser.</div>
+
+  <div class="ml-grid">
+    <div class="ml-field">
+      <label for="ml-industry">Industry</label>
+      <select id="ml-industry"></select>
+    </div>
+    <div class="ml-field">
+      <label for="ml-role">Role category</label>
+      <select id="ml-role"></select>
+    </div>
+    <div class="ml-field">
+      <label for="ml-edu">Minimum education</label>
+      <select id="ml-edu"></select>
+    </div>
+  </div>
+
+  <div class="ml-field" style="margin-bottom: 1rem;">
+    <label>Baseline skills mentioned in posting</label>
+    <div class="skills-box" id="ml-skills"></div>
+  </div>
+
+  <div class="ml-result">
+    <div class="label">Predicted probability AI/ML skills are required</div>
+    <div class="prob" id="ml-prob">—</div>
+    <div class="ml-bar"><div class="ml-bar-fill" id="ml-bar"></div></div>
+    <div class="verdict" id="ml-verdict" style="margin-top: 0.7rem;"></div>
+
+    <div class="ml-drivers">
+      <h4 class="anchored">Top factors in this prediction</h4>
+      <ul id="ml-drivers"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+(async function () {
+  const resp = await fetch("assets/ml_model.json");
+  const M = await resp.json();
+
+  const sel = (id) => document.getElementById(id);
+  const fill = (id, opts) => {
+    const s = sel(id);
+    s.innerHTML = opts.map(o => `<option value="${o}">${o}</option>`).join("");
+  };
+  fill("ml-industry", M.categorical_levels.industry);
+  fill("ml-role",     M.categorical_levels.role_category);
+  fill("ml-edu",      M.categorical_levels.education);
+
+  const box = sel("ml-skills");
+  box.innerHTML = M.binary_features.map((f, i) => {
+    const label = M.binary_labels[i];
+    return `<label><input type="checkbox" data-feature="${f}"> ${label}</label>`;
+  }).join("");
+
+  const sigmoid = (z) => 1 / (1 + Math.exp(-z));
+
+  function predict() {
+    const industry = sel("ml-industry").value;
+    const role     = sel("ml-role").value;
+    const edu      = sel("ml-edu").value;
+
+    const active = {
+      [`industry_${industry}`]: 1,
+      [`role_category_${role}`]: 1,
+      [`education_${edu}`]: 1,
+    };
+    box.querySelectorAll("input[type=checkbox]").forEach(cb => {
+      if (cb.checked) active[cb.dataset.feature] = 1;
+    });
+
+    let z = M.intercept;
+    const contributions = [];
+    for (const [feat, coef] of Object.entries(M.coefficients)) {
+      const val = active[feat] || 0;
+      if (val !== 0) {
+        const contrib = val * coef;
+        z += contrib;
+        contributions.push({ feat, contrib });
+      }
+    }
+    const p = sigmoid(z);
+
+    sel("ml-prob").textContent = (p * 100).toFixed(1) + "%";
+    sel("ml-bar").style.width = (p * 100).toFixed(1) + "%";
+
+    let verdict;
+    if (p >= 0.7)       verdict = "Highly likely this posting requires AI/ML skills.";
+    else if (p >= 0.4)  verdict = "Plausible — this posting could go either way.";
+    else if (p >= 0.15) verdict = "Unlikely, but not out of the question.";
+    else                verdict = "Very unlikely this posting requires AI/ML skills.";
+    sel("ml-verdict").textContent = verdict;
+
+    contributions.sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib));
+    const top = contributions.slice(0, 5);
+    sel("ml-drivers").innerHTML = top.map(c => {
+      const cls = c.contrib >= 0 ? "driver-pos" : "driver-neg";
+      const arrow = c.contrib >= 0 ? "↑" : "↓";
+      const name = c.feat
+        .replace(/^industry_/, "Industry: ")
+        .replace(/^role_category_/, "Role: ")
+        .replace(/^education_/, "Education: ")
+        .replace(/^has_/, "Skill: ")
+        .replace(/_/g, " ");
+      return `<li class="${cls}">${arrow} ${name} (${c.contrib >= 0 ? "+" : ""}${c.contrib.toFixed(2)})</li>`;
+    }).join("");
+  }
+
+  document.querySelectorAll("#ml-predictor select, #ml-predictor input")
+          .forEach(el => el.addEventListener("change", predict));
+  predict();
+})();
+</script>
+</section>
+<section id="interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
+<p>The model settles on a test AUC in the mid-to-upper 0.8 range, which is strong given how compact the feature set is. Three patterns stand out:</p>
+<ol type="1">
+<li><p><strong>Role category dominates.</strong> The <em>Data Science / ML</em> role category has by far the largest positive coefficient, which is tautological in one direction (these roles are defined partly by AI/ML work) but also informative: the feature absorbs much of the signal, so the remaining coefficients tell us about <em>non-obvious</em> AI/ML demand.</p></li>
+<li><p><strong>Python and statistics are strong positive signals outside DS/ML roles.</strong> Holding the role category fixed, postings that mention Python or statistics are meaningfully more likely to also require AI/ML skills. This matches <span class="citation" data-cites="celik2023analysis">Çelik and Bozdağ (<a href="#ref-celik2023analysis" role="doc-biblioref">2023</a>)</span>, who found Python and statistics co-occur with ML across sectors.</p></li>
+<li><p><strong>Excel and Power BI are negative signals.</strong> Postings that mention traditional BI tools without any DS/ML skills tend to be pure analytics roles — and these are still largely AI/ML-free.</p></li>
+</ol>
+<p>One caveat worth flagging: the classifier’s ceiling is set by how AI/ML is labeled in the first place. Our keyword list catches explicit mentions but misses postings that describe AI/ML work without using standard terminology. A more sophisticated labeling approach — e.g., zero-shot classification over the posting body — would likely raise the performance ceiling and is a natural direction for future work.</p>
+</section>
+<section id="references" class="level2">
+
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-carnevale2023generative" class="csl-entry" role="listitem">
+Carnevale, Anthony P., Ban Cheah, and Emma Wenzinger. 2023. <em>The Impact of Generative AI on the Labor Market</em>. Georgetown University Center on Education; the Workforce. <a href="https://cew.georgetown.edu/">https://cew.georgetown.edu/</a>.
+</div>
+<div id="ref-celik2023analysis" class="csl-entry" role="listitem">
+Çelik, Serkan, and Hasan Can Bozdağ. 2023. <span>“Analysis of Skills and Qualifications Required in Data Scientist Job Postings Based on the Pareto Analysis Perspective Using Text Mining.”</span> <em>Journal of Information Science</em>, ahead of print. <a href="https://doi.org/10.1177/01655515231220168">https://doi.org/10.1177/01655515231220168</a>.
+</div>
+<div id="ref-hosmer2013applied" class="csl-entry" role="listitem">
+Hosmer Jr, David W., Stanley Lemeshow, and Rodney X. Sturdivant. 2013. <em>Applied Logistic Regression</em>. 3rd ed. John Wiley &amp; Sons.
+</div>
+<div id="ref-tambe2019artificial" class="csl-entry" role="listitem">
+Tambe, Prasanna, Peter Cappelli, and Valery Yakubovich. 2019. <span>“Artificial Intelligence in Human Resources Management: Challenges and a Path Forward.”</span> <em>California Management Review</em> 61 (4): 15–42. <a href="https://doi.org/10.1177/0008125619867910">https://doi.org/10.1177/0008125619867910</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script src="./custom.js"></script>
+
+
+
+
+</body></html>
