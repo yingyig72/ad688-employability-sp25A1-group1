@@ -17,20 +17,20 @@ bibliography: references.bib
 ---
 
 # Introduction
-Artificial intelligence (AI) is rapidly transforming labor markets, but its impact is not uniform across regions or skill groups. Rather than simply increasing or decreasing employment, AI reshapes the structure of work by altering skill demand, wage distribution, and geographic concentration of opportunities. Existing research suggests that AI disproportionately benefits high-skilled workers while displacing routine and low-skilled labor, particularly in urban areas @mookerjee2023ai. At the same time, rural labor markets face structural constraints, where limited opportunities interact with strong geographic attachment, leading individuals to adjust their career expectations downward @niccolai2022rural.
+Artificial intelligence (AI) is rapidly transforming labor markets, but its impact is not uniform across regions or skill groups. Rather than simply increasing or decreasing employment, AI reshapes the structure of work by altering skill demand, wage distribution, and geographic concentration of opportunities. Existing research suggests that AI disproportionately benefits high-skilled workers while displacing routine and low-skilled labor, particularly in urban areas (Mookerjee 2023). At the same time, rural labor markets face structural constraints, where limited opportunities interact with strong geographic attachment, leading individuals to adjust their career expectations downward (Niccolai et al. 2022).
 
 This paper investigates how AI affects labor market outcomes across urban and rural areas by focusing on three key dimensions: skill composition, wage inequality, and job distribution over time. By combining descriptive visualization and regression analysis, this study aims to understand whether AI amplifies spatial inequality and how skill-based transformations shape these patterns.
 
 # Literature Review
-A growing body of literature highlights that AI does not affect all workers equally. @mookerjee2023ai finds that AI increases demand for high-skilled labor while reducing opportunities for routine and low-skilled jobs, particularly in urban economies. This suggests that AI contributes to wage polarization and skill-biased inequality.
+A growing body of literature highlights that AI does not affect all workers equally. (Mookerjee 2023) finds that AI increases demand for high-skilled labor while reducing opportunities for routine and low-skilled jobs, particularly in urban economies. This suggests that AI contributes to wage polarization and skill-biased inequality.
 
-From a structural perspective, @shen2024 argues that AI primarily transforms tasks rather than eliminating entire occupations. Routine tasks are increasingly automated, while non-routine, cognitive, and analytical tasks become more valuable. As a result, labor demand shifts toward medium- and high-skill roles, leading to a reconfiguration of skill composition.
+From a structural perspective, (Shen 2024) argues that AI primarily transforms tasks rather than eliminating entire occupations. Routine tasks are increasingly automated, while non-routine, cognitive, and analytical tasks become more valuable. As a result, labor demand shifts toward medium- and high-skill roles, leading to a reconfiguration of skill composition.
 
-Spatial inequality is further emphasized by @capello2023, who show that automation produces different outcomes across regions. In rural areas, low-skilled workers are more likely to exit the labor market entirely due to limited reallocation opportunities. In contrast, urban areas experience restructuring rather than simple job loss, with increasing dominance of high-skilled employment but also rising inequality.
+Spatial inequality is further emphasized by (Capello and Lenzi 2023), who show that automation produces different outcomes across regions. In rural areas, low-skilled workers are more likely to exit the labor market entirely due to limited reallocation opportunities. In contrast, urban areas experience restructuring rather than simple job loss, with increasing dominance of high-skilled employment but also rising inequality.
 
-Geographic concentration also plays a key role. AI-related jobs remain heavily clustered in major metropolitan areas such as San Francisco, New York, and Seattle, although some diffusion to secondary cities is emerging @ather2024. Despite this, access to opportunities remains uneven.
+Geographic concentration also plays a key role. AI-related jobs remain heavily clustered in major metropolitan areas such as San Francisco, New York, and Seattle, although some diffusion to secondary cities is emerging (Ather et al. 2024). Despite this, access to opportunities remains uneven.
 
-Finally, beyond economic constraints, social factors also shape labor outcomes.@niccolai2022rural show that rural workers often prioritize staying in their communities despite limited job availability, creating a tension between aspiration and opportunity. This highlights that labor market outcomes are shaped not only by demand but also by social and geographic constraints.
+Finally, beyond economic constraints, social factors also shape labor outcomes.(Niccolai et al. 2022) show that rural workers often prioritize staying in their communities despite limited job availability, creating a tension between aspiration and opportunity. This highlights that labor market outcomes are shaped not only by demand but also by social and geographic constraints.
 
 # Data & Methodology
 This study uses job-level data including salary, skill level, AI classification, geographic classification (urban vs rural), and years of experience.
@@ -205,7 +205,7 @@ df.groupby("AREA_LABEL")["SKILL_LEVEL"].value_counts(normalize=True)
 This graph clearly shows a distinct trend of skill and spatial differentiation. The number of high-skilled positions in urban areas has continued to grow significantly, while the growth of medium and low-skilled positions has been relatively slow; in contrast, the overall number of positions in rural areas is lower, and the changes in each skill level are relatively small. This indicates that employment growth is mainly concentrated in high-skilled fields in cities, while the overall development of the rural labor market is relatively sluggish.
 This trend suggests that AI is driving the labor market to concentrate on high-skilled and urban areas, and exacerbating structural inequality. 
 
-Specifically, high-skilled positions continue to expand in cities, while medium and low-skilled positions have limited growth or even face pressure, and the overall changes in rural areas are relatively weak, further widening the urban-rural gap @mookerjee2023ai.
+Specifically, high-skilled positions continue to expand in cities, while medium and low-skilled positions have limited growth or even face pressure, and the overall changes in rural areas are relatively weak, further widening the urban-rural gap (Mookerjee 2023).
 
 ```{python}
 import pandas as pd
@@ -247,7 +247,7 @@ fig.show()
 ## Skill Distribution - Skill Composition in AI vs Non-AI Jobs by Area
 This chart illustrates the differences in skill structures between AI positions and non-AI positions across urban and rural areas. It can be observed that in both cities and rural areas, the proportion of highly skilled labor in AI positions is generally higher than that in non-AI positions, while the proportion of low-skilled workers is lower. This indicates that AI-related work has a stronger demand for high-skilled individuals. Additionally, medium-skilled workers still dominate in both types of positions, but their proportion is slightly reduced in AI positions, reflecting a structural shift towards the higher-skilled end.
 
-This distribution indicates that AI does not uniformly affect all skill levels, but rather drives the labor force structure towards a higher-skilled orientation and reduces the demand for low-skilled labor. This "skill-biased change" will further intensify the differentiation in the labor market, benefiting the high-skilled group more while imposing greater adjustment pressure on the middle and low-skilled groups @mookerjee2023ai
+This distribution indicates that AI does not uniformly affect all skill levels, but rather drives the labor force structure towards a higher-skilled orientation and reduces the demand for low-skilled labor. This "skill-biased change" will further intensify the differentiation in the labor market, benefiting the high-skilled group more while imposing greater adjustment pressure on the middle and low-skilled groups (Mookerjee 2023)
 ```{python}
 high_skill = df[df["SKILL_LEVEL"] == "High"]
 
@@ -300,7 +300,7 @@ fig.show()
 ## Skill Composition Across Regions - Skill Distribution (Proportion) in AI vs Non-AI Jobs
 This chart further compares the differences in skill proportions between AI-related positions and non-AI positions. It can be seen that in AI positions, the proportion of highly skilled workers is significantly higher than in non-AI positions, while the proportion of medium-skilled workers has decreased, and the proportion of low-skilled workers remains at a relatively low level. At the same time, this structure is basically the same in urban and rural areas, but the proportion of highly skilled workers is slightly higher in cities, indicating that AI-related positions have a more concentrated demand for highly skilled labor.
 
-This result indicates that AI is driving the transformation of the labor force structure from being "dominated by medium skills" to "favoring high skills", and it shows a consistent but varying trend in different regions. This change reflects the selective demands of AI for tasks and capabilities, giving an advantage to high-skilled workers while weakening the relative position of those with medium and low skills, thereby exacerbating the inequality between skill levels @mookerjee2023ai
+This result indicates that AI is driving the transformation of the labor force structure from being "dominated by medium skills" to "favoring high skills", and it shows a consistent but varying trend in different regions. This change reflects the selective demands of AI for tasks and capabilities, giving an advantage to high-skilled workers while weakening the relative position of those with medium and low skills, thereby exacerbating the inequality between skill levels (Mookerjee 2023)
 
 ```{python}
 skill_dist = (
@@ -373,3 +373,15 @@ Concentrating job growth in urban areas
 Expanding inequality across both skill and geographic dimensions
 
 Ultimately, AI does not affect all workers equally. Instead, it redistributes opportunities, creating growth and innovation in urban regions while leaving rural areas with fewer pathways for adaptation.
+
+# References
+
+Mookerjee, U. 2023. *Disparities in the Age of AI: Employment and Wage Inequality Across Skill Groups in Rural and Urban Areas*. SSRN Electronic Journal.
+
+Shen, Y. 2024. *Future Jobs: Analyzing the Impact of Artificial Intelligence on Employment and Its Mechanisms*. Economic Change and Restructuring.
+
+Capello, Roberta, and Camilla Lenzi. 2023. *Automation and Labour Market Inequalities: A Comparison Between Cities and Non-Cities*. npj Urban Sustainability.
+
+Ather, Danish, et al. 2024. *The Geography of AI Jobs*. Economic Geography Review.
+
+Niccolai, Ashley R., Sarah Damaske, and Jason Park. 2022. *Navigating Rural Labor Markets: Aspirations, Constraints, and Inequality*. RSF: The Russell Sage Foundation Journal of the Social Sciences.
