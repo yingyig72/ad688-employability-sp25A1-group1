@@ -13,13 +13,7 @@ execute:
   echo: false
   warning: false
   message: false
-format:
-  html:
-    toc: true
-    number-sections: true
-    code-fold: false
-    code-overflow: scroll
-    bibliography: references.bib
+bibliography: references.bib
 ---
 
 # Introduction
