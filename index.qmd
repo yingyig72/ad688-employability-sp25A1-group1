@@ -79,7 +79,7 @@ Are remote jobs increasing or decreasing across industries?
 
 [Read analysis →](tianyi.html){.card-link}
 
-<span class="author">Tianyi</span>
+<span class="author">Zichen</span>
 :::
 :::
 
@@ -90,7 +90,7 @@ Where are the hottest regional job markets, and how does location shape opportun
 
 [Read analysis →](yingyi.html){.card-link}
 
-<span class="author">Yingyi</span>
+<span class="author">Tianyi</span>
 :::
 :::
 
