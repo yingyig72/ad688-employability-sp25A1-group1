@@ -550,7 +550,7 @@
     "href": "cluster_finder.html#cluster-landscape",
     "title": "Job Cluster Finder",
     "section": "Cluster Landscape",
-    "text": "Cluster Landscape\nThe plot below projects every posting down to two dimensions using PCA, colored by its assigned cluster. Points that sit close together share similar skill profiles; clusters that overlap in 2D often reflect role families with related skill bases (e.g. data analytics and business intelligence).\n\n\n\nJob postings projected to 2D via PCA, colored by cluster assignment\n\n\nThe clusters themselves are defined by their top skills. The chart below shows the most common skills within each cluster, which gives a quick sense of what kind of work each cluster represents.\n\n\n\nTop skills within each of the ten clusters"
+    "text": "Cluster Landscape\nThe plot below projects every posting down to two dimensions using PCA, colored by its assigned cluster. Hover over any point to see the job title and cluster, click cluster names in the legend to isolate them, and use the box/lasso tools in the top-right corner to zoom into dense regions.\n\n\n\n\n\n\n\n        \n        \n        \n\n\n(a) Job postings projected to 2D via PCA, colored by cluster assignment. Hover for job titles; click legend items to filter.\n\n\n\n\n\n\n                            \n                                            \n\n\n(b)\n\n\n\n\n\nFigure 1\n\n\n\n\nThe clusters themselves are defined by their top skills. The chart below lets you pick any cluster to see its most defining skills, ranked by how strongly they distinguish that cluster from the rest of the market.\n\n\n\n\n                            \n                                            \n\n\nFigure 2: Top defining skills per cluster. Use the dropdown to switch between clusters."
   },
   {
     "objectID": "cluster_finder.html#find-your-own-cluster",
@@ -1040,7 +1040,7 @@
     "href": "ml_model.html#what-the-model-learned",
     "title": "Predicting AI/ML Skill Requirements: An Interactive Classifier",
     "section": "What the Model Learned",
-    "text": "What the Model Learned\nThe chart below shows the 15 features with the largest absolute coefficients. Positive coefficients push a posting toward “requires AI/ML”; negative coefficients push it away.\n\n\n\nModel coefficients"
+    "text": "What the Model Learned\nThe chart below shows the features with the largest absolute coefficients. Positive coefficients (green) push a posting toward “requires AI/ML”; negative coefficients (red) push it away. Hover over any bar for the exact log-odds value and the implied multiplicative effect on the odds.\n\n\n\n\n\n\n\n        \n        \n        \n\n\n(a) Strongest predictors of AI/ML skill requirements (top 20 by absolute coefficient). Hover for details.\n\n\n\n\n\n\n                            \n                                            \n\n\n(b)\n\n\n\n\n\nFigure 1"
   },
   {
     "objectID": "ml_model.html#exporting-the-model-for-the-browser",

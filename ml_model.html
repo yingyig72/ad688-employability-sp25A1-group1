@@ -47,7 +47,7 @@ div.csl-indent {
 }</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -91,6 +91,9 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <style>
   .ml-predictor {
     font-family: inherit;
@@ -372,7 +375,7 @@ div.csl-indent {
 </section>
 <section id="data-loading-and-label-construction" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading-and-label-construction">Data Loading and Label Construction</h2>
-<div id="2adf39e2" class="cell" data-execution_count="1">
+<div id="14b3c077" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>Postings loaded: 72,454</code></pre>
 </div>
@@ -380,7 +383,7 @@ div.csl-indent {
 <section id="defining-the-target-variable" class="level3">
 <h3 class="anchored" data-anchor-id="defining-the-target-variable">Defining the target variable</h3>
 <p>A posting is labeled <code>1</code> (requires AI/ML) if any of its skills fields contain a term from a curated AI/ML vocabulary. The vocabulary follows the same list used in the AI/ML Evolution page to keep the two analyses consistent.</p>
-<div id="1e257a6c" class="cell" data-execution_count="2">
+<div id="391f1b2b" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>Postings requiring AI/ML: 6,715 (9.3%)</code></pre>
 </div>
@@ -390,7 +393,7 @@ div.csl-indent {
 <section id="feature-engineering" class="level2">
 <h2 class="anchored" data-anchor-id="feature-engineering">Feature Engineering</h2>
 <p>We build a compact set of features that users can reasonably pick from a dropdown. Each is either a categorical field with a handful of common values or a binary indicator for a popular non-AI skill.</p>
-<div id="f267c94d" class="cell" data-execution_count="3">
+<div id="804dbb4c" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>Categorical features: ['industry', 'education', 'role_category']
 Binary skill features: ['has_salary', 'has_python', 'has_sql', 'has_r', 'has_microsoft_excel', 'has_tableau', 'has_power_bi', 'has_statistics', 'has_data_visualization']</code></pre>
@@ -399,7 +402,7 @@ Binary skill features: ['has_salary', 'has_python', 'has_sql', 'has_r', 'has_mic
 </section>
 <section id="model-training" class="level2">
 <h2 class="anchored" data-anchor-id="model-training">Model Training</h2>
-<div id="7e3cba0a" class="cell" data-execution_count="4">
+<div id="23f2f83a" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>Test AUC: 0.746
 Test accuracy: 0.908
@@ -419,18 +422,73 @@ weighted avg      0.876     0.908     0.869     18114
 </section>
 <section id="what-the-model-learned" class="level2">
 <h2 class="anchored" data-anchor-id="what-the-model-learned">What the Model Learned</h2>
-<p>The chart below shows the 15 features with the largest absolute coefficients. Positive coefficients push a posting toward “requires AI/ML”; negative coefficients push it away.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="visualizations/ml_coefficients.png" class="img-fluid figure-img"></p>
-<figcaption>Model coefficients</figcaption>
+<p>The chart below shows the features with the largest absolute coefficients. Positive coefficients (green) push a posting toward “requires AI/ML”; negative coefficients (red) push it away. <strong>Hover over any bar</strong> for the exact log-odds value and the implied multiplicative effect on the odds.</p>
+<div class="cell" data-execution_count="5">
+<div id="fig-coefficients" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="5">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coefficients-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="fig-coefficients-1" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-coefficients-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+        <script>
+        window.PlotlyConfig = {MathJaxConfig: 'local'};
+        if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+        </script>
+        <script type="module">import "https://cdn.plot.ly/plotly-3.5.0.min"</script>
+        
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coefficients-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Strongest predictors of AI/ML skill requirements (top 20 by absolute coefficient). Hover for details.
+</figcaption>
 </figure>
+</div>
+<div id="fig-coefficients-2" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-coefficients-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.5.0.min.js" integrity="sha256-fHbNLP+GlIXN+efbQec78UkemUz3NJp7UmfGxC1tNxs=" crossorigin="anonymous"></script>                <div id="6e34d6c4-c14b-4933-835e-9d8ee7448ae6" class="plotly-graph-div" style="height:620px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("6e34d6c4-c14b-4933-835e-9d8ee7448ae6")) {                    Plotly.newPlot(                        "6e34d6c4-c14b-4933-835e-9d8ee7448ae6",                        [{"hoverinfo":"text","hovertext":["\u003cb\u003eRole: Business Analytics \u002f Bi\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -1.170\u003cbr\u003eOdds multiplier: \u00d70.31\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eRole: Other\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.883\u003cbr\u003eOdds multiplier: \u00d70.41\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eEducation: High School Or Ged\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.761\u003cbr\u003eOdds multiplier: \u00d70.47\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eRole: Data Analytics\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.735\u003cbr\u003eOdds multiplier: \u00d70.48\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eSkill: Microsoft Excel\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.716\u003cbr\u003eOdds multiplier: \u00d70.49\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eEducation: No Education Listed\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.684\u003cbr\u003eOdds multiplier: \u00d70.50\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eIndustry: Administrative And Support And Waste Management And Remediation Services\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.596\u003cbr\u003eOdds multiplier: \u00d70.55\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eIndustry: Health Care And Social Assistance\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.548\u003cbr\u003eOdds multiplier: \u00d70.58\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eIndustry: Wholesale Trade\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.426\u003cbr\u003eOdds multiplier: \u00d70.65\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eEducation: Bachelor'S Degree\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: -0.317\u003cbr\u003eOdds multiplier: \u00d70.73\u003cbr\u003eDirection: Decreases AI\u002fML probability","\u003cb\u003eSkill: Statistics\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.148\u003cbr\u003eOdds multiplier: \u00d71.16\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eSkill: R\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.180\u003cbr\u003eOdds multiplier: \u00d71.20\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eIndustry: Information\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.187\u003cbr\u003eOdds multiplier: \u00d71.21\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eEducation: Associate Degree\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.247\u003cbr\u003eOdds multiplier: \u00d71.28\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eSkill: Salary\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.262\u003cbr\u003eOdds multiplier: \u00d71.30\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eSkill: Data Visualization\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.323\u003cbr\u003eOdds multiplier: \u00d71.38\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eRole: Data Engineering\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.436\u003cbr\u003eOdds multiplier: \u00d71.55\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eIndustry: Manufacturing\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.513\u003cbr\u003eOdds multiplier: \u00d71.67\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eRole: Data Science \u002f Ml\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +0.872\u003cbr\u003eOdds multiplier: \u00d72.39\u003cbr\u003eDirection: Increases AI\u002fML probability","\u003cb\u003eSkill: Python\u003c\u002fb\u003e\u003cbr\u003eLog-odds coefficient: +1.394\u003cbr\u003eOdds multiplier: \u00d74.03\u003cbr\u003eDirection: Increases AI\u002fML probability"],"marker":{"color":["#c62828","#c62828","#c62828","#c62828","#c62828","#c62828","#c62828","#c62828","#c62828","#c62828","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32","#2e7d32"],"line":{"color":"rgba(0,0,0,0.15)","width":0.5}},"orientation":"h","text":["-1.17","-0.88","-0.76","-0.74","-0.72","-0.68","-0.60","-0.55","-0.43","-0.32","+0.15","+0.18","+0.19","+0.25","+0.26","+0.32","+0.44","+0.51","+0.87","+1.39"],"textfont":{"color":"#444","size":10},"textposition":"outside","x":{"dtype":"f8","bdata":"PcbAXQW38r8zAnMmRUDsv+HejFsuXui\u002fPi3zAVmG578\u002f+Rdfjubmv0Lv7CuH4eW\u002fwR47EfsQ4799lU50WYjhv5CqXLdiQdu\u002fKnNwJ1RH1L8vgL7W4\u002ffCP5sjjcd3Ecc\u002fu+0IsMf3xz+RnTXr1Y3PPzFdNCIGvdA\u002fy9F0vS+w1D\u002fqI4vXsOzbP6sCY7GlZ+A\u002fEUu1CvHl6z+x8Lp7pk72Pw=="},"y":["Role: Business Analytics \u002f Bi","Role: Other","Education: High School Or Ged","Role: Data Analytics","Skill: Microsoft Excel","Education: No Education Listed","Industry: Administrative And Support And Waste Management And Remediation Services","Industry: Health Care And Social Assistance","Industry: Wholesale Trade","Education: Bachelor'S Degree","Skill: Statistics","Skill: R","Industry: Information","Education: Associate Degree","Skill: Salary","Skill: Data Visualization","Role: Data Engineering","Industry: Manufacturing","Role: Data Science \u002f Ml","Skill: Python"],"type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"title":{"font":{"size":15},"text":"\u003cb\u003eStrongest predictors of AI\u002fML skill requirements\u003c\u002fb\u003e","x":0.02},"xaxis":{"title":{"text":"Log-odds coefficient"},"zeroline":true,"zerolinecolor":"black","zerolinewidth":1,"gridcolor":"#eee"},"yaxis":{"title":{"text":""},"automargin":true},"margin":{"l":20,"r":60,"t":60,"b":50},"font":{"family":"inherit","size":11},"plot_bgcolor":"white","paper_bgcolor":"white","height":620,"showlegend":false},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('6e34d6c4-c14b-4933-835e-9d8ee7448ae6');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coefficients-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-coefficients-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
 </div>
 </section>
 <section id="exporting-the-model-for-the-browser" class="level2">
 <h2 class="anchored" data-anchor-id="exporting-the-model-for-the-browser">Exporting the Model for the Browser</h2>
 <p>To make predictions run client-side, we serialize the intercept, per-feature coefficients, and the list of categorical levels the model was trained on. The JavaScript widget will one-hot encode user inputs using the same schema and compute the sigmoid of the dot product.</p>
-<div id="5e1ebcdc" class="cell" data-execution_count="6">
+<div id="d450aa01" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>Exported assets/ml_model.json
   Features: 31
