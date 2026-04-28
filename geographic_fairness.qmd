@@ -679,7 +679,7 @@ print(f"Exported model: {len(coefficients)} coefficients, {len(city_residuals)} 
   let MODEL = null;
 
   // Load the exported model
-  fetch("data/fairness_model.json")
+  fetch("assets/fairness_model.json")
     .then(r => r.json())
     .then(m => {
       MODEL = m;
