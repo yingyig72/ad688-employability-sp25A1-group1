@@ -63,7 +63,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-92ccca19d14c0bd04edafc1952284584.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-4897d45d2f75ed4f519693be625836c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -222,6 +222,7 @@ div.csl-indent {
   <li><a href="#business-analytics-career-outlook-omar" id="toc-business-analytics-career-outlook-omar" class="nav-link" data-scroll-target="#business-analytics-career-outlook-omar">Business Analytics Career Outlook (Omar)</a></li>
   </ul></li>
   <li><a href="#predictive-modeling" id="toc-predictive-modeling" class="nav-link" data-scroll-target="#predictive-modeling">Predictive Modeling</a></li>
+  <li><a href="#geographic-salary-fairness" id="toc-geographic-salary-fairness" class="nav-link" data-scroll-target="#geographic-salary-fairness">Geographic Salary Fairness</a></li>
   <li><a href="#tools-reproducibility" id="toc-tools-reproducibility" class="nav-link" data-scroll-target="#tools-reproducibility">Tools &amp; Reproducibility</a></li>
   <li><a href="#how-to-read-this-report" id="toc-how-to-read-this-report" class="nav-link" data-scroll-target="#how-to-read-this-report">How to Read This Report</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
@@ -380,6 +381,14 @@ div.csl-indent {
 <section id="predictive-modeling" class="level2">
 <h2 class="anchored" data-anchor-id="predictive-modeling">Predictive Modeling</h2>
 <p>Two predictive models live on the site as standalone deliverables. The <strong>AI/ML Requirement Predictor</strong> (<code>ml_model.qmd</code>) is a logistic regression — Test AUC 0.746, accuracy 0.908 — that takes industry, role, education, and a checklist of baseline skills (Python, SQL, R, Excel, Tableau, Power BI, Statistics, Data Visualization) and outputs a calibrated probability that the posting will require AI/ML expertise. The trained coefficients are exported to JSON and the prediction runs entirely in the browser. The <strong>Find Your Match</strong> widget (<code>cluster_finder.qmd</code>) uses K-means clustering on the postings and a cosine-similarity skill matcher so users can paste their skills and see which job clusters they’re closest to.</p>
+</section>
+<section id="geographic-salary-fairness" class="level2">
+<h2 class="anchored" data-anchor-id="geographic-salary-fairness">Geographic Salary Fairness</h2>
+<p>The site also includes a <strong>Geographic Salary Fairness</strong> analysis that asks whether certain cities or states pay more — or less — than the work itself would justify. Instead of directly comparing raw salaries across locations, the analysis first predicts salary using job-related features such as role category, experience level, industry, education, and remote status. Geography is intentionally left out of the prediction model so that location can be evaluated afterward.</p>
+<p>After the model predicts an expected salary, each posting receives a <strong>residual</strong>:</p>
+<p>A positive residual means the posting pays more than expected, while a negative residual means it pays less than expected. These residuals are then grouped by city and state to identify premium markets, where postings consistently pay above the model prediction, and discount markets, where postings consistently pay below the model prediction.</p>
+<p>This approach makes the fairness question more meaningful because the model is not simply saying that places like San Francisco or New York pay more because they have more tech jobs. Instead, it asks whether similar jobs still pay differently across locations after controlling for the job characteristics available in the data. The result is a descriptive fairness audit: it does not prove discrimination or exploitation, but it highlights where geography appears to influence pay beyond the work itself.</p>
+<p>The page also includes an interactive in-browser predictor. Users can paste a job description, auto-detect fields such as role, experience, education, industry, and remote status, then enter a city and posted salary. The tool compares the posted salary against the model’s expected salary and labels the offer as premium, fair, or discount relative to the prediction.</p>
 </section>
 <section id="tools-reproducibility" class="level2">
 <h2 class="anchored" data-anchor-id="tools-reproducibility">Tools &amp; Reproducibility</h2>
