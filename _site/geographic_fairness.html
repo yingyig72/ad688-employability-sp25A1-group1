@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Omar Mohd Haris">
+<meta name="dcterms.date" content="2026-04-28">
+
+<title>Geographic Salary Fairness: A Residual Analysis – AD688 Team 1 Spring 2026</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b03a11417efed39b2e2431882e1d3ba1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">AD688 Team 1 Spring 2026</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_cleaning.html"> 
+<span class="menu-text">Data Cleaning</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research-questions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Research Questions</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-research-questions">    
+        <li>
+    <a class="dropdown-item" href="./ricardo_after2_fixed-4.html">
+ <span class="dropdown-text">Which Cities/States Have the Highest Job Growth?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tianyi.html">
+ <span class="dropdown-text">Do Tech Hubs Still Dominate Hiring?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./zichen.html">
+ <span class="dropdown-text">Are remote jobs increasing or decreasing across industries?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./yingyi.html">
+ <span class="dropdown-text">Urban vs.&nbsp;Rural Job Markets for AI &amp; Non-AI Careers</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ml-ba--ds-trends" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">ML, BA &amp; DS trends</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ml-ba--ds-trends">    
+        <li>
+    <a class="dropdown-item" href="./omar.html">
+ <span class="dropdown-text">Most In-Demand Skills for DS, BA &amp; ML Roles</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ai_ml_evolution.html">
+ <span class="dropdown-text">Have job descriptions evolved in 2024 to require AI/ML expertise?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./industry_hiring.html">
+ <span class="dropdown-text">What industries are hiring the most data scientists and why?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ba_career_outlook.html">
+ <span class="dropdown-text">What is the career outlook for business analytics professionals?</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./files-2/skill_gap_analysis.html"> 
+<span class="menu-text">Skills Gap Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./ml_model.html"> 
+<span class="menu-text">Machine Learning</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./cluster_finder.html"> 
+<span class="menu-text">Find Your Match</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./references.html"> 
+<span class="menu-text">References</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-fairness-question" id="toc-the-fairness-question" class="nav-link active" data-scroll-target="#the-fairness-question">The fairness question</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#loading-the-cleaned-data" id="toc-loading-the-cleaned-data" class="nav-link" data-scroll-target="#loading-the-cleaned-data">Loading the cleaned data</a></li>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering">Feature engineering</a></li>
+  <li><a href="#building-the-model" id="toc-building-the-model" class="nav-link" data-scroll-target="#building-the-model">Building the model</a></li>
+  <li><a href="#where-geography-pays-more-and-less-than-the-work-justifies" id="toc-where-geography-pays-more-and-less-than-the-work-justifies" class="nav-link" data-scroll-target="#where-geography-pays-more-and-less-than-the-work-justifies">Where geography pays more — and less — than the work justifies</a></li>
+  <li><a href="#distribution-of-residuals" id="toc-distribution-of-residuals" class="nav-link" data-scroll-target="#distribution-of-residuals">Distribution of residuals</a></li>
+  <li><a href="#within-role-robustness-check" id="toc-within-role-robustness-check" class="nav-link" data-scroll-target="#within-role-robustness-check">Within-role robustness check</a></li>
+  <li><a href="#try-it-test-a-job-posting-against-the-model" id="toc-try-it-test-a-job-posting-against-the-model" class="nav-link" data-scroll-target="#try-it-test-a-job-posting-against-the-model">Try it: Test a job posting against the model</a>
+  <ul class="collapse">
+  <li><a href="#export-the-model-coefficients-to-json" id="toc-export-the-model-coefficients-to-json" class="nav-link" data-scroll-target="#export-the-model-coefficients-to-json">Export the model coefficients to JSON</a></li>
+  <li><a href="#the-interactive-predictor" id="toc-the-interactive-predictor" class="nav-link" data-scroll-target="#the-interactive-predictor">The interactive predictor</a></li>
+  </ul></li>
+  <li><a href="#what-this-means" id="toc-what-this-means" class="nav-link" data-scroll-target="#what-this-means">What this means</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Geographic Salary Fairness: A Residual Analysis</h1>
+<p class="subtitle lead">Where does location pay more — or less — than the work justifies?</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Omar Mohd Haris </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 28, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-fairness-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-fairness-question">The fairness question</h2>
+<p>Salaries vary by city. That much is obvious — a software engineer in San Francisco rarely earns the same as one in Tulsa. The harder question is <em>why</em>. Some of that variation is <strong>legitimate</strong>: senior roles, scarce skills, costlier industries, more years of experience. Some of it is <strong>structural</strong>: cost of living, local labor markets, employer concentration. And some of it is <strong>unexplained</strong> — pay differences that survive after we control for everything we can measure about the work itself.</p>
+<p>This page builds a machine learning model that learns what role-, experience-, and industry-driven salary <em>should</em> look like, then compares actual posted salaries against that prediction. The gap — the residual — is our fairness signal. If a city consistently pays workers above what their job characteristics justify, that city is a <strong>premium</strong> market. If it consistently pays below, it’s a <strong>discount</strong> market. Neither is automatically “unfair” in a moral sense — but the systematic gaps are exactly where questions about geographic equity, remote-work arbitrage, and local market power start to matter.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What this is — and isn’t
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is a <em>descriptive</em> fairness audit. We are not claiming that high-residual cities are exploitative or that low-residual cities are generous. We are identifying where geography explains pay <em>beyond</em> what the work itself does, and surfacing that for further investigation.</p>
+</div>
+</div>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+</section>
+<section id="loading-the-cleaned-data" class="level2">
+<h2 class="anchored" data-anchor-id="loading-the-cleaned-data">Loading the cleaned data</h2>
+<div id="load-data" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-stdout">
+<pre><code>Loaded cleaned dataset: 72,454 postings</code></pre>
+</div>
+</div>
+</section>
+<section id="feature-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="feature-engineering">Feature engineering</h2>
+<p>The model deliberately uses only <strong>legitimate</strong> predictors — characteristics of the job itself. Geography is held out so it can be examined as the residual signal.</p>
+<div id="features" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-stdout">
+<pre><code>Modeling sample: 30,751 postings
+Unique cities: 2,299</code></pre>
+</div>
+</div>
+</section>
+<section id="building-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-model">Building the model</h2>
+<p>We compare two estimators: a Ridge regression baseline (interpretable, exportable to JavaScript for the interactive predictor below) and a gradient boosting model (captures non-linear interactions, used for the residual maps).</p>
+<div id="cell-train" class="cell" data-execution_count="4">
+<div id="train" class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Model</th>
+<th data-quarto-table-cell-role="th">MAE ($)</th>
+<th data-quarto-table-cell-role="th">R² (log)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Ridge</td>
+<td>26449.0</td>
+<td>0.395</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Gradient Boosting</td>
+<td>24495.0</td>
+<td>0.464</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="where-geography-pays-more-and-less-than-the-work-justifies" class="level2">
+<h2 class="anchored" data-anchor-id="where-geography-pays-more-and-less-than-the-work-justifies">Where geography pays more — and less — than the work justifies</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="visualizations/state_residuals.png" class="img-fluid figure-img"></p>
+<figcaption>State-level salary residuals</figcaption>
+</figure>
+</div>
+<p>The pattern is the one most people would predict — coastal tech hubs and finance-heavy metros at the top, smaller and more rural labor markets at the bottom — but the residual framing matters because <strong>we already controlled for industry mix</strong>. A state with lots of finance jobs would <em>not</em> show up as a premium market just because finance pays more; the model already knows finance pays more. A premium state is one where <em>the same job, with the same experience, in the same industry</em> pays more than the model expects.</p>
+</section>
+<section id="distribution-of-residuals" class="level2">
+<h2 class="anchored" data-anchor-id="distribution-of-residuals">Distribution of residuals</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="visualizations/residual_distribution.png" class="img-fluid figure-img"></p>
+<figcaption>Distribution of residuals</figcaption>
+</figure>
+</div>
+<p>Most postings cluster within ±15% of the model’s prediction — that’s the noise floor of salary posting variance. The tails are where the questions live: postings paying 30, 40, even 60 percent above or below what the role characteristics alone would predict.</p>
+</section>
+<section id="within-role-robustness-check" class="level2">
+<h2 class="anchored" data-anchor-id="within-role-robustness-check">Within-role robustness check</h2>
+<p>A skeptic could object that residuals just reflect role seniority the model failed to capture. To test, we look at residuals <em>within a single role</em> across cities.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="visualizations/role_controlled_residuals.png" class="img-fluid figure-img"></p>
+<figcaption>Within-role city residuals</figcaption>
+</figure>
+</div>
+<p>The pattern survives the within-role check. The same data science role, with the same experience bucket, in the same industry, posted in San Francisco vs.&nbsp;posted in a smaller metro shows a genuine, persistent gap. That’s strong evidence the geographic signal isn’t a side-effect of role mix — it’s geography itself, doing real work in the salary equation.</p>
+</section>
+<section id="try-it-test-a-job-posting-against-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-test-a-job-posting-against-the-model">Try it: Test a job posting against the model</h2>
+<p>The interactive tool below lets you check any job posting against the fairness model in real time. Paste the description from a LinkedIn posting (or any other source) and the tool extracts role, experience level, industry, education, and remote status, predicts what the model thinks the salary <em>should</em> be, and compares it to typical residuals for the city you specify.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+How to use it
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Open the LinkedIn posting in your browser</li>
+<li>Select the job description text and copy it</li>
+<li>Paste it into the box below and click “Auto-detect fields”</li>
+<li>Review the auto-filled dropdowns and correct anything that’s wrong</li>
+<li>Enter the city and posted salary, then click Predict</li>
+</ol>
+<p>The model parses the description, predicts a fair salary, and shows you whether the posting is a premium, fair, or discount relative to what the work itself predicts.</p>
+</div>
+</div>
+<section id="export-the-model-coefficients-to-json" class="level3">
+<h3 class="anchored" data-anchor-id="export-the-model-coefficients-to-json">Export the model coefficients to JSON</h3>
+<div id="export-model" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-stdout">
+<pre><code>Exported model: 40 coefficients, 198 cities</code></pre>
+</div>
+</div>
+</section>
+<section id="the-interactive-predictor" class="level3">
+<h3 class="anchored" data-anchor-id="the-interactive-predictor">The interactive predictor</h3>
+<style>
+  .fairness-tool {
+    --ft-bg:       #fafaf7;
+    --ft-soft:     #f0ebe0;
+    --ft-ink:      #1a1a1a;
+    --ft-mute:     #6b6358;
+    --ft-warm:     #c95d3a;
+    --ft-cool:     #3a6b8c;
+    --ft-accent:   #d9a441;
+    --ft-line:     #d9d2c2;
+    background: var(--ft-bg);
+    border: 1px solid var(--ft-line);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ft-ink);
+  }
+  .fairness-tool h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+  }
+  .fairness-tool .ft-hint {
+    color: var(--ft-mute);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  .fairness-tool textarea {
+    width: 100%;
+    min-height: 140px;
+    padding: 0.75rem;
+    border: 1px solid var(--ft-line);
+    border-radius: 4px;
+    background: white;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  .fairness-tool textarea:focus {
+    outline: 2px solid var(--ft-accent);
+    outline-offset: -1px;
+  }
+  .fairness-tool .ft-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+  .fairness-tool label {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ft-mute);
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+  .fairness-tool select, .fairness-tool input[type=text], .fairness-tool input[type=number] {
+    width: 100%;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid var(--ft-line);
+    border-radius: 4px;
+    background: white;
+    font-size: 0.9rem;
+    color: var(--ft-ink);
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+  .fairness-tool select:focus, .fairness-tool input:focus {
+    outline: 2px solid var(--ft-accent);
+    outline-offset: -1px;
+  }
+  .fairness-tool .ft-button-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .fairness-tool button {
+    background: var(--ft-ink);
+    color: var(--ft-bg);
+    border: none;
+    padding: 0.6rem 1.25rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 120ms ease;
+    font-family: inherit;
+  }
+  .fairness-tool button:hover { background: var(--ft-warm); }
+  .fairness-tool button.ft-secondary {
+    background: transparent;
+    color: var(--ft-ink);
+    border: 1px solid var(--ft-line);
+  }
+  .fairness-tool button.ft-secondary:hover {
+    background: var(--ft-soft);
+  }
+  .fairness-tool .ft-result {
+    margin-top: 1.25rem;
+    padding: 1.25rem;
+    background: white;
+    border: 1px solid var(--ft-line);
+    border-radius: 4px;
+    border-left: 4px solid var(--ft-accent);
+    display: none;
+  }
+  .fairness-tool .ft-result.shown { display: block; }
+  .fairness-tool .ft-result.premium  { border-left-color: var(--ft-warm); }
+  .fairness-tool .ft-result.discount { border-left-color: var(--ft-cool); }
+  .fairness-tool .ft-result.fair     { border-left-color: var(--ft-accent); }
+  .fairness-tool .ft-headline {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .fairness-tool .ft-headline.premium  { color: var(--ft-warm); }
+  .fairness-tool .ft-headline.discount { color: var(--ft-cool); }
+  .fairness-tool .ft-headline.fair     { color: var(--ft-mute); }
+  .fairness-tool .ft-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .fairness-tool .ft-stat {
+    border-top: 1px solid var(--ft-line);
+    padding-top: 0.5rem;
+  }
+  .fairness-tool .ft-stat-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ft-mute);
+    margin-bottom: 0.2rem;
+  }
+  .fairness-tool .ft-stat-value {
+    font-size: 1.15rem;
+    font-weight: 500;
+  }
+  .fairness-tool .ft-context {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--ft-line);
+    font-size: 0.875rem;
+    color: var(--ft-mute);
+    line-height: 1.5;
+  }
+  .fairness-tool .ft-error {
+    color: var(--ft-warm);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    min-height: 1.2em;
+  }
+  .fairness-tool .ft-detected {
+    background: var(--ft-soft);
+    padding: 0.5rem 0.75rem;
+    border-radius: 3px;
+    font-size: 0.82rem;
+    color: var(--ft-mute);
+    margin: 0.5rem 0;
+    display: none;
+  }
+  .fairness-tool .ft-detected.shown { display: block; }
+  .fairness-tool .ft-detected strong { color: var(--ft-ink); }
+</style>
+
+<div class="fairness-tool" id="ft-root">
+  <h4 class="anchored">Test a job posting</h4>
+  <p class="ft-hint">Paste the job description text. The tool will auto-fill the fields below — review and correct if needed, then add the city and posted salary.</p>
+
+  <textarea id="ft-jd" placeholder="Paste the LinkedIn job description here. For best results, include sections about responsibilities, requirements, and required experience."></textarea>
+
+  <div class="ft-button-row">
+    <button class="ft-secondary" id="ft-parse-btn" type="button">Auto-detect fields</button>
+    <span class="ft-hint" style="margin: 0;">— or fill them in manually below</span>
+  </div>
+
+  <div class="ft-detected" id="ft-detected"></div>
+
+  <div class="ft-grid">
+    <div>
+      <label for="ft-role">Role</label>
+      <select id="ft-role"></select>
+    </div>
+    <div>
+      <label for="ft-exp">Experience level</label>
+      <select id="ft-exp"></select>
+    </div>
+    <div>
+      <label for="ft-edu">Education</label>
+      <select id="ft-edu"></select>
+    </div>
+    <div>
+      <label for="ft-ind">Industry</label>
+      <select id="ft-ind"></select>
+    </div>
+    <div>
+      <label for="ft-remote">Remote?</label>
+      <select id="ft-remote">
+        <option value="0">No (on-site/hybrid)</option>
+        <option value="1">Yes (remote)</option>
+      </select>
+    </div>
+    <div>
+      <label for="ft-city">City, State</label>
+      <input type="text" id="ft-city" placeholder="e.g., Boston, MA" list="ft-city-list">
+      <datalist id="ft-city-list"></datalist>
+    </div>
+    <div>
+      <label for="ft-salary">Posted salary ($)</label>
+      <input type="number" id="ft-salary" placeholder="e.g., 110000" step="1000">
+    </div>
+  </div>
+
+  <div class="ft-button-row">
+    <button id="ft-predict-btn" type="button">Predict</button>
+  </div>
+  <div class="ft-error" id="ft-error"></div>
+
+  <div class="ft-result" id="ft-result">
+    <div class="ft-headline" id="ft-headline"></div>
+    <div id="ft-summary"></div>
+    <div class="ft-stats">
+      <div class="ft-stat">
+        <div class="ft-stat-label">Posted salary</div>
+        <div class="ft-stat-value" id="ft-stat-actual"></div>
+      </div>
+      <div class="ft-stat">
+        <div class="ft-stat-label">Model prediction</div>
+        <div class="ft-stat-value" id="ft-stat-predicted"></div>
+      </div>
+      <div class="ft-stat">
+        <div class="ft-stat-label">Posting residual</div>
+        <div class="ft-stat-value" id="ft-stat-residual"></div>
+      </div>
+      <div class="ft-stat">
+        <div class="ft-stat-label">City typical residual</div>
+        <div class="ft-stat-value" id="ft-stat-city"></div>
+      </div>
+    </div>
+    <div class="ft-context" id="ft-context"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  let MODEL = null;
+
+  // Load the exported model
+  fetch("data/fairness_model.json")
+    .then(r => r.json())
+    .then(m => {
+      MODEL = m;
+      populateDropdowns();
+      populateCityList();
+    })
+    .catch(err => {
+      document.getElementById("ft-error").textContent =
+        "Could not load the model file. Make sure data/fairness_model.json is in the rendered site.";
+    });
+
+  function populateDropdowns() {
+    const fields = {
+      "ft-role":  "role_category",
+      "ft-exp":   "experience_bucket",
+      "ft-edu":   "education",
+      "ft-ind":   "industry",
+    };
+    for (const [elId, catKey] of Object.entries(fields)) {
+      const sel = document.getElementById(elId);
+      sel.innerHTML = "";
+      MODEL.categories[catKey].forEach(opt => {
+        const o = document.createElement("option");
+        o.value = opt; o.textContent = opt;
+        sel.appendChild(o);
+      });
+    }
+  }
+
+  function populateCityList() {
+    const dl = document.getElementById("ft-city-list");
+    Object.keys(MODEL.city_residuals).sort().forEach(city => {
+      const o = document.createElement("option");
+      o.value = city;
+      dl.appendChild(o);
+    });
+  }
+
+  // Auto-detect fields from job description text
+  function parseJobDescription(text) {
+    const t = text.toLowerCase();
+    const detected = {};
+
+    // Role detection — same logic as the Python categorizer
+    if (/(data scien|machine learning|\bml engineer|\bai engineer)/.test(t))      detected.role = "Data Science / ML";
+    else if (/(data engineer|analytics engineer|\betl)/.test(t))                  detected.role = "Data Engineering";
+    else if (/(software|developer|\bswe\b|full stack|backend|frontend)/.test(t))  detected.role = "Software Engineering";
+    else if (/(business analyst|business intel|\bbi analyst|data analyst)/.test(t)) detected.role = "Business / Data Analyst";
+    else if (/(product manager|product owner)/.test(t))                           detected.role = "Product";
+    else if (/(\bmanager\b|\bdirector\b|\bvp\b|head of|\blead\b)/.test(t))        detected.role = "Management";
+    else                                                                          detected.role = "Other";
+
+    // Experience years
+    const yearPatterns = [
+      /(\d+)\s*\+?\s*(?:to|-)\s*\d+\s*years?/,
+      /(?:minimum|min|at least)\s*(?:of)?\s*(\d+)\s*years?/,
+      /(\d+)\s*\+\s*years?/,
+      /(\d+)\s*years?\s*(?:of)?\s*experience/,
+    ];
+    let years = null;
+    for (const re of yearPatterns) {
+      const m = t.match(re);
+      if (m) { years = parseInt(m[1]); break; }
+    }
+    if (years === null)        detected.experience = "Unspecified";
+    else if (years < 2)        detected.experience = "Entry (<2y)";
+    else if (years < 5)        detected.experience = "Mid (2-4y)";
+    else if (years < 8)        detected.experience = "Senior (5-7y)";
+    else                       detected.experience = "Principal (8y+)";
+    detected.years = years;
+
+    // Education
+    if (/\bph\.?d\b|doctorate/.test(t))                                detected.education = "Ph.D.";
+    else if (/master'?s|m\.?s\.?\b|m\.?b\.?a\.?|mba/.test(t))          detected.education = "Master's degree";
+    else if (/bachelor'?s|b\.?s\.?\b|b\.?a\.?\b|undergraduate/.test(t)) detected.education = "Bachelor's degree";
+    else if (/associate'?s/.test(t))                                   detected.education = "Associate's degree";
+    else if (/high school|ged/.test(t))                                detected.education = "High school or equivalent";
+    else                                                               detected.education = "Unspecified";
+
+    // Remote
+    detected.remote = /(\bremote\b|work from (?:home|anywhere)|fully remote|100% remote)/.test(t) ? 1 : 0;
+
+    // Industry — keyword bucketing into common NAICS-2 categories
+    if (/\b(?:bank|finance|insurance|investment|trading|hedge fund|capital markets|fintech)\b/.test(t))
+      detected.industry = "Finance and Insurance";
+    else if (/\b(?:hospital|health|clinical|medical|pharma|biotech|patient)\b/.test(t))
+      detected.industry = "Health Care and Social Assistance";
+    else if (/\b(?:technology|software|saas|tech compan|startup)\b/.test(t))
+      detected.industry = "Information";
+    else if (/\b(?:retail|e-?commerce|consumer goods)\b/.test(t))
+      detected.industry = "Retail Trade";
+    else if (/\b(?:manufactur|factory|production|industrial)\b/.test(t))
+      detected.industry = "Manufacturing";
+    else if (/\b(?:consulting|advisory|professional services)\b/.test(t))
+      detected.industry = "Professional, Scientific, and Technical Services";
+    else if (/\b(?:government|federal|state agency|public sector)\b/.test(t))
+      detected.industry = "Public Administration";
+    else
+      detected.industry = "Unknown";
+
+    return detected;
+  }
+
+  function applyDetection(d) {
+    const setIfPresent = (id, value) => {
+      const el = document.getElementById(id);
+      const opts = Array.from(el.options).map(o => o.value);
+      if (opts.includes(value)) el.value = value;
+    };
+    setIfPresent("ft-role", d.role);
+    setIfPresent("ft-exp",  d.experience);
+    setIfPresent("ft-edu",  d.education);
+    setIfPresent("ft-ind",  d.industry);
+    document.getElementById("ft-remote").value = String(d.remote);
+
+    const banner = document.getElementById("ft-detected");
+    const yearsTxt = d.years !== null ? `~${d.years}y experience` : "experience not stated";
+    banner.innerHTML = `Detected: <strong>${d.role}</strong> · ${yearsTxt} (${d.experience}) · ${d.education} · ${d.industry} · ${d.remote ? "remote" : "on-site/hybrid"}. Edit any field above if wrong.`;
+    banner.classList.add("shown");
+  }
+
+  document.getElementById("ft-parse-btn").addEventListener("click", () => {
+    const text = document.getElementById("ft-jd").value.trim();
+    if (!text) {
+      document.getElementById("ft-error").textContent = "Paste a job description first.";
+      return;
+    }
+    document.getElementById("ft-error").textContent = "";
+    applyDetection(parseJobDescription(text));
+  });
+
+  // Predict salary using exported Ridge coefficients
+  function predictLogSalary(features) {
+    let logPred = MODEL.intercept;
+
+    MODEL.categorical_features.forEach(catCol => {
+      const value = features[catCol];
+      const featName = `${catCol}_${value}`;
+      if (MODEL.coefficients[featName] !== undefined) {
+        logPred += MODEL.coefficients[featName];
+      }
+    });
+
+    MODEL.numeric_features.forEach((numCol, i) => {
+      const raw = features[numCol];
+      const scaled = (raw - MODEL.scaler_mean[i]) / MODEL.scaler_scale[i];
+      const coef = MODEL.coefficients[numCol] || 0;
+      logPred += scaled * coef;
+    });
+
+    return logPred;
+  }
+
+  document.getElementById("ft-predict-btn").addEventListener("click", () => {
+    const errEl = document.getElementById("ft-error");
+    errEl.textContent = "";
+
+    const features = {
+      role_category:     document.getElementById("ft-role").value,
+      experience_bucket: document.getElementById("ft-exp").value,
+      education:         document.getElementById("ft-edu").value,
+      industry:          document.getElementById("ft-ind").value,
+      is_remote:         parseInt(document.getElementById("ft-remote").value, 10),
+    };
+    const city   = document.getElementById("ft-city").value.trim();
+    const salary = parseFloat(document.getElementById("ft-salary").value);
+
+    if (!salary || salary <= 0) {
+      errEl.textContent = "Enter a posted salary to compare against the prediction.";
+      return;
+    }
+
+    const logPred = predictLogSalary(features);
+    const predictedSalary = Math.expm1(logPred);
+    const residual = salary - predictedSalary;
+    const residualPct = (residual / predictedSalary) * 100;
+
+    let cityInfo = null;
+    if (city) {
+      const cityKeys = Object.keys(MODEL.city_residuals);
+      const match = cityKeys.find(k => k.toLowerCase() === city.toLowerCase());
+      if (match) cityInfo = { name: match, ...MODEL.city_residuals[match] };
+    }
+
+    showResult({ salary, predictedSalary, residual, residualPct, city, cityInfo });
+  });
+
+  function fmtMoney(x) {
+    return "$" + Math.round(x).toLocaleString("en-US");
+  }
+
+  function showResult(r) {
+    const resultEl   = document.getElementById("ft-result");
+    const headlineEl = document.getElementById("ft-headline");
+    const summaryEl  = document.getElementById("ft-summary");
+
+    let verdict, klass, headline;
+    if (r.residualPct > 12) {
+      verdict = "premium"; klass = "premium";
+      headline = `+${r.residualPct.toFixed(1)}% above model prediction`;
+    } else if (r.residualPct < -12) {
+      verdict = "discount"; klass = "discount";
+      headline = `${r.residualPct.toFixed(1)}% below model prediction`;
+    } else {
+      verdict = "fair"; klass = "fair";
+      headline = `${r.residualPct >= 0 ? "+" : ""}${r.residualPct.toFixed(1)}% — within typical range`;
+    }
+
+    resultEl.classList.remove("premium", "discount", "fair");
+    headlineEl.classList.remove("premium", "discount", "fair");
+    resultEl.classList.add(klass);
+    headlineEl.classList.add(klass);
+
+    headlineEl.textContent = headline;
+
+    let summaryText;
+    if (verdict === "premium") {
+      summaryText = `This posting pays meaningfully more than what the role, experience, industry, and education alone predict. ` +
+                    `The extra ${fmtMoney(r.residual)} is unexplained by job characteristics — it's the geographic/employer premium portion of the offer.`;
+    } else if (verdict === "discount") {
+      summaryText = `This posting pays meaningfully less than what the role, experience, industry, and education alone predict. ` +
+                    `The shortfall of ${fmtMoney(-r.residual)} could reflect a low-cost-of-living market, employer-specific pay practices, or a structural undervaluation.`;
+    } else {
+      summaryText = `This posting falls within the noise floor of typical salary variation (±12%). ` +
+                    `The work characteristics largely explain the offered salary.`;
+    }
+    summaryEl.textContent = summaryText;
+
+    document.getElementById("ft-stat-actual").textContent    = fmtMoney(r.salary);
+    document.getElementById("ft-stat-predicted").textContent = fmtMoney(r.predictedSalary);
+    document.getElementById("ft-stat-residual").textContent  =
+      `${r.residualPct >= 0 ? "+" : ""}${r.residualPct.toFixed(1)}%`;
+
+    if (r.cityInfo) {
+      document.getElementById("ft-stat-city").textContent =
+        `${r.cityInfo.residual_pct >= 0 ? "+" : ""}${r.cityInfo.residual_pct.toFixed(1)}%`;
+    } else {
+      document.getElementById("ft-stat-city").textContent = "—";
+    }
+
+    let contextHtml = "";
+    if (r.cityInfo) {
+      const cityResid  = r.cityInfo.residual_pct;
+      const cityMedian = r.cityInfo.median_salary;
+      const cityN      = r.cityInfo.n;
+      let contextLine;
+      if (Math.abs(r.residualPct - cityResid) < 5) {
+        contextLine = `This posting's residual closely matches what's typical for ${r.cityInfo.name} (${cityResid >= 0 ? "+" : ""}${cityResid.toFixed(1)}% across ${cityN.toLocaleString()} postings) — the offer is consistent with the local market.`;
+      } else if (r.residualPct > cityResid) {
+        contextLine = `This posting pays better than what's typical for ${r.cityInfo.name}, where the average residual across ${cityN.toLocaleString()} postings is ${cityResid >= 0 ? "+" : ""}${cityResid.toFixed(1)}%.`;
+      } else {
+        contextLine = `This posting pays worse than what's typical for ${r.cityInfo.name}, where the average residual across ${cityN.toLocaleString()} postings is ${cityResid >= 0 ? "+" : ""}${cityResid.toFixed(1)}%. The local market typically pays ${fmtMoney(cityMedian)} (median).`;
+      }
+      contextHtml = contextLine;
+    } else if (r.city) {
+      contextHtml = `No city-level data for "${r.city}" in the Lightcast sample. Try a major metro like "Boston, MA" or "San Francisco, CA" — the city must be in the format "City, ST" with the two-letter state abbreviation.`;
+    } else {
+      contextHtml = "Enter a city to see how this posting's residual compares to typical residuals for that local market.";
+    }
+    document.getElementById("ft-context").innerHTML = contextHtml;
+    resultEl.classList.add("shown");
+  }
+})();
+</script>
+<p>A note on how parsing works. The auto-detect uses the same role-categorization keywords as the Python pipeline, plus regex patterns for years of experience (looking for “5+ years”, “minimum 3 years”, and similar phrases), education degrees (Ph.D., Master’s, Bachelor’s, etc.), and remote-work language (“fully remote”, “work from home”). Industry detection uses NAICS-aligned keyword buckets — finance, healthcare, technology, retail, manufacturing, consulting, government. None of this is perfect; LinkedIn descriptions are written by humans and don’t follow templates. If a field looks wrong, edit the dropdown directly before clicking Predict.</p>
+<p>The model itself is the Ridge regression we trained above, exported as a JSON of coefficients. It runs entirely in your browser — nothing about your job search is sent anywhere. The predicted salary is what the model thinks the role <em>should</em> pay based on its characteristics alone, and the residual is the gap between the posted offer and that prediction. A city-level residual comparison shows you whether the offer is in line with what the local market typically does relative to the model.</p>
+</section>
+</section>
+<section id="what-this-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-means">What this means</h2>
+<p>The model is not making a moral judgment. A 25% premium in a coastal metro might be entirely justified by housing costs, talent competition, or the marginal productivity of being co-located with capital. A 20% discount in a smaller market might reflect genuinely lower costs of living that workers are happy to accept.</p>
+<p>But three things are worth taking seriously. The first is that <strong>remote work breaks the implicit contract</strong> these geographic pay differences depend on. If a worker can do the same job from anywhere, employers paying San Francisco salaries for remote roles and employers paying Tulsa salaries for the same remote work are running two different compensation philosophies. The second is that <strong>discount markets compound disadvantage</strong>: a worker stuck in a low-residual market faces not just lower pay today, but lower salary anchoring for every future negotiation. The third is that <strong>fairness is a question this analysis raises, not answers</strong>. We’ve shown where geography explains pay beyond what the work itself does. Whether those gaps are justified by cost-of-living, by labor market efficiency, or by structural inequity is a question that requires data we don’t have here.</p>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<p>A few honest caveats. The Lightcast data captures <em>posted</em> salary ranges, not actual paid compensation, and posting practices vary by employer and state (some states require posting; others don’t). The model’s “legitimate” features are the ones we could engineer cleanly — title-based role categorization, experience-year buckets, NAICS industry — but skill granularity, equity compensation, and bonus structures are largely missing. The residuals therefore conflate “geographic premium” with “compensation structure premium” in ways we can’t fully separate. The interactive predictor’s text parser is keyword-based, not a language model, so it will miss role types that don’t match its keyword list and will misclassify ambiguous descriptions. Always review the auto-detected fields before predicting.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<script src="./custom.js"></script>
+
+
+
+
+</body></html>

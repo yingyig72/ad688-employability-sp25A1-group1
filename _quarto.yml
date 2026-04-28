@@ -4,6 +4,7 @@ project:
     - assets/cluster_data.json
     - assets/cluster_points.csv
     - assets/ml_model.json
+    - data/fairness_model.json
   render:
     - "*.qmd"
  
@@ -50,6 +51,8 @@ website:
         text: Skills Gap Analysis
       - href: ml_model.qmd
         text: Machine Learning
+      - href: geographic_fairness.qmd
+        text: Salary Fairness
       - href: cluster_finder.qmd
         text: Find Your Match
       - href: references.qmd  
