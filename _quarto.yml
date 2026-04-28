@@ -4,7 +4,7 @@ project:
     - assets/cluster_data.json
     - assets/cluster_points.csv
     - assets/ml_model.json
-    - data/fairness_model.json
+    - assets/fairness_model.json
   render:
     - "*.qmd"
  

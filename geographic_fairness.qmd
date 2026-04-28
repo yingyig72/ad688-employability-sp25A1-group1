@@ -414,8 +414,8 @@ model_export = {
     "city_residuals":       city_residuals,
 }
 
-os.makedirs("data", exist_ok=True)
-with open("data/fairness_model.json", "w") as f:
+os.makedirs("assets", exist_ok=True)
+with open("assets/fairness_model.json", "w") as f:
     json.dump(model_export, f)
 
 print(f"Exported model: {len(coefficients)} coefficients, {len(city_residuals)} cities")
