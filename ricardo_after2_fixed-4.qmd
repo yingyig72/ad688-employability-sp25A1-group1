@@ -690,11 +690,11 @@ for member in df_skills.index:
     print(f"\n👤 {member}")
     print(f"   Strongest: {', '.join(scores.nlargest(3).index)}")
     if critical:
-        print(f"   ⚠️  Priority gaps: {', '.join(critical)}")
+        print(f"     Priority gaps: {', '.join(critical)}")
     else:
-        print(f"   ✅ Well-rounded!")
+        print(f"    Well-rounded!")
 
-print("\n\n🤝 PEER TEACHING OPPORTUNITIES")
+print("\n\n PEER TEACHING OPPORTUNITIES")
 print("-" * 40)
 for skill in df_skills.columns:
     experts = df_skills[df_skills[skill] >= 4].index.tolist()

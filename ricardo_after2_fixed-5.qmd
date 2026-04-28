@@ -300,7 +300,6 @@ This suggests that AI demand has spread well beyond the traditional tech centers
 
 The intensity chart (Figure 6) adds another twist: smaller metros like Rochester MN, Reading PA, and New Haven CT lead in AI share — mostly because they have specialized employers (like the Mayo Clinic in Rochester) that skew the percentages. Washington DC is the only large metro that ranks high on both volume and intensity.
 
-Dallas–Fort Worth and Austin appear in both the AI rankings and the broader talent-attraction rankings, which reinforces why Texas keeps coming up as a “bridge” state.
 
 ## 3.5 Salary: AI vs. Non-AI by State
 
@@ -407,10 +406,11 @@ fig.show()
 ```
 
 ### Skills Takeaway
-
-The skills split between AI and non-AI postings is pretty stark. AI roles lean heavily on Python, machine learning, SQL, and cloud platforms, while non-AI roles emphasize communication, project management, and Excel. This helps explain the geographic clustering we have been seeing throughout the analysis — AI jobs need a specialized talent pipeline that tends to exist only near major research universities and established tech ecosystems.
-
-LinkedIn’s 2025 Future of Work Report flags machine learning and AI skills as some of the fastest-growing globally, which suggests that the demand side of this equation is only going to intensify. For students deciding where to focus, the chart gives a useful snapshot of what each track actually asks for.
+The skills chart reveals an interesting pattern. At the top, Data Analysis is the most requested skill overall, but it appears significantly more in AI postings (~67%) than in non-AI ones (~38%). Data Science, SQL, and Python follow the same pattern — they show up in both types of postings, but AI roles ask for them at much higher rates.
+Communication is a notable exception: it ranks 4th overall and is heavily requested by both AI and non-AI postings — around 43% for non-AI and 50% for AI. This is not a skill that belongs exclusively to one track.
+The middle of the chart is where AI and non-AI overlap the most. Skills like Management, Tableau, Leadership, Statistics, and Problem Solving appear in both, though usually with a slight AI edge. This zone is where the two tracks share common ground.
+The bottom of the chart is where the real divide shows up. From Operations downward — Project Management, Business Process, Business Requirements, SAP, Microsoft Excel, Finance, Planning — these skills appear almost exclusively in non-AI postings. There are essentially no blue bars at all. These are the skills that define the non-AI career track.
+So the chart is not just about which skills are "more important" — it shows that AI and non-AI roles draw from genuinely different skill sets, with some overlap in the middle. LinkedIn's 2025 Future of Work Report flags machine learning and AI skills as among the fastest-growing globally, which suggests this divergence is only going to widen.
 
 ---
 
@@ -694,11 +694,11 @@ for member in df_skills.index:
     print(f"\n👤 {member}")
     print(f"   Strongest: {', '.join(scores.nlargest(3).index)}")
     if critical:
-        print(f"   ⚠️  Priority gaps: {', '.join(critical)}")
+        print(f"     Priority gaps: {', '.join(critical)}")
     else:
-        print(f"   ✅ Well-rounded!")
+        print(f"    Well-rounded!")
 
-print("\n\n🤝 PEER TEACHING OPPORTUNITIES")
+print("\n\n PEER TEACHING OPPORTUNITIES")
 print("-" * 40)
 for skill in df_skills.columns:
     experts = df_skills[df_skills[skill] >= 4].index.tolist()
@@ -706,6 +706,8 @@ for skill in df_skills.columns:
     if experts and learners:
         print(f"  {skill}: {', '.join(experts)} can mentor → {', '.join(learners)}")
 ```
+
+
 
 ---
 
