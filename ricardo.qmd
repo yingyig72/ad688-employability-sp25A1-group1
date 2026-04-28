@@ -490,7 +490,7 @@ split = pd.DataFrame({
     'Dimension': ['Leading States', 'Leading Metros', 'Main Drivers',
                   'Concentration', 'Salary Level', 'Skill Barrier'],
     'AI Careers': [
-        'CA, VA, WA, MA, NY, DC',
+        'CA, TX, VA, WA, MA, NY, DC,',
         'DC, NYC, Dallas–Fort Worth, Chicago, Atlanta, SF',
         'R&D, defense, venture capital, cloud computing, elite universities',
         'Highly concentrated in ~6 innovation hubs',
