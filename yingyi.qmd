@@ -10,7 +10,6 @@ format:
     code-overflow: scroll
 execute:
   eval: false
-  freeze: auto
   echo: false
   warning: false
   message: false
