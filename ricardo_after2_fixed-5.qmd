@@ -907,52 +907,51 @@ fig.show()
 
 ## 7.1 Answer to the Research Question
 
-> **AI career growth is strongest in innovation-intensive states and metros** — California, Virginia, Washington, Massachusetts, New York, and the DC area — with San Francisco, San Jose, Seattle, and Boston leading at the metro level. **Broader non-AI job growth is strongest in Sun Belt labor markets** — especially Florida and Texas — with Dallas–Fort Worth and Austin among the most prominent metros. **Texas stands out as the only state performing strongly on both dimensions.**
+> **AI career growth is strongest in large, diversified metros with defense, finance, and corporate services sectors** — Washington DC, New York, and Dallas–Fort Worth lead in our data, followed by Chicago, Atlanta, and San Francisco. At the state level, California, Texas, Virginia, Washington, Massachusetts, New York, and DC consistently rank highest for AI hiring. **Broader non-AI job growth is strongest in Sun Belt labor markets** — especially Florida and Texas — with Dallas–Fort Worth and Austin among the most prominent metros. **Texas stands out as the only state performing strongly on both dimensions.**
+
+This answer is based on our analysis of 72,454 Lightcast job postings (May–Sep 2024) and validated against UMD-LinkUp AI Maps, BLS employment data, and Lightcast's 2025 Talent Attraction Scorecard.
 
 ## 7.2 Geographic Targeting Strategy
 
-```{python}
-#| label: geo-strategy
-#| code-summary: "Career targeting recommendations"
+Based on the geographic and salary patterns we found, here are five practical strategies depending on what you prioritize:
 
-geo = pd.DataFrame({
-    'Strategy': ['Maximum AI Opportunity', 'AI + Affordable Living', 'Bridge (AI + Broad Growth)',
-                 'Non-AI Stability + Growth', 'Remote-First AI'],
-    'Target Locations': [
-        'San Francisco Bay Area, Seattle, Boston, NYC, Washington DC',
-        'Austin, TX; Raleigh, NC; Denver, CO; Atlanta, GA',
-        'Dallas–Fort Worth, TX; Austin, TX; Atlanta, GA',
-        'Tampa, FL; Miami, FL; Phoenix, AZ; Jacksonville, FL',
-        'Apply nationally — many AI roles are remote-friendly'
-    ],
-    'Trade-off': [
-        'Highest salary but highest cost of living',
-        'Strong AI ecosystem with moderate costs (emerging hubs)',
-        'Both strong AI volume AND broad labor market growth',
-        'Fast-growing labor market, lower AI intensity',
-        'Geographic flexibility but competitive applicant pools'
-    ]
-})
-display(geo.style.set_properties(**{'text-align':'left'}))
-```
+| Strategy | Target Locations | Trade-off |
+|----------|-----------------|-----------|
+| **Maximum AI Volume** | Washington DC, NYC, Dallas–Fort Worth | Large diversified markets — AI embedded in defense, finance, and corporate services, but high cost of living in DC and NYC |
+| **AI + Tech Ecosystem** | San Francisco, Seattle, Boston, San Jose | Traditional tech hubs with deep AI ecosystems — highest salaries but also highest cost of living |
+| **AI + Affordable Living** | Austin, TX; Atlanta, GA; Raleigh, NC | Growing AI ecosystems with moderate costs — not the highest volume, but strong upward trends |
+| **Bridge (AI + Broad Growth)** | Dallas–Fort Worth, TX; Austin, TX | Both strong AI volume AND broad labor market growth — the most versatile option |
+| **Non-AI Stability + Growth** | Tampa, FL; Miami, FL; Phoenix, AZ; Jacksonville, FL | Fast-growing labor markets driven by population and services — lower AI intensity but many non-AI career options |
 
-## 7.3 Recommended Certifications
+## 7.3 Skills Investment Plan
 
-```{python}
-#| label: certs
-#| code-summary: "Certification recommendations"
+Our skill gap analysis (Section 5.3) identified the areas where market demand most exceeds our team's current proficiency. Based on those gaps, here are the priority skills to develop, ranked by gap severity:
 
-certs = pd.DataFrame({
-    'Certification': ['AWS Cloud Practitioner', 'Google Data Analytics Professional',
-        'TensorFlow Developer Certificate', 'Azure Fundamentals (AZ-900)',
-        'IBM Data Science Professional'],
-    'Relevance': ['Cloud/AI', 'Analytics', 'AI/ML', 'Cloud', 'Data Science'],
-    'Difficulty': ['Beginner', 'Beginner', 'Intermediate', 'Beginner', 'Intermediate'],
-    'Cost': ['$100', '$49/mo', '$100', 'Free', '$49/mo'],
-    'Duration': ['2–4 weeks', '6 months', '3–4 months', '1–2 weeks', '4–6 months']
-})
-display(certs)
-```
+| Priority | Skill | Why It Matters | How to Build It |
+|----------|-------|---------------|-----------------|
+| 1 | Machine Learning | Appears in ~35% of AI postings in our data; our team averages 2.4/5 | Online courses (Andrew Ng's ML Specialization on Coursera), hands-on Kaggle projects |
+| 2 | Communication | Appears in ~43–50% of both AI and non-AI postings; our team averages 4.0/5 but market demand is very high | Presentation practice, technical writing, cross-functional project experience |
+| 3 | Deep Learning / NLP | Growing demand in AI postings; our team averages 1.4/5 | Fast.ai course, HuggingFace tutorials, build a small NLP project |
+| 4 | Cloud Computing / AWS | Increasingly required for deploying AI models; our team averages 2.0/5 | AWS Cloud Practitioner (beginner, ~$100, 2–4 weeks), Azure Fundamentals AZ-900 (free, 1–2 weeks) |
+| 5 | Docker / Spark | Low team proficiency (1.2/5) and growing market presence | Docker getting-started tutorial, Databricks community edition for Spark |
+
+These priorities come directly from the gap between what our Lightcast data shows employers are asking for and where our team self-assessed as weakest (Figures 12 and 13).
+
+## 7.4 Peer Teaching Plan
+
+Our heatmap (Figure 10) revealed that team members have complementary strengths. Rather than everyone learning everything alone, we can leverage each other:
+
+| Skill | Who Can Teach | Who Benefits | Format |
+|-------|--------------|-------------|--------|
+| Python | Ricardo (4/5), Tianyi (4/5) | Omar, Ying, Zayn | Weekly coding workshops |
+| SQL | Omar (4/5), Tianyi (4/5) | Zayn (2/5) | Pair programming on real queries |
+| Excel | Omar (5/5) | Tianyi (3/5) | Advanced Excel tips sessions |
+| Communication | Zayn (5/5) | Tianyi (3/5) | Presentation dry runs and feedback |
+| Git | Tianyi (4/5) | Omar, Ying, Zayn | Version control walkthrough for the group |
+| Tableau | Omar (4/5) | Tianyi (2/5), Zayn (3/5) | Dashboard-building practice |
+
+This approach means that every team member is both a learner and a teacher, which is more efficient than everyone trying to close every gap on their own.
+
 
 ---
 
@@ -960,7 +959,7 @@ display(certs)
 
 Our analysis paints a pretty clear picture: the U.S. labor market has two geographic tracks that overlap in some places but diverge in others.
 
-The first is the **AI track**. AI hiring is concentrated in a handful of states — California, Virginia, Washington, Massachusetts, New York, and DC — and within those states, in specific metros: San Francisco, San Jose, Seattle, Washington DC, New York, and Boston. What these places have in common is a combination of research universities, venture capital, big tech companies, and defense contractors. Our predictive models back this up: occupation type and state location are strong predictors of whether a posting is AI-related and how much it pays.
+The first is the AI track. AI hiring is concentrated in a handful of states — California, Virginia, Washington, Massachusetts, New York, and DC — and within those states, in specific metros. Our data shows that Washington DC, New York, and Dallas–Fort Worth lead in AI job volume, followed by Chicago, Atlanta, and San Francisco. This is notable because the top metros are not the traditional Silicon Valley tech hubs — they are large, diversified economies where AI demand is driven by defense, finance, and corporate services. Our predictive models back this up: state location and salary are the strongest predictors of whether a posting is AI-related.
 
 The second is the **broad-growth track**. BLS data shows that the biggest absolute job gains in 2024 went to Texas (+284,200), California (+180,500), and Florida (+147,900), but the fastest percentage growth happened in Idaho, South Carolina, and Missouri — none of which are AI leaders. Lightcast’s Talent Attraction Scorecard puts Florida at #1 and Texas at #2 for talent migration, driven by population growth, lower living costs, and service-sector expansion. Meanwhile, the top AI states — California, New York, Massachusetts — sit near the bottom of that same scorecard.
 
@@ -968,8 +967,7 @@ The second is the **broad-growth track**. BLS data shows that the biggest absolu
 
 The **salary premium** for AI roles is real. AI postings pay more than non-AI postings in virtually every state, and the gap tends to be largest in states where AI demand is most intense.
 
-For anyone planning their career, the practical takeaway is this: if you want to work in AI, the strongest ecosystems are in a relatively small set of coastal and innovation-hub metros, and you will need Python, machine learning, and cloud skills to compete. If you are looking for broad employment growth with more geographic flexibility, the Sun Belt — especially Texas and Florida — is where the momentum is. And if you want both, Texas is hard to beat.
-
+For anyone planning their career, the practical takeaway is this: if you want to work in AI, the strongest ecosystems are in a handful of large metros — some coastal like DC, NYC, and SF, and some inland like Dallas–Fort Worth, Chicago, and Atlanta — and you will need Python, machine learning, and cloud skills to compete. If you are looking for broad employment growth with more geographic flexibility, the Sun Belt — especially Texas and Florida — is where the momentum is. And if you want both, Texas is hard to beat.
 ---
 
 # 9. References
