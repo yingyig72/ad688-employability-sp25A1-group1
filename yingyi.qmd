@@ -9,7 +9,7 @@ format:
     code-fold: false
     code-overflow: scroll
 execute:
-  eval: true
+  eval: false
   freeze: auto
   echo: false
   warning: false
