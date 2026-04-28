@@ -91,6 +91,18 @@ After re-categorizing into BA / Data Analytics / Data Science / Data Engineering
 
 Two predictive models live on the site as standalone deliverables. The **AI/ML Requirement Predictor** (`ml_model.qmd`) is a logistic regression — Test AUC 0.746, accuracy 0.908 — that takes industry, role, education, and a checklist of baseline skills (Python, SQL, R, Excel, Tableau, Power BI, Statistics, Data Visualization) and outputs a calibrated probability that the posting will require AI/ML expertise. The trained coefficients are exported to JSON and the prediction runs entirely in the browser. The **Find Your Match** widget (`cluster_finder.qmd`) uses K-means clustering on the postings and a cosine-similarity skill matcher so users can paste their skills and see which job clusters they're closest to.
 
+## Geographic Salary Fairness
+
+The site also includes a **Geographic Salary Fairness** analysis that asks whether certain cities or states pay more — or less — than the work itself would justify. Instead of directly comparing raw salaries across locations, the analysis first predicts salary using job-related features such as role category, experience level, industry, education, and remote status. Geography is intentionally left out of the prediction model so that location can be evaluated afterward.
+
+After the model predicts an expected salary, each posting receives a **residual**:
+
+A positive residual means the posting pays more than expected, while a negative residual means it pays less than expected. These residuals are then grouped by city and state to identify premium markets, where postings consistently pay above the model prediction, and discount markets, where postings consistently pay below the model prediction.
+
+This approach makes the fairness question more meaningful because the model is not simply saying that places like San Francisco or New York pay more because they have more tech jobs. Instead, it asks whether similar jobs still pay differently across locations after controlling for the job characteristics available in the data. The result is a descriptive fairness audit: it does not prove discrimination or exploitation, but it highlights where geography appears to influence pay beyond the work itself.
+
+The page also includes an interactive in-browser predictor. Users can paste a job description, auto-detect fields such as role, experience, education, industry, and remote status, then enter a city and posted salary. The tool compares the posted salary against the model's expected salary and labels the offer as premium, fair, or discount relative to the prediction.
+
 ## Tools & Reproducibility
 
 The site is built with **Quarto** and deployed via **GitHub Actions** to GitHub Pages. The analysis stack is **Python** (pandas, scikit-learn, matplotlib, plotly), with deck.gl and custom WebGL fragment shaders powering the home page's silk-flow and aurora visual elements. References are managed in a shared `references.bib` file. The cleaned Lightcast file is regenerated only when the cleaning page changes; downstream pages use Quarto's `freeze: true` execution caching so renders are fast and reproducible across team members. The site is at <https://yingyig72.github.io/ad688-employability-sp25A1-group1>.
