@@ -41,3 +41,6 @@ files-2/job_market_data.csv
 files-2/lightcast_cleaned.csv
 data/lightcast_job_postings.csv
 EOF
+
+job_market_data.csv
+*.csv
