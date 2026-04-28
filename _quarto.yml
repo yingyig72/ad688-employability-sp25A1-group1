@@ -29,7 +29,7 @@ website:
         text: Data Cleaning
       - text: Research Questions
         menu:
-          - href: ricardo_after2_fixed-5.qmd
+          - href: ricardo.qmd
             text: "Which Cities/States Have the Highest Job Growth?"
           - href: tianyi.qmd
             text: "Do Tech Hubs Still Dominate Hiring?"
